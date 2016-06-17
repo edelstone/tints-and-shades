@@ -1,0 +1,135 @@
+/* CSS Document */
+
+body {
+	font-size: 14px;
+	line-height: 1.4285714285714286em;
+	margin: 0;
+	padding: 0;
+	font-family: Corbel, "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", "Bitstream Vera Sans", "Liberation Sans", Verdana, "Verdana Ref", sans-serif;	
+	background: url(images/background.jpg) top left repeat-x;
+}
+a {
+	color: #630000;
+	font-weight: bold;
+}
+h1 {
+	margin: 0;
+	font-size: 2.5714285714285714em;
+	line-height: 0.9090909090909091em;
+	margin-bottom: 0.9090909090909091em;
+	margin-bottom: 0.5em;
+	color: #630000;
+	display: inline;
+}
+h2 {
+	margin: 0;
+	font-size: 1.4285714285714286em;
+	line-height: 1em;
+	margin-bottom: 1em;
+}
+h3 {
+	margin: 0;
+	font-size: 1.2857142857142858em;
+	line-height: 1.1111111111111111em;
+	margin-bottom: 1.1111111111111111em;
+}
+h4 {
+	margin: 0;
+	font-size: 1.1428571428571428em;
+	line-height: 1.25em;
+	margin-bottom: 1.25em;
+}
+p, ul, blockquote, pre, td, th, label {
+	margin: 0;
+	font-size: 1em;
+	line-height: 1.4285714285714286em;
+	margin-bottom: 1.4285714285714286em;
+	margin-bottom: 0.5em;
+}
+p.small {
+	margin: 0;
+	font-size: 0.8571428571428571em;
+	line-height: 1.6666666666666667em;
+	margin-bottom: 1.6666666666666667em;
+}
+sup {
+	font-size: 0.5em;
+}
+em {
+	font-style: italic;
+	font-weight: bold;
+}
+table {
+	border-collapse: collapse;
+	margin-bottom: 1.4285714285714286em;
+}
+td {
+	width: 80px;
+	height: 50px;
+	margin: 15px;
+	border: 1px solid #e1e1e1;
+}
+td.rgb-value {
+	border: none;
+	height: 1em;
+	font-family: Consolas, "Lucida Console", "Lucida Sans Typewriter", Monaco, "Courier New", Courier, monospace;
+}
+
+.monospace {
+	font-family: Consolas, "Lucida Console", "Lucida Sans Typewriter", Monaco, "Courier New", Courier, monospace;
+}
+
+#wrapper {
+	margin-top: 50px;
+	margin-bottom: 10px;
+	padding-bottom: 30px;
+	border-bottom: 3px solid #999999;
+}
+
+#color-entry-form textarea {
+	width: 100%;
+	margin-bottom: 0.5em;
+	background-color: #efefef;
+}
+#color-entry-form input {
+	width: 100%;
+	padding: 10px;
+	background: url(images/button-background.jpg) top left repeat-x;
+	text-transform: uppercase;
+}
+#color-entry-form textarea {
+	margin-bottom: 2em;
+}
+
+#header {
+	background-color: #d7d7d7;
+	padding-top: 2em;
+	margin-top: 30px;
+}
+#header img {
+	width: 380px;
+	height: 179px;
+	position: absolute;
+	top: -55px;
+	right: 100px;
+}
+
+#footer {
+	background-color: #e1e1e1;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+#about-footer {
+	text-align: right;
+}
+#about-content {
+	display: none;
+}
+
+.clear {
+	clear: both;
+	line-height: 0px; /* leave this stuff in to fix IE bugs */
+	height: 0px;
+	font-size: 0px;
+}
+
