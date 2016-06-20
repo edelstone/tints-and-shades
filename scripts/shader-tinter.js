@@ -38,13 +38,13 @@ function calculateShades(colorValue) {
 // calculate a decrement value for R, G, and B based on 10% of their
 // original values.
    var red = parseInt(colorValue.substr(0, 2), 16);
-   var redDecrement = Math.round(red*0.1);
+   var redDecrement = (red*0.1);
 
    var green = parseInt(colorValue.substr(2, 2), 16);
-   var greenDecrement = Math.round(green*0.1);
+   var greenDecrement = (green*0.1);
 
    var blue = parseInt(colorValue.substr(4, 2), 16);
-   var blueDecrement = Math.round(blue*0.1);
+   var blueDecrement = (blue*0.1);
 
    var shadeValues = [];
    var redString = null;
@@ -61,15 +61,15 @@ function calculateShades(colorValue) {
        shadeValues[i] = redString + greenString + blueString;
 
 // reduce the shade towards black
-       red = red - redDecrement;
+       red = Math.round(red - redDecrement);
        if (red <= 0) {
                        red = 0;
                }
-       green = green - greenDecrement;
+       green = Math.round(green - greenDecrement);
        if (green <= 0) {
                        green = 0;
                }
-       blue = blue - blueDecrement;
+       blue = Math.round(blue - blueDecrement);
        if (blue <= 0) {
                        blue = 0;
                }
@@ -87,13 +87,13 @@ function calculateTints(colorValue) {
 // calculate an increment value for R, G, and B based on 10% of the
 // difference between their original values, and white.
    var red = parseInt(colorValue.substr(0, 2), 16);
-   var redIncrement = Math.round((255 - red)*0.1);
+   var redIncrement = ((255 - red)*0.1);
 
    var green = parseInt(colorValue.substr(2, 2), 16);
-   var greenIncrement = Math.round((255 - green)*0.1);
+   var greenIncrement = ((255 - green)*0.1);
 
    var blue = parseInt(colorValue.substr(4, 2), 16);
-   var blueIncrement = Math.round((255 - blue)*0.1);
+   var blueIncrement = ((255 - blue)*0.1);
 
    var tintValues = [];
    var redString = null;
@@ -110,15 +110,15 @@ function calculateTints(colorValue) {
        tintValues[i] = redString + greenString + blueString;
 
 // increase the tint towards white
-       red = red + redIncrement;
+       red = Math.round(red + redIncrement);
        if (red >= 255) {
                        red = 255; // make sure we don't go above #FF
                }
-       green = green + greenIncrement;
+       green = Math.round(green + greenIncrement);
        if (green >= 255) {
                        green = 255;
                }
-       blue = blue + blueIncrement;
+       blue = Math.round(blue + blueIncrement);
        if (blue >= 255) {
                        blue = 255;
                }
