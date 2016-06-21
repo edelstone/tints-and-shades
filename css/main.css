@@ -135,6 +135,7 @@ input[type="submit"] {
     transition: background 0.1s ease-in-out;
     position: relative;
     outline: none;
+    -webkit-appearance: none;
 }
 
 input[type="submit"]:hover {
