@@ -13,7 +13,7 @@ We take the hex color input and convert it to RGB. Then we take each component f
 * **Shades:** New value = current value x tint factor
 
 ## Example Calculation
-Let's say we want tints and shades of Rebecca Purple, #663399.
+Let's say we want tints and shades of [Rebecca Purple](http://www.economist.com/blogs/babbage/2014/06/digital-remembrance), #663399.
 
 #### 10% Lighter Tint
 * #663399 is converted to the RGB equivalent of 102, 51, 153
@@ -32,12 +32,13 @@ Let's say we want tints and shades of Rebecca Purple, #663399.
 ## Attribution
 This application is remixed from [North Krimsly's](http://highintegritydesign.com/) original [Color Tinter-Shader](http://highintegritydesign.com/tools/tinter-shader) with some key modifications made to the calculation method.
 
-##Credits
+## Credits
 [Michael Edelstone](http://michaeledelstone.com) designed it and Nick Wing made it work.
 
-##License
-[CC BY-SA 3.0 US](http://creativecommons.org/licenses/by-sa/3.0/us/)
+## License
+Open source; please use. [CC BY-SA 3.0 US](http://creativecommons.org/licenses/by-sa/3.0/us/)
 
 ## Resources
-* Convert hex (or just about anything) to RGB: [http://rgb.to/](http://rgb.to/)
+* Convert hex (or just about anything) to RGB: [http://rgb.to](http://rgb.to)
 * Further explanation of the calculation method: [Stack Overflow](http://stackoverflow.com/questions/6615002/given-an-rgb-value-how-do-i-create-a-tint-or-shade)
+* Modal window plugin: [Lean Modal](http://leanmodal.finelysliced.com.au/)
