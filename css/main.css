@@ -166,6 +166,7 @@ td.hex-value {
 	font-size: 1.2rem;
 	text-align: center;
 	padding-bottom: 1rem;
+	text-transform: lowercase;
 }
 
 .txst-footer {
