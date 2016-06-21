@@ -1,0 +1,227 @@
+::-moz-selection {background: #d0dfd9; text-shadow: none;}
+::selection {background: #d0dfd9; text-shadow: none;}
+
+html, body {
+	height: 100%;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font-size: 1.6em;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 400;
+	margin: auto;
+	text-align: center;
+}
+
+.txst-wrapper {
+	font-size: 2rem;
+	line-height: 2.5rem;
+}
+
+.txst-app {
+	min-height: 100%;
+	margin-bottom: -20rem;
+}
+
+.txst-app:after {
+	content: "";
+	display: block;
+}
+
+.txst-header {
+    background: #6a5638;
+    color: #ffffff;
+    padding: 4rem 1.5rem;
+    border-bottom: 3px solid #501214;
+}
+
+.txst-headline {
+    max-width: 80rem;
+    margin: auto;
+}
+
+.txst-headline h1 {
+	font-family: 'Patua One', serif;
+ 	font-size: 6rem;
+    font-weight: 700;
+    line-height: 6rem;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 2px #262524;
+}
+
+.txst-headline p {
+    margin-top: 0.5rem;
+    font-size: 1.4rem;
+}
+
+.txst-headline a {
+	color: #ffffff;
+    background: linear-gradient(to bottom, transparent 0, transparent 80%, #887860 80%);
+    text-decoration: none;
+    display: inline-block;
+    line-height: 2.2rem;
+    transition: transform .15s ease-in-out;
+}
+
+.txst-headline a:hover {
+	transform: rotate(2deg);
+}
+
+.txst-content {
+	padding: 4rem 1.5rem;
+	max-width: 80rem;
+	margin: auto;
+}
+
+.txst-content a {
+    color: #005481;
+    text-decoration: none;
+    border-bottom: 1px solid #005481;
+}
+
+.txst-content a:hover {
+	border-width: 2px;
+}
+
+.txst-content h2 {
+	font-size: 2.4rem;
+	line-height: 3rem;
+	font-weight: bold;
+	color: #501214;
+}
+
+.txst-hint {
+	font-size: 1.2rem;
+}
+
+.txst-content textarea {
+    display: block;
+    min-width: 40rem;
+    padding: .8rem 1.2rem;
+    margin: 3rem auto;
+    font-size: 1.6rem;
+    font-weight: 400;
+    min-height: 20rem;
+    line-height: 2.4rem;
+    border-radius: 3px;
+    border: 3px solid #887860;
+    word-spacing: 0.5rem;
+}
+
+input[type="submit"] {
+    min-width: 40rem;
+    display: block;
+    margin: auto;
+    padding: 2rem 1.5rem 1.8rem 1.5rem;
+    border: 0px solid #6a5638;
+    background: #6a5638;
+    box-shadow: 0 4px 0 #333;
+    margin-bottom: 1rem;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-radius: 3px;
+    font-size: 1.6rem;
+    cursor: pointer;
+    transition: background 0.1s ease-in-out;
+    position: relative;
+    outline: none;
+}
+
+input[type="submit"]:hover {
+    background: #79674C;
+}
+
+input[type="submit"]:active {
+    box-shadow: 0 0 #4A3C27;
+    top: 4px;
+}
+
+#shades-tints {
+    overflow-x: auto;
+    width: 100%;
+}
+
+.txst-content table {
+	width: 100%;
+	margin: 3rem 0;
+}
+
+.txst-colors {
+    min-height: 20rem;
+}
+
+td.hex-color {
+    height: 7rem;
+    border: 1rem solid #f4f1ed;
+    width: calc(100%/11);
+    min-width: 6rem;
+}
+
+td.hex-value {
+	font-size: 1.2rem;
+	text-align: center;
+	padding-bottom: 1rem;
+}
+
+.txst-footer {
+    background: #363534;
+    padding: 0 1.5rem;
+    color: #e8e3db;
+    font-size: 1.6rem;
+    line-height: 2rem;
+}
+
+.txst-footer, .txst-app:after {
+  height: 20rem; 
+}
+
+.txst-footer-content {
+	padding: 3rem 0;
+}
+
+.txst-footer a {
+    color: #e8e3db;
+    text-decoration: none;
+    border-bottom: 1px solid #e8e3db;
+}
+
+.txst-footer a:hover {
+    background: transparent;
+    border-bottom-width: 2px;
+}
+
+.source-links {
+	margin-bottom: 2.5rem;
+}
+
+.github-logo {
+    margin-bottom: 0.5rem;
+}
+
+.github-logo a {
+    border: none;
+    font-size: 5rem;
+    transition: all .2s ease-in-out;
+    display: inline-block;
+}
+
+.github-logo a:hover {
+    border: none;
+    transform: scale(1.1);
+    background: transparent;
+}
+
+@media (max-width: 1000px) {
+	html {font-size: 55%;}
+}
+
+@media (max-width: 640px) {
+	html {font-size: 50%;}
+	.txst-headline a  {display: inline;}
+	.txst-content textarea, input[type="submit"] {min-width: 100%;}
+}
