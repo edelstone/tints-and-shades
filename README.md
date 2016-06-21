@@ -1,4 +1,4 @@
-# Color Tinter and Shader
+# [Color Tinter and Shader](http://michaeledelstone.com/tints-and-shades/)
 from the [Texas State University](http://txstate.edu) web team
 
 ## Purpose
@@ -33,7 +33,10 @@ Let's say we want tints and shades of Rebecca Purple, #663399.
 This application is remixed from [North Krimsly's](http://highintegritydesign.com/) original [Color Tinter-Shader](http://highintegritydesign.com/tools/tinter-shader) with some key modifications made to the calculation method.
 
 ##Credits
-Michael Edelstone designed it and Nick Wing made it work.
+[Michael Edelstone](http://michaeledelstone.com) designed it and Nick Wing made it work.
+
+##License
+[CC BY-SA 3.0 US](http://creativecommons.org/licenses/by-sa/3.0/us/)
 
 ## Resources
 * Convert hex (or just about anything) to RGB: [http://rgb.to/](http://rgb.to/)
