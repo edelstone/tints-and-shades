@@ -108,7 +108,7 @@ body {
     min-width: 40rem;
     padding: .8rem 1.2rem;
     margin: 3rem auto;
-    font-size: 1.6rem;
+    font-size: 16px;
     font-weight: 400;
     min-height: 20rem;
     line-height: 2.4rem;
@@ -137,8 +137,6 @@ input[type="submit"] {
     outline: none;
     -webkit-appearance: none;
 }
-
-select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] { font-size: 16px !important; }
 
 input[type="submit"]:hover {
     background: #79674C;
@@ -231,6 +229,7 @@ td.hex-value {
 
 @media (max-width: 640px) {
 	html {font-size: 50%;}
-	.txst-headline a  {display: inline;}
+	.txst-team a  {display: inline;}
+	.txst-headline h1 {letter-spacing: -2px;}
 	.txst-content textarea, input[type="submit"] {min-width: 100%;}
 }
