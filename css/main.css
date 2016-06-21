@@ -230,6 +230,6 @@ td.hex-value {
 @media (max-width: 640px) {
 	html {font-size: 50%;}
 	.txst-team a  {display: inline;}
-	.txst-headline h1 {letter-spacing: -2px;}
+	.txst-headline h1 {letter-spacing: -1px; text-shadow: none;}
 	.txst-content textarea, input[type="submit"] {min-width: 100%;}
 }
