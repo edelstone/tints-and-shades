@@ -58,7 +58,7 @@ body {
     font-size: 1.4rem;
 }
 
-.txst-headline a {
+.txst-team a {
 	color: #ffffff;
     background: linear-gradient(to bottom, transparent 0, transparent 80%, #887860 80%);
     text-decoration: none;
@@ -67,7 +67,12 @@ body {
     transition: transform .15s ease-in-out;
 }
 
-.txst-headline a:hover {
+.txst-headline h1 a {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+.txst-team a:hover {
 	transform: rotate(2deg);
 }
 

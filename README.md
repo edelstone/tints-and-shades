@@ -32,6 +32,9 @@ Let's say we want tints and shades of Rebecca Purple, #663399.
 ## Attribution
 This application is remixed from [North Krimsly's](http://highintegritydesign.com/) original [Color Tinter-Shader](http://highintegritydesign.com/tools/tinter-shader) with some key modifications made to the calculation method.
 
+##Credits
+Michael Edelstone designed it and Nick Wing made it work.
+
 ## Resources
 * Convert hex (or just about anything) to RGB: [http://rgb.to/](http://rgb.to/)
 * Further explanation of the calculation method: [Stack Overflow](http://stackoverflow.com/questions/6615002/given-an-rgb-value-how-do-i-create-a-tint-or-shade)
