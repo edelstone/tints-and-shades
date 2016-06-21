@@ -1,5 +1,5 @@
 # Color Tinter and Shader
-_from the [Texas State University](http://txstate.edu) web team_
+from the [Texas State University](http://txstate.edu) web team
 
 ## Purpose
 The purpose of this tool is to accurately produce tints and shades in 10% increments based on a given base hex color.
