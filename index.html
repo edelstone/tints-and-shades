@@ -1,203 +1,78 @@
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
-
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-	<title>Tinter-Shader | Choose your colors, then get tints &amp; shades | High Integrity Design LLC</title> 
-
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
-
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/960gs/0/960.min.css" />
-
-	<link rel="stylesheet" type="text/css" href="css/styles.css" />
-
-
-<!--[if lte IE 6]>
-
-<link rel="stylesheet" type="text/css" href="styles_IE6.css" />
-
-<![endif]-->	
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-	<script type="text/javascript" src="scripts/shader-tinter.js"></script> 
-
-<!--	********************************************************************* 
-
-		Tinter-Shader web application, (c) Copyright 2010 High Integrity Design, LLC
-
-		http://www.highintegritydesign.com
-
-
-
-		licensed under a Creative Commons Attribution-Share Alike 3.0 United States License. 
-
-		http://creativecommons.org/licenses/by-sa/3.0/us/
-
-		********************************************************************* -->
-
+<meta charset="UTF-8">
+<meta name="description" content="Make perfect tints and shades from any hexadecimal color.">
+<meta name="author" content="Nick Wing, Michael Edelstone">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Color Tinter and Shader | Texas State University Web Team</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,800,800i|Patua+One" rel="stylesheet">
+<link rel="stylesheet" href="css/main.css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script type="text/javascript" src="scripts/shades-tints.js"></script> 
 </head>
 
 <body>
-
-<div class="container_12">
-
-	<div id="about-content">
-
-		<h2>What Is Tinter-Shader?</h2>
-
-		<p>Tinter-Shader is a web application that generates tints and shades from an RGB color pallette that you give it. 
-
-			I wrote it because I needed a tool like this and couldn&rsquo;t find one on the web. And, because I 
-
-			wanted to practice and improve my JavaScript and JQuery skills.</p>
-
-		<h2>What&rsquo;s It Good For?</h2>
-
-		<p>Tinter-Shader is great for when you already have a color pallete for your design, but you need some tints and shades
-
-			that would make good colors for backgrounds, text, forms and panels that fit into your existing color scheme.
-
-		</p>
-
-		<h2>Inspiration</h2>
-
-		<p>Inspiration for Tinter-Shader came from two of my favorite tools, Color Blender (http://meyerweb.com/eric/tools/color-blend/) and Color Scheme Designer (http://colorschemedesigner.com/).  These are both excellent tools which I use often.  Tinter-Shader is a different and complementary tool to these.</p>
-
-		<h2>Enjoy...and a Disclaimer</h2>
-
-		<p>I hope you enjoy Tinter-Shader.  If you find it useful, please consider mentioning my name and linking to me from your site to share some Google Love.  Last but not least, this is a free tool&mdash; no warranty is provided.  Use at your own risk.  It works for me!</p>
-
-	</div> <!-- about-content -->
-
 	
-
-	<div id="header">
-
-		<div class="grid_6">
-
-			<h1>Color Tinter-Shader</h1> <em>Beta</em>
-
-			<h2>Choose your colors, then get your tints &amp; shades</h2> 
-
-		</div>
-
-		<div class="grid_6">
-
-			<img id="header-image" src="images/sunglasses.png" alt="Get your shades" />
-
-		</div>
-
-	<div class="clear"></div>
-
-	</div> <!-- header -->
-
+	<div class="txst-wrapper">
 	
+		<div class="txst-app">
 
-	<div id="wrapper">
-
-		<div class="grid_3">
-
-			<h3>1. Enter your color values</h3> 
-
-			<p>
-
-				Enter your colors as hexadecimal RGB values separated by spaces or returns. For example: 
-
-			</p>
-
-			<form id="color-entry-form" action="#" method="post" name="color-entry-form">
-
-				<textarea class="monospace" rows="10" cols="20" id="color-values" name="color-values">501214 6a5638</textarea> 
-
-				<h3>2. Get your tints &amp; shades</h3> 
-
-				<input type="submit" value="Get Tints &amp; Shades!" /> 
-
-			</form>
-
-		</div><!-- grid_3 -->
-
+			<div class="txst-header">
 		
-
-		<div class="grid_9">
-
-			<div id="shades-tints">
-
+				<div class="txst-headline">
+					<h1><a href="http://michaeledelstone.com/tints-and-shades">Color Tinter and Shader</a></h1>
+					<p class="txst-team">from the <a href="http://txstate.edu">Texas State University</a> web team</p>
+				</div>
+			
 			</div>
 
-		</div><!-- grid_9 -->
+			<div class="txst-content">
+	
+				<div class="txst-form">
 
+					<h2>Enter hex colors separated by spaces:</h2>
+			
+					<form class="pure-form" id="color-entry-form" action="#" method="post" name="color-entry-form">
+						<textarea id="color-values" name="color-values">501214 6a5638</textarea>
+						<input type="submit" value="Make Tints and Shades" />
+					</form>
+				
+					<p class="txst-hint"><a href="http://rgb.to/">Need to convert your color to hex?</a></p>
+
+				</div>
 		
+				<div class="txst-colors">
 
-		<div class="clear"></div>
-
-	</div><!-- wrapper -->
-
-		<div class="clear"></div>	
-
-	<div id="footer">
-
-		<div class="grid_3">
-
-			<p>
-
-				&copy; 2010 High Integrity Design, LLC 
-
-				<br />
-
-				<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/us/">
-
-					<img alt="Creative Commons License" style="border-width:0" src="http://creativecommons.org/images/public/somerights20.png" />
-
-				</a>
-
-			</p>
-
-		</div> <!-- grid_3 -->
-
+					<div id="shades-tints"></div>
+			
+				</div>
+	
+			</div>
 		
+		</div>
+		
+		<div class="txst-footer">
+				
+			<div class="txst-footer-content">
+			
+				<div class="source-links">
+					<p class="github-logo"><a href="https://github.com/edelstone/tints-and-shades"><i class="fa fa-github" aria-hidden="true"></i></a></p>
+					<p class="github-link"><a href="https://github.com/edelstone/tints-and-shades">View on GitHub</a></p>
+				</div>
+				
+				<div class="documentation">
+					<p><a href="https://github.com/edelstone/tints-and-shades/blob/gh-pages/README.md">How does it work?</a> | Inspired by <a href="http://highintegritydesign.com/tools/tinter-shader/">Tinter-Shader</a></p>
+				</div>
+				
+			</div>
+						
+		</div>
 
-		<div class="grid_6">
-
-			<p>
-
-				Tinter-Shader by <a href="http://www.highintegritydesign.com" 
-
-											rel="cc:attributionURL">High Integrity Design LLC</a> is licensed
-
-											under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/us/">
-
-											Creative Commons Attribution-Share Alike 3.0 United States License
-
-										</a>
-
-				<br />
-
-			</p>
-
-		</div> <!-- grid_6 -->
-
-
-
-		<div class="grid_3" id="about-footer">
-
-			<p><a id="about-link" href="#about-content">About Tinter-Shader</a></p>
-
-		</div> <!-- grid_3 -->
-
-
-
-		<div class="clear"></div>
-
-	</div> <!-- footer -->
-
-</div><!-- container_12 -->
+	</div>
 
 </body>
 
 </html>
-
