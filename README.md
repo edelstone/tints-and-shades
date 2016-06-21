@@ -1,5 +1,5 @@
 # [Color Tinter and Shader](http://michaeledelstone.com/tints-and-shades/)
-from the [Texas State University](http://txstate.edu) web team
+*from the [Texas State University](http://txstate.edu) web team*
 
 ## Purpose
 The purpose of this tool is to accurately produce tints and shades in 10% increments based on a given base hex color.
@@ -33,7 +33,7 @@ Let's say we want tints and shades of [Rebecca Purple](http://www.economist.com/
 This application is remixed from [North Krimsly's](http://highintegritydesign.com/) original [Color Tinter-Shader](http://highintegritydesign.com/tools/tinter-shader) with some key modifications made to the calculation method.
 
 ## Credits
-[Michael Edelstone](http://michaeledelstone.com) designed it and Nick Wing made it work.
+Nick Wing made it work and [Michael Edelstone](http://michaeledelstone.com) designed it.
 
 ## License
 Open source; please use. [CC BY-SA 3.0 US](http://creativecommons.org/licenses/by-sa/3.0/us/)
@@ -41,4 +41,3 @@ Open source; please use. [CC BY-SA 3.0 US](http://creativecommons.org/licenses/b
 ## Resources
 * Convert hex (or just about anything) to RGB: [http://rgb.to](http://rgb.to)
 * Further explanation of the calculation method: [Stack Overflow](http://stackoverflow.com/questions/6615002/given-an-rgb-value-how-do-i-create-a-tint-or-shade)
-* Modal window plugin: [Lean Modal](http://leanmodal.finelysliced.com.au/)
