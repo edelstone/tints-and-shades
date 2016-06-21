@@ -34,4 +34,4 @@ This application is remixed from [North Krimsly's](http://highintegritydesign.co
 
 ## Resources
 * Convert hex (or just about anything) to RGB: [http://rgb.to/](http://rgb.to/)
-* Further Explanation of the calculation method: [Stack Overflow](http://stackoverflow.com/questions/6615002/given-an-rgb-value-how-do-i-create-a-tint-or-shade)
+* Further explanation of the calculation method: [Stack Overflow](http://stackoverflow.com/questions/6615002/given-an-rgb-value-how-do-i-create-a-tint-or-shade)
