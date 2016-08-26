@@ -1,4 +1,4 @@
-# [Tint & Shade Generator](http://michaeledelstone.com/tints-and-shades/)
+# [Tint & Shade Generator](http://edelstone.github.io/tints-and-shades/)
 *from the [Texas State University](http://txstate.edu) web team*
 
 ## Purpose
