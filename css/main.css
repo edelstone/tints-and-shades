@@ -80,7 +80,7 @@ b, strong {
 
 .ts-documentation {
     text-align: left;
-    padding-top: 1rem;
+    padding-top: 1.5rem;
     font-size: 1.6rem;
 }
 
@@ -97,13 +97,13 @@ b, strong {
 
 .ts-documentation ol {
 	list-style-type: decimal;
-	padding-left: 2rem;
+	padding-left: 3rem;
 	margin-top: 1rem;
 }
 
 .ts-documentation ul {
 	list-style-type: disc;
-	padding-left: 2rem;
+	padding-left: 3rem;
 	margin-top: 1rem;
 }
 
@@ -143,23 +143,21 @@ b, strong {
 }
 
 input[type="submit"] {
-    min-width: 22rem;
     display: block;
     margin: auto;
-    padding: 1.8rem 1.5rem;
+    padding: 1.8rem 2.5rem;
     border: none;
     background: #53777a;
     margin-bottom: 0.8rem;
     color: #fff;
     font-weight: bold;
     border-radius: 3px;
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     cursor: pointer;
     position: relative;
     outline: none;
     -webkit-appearance: none;
 	transition: background 0.1s ease-in-out;
-	border: 1px solid #425f62;
 }
 
 input[type="submit"]:hover {
@@ -194,7 +192,7 @@ td.hex-color {
 td.hex-value {
 	font-size: 1.2rem;
 	text-align: center;
-	padding-bottom: 1rem;
+	padding-bottom: 2rem;
 	text-transform: lowercase;
 }
 
