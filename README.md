@@ -6,8 +6,8 @@ The purpose of this tool is to accurately produce tints (lighter variants) and s
 ## Why 10% Increments?
 That's the standard I developed for my design process at Texas State University and in other projects. I think choosing colors based on a flat percentage is a clean, reproducible way to create brand palettes, gradients and more.
 
-## Calculations
-The input hex color is converted to RGB. Then each component from the RGB color has the following calculations performed on it before rounding and converting back to hex.
+## Calculation Method
+The given hex color is first converted to RGB. Then each component of the RGB color has the following calculation performed on it before rounding and converting back to hex for display.
 * **Tints:** New value = current value + ((255 - current value) x tint factor)
 * **Shades:** New value = current value x tint factor
 
@@ -29,7 +29,7 @@ Let's say we want tints and shades of [Rebecca Purple](http://www.economist.com/
 1. RGB 92, 46, 138 is converted to the hex equivalent of #5C2E8A
 
 ## Attribution
-This application is remixed from an old app by [North Krimsly](http://highintegritydesign.com/), with key modifications made to the calculation method and design. The original is no longer online.
+This application is remixed from an old app by [North Krimsly](http://highintegritydesign.com/), with key modifications made to the calculation method and design. The original version is no longer online.
 
 ## Credits
 [Michael Edelstone](http://michaeledelstone.com) designed it and put it together, with much-appreciated feedback from Nick Wing.
