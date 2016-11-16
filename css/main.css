@@ -15,6 +15,10 @@ body {
 	background: #f5f7f7;
 }
 
+b, strong {
+    font-weight: bold;
+}
+
 .ts-wrapper {
 	font-size: 2rem;
 	line-height: 2.5rem;
@@ -72,6 +76,35 @@ body {
 	padding: 4rem 1.5rem;
 	max-width: 80rem;
 	margin: auto;
+}
+
+.ts-documentation {
+    text-align: left;
+    padding-top: 1rem;
+    font-size: 1.6rem;
+}
+
+.ts-documentation h2 {
+    margin-bottom: 1rem;
+    margin-top: 2.5rem;
+}
+
+.ts-documentation h3 {
+    font-weight: bold;
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.ts-documentation ol {
+	list-style-type: decimal;
+	padding-left: 2rem;
+	margin-top: 1rem;
+}
+
+.ts-documentation ul {
+	list-style-type: disc;
+	padding-left: 2rem;
+	margin-top: 1rem;
 }
 
 .ts-content a {
