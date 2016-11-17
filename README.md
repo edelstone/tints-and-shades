@@ -2,18 +2,21 @@
 
 ## What is the Tint & Shade Generator?
 The purpose of this tool is to accurately produce tints (lighter variants) and shades (darker variants) of a given hex color in 10% increments.
+
 It matches the way Chrome dev tools and the classic [W3Schools color picker](http://www.w3schools.com/colors/colors_picker.asp) calculate tints and shades, but simplifies the process.
 
 ## When would I use this?
 It's best for scenarios where you already have a base color palette but would like complimentary colors for gradients, borders, backgrounds, typography or other elements.
 
-## Why 10% Increments?
+## Why 10% increments?
 That’s the standard I developed for [my design process at Texas State University](http://www.styleguide.txstate.edu/colors/template.html) and in other projects. I think choosing colors based on a flat percentage is a clean, reproducible way to augment brand palettes and produce designs with depth.
 
 ## Calculation Method
 The given hex color is first converted to RGB. Then each component of the RGB color has the following calculation performed on it, respectively.
+
 * **Tints:** New value = current value + ((255 - current value) x tint factor)
 * **Shades:** New value = current value x tint factor
+
 The new value is rounded if necessary, and then converted back to hex for display.
 
 ## Example Calculation
