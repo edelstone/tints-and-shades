@@ -84,8 +84,12 @@ b, strong {
     font-size: 1.6rem;
 }
 
+.ts-documentation p {
+    margin: 1rem 0;
+}
+
 .ts-documentation h2 {
-    margin-bottom: 1rem;
+    margin-bottom: 1.2rem;
     margin-top: 2.5rem;
 }
 
@@ -95,16 +99,17 @@ b, strong {
     margin-bottom: 0.5rem;
 }
 
+.ts-documentation ul, .ts-documentation ol {
+	padding-left: 3rem;
+	margin: 1rem 0;
+}
+
 .ts-documentation ol {
 	list-style-type: decimal;
-	padding-left: 3rem;
-	margin-top: 1rem;
 }
 
 .ts-documentation ul {
 	list-style-type: disc;
-	padding-left: 3rem;
-	margin-top: 1rem;
 }
 
 .ts-content a {
@@ -151,7 +156,7 @@ input[type="submit"] {
     margin-bottom: 0.8rem;
     color: #fff;
     font-weight: bold;
-    border-radius: 3px;
+    border-radius: 5px;
     font-size: 1.8rem;
     cursor: pointer;
     position: relative;

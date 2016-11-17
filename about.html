@@ -35,26 +35,33 @@
 
 			<div class="ts-content ts-documentation">
 					
-				<h2>Purpose</h2>
+				<h2>What is the Tint & Shade Generator?</h2>
 				
 				<p>The purpose of this tool is to accurately produce tints (lighter variants) and shades (darker variants) of a given hex color in 10% increments.</p>
+				<p>It matches the way Chrome dev tools and the classic <a href="http://www.w3schools.com/colors/colors_picker.asp">W3Schools color picker</a> calculate tints and shades, but simplifies the process.</p>
+				
+				<h2>When would I use this?</h2>
+				
+				<p>It's best for scenarios where you already have a base color palette but would like complimentary colors for gradients, borders, backgrounds, typography or other elements.</p>
 				
 				<h2>Why 10% Increments?</h2>
 				
-				<p>That’s the standard I developed for my design process at Texas State University and in other projects. I think choosing colors based on a flat percentage is a clean, reproducible way to create brand palettes, gradients and more.</p>
+				<p>That’s the standard I developed for <a href="http://www.styleguide.txstate.edu/colors/template.html">my design process at Texas State University</a> and in other projects. I think choosing colors based on a flat percentage is a clean, reproducible way to augment brand palettes and produce designs with depth.</p>
 				
 				<h2>Calculation Method</h2>
 				
-				<p>The given hex color is first converted to RGB. Then each component of the RGB color has the following calculation performed on it before rounding and converting back to hex for display.</p>
+				<p>The given hex color is first converted to RGB. Then each component of the RGB color has the following calculation performed on it, respectively.</p>
 				
 				<ul>
 					<li><b>Tints:</b> New value = current value + ((255 - current value) x tint factor)</li>
 					<li><b>Shades:</b> New value = current value x tint factor</li>
 				</ul>
 				
+				<p>The new value is rounded if necessary, and then converted back to hex for display.</p>
+				
 				<h2>Example Calculation</h2>
 				
-				<p>Let’s say we want tints and shades of <a href="http://www.economist.com/blogs/babbage/2014/06/digital-remembrance">Rebecca Purple</a>, #663399:</p>
+				<p>Let’s say we want tints and shades of <a href="http://www.economist.com/blogs/babbage/2014/06/digital-remembrance">Rebecca Purple</a>, #663399.</p>
 				
 				<h3>10% Tint</h3>
 				
@@ -78,7 +85,7 @@
 				
 				<h2>Attribution</h2>
 				
-				<p>This application is remixed from a similar app by <a href="http://highintegritydesign.com/">North Krimsly</a>, with key modifications made to the calculation method and design. The original version is no longer online.</p>
+				<p>This application is remixed from a similar app by <a href="http://highintegritydesign.com/">North Krimsly</a>, with significant modifications made to the calculation method and design.</p>
 				
 				<h2>Credits</h2>
 				
@@ -91,8 +98,10 @@
 				<h2>Resources</h2>
 				
 				<ul>
-					<li>Convert hex – or just about any format – to RGB: <a href="http://rgb.to">http://rgb.to</a></li>
-					<li>Further explanation of the calculation method: <a href="http://stackoverflow.com/questions/6615002/given-an-rgb-value-how-do-i-create-a-tint-or-shade">Stack Overflow</a></li>
+					<li>Convert hex – or just about any color format – to RGB: <a href="http://rgb.to">http://rgb.to</a></li>
+					<li>Further explanation of the calculation method: <a href="http://stackoverflow.com/questions/6615002/given-an-rgb-value-how-do-i-create-a-tint-or-shade">http://stackoverflow.com/questions/6615002</a></li>
+					<li>Texas State University style guide: <a href="http://www.styleguide.txstate.edu">http://styleguide.txstate.edu</a></li>
+					<li>W3Schools Color Picker: <a href="http://www.w3schools.com/colors/colors_picker.asp">http://w3schools.com/colors/colors_picker.asp</a></li>
 				</ul>
 	
 			</div>
@@ -110,8 +119,8 @@
 					</a>
 				</div>
 				
-				<div class="ts-how">
-					<p><a href="https://edelstone.github.com/tints-and-shades/documentation">How does it work?</a></p>
+				<div class="ts-about">
+					<p><a href="https://edelstone.github.com/tints-and-shades/about">About Tint &amp; Shade Generator</a></p>
 				</div>
 				
 			</div>

@@ -1,15 +1,20 @@
 # [Tint & Shade Generator](http://edelstone.github.io/tints-and-shades/)
 
-## Purpose
+## What is the Tint & Shade Generator?
 The purpose of this tool is to accurately produce tints (lighter variants) and shades (darker variants) of a given hex color in 10% increments.
+It matches the way Chrome dev tools and the classic [W3Schools color picker](http://www.w3schools.com/colors/colors_picker.asp) calculate tints and shades, but simplifies the process.
+
+## When would I use this?
+It's best for scenarios where you already have a base color palette but would like complimentary colors for gradients, borders, backgrounds, typography or other elements.
 
 ## Why 10% Increments?
-That's the standard I developed for my design process at Texas State University and in other projects. I think choosing color variants based on a flat percentage is a clean, reproducible way to create brand palettes, gradients and more.
+That’s the standard I developed for [my design process at Texas State University](http://www.styleguide.txstate.edu/colors/template.html) and in other projects. I think choosing colors based on a flat percentage is a clean, reproducible way to augment brand palettes and produce designs with depth.
 
 ## Calculation Method
-The given hex color is first converted to RGB. Then each component of the RGB color has the following calculation performed on it before rounding and converting back to hex for final display.
+The given hex color is first converted to RGB. Then each component of the RGB color has the following calculation performed on it, respectively.
 * **Tints:** New value = current value + ((255 - current value) x tint factor)
 * **Shades:** New value = current value x tint factor
+The new value is rounded if necessary, and then converted back to hex for display.
 
 ## Example Calculation
 Let's say we want tints and shades of [Rebecca Purple](http://www.economist.com/blogs/babbage/2014/06/digital-remembrance), #663399.
@@ -29,7 +34,7 @@ Let's say we want tints and shades of [Rebecca Purple](http://www.economist.com/
 1. RGB 92, 46, 138 is converted to the hex equivalent of #5C2E8A
 
 ## Attribution
-This application is remixed from a similar app by [North Krimsly](http://highintegritydesign.com/), with key modifications made to the calculation method and design. The original version is no longer online.
+This application is remixed from a similar app by [North Krimsly](http://highintegritydesign.com/), with significant modifications made to the calculation method and design.
 
 ## Credits
 [Michael Edelstone](http://michaeledelstone.com) designed it and put it together, with much-appreciated feedback from Nick Wing.
@@ -40,3 +45,5 @@ Open source; please use. [CC BY-SA 3.0 US](http://creativecommons.org/licenses/b
 ## Resources
 * Convert hex – or just about any format – to RGB: [http://rgb.to](http://rgb.to)
 * Further explanation of the calculation method: [Stack Overflow](http://stackoverflow.com/questions/6615002/given-an-rgb-value-how-do-i-create-a-tint-or-shade)
+* Texas State University style guide: [http://styleguide.txstate.edu](http://styleguide.txstate.edu)
+* W3Schools Color Picker: [http://w3schools.com/colors/colors_picker.asp](http://w3schools.com/colors/colors_picker.asp)
