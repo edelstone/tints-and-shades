@@ -97,6 +97,7 @@ b, strong {
     font-weight: bold;
     margin-top: 2rem;
     margin-bottom: 0.5rem;
+    font-size: 1.6rem;
 }
 
 .ts-documentation ul, .ts-documentation ol {
