@@ -15,7 +15,7 @@ That’s the standard I developed for [my design process at Texas State Universi
 The given hex color is first converted to RGB. Then each component of the RGB color has the following calculation performed on it, respectively.
 
 * **Tints:** New value = current value + ((255 - current value) x tint factor)
-* **Shades:** New value = current value x tint factor
+* **Shades:** New value = current value x shade factor
 
 The new value is rounded if necessary, and then converted back to hex for display.
 
