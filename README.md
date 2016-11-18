@@ -27,14 +27,14 @@ Let's say we want tints and shades of [Rebecca Purple](http://www.economist.com/
 1. **R:** 102 + ((255 - 102) x .1) = 117.3, rounded to 117
 1. **G:** 51 + ((255 - 51) x .1) = 71.4, rounded to 71
 1. **B:** 153 + ((255 - 153) x .1) = 163.2, rounded to 163
-1. RGB 117, 71, 163 is converted to the hex equivalent of #7547A3
+1. RGB 117, 71, 163 is converted to the hex equivalent of #7547a3
 
 #### 10% Shade
 1. #663399 is converted to the RGB equivalent of 102, 51, 153
 1. **R:** 102 x .9 = 91.8, rounded to 92
 1. **G:** 51 x .9 = 45.9, rounded to 46
 1. **B:** 153 x .9 = 137.7, rounded to 138
-1. RGB 92, 46, 138 is converted to the hex equivalent of #5C2E8A
+1. RGB 92, 46, 138 is converted to the hex equivalent of #5c2e8a
 
 ## Attribution
 This application is inspired by a similar app once maintained by [North Krimsly](http://highintegritydesign.com/), with significant modifications made to the calculation method and design.
