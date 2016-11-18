@@ -131,7 +131,7 @@ b, strong {
 }
 
 .ts-hint {
-	font-size: 1.3rem;
+	font-size: 1.4rem;
 }
 
 .ts-content textarea {
@@ -157,13 +157,14 @@ input[type="submit"] {
     margin-bottom: 0.8rem;
     color: #fff;
     font-weight: bold;
-    border-radius: 5px;
-    font-size: 1.8rem;
+    border-radius: 3px;
+    font-size: 1.6rem;
     cursor: pointer;
     position: relative;
     outline: none;
     -webkit-appearance: none;
 	transition: background 0.1s ease-in-out;
+	text-transform: uppercase;
 }
 
 input[type="submit"]:hover {

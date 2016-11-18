@@ -3,7 +3,7 @@
 ## What is the Tint & Shade Generator?
 The purpose of this tool is to accurately produce tints (lighter variants) and shades (darker variants) of a given hex color in 10% increments.
 
-It matches the way Chrome dev tools and the classic [W3Schools color picker](http://www.w3schools.com/colors/colors_picker.asp) calculate tints and shades, but simplifies the process.
+It matches the way Chrome dev tools and the classic [W3Schools color picker](http://www.w3schools.com/colors/colors_picker.asp) calculate tints and shades. As far as I can tell, there are no other applications that get the calculation right and produce the tints and shades so simply.
 
 ## When would I use this?
 It's best used when you already have a base color palette but would like complimentary colors for gradients, borders, backgrounds, typography or other elements.
@@ -37,7 +37,7 @@ Let's say we want tints and shades of [Rebecca Purple](http://www.economist.com/
 1. RGB 92, 46, 138 is converted to the hex equivalent of #5C2E8A
 
 ## Attribution
-This application is remixed from a similar app by [North Krimsly](http://highintegritydesign.com/), with significant modifications made to the calculation method and design.
+This application is inspired by a similar app once maintained by [North Krimsly](http://highintegritydesign.com/), with significant modifications made to the calculation method and design.
 
 ## Credits
 [Michael Edelstone](http://michaeledelstone.com) designed it and put it together, with much-appreciated feedback from Nick Wing.
