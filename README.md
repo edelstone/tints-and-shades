@@ -6,7 +6,7 @@ The purpose of this tool is to accurately produce tints (lighter variants) and s
 It matches the way Chrome dev tools and the classic [W3Schools color picker](http://www.w3schools.com/colors/colors_picker.asp) calculate tints and shades. As far as I can tell, there are no other applications that get the calculation right and produce the tints and shades so simply.
 
 ## When would I use this?
-It's best used when you already have a base color palette but would like complimentary colors for gradients, borders, backgrounds, typography or other elements.
+It's best used when you already have a base color palette but would like complimentary colors for gradients, borders, backgrounds, shadows or other elements.
 
 ## Why 10% increments?
 That’s the standard I developed for [my design process at Texas State University](http://www.styleguide.txstate.edu/colors/template.html) and in other projects. I think choosing colors based on a flat percentage is a clean, reproducible way to augment brand palettes and produce designs with depth.
