@@ -9,7 +9,7 @@ Testing shows that it matches the way Chrome DevTools and the classic [W3Schools
 It's best used when you already have a base color palette but would like complimentary colors for gradients, borders, backgrounds, shadows or other elements.
 
 ## Why 10% increments?
-That’s the standard I developed for [my design process at Texas State University](http://www.styleguide.txstate.edu/colors/template.html) and in other projects. I think choosing colors based on a flat percentage is a clean, reproducible way to augment brand palettes and produce designs with depth.
+That’s the standard I developed for [my design process at Texas State University](http://www.styleguide.txstate.edu/colors/template.html) and in other projects. I think choosing tints and shades based on a flat percentage is a clean, reproducible way to augment brand palettes and produce designs with depth.
 
 ## Calculation Method
 The given hex color is first converted to RGB. Then each component of the RGB color has the following calculation performed on it, respectively.
