@@ -1,70 +1,71 @@
 <html>
 
 <head>
-<meta charset="UTF-8">
-<meta name="description" content="Make perfect tints and shades from any hexadecimal color.">
-<meta name="author" content="Nick Wing, Michael Edelstone">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tint and Shade Generator</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
-<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,800|Patua+One" rel="stylesheet">
-<link rel="stylesheet" href="css/main.css" />
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-<script type="text/javascript" src="scripts/shades-tints.js"></script> 
+	<meta charset="UTF-8">
+	<meta name="description" content="Easily make tints and shades in 10% increments.">
+	<meta name="author" content="Michael Edelstone">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Tint and Shade Generator</title>
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link href="//fonts.googleapis.com/css?family=Open+Sans:400,400i,800|Patua+One" rel="stylesheet">
+	<link rel="stylesheet" href="css/main.css" />
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+	<script type="text/javascript" src="/scripts/shades-tints.js"></script>
 </head>
 
 <body>
-	
+
 	<div class="ts-wrapper">
-	
+
 		<div class="ts-app">
 
 			<div class="ts-header-wrapper">
-			
+
 				<div class="ts-header">
-		
+
 					<div class="ts-headline">
-						<h1><a href="https://edelstone.github.io/tints-and-shades">Tint &amp; Shade Generator</a></h1>
+						<h1><a href="/">Tint &amp; Shade Generator</a></h1>
 						<p class="ts-subhead">Easily make tints and shades in 10% increments.</p>
 					</div>
-			
+
 				</div>
-				
+
 			</div>
 
 			<div class="ts-content ts-documentation">
-					
+
 				<h2>What is the Tint & Shade Generator?</h2>
-				
+
 				<p>The purpose of this tool is to accurately produce tints (lighter variants) and shades (darker variants) of a given hex color in 10% increments.</p>
-				<p>Testing shows that it matches the way Chrome DevTools and the classic <a href="http://www.w3schools.com/colors/colors_picker.asp">W3Schools color picker</a> calculate tints and shades. As far as I can tell, there are no other applications that get the calculation correct and produce the tints and shades so simply.</p>
-				
+				<p>Testing shows that it matches the calculations of Chrome DevTools, the <a href="http://www.w3schools.com/colors/colors_picker.asp">W3Schools color picker</a>, and the <a href="https://sindresorhus.com/sass-extras/#color-function-tint">standard Sass functions</a> that mix colors with percentages of pure white or black.</p>
+
 				<h2>When would I use this?</h2>
-				
-				<p>It's best used when you already have a base color palette but would like complimentary colors for gradients, borders, backgrounds, shadows or other elements.</p>
-				
+
+				<p>It's best used when you already have a base color palette but would like to grab or preview complimentary colors for gradients, borders, backgrounds, shadows or other elements.</p>
+				<p>This of course can be done <a href="https://sindresorhus.com/sass-extras/#color-function-tint">using Sass these days</a>, but this tool is still very useful for designers or those not comfortable with Sass functions.
+
 				<h2>Why 10% increments?</h2>
-				
+
 				<p>That’s the standard I developed for <a href="http://www.styleguide.txstate.edu/colors/template.html">my design process at Texas State University</a> and in other projects. I think choosing tints and shades based on a flat percentage is a clean, reproducible way to augment brand palettes and produce designs with depth.</p>
-				
+
 				<h2>Calculation Method</h2>
-				
+
 				<p>The given hex color is first converted to RGB. Then each component of the RGB color has the following calculation performed on it, respectively.</p>
-				
+
 				<ul>
 					<li><b>Tints:</b> New value = current value + ((255 - current value) x tint factor)</li>
 					<li><b>Shades:</b> New value = current value x shade factor</li>
 				</ul>
-				
+
 				<p>The new value is rounded if necessary, and then converted back to hex for display.</p>
-				
+
 				<h2>Example Calculation</h2>
-				
+
 				<p>Let’s say we want tints and shades of <a href="http://www.economist.com/blogs/babbage/2014/06/digital-remembrance">Rebecca Purple</a>, #663399.</p>
-				
+
 				<h3>10% Tint</h3>
-				
+
 				<ol>
 					<li>#663399 is converted to the RGB equivalent of 102, 51, 153</li>
 					<li><b>R:</b> 102 + ((255 - 102) x .1) = 117.3, rounded to 117</li>
@@ -72,9 +73,9 @@
 					<li><b>B:</b> 153 + ((255 - 153) x .1) = 163.2, rounded to 163</li>
 					<li>RGB 117, 71, 163 is converted to the hex equivalent of #7547a3</li>
 				</ol>
-				
+
 				<h3>10% Shade</h3>
-				
+
 				<ol>
 					<li>#663399 is converted to the RGB equivalent of 102, 51, 153</li>
 					<li><b>R:</b> 102 x .9 = 91.8, rounded to 92</li>
@@ -82,53 +83,52 @@
 					<li><b>B:</b> 153 x .9 = 137.7, rounded to 138</li>
 					<li>RGB 92, 46, 138 is converted to the hex equivalent of #5c2e8a</li>
 				</ol>
-				
+
 				<h2>Attribution</h2>
-				
+
 				<p>This application is inspired by a similar app once maintained by <a href="http://highintegritydesign.com/">North Krimsly</a>, with significant modifications made to the calculation method and design.</p>
-				
+
 				<h2>Credits</h2>
-				
-				<p><a href="http://michaeledelstone.com">Michael Edelstone</a> designed it and put it together, with much-appreciated feedback from Nick Wing.</p>
-				
+
+				<p><a href="https://michaeledelstone.com">Michael Edelstone</a> designed it and put it together, with much-appreciated feedback from Nick Wing.</p>
+
 				<h2>License</h2>
-				
+
 				<p>Open source; please use. <a href="http://creativecommons.org/licenses/by-sa/3.0/us/">CC BY-SA 3.0 US</a></p>
-				
+
 				<h2>Resources</h2>
-				
+
 				<ul>
 					<li>Convert hex – or just about any color format – to RGB: <a href="http://rgb.to">http://rgb.to</a></li>
-					<li>Further explanation of the calculation method: <a href="http://stackoverflow.com/questions/6615002/given-an-rgb-value-how-do-i-create-a-tint-or-shade">http://stackoverflow.com/questions/6615002</a></li>
-					<li>Texas State University style guide: <a href="http://www.styleguide.txstate.edu">http://styleguide.txstate.edu</a></li>
-					<li>W3Schools Color Picker: <a href="http://www.w3schools.com/colors/colors_picker.asp">http://w3schools.com/colors/colors_picker.asp</a></li>
+					<li>Further explanation of the calculation method: <a href="http://stackoverflow.com/questions/6615002/given-an-rgb-value-how-do-i-create-a-tint-or-shade">https://stackoverflow.com/questions/6615002</a></li>
+					<li>W3Schools Color Picker: <a href="https://www.w3schools.com/colors/colors_picker.asp">https://www.w3schools.com/colors/colors_picker.asp</a></li>
 				</ul>
-	
+
 			</div>
-		
+
 		</div>
-		
+
 		<div class="ts-footer">
-				
+
 			<div class="ts-footer-content">
-			
+
 				<div class="ts-source">
 					<a href="https://github.com/edelstone/tints-and-shades">
 						<p class="ts-source-logo"><i class="fa fa-github" aria-hidden="true"></i></p>
 						<p class="ts-source-text">View on GitHub</p>
 					</a>
 				</div>
-				
+
 				<div class="ts-about">
-					<p><a href="https://edelstone.github.com/tints-and-shades/about">About Tint &amp; Shade Generator</a></p>
+					<p><a href="/about">About Tint &amp; Shade Generator</a></p>
 				</div>
-				
+
 			</div>
-						
+
 		</div>
 
 	</div>
-	
+
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

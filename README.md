@@ -3,10 +3,12 @@
 ## What is the Tint & Shade Generator?
 The purpose of this tool is to accurately produce tints (lighter variants) and shades (darker variants) of a given hex color in 10% increments.
 
-Testing shows that it matches the way Chrome DevTools and the classic [W3Schools color picker](http://www.w3schools.com/colors/colors_picker.asp) calculate tints and shades. As far as I can tell, there are no other applications that get the calculation correct and produce the tints and shades so simply.
+Testing shows that it matches the calculations of Chrome DevTools, the [W3Schools color picker](http://www.w3schools.com/colors/colors_picker.asp), and the [standard Sass functions](https://sindresorhus.com/sass-extras/#color-function-tint) that mix colors with percentages of pure white or black.
 
 ## When would I use this?
-It's best used when you already have a base color palette but would like complimentary colors for gradients, borders, backgrounds, shadows or other elements.
+It's best used when you already have a base color palette but would like to grab or preview complimentary colors for gradients, borders, backgrounds, shadows or other elements.
+
+This of course can be done [using Sass these days](https://sindresorhus.com/sass-extras/#color-function-tint), but this tool is still very useful for designers or those not comfortable with Sass functions.
 
 ## Why 10% increments?
 That’s the standard I developed for [my design process at Texas State University](http://www.styleguide.txstate.edu/colors/template.html) and in other projects. I think choosing tints and shades based on a flat percentage is a clean, reproducible way to augment brand palettes and produce designs with depth.
@@ -47,6 +49,5 @@ Open source; please use. [CC BY-SA 3.0 US](http://creativecommons.org/licenses/b
 
 ## Resources
 * Convert hex – or just about any format – to RGB: [http://rgb.to](http://rgb.to)
-* Further explanation of the calculation method: [Stack Overflow](http://stackoverflow.com/questions/6615002/given-an-rgb-value-how-do-i-create-a-tint-or-shade)
-* Texas State University style guide: [http://styleguide.txstate.edu](http://styleguide.txstate.edu)
-* W3Schools Color Picker: [http://w3schools.com/colors/colors_picker.asp](http://w3schools.com/colors/colors_picker.asp)
+* Further explanation of the calculation method: [Stack Overflow](https://stackoverflow.com/questions/6615002)
+* W3Schools Color Picker: [http://w3schools.com/colors/colors_picker.asp](https://w3schools.com/colors/colors_picker.asp)

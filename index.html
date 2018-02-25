@@ -1,84 +1,84 @@
 <html>
 
 <head>
-<meta charset="UTF-8">
-<meta name="description" content="Make perfect tints and shades from any hexadecimal color.">
-<meta name="author" content="Nick Wing, Michael Edelstone">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tint and Shade Generator</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
-<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,800|Patua+One" rel="stylesheet">
-<link rel="stylesheet" href="css/main.css" />
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-<script type="text/javascript" src="scripts/shades-tints.js"></script> 
+	<meta charset="UTF-8">
+	<meta name="description" content="Easily make tints and shades in 10% increments.">
+	<meta name="author" content="Michael Edelstone">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Tint and Shade Generator</title>
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link href="//fonts.googleapis.com/css?family=Open+Sans:400,400i,800|Patua+One" rel="stylesheet">
+	<link rel="stylesheet" href="/css/main.css" />
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+	<script type="text/javascript" src="/scripts/shades-tints.js"></script>
 </head>
 
 <body>
-	
+
 	<div class="ts-wrapper">
-	
+
 		<div class="ts-app">
 
 			<div class="ts-header-wrapper">
-			
+
 				<div class="ts-header">
-		
+
 					<div class="ts-headline">
-						<h1><a href="https://edelstone.github.io/tints-and-shades">Tint &amp; Shade Generator</a></h1>
+						<h1><a href="/">Tint &amp; Shade Generator</a></h1>
 						<p class="ts-subhead">Easily make tints and shades in 10% increments.</p>
 					</div>
-			
+
 				</div>
-				
+
 			</div>
 
 			<div class="ts-content">
-	
+
 				<div class="ts-form">
 
 					<h2>Enter hex colors separated by spaces:</h2>
-			
+
 					<form class="pure-form" id="color-entry-form" action="#" method="post" name="color-entry-form">
 						<textarea id="color-values" name="color-values"></textarea>
 						<input type="submit" value="Make Tints &amp; Shades" />
 					</form>
-				
+
 					<p class="ts-hint"><a href="http://rgb.to/">Convert to hex first</a></p>
 
 				</div>
-		
+
 				<div class="ts-colors">
 
 					<div id="shades-tints"></div>
-			
+
 				</div>
-	
+
 			</div>
-		
+
 		</div>
-		
+
 		<div class="ts-footer">
-				
+
 			<div class="ts-footer-content">
-			
+
 				<div class="ts-source">
 					<a href="https://github.com/edelstone/tints-and-shades">
 						<p class="ts-source-logo"><i class="fa fa-github" aria-hidden="true"></i></p>
 						<p class="ts-source-text">View on GitHub</p>
 					</a>
 				</div>
-				
+
 				<div class="ts-about">
-					<p><a href="https://edelstone.github.com/tints-and-shades/about">About Tint &amp; Shade Generator</a></p>
+					<p><a href="/about">About Tint &amp; Shade Generator</a></p>
 				</div>
-				
+
 			</div>
-						
+
 		</div>
 
 	</div>
-	
+
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
