@@ -1,5 +1,5 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta name="description" content="Easily make tints and shades in 10% increments.">
@@ -7,10 +7,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>About | Tint and Shade Generator</title>
 	<link rel="apple-touch-icon-precomposed" href="/images/touch.png">
-	<link rel="shortcut icon" type="image/png" href="/images/favicon.png"/>
-	<link href="//fonts.googleapis.com/css?family=Work+Sans:400,700,900" rel="stylesheet">
-	<link rel="stylesheet" href="/css/normalize.css" />
-	<link rel="stylesheet" href="/css/main.css" />
+	<link rel="shortcut icon" type="image/png" href="/images/favicon.png">
+	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Work+Sans:400,700,900">
+	<link rel="stylesheet" href="/css/normalize.css">
+	<link rel="stylesheet" href="/css/main.css">
 	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 	<script type="text/javascript" src="/scripts/tints-and-shades.js"></script>
 </head>
@@ -33,12 +33,17 @@
 			<h2>What is the Tint & Shade Generator?</h2>
 
 			<p>The purpose of this tool is to accurately produce tints (lighter variants) and shades (darker variants) of a given hex color in 10% increments.</p>
-			<p>Testing shows that it matches the calculations of Chrome DevTools, the <a href="http://www.w3schools.com/colors/colors_picker.asp">W3Schools color picker</a>, and the <a href="https://sindresorhus.com/sass-extras/#color-function-tint">standard Sass functions</a> that mix colors with percentages of pure white or black.</p>
+
+			<h2>Why is this tool unique?</h2>
+
+			<p>Testing shows that the color output matches that of the classic <a href="http://www.w3schools.com/colors/colors_picker.asp">W3Schools color picker</a>, and the <a href="https://sindresorhus.com/sass-extras/#color-function-tint">standard Sass function</a> that mixes color variables with percentages of pure white or black.</p>
+
+			<p>The W3Schools color picker no longer shows tints and shades in exact 10% increments from the base color, and most other tools out there get the calculation incorrect due to rounding errors.</p>
 
 			<h2>When would I use this?</h2>
 
-			<p>It’s best used when you already have a base color palette but would like to grab or preview complimentary colors for gradients, borders, backgrounds, shadows or other elements.</p>
-			<p>This of course can be done <a href="https://sindresorhus.com/sass-extras/#color-function-tint">using Sass these days</a>, but this tool is still very useful for designers or those not comfortable with Sass functions.
+			<p>It's best used when you already have a base color palette but would like some complimentary colors for gradients, borders, backgrounds, shadows or other elements.</p>
+			<p>This is useful for designers who may be communicating color intent to developers that use <a href="https://sindresorhus.com/sass-extras/#color-function-tint">Sass color functions</a> in their builds. It's also a solid way to quickly preview what tints and shades look like for a base color you may be considering for your design.</p>
 
 			<h2>Why 10% increments?</h2>
 

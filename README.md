@@ -3,12 +3,15 @@
 ## What is the Tint & Shade Generator?
 The purpose of this tool is to accurately produce tints (lighter variants) and shades (darker variants) of a given hex color in 10% increments.
 
-Testing shows that it matches the calculations of Chrome DevTools, the [W3Schools color picker](http://www.w3schools.com/colors/colors_picker.asp), and the [standard Sass functions](https://sindresorhus.com/sass-extras/#color-function-tint) that mix colors with percentages of pure white or black.
+## Why is this tool unique?
+Testing shows that the color output matches that of the classic [W3Schools color picker](http://www.w3schools.com/colors/colors_picker.asp), and the [standard Sass function](https://sindresorhus.com/sass-extras/#color-function-tint) that mixes color variables with percentages of pure white or black.
+
+The W3Schools color picker no longer shows tints and shades in exact 10% increments from the base color, and most other tools out there get the calculation incorrect due to rounding errors.
 
 ## When would I use this?
-It's best used when you already have a base color palette but would like to grab or preview complimentary colors for gradients, borders, backgrounds, shadows or other elements.
+It's best used when you already have a base color palette but would like some complimentary colors for gradients, borders, backgrounds, shadows or other elements.
 
-This of course can be done [using Sass these days](https://sindresorhus.com/sass-extras/#color-function-tint), but this tool is still very useful for designers or those not comfortable with Sass functions.
+This is useful for designers who may be communicating color intent to developers that use [Sass color functions](https://sindresorhus.com/sass-extras/#color-function-tint) in their builds. It's also a solid way to quickly preview what tints and shades look like for a base color you may be considering for your design.
 
 ## Why 10% increments?
 That’s the standard I developed for [my design process at Texas State University](http://www.styleguide.txstate.edu/colors/template.html) and in other projects. I think choosing tints and shades based on a flat percentage is a clean, reproducible way to augment brand palettes and produce designs with depth.
