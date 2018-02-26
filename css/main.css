@@ -163,6 +163,13 @@ td.hex-value {
 	margin: 0;
 }
 
+.github-corner {
+	position: absolute;
+	top: 0;
+	border: none;
+	right: 0;
+}
+
 .github-corner:hover svg {
 	fill: #ca228e !important;
 }
