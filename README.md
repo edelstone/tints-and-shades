@@ -42,7 +42,7 @@ Let's say we want tints and shades of [Rebecca Purple](https://meyerweb.com/eric
 1. RGB 92, 46, 138 is converted to the hex equivalent of #5c2e8a
 
 ## Attribution
-This application is inspired by a similar app once maintained by [North Krimsly](http://highintegritydesign.com/), with significant modifications made to the calculation method and design.
+This application is inspired by a similar app once maintained by [North Krimsly](http://highintegritydesign.com/), with significant modifications made to the calculation method and interface design.
 
 ## Credits
 [Michael Edelstone](http://michaeledelstone.com) designed and organized it. Nick Wing helped with the JavaScript.
