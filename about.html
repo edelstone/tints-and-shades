@@ -21,89 +21,85 @@
 
 	<div class="ts-wrapper">
 
-		<div class="ts-app">
+		<header class="ts-header">
+			<div class="ts-headline">
+				<h1><a href="/">Tint &amp; Shade Generator</a></h1>
+				<p class="ts-subhead">Easily make tints and shades in 10% increments.</p>
+			</div>
+		</header>
 
-			<header class="ts-header">
-				<div class="ts-headline">
-					<h1><a href="/">Tint &amp; Shade Generator</a></h1>
-					<p class="ts-subhead">Easily make tints and shades in 10% increments.</p>
-				</div>
-			</header>
+		<section class="ts-content ts-documentation">
 
-			<section class="ts-content ts-documentation">
+			<h2>What is the Tint & Shade Generator?</h2>
 
-				<h2>What is the Tint & Shade Generator?</h2>
+			<p>The purpose of this tool is to accurately produce tints (lighter variants) and shades (darker variants) of a given hex color in 10% increments.</p>
+			<p>Testing shows that it matches the calculations of Chrome DevTools, the <a href="http://www.w3schools.com/colors/colors_picker.asp">W3Schools color picker</a>, and the <a href="https://sindresorhus.com/sass-extras/#color-function-tint">standard Sass functions</a> that mix colors with percentages of pure white or black.</p>
 
-				<p>The purpose of this tool is to accurately produce tints (lighter variants) and shades (darker variants) of a given hex color in 10% increments.</p>
-				<p>Testing shows that it matches the calculations of Chrome DevTools, the <a href="http://www.w3schools.com/colors/colors_picker.asp">W3Schools color picker</a>, and the <a href="https://sindresorhus.com/sass-extras/#color-function-tint">standard Sass functions</a> that mix colors with percentages of pure white or black.</p>
+			<h2>When would I use this?</h2>
 
-				<h2>When would I use this?</h2>
+			<p>It’s best used when you already have a base color palette but would like to grab or preview complimentary colors for gradients, borders, backgrounds, shadows or other elements.</p>
+			<p>This of course can be done <a href="https://sindresorhus.com/sass-extras/#color-function-tint">using Sass these days</a>, but this tool is still very useful for designers or those not comfortable with Sass functions.
 
-				<p>It’s best used when you already have a base color palette but would like to grab or preview complimentary colors for gradients, borders, backgrounds, shadows or other elements.</p>
-				<p>This of course can be done <a href="https://sindresorhus.com/sass-extras/#color-function-tint">using Sass these days</a>, but this tool is still very useful for designers or those not comfortable with Sass functions.
+			<h2>Why 10% increments?</h2>
 
-				<h2>Why 10% increments?</h2>
+			<p>That’s the standard I developed for <a href="http://www.styleguide.txstate.edu/colors/template.html">my design process at Texas State University</a> and in other projects. I think choosing tints and shades based on a flat percentage is a clean, reproducible way to augment brand palettes and produce designs with depth.</p>
 
-				<p>That’s the standard I developed for <a href="http://www.styleguide.txstate.edu/colors/template.html">my design process at Texas State University</a> and in other projects. I think choosing tints and shades based on a flat percentage is a clean, reproducible way to augment brand palettes and produce designs with depth.</p>
+			<h2>Calculation Method</h2>
 
-				<h2>Calculation Method</h2>
+			<p>The given hex color is first converted to RGB. Then each component of the RGB color has the following calculation performed on it, respectively.</p>
 
-				<p>The given hex color is first converted to RGB. Then each component of the RGB color has the following calculation performed on it, respectively.</p>
+			<ul>
+				<li><b>Tints:</b> New value = current value + ((255 - current value) x tint factor)</li>
+				<li><b>Shades:</b> New value = current value x shade factor</li>
+			</ul>
 
-				<ul>
-					<li><b>Tints:</b> New value = current value + ((255 - current value) x tint factor)</li>
-					<li><b>Shades:</b> New value = current value x shade factor</li>
-				</ul>
+			<p>The new value is rounded if necessary, and then converted back to hex for display.</p>
 
-				<p>The new value is rounded if necessary, and then converted back to hex for display.</p>
+			<h2>Example Calculation</h2>
 
-				<h2>Example Calculation</h2>
+			<p>Let’s say we want tints and shades of <a href="http://www.economist.com/blogs/babbage/2014/06/digital-remembrance">Rebecca Purple</a>, #663399.</p>
 
-				<p>Let’s say we want tints and shades of <a href="http://www.economist.com/blogs/babbage/2014/06/digital-remembrance">Rebecca Purple</a>, #663399.</p>
+			<h3>10% Tint</h3>
 
-				<h3>10% Tint</h3>
+			<ol>
+				<li>#663399 is converted to the RGB equivalent of 102, 51, 153</li>
+				<li><b>R:</b> 102 + ((255 - 102) x .1) = 117.3, rounded to 117</li>
+				<li><b>G:</b> 51 + ((255 - 51) x .1) = 71.4, rounded to 71</li>
+				<li><b>B:</b> 153 + ((255 - 153) x .1) = 163.2, rounded to 163</li>
+				<li>RGB 117, 71, 163 is converted to the hex equivalent of #7547a3</li>
+			</ol>
 
-				<ol>
-					<li>#663399 is converted to the RGB equivalent of 102, 51, 153</li>
-					<li><b>R:</b> 102 + ((255 - 102) x .1) = 117.3, rounded to 117</li>
-					<li><b>G:</b> 51 + ((255 - 51) x .1) = 71.4, rounded to 71</li>
-					<li><b>B:</b> 153 + ((255 - 153) x .1) = 163.2, rounded to 163</li>
-					<li>RGB 117, 71, 163 is converted to the hex equivalent of #7547a3</li>
-				</ol>
+			<h3>10% Shade</h3>
 
-				<h3>10% Shade</h3>
+			<ol>
+				<li>#663399 is converted to the RGB equivalent of 102, 51, 153</li>
+				<li><b>R:</b> 102 x .9 = 91.8, rounded to 92</li>
+				<li><b>G:</b> 51 x .9 = 45.9, rounded to 46</li>
+				<li><b>B:</b> 153 x .9 = 137.7, rounded to 138</li>
+				<li>RGB 92, 46, 138 is converted to the hex equivalent of #5c2e8a</li>
+			</ol>
 
-				<ol>
-					<li>#663399 is converted to the RGB equivalent of 102, 51, 153</li>
-					<li><b>R:</b> 102 x .9 = 91.8, rounded to 92</li>
-					<li><b>G:</b> 51 x .9 = 45.9, rounded to 46</li>
-					<li><b>B:</b> 153 x .9 = 137.7, rounded to 138</li>
-					<li>RGB 92, 46, 138 is converted to the hex equivalent of #5c2e8a</li>
-				</ol>
+			<h2>Attribution</h2>
 
-				<h2>Attribution</h2>
+			<p>This application is inspired by a similar app once maintained by <a href="http://highintegritydesign.com/">North Krimsly</a>, with significant modifications made to the calculation method and interface design.</p>
 
-				<p>This application is inspired by a similar app once maintained by <a href="http://highintegritydesign.com/">North Krimsly</a>, with significant modifications made to the calculation method and interface design.</p>
+			<h2>Credits</h2>
 
-				<h2>Credits</h2>
+			<p><a href="https://michaeledelstone.com">Michael Edelstone</a> designed and organized it. Nick Wing helped with the JavaScript.</p>
 
-				<p><a href="https://michaeledelstone.com">Michael Edelstone</a> designed and organized it. Nick Wing helped with the JavaScript.</p>
+			<h2>License</h2>
 
-				<h2>License</h2>
+			<p>Open source and <a href="https://github.com/edelstone/tints-and-shades">available on GitHub</a>; please use. <a href="http://creativecommons.org/licenses/by-sa/3.0/us/">CC BY-SA 3.0 US</a></p>
 
-				<p>Open source and <a href="https://github.com/edelstone/tints-and-shades">available on GitHub</a>; please use. <a href="http://creativecommons.org/licenses/by-sa/3.0/us/">CC BY-SA 3.0 US</a></p>
+			<h2>Resources</h2>
 
-				<h2>Resources</h2>
+			<ul>
+				<li><a href="http://rgb.to">Convert other color formats to hex</a></li>
+				<li><a href="http://stackoverflow.com/questions/6615002/given-an-rgb-value-how-do-i-create-a-tint-or-shade">Stack Overflow discussion about the calculation method</a></li>
+				<li><a href="https://www.w3schools.com/colors/colors_picker.asp">W3Schools Color Picker</a></li>
+			</ul>
 
-				<ul>
-					<li><a href="http://rgb.to">Convert other color formats to hex</a></li>
-					<li><a href="http://stackoverflow.com/questions/6615002/given-an-rgb-value-how-do-i-create-a-tint-or-shade">Stack Overflow discussion about the calculation method</a></li>
-					<li><a href="https://www.w3schools.com/colors/colors_picker.asp">W3Schools Color Picker</a></li>
-				</ul>
-
-			</section>
-
-		</div>
+		</section>
 
 		<footer class="ts-footer">
 			<p><a href="/about">About Tint &amp; Shade Generator</a></p>
