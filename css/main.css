@@ -101,7 +101,7 @@ input[type="submit"] {
 	-webkit-appearance: none;
 }
 
-input[type="submit"]:hover {
+input[type="submit"]:hover, input[type="submit"]:focus {
 	background: #ca228e;
 }
 
@@ -154,6 +154,10 @@ td.hex-value {
 .ts-documentation ul, .ts-documentation ol {
 	padding-left: 3rem;
 	margin: 1.5rem 0;
+}
+
+.ts-documentation li {
+	margin-bottom: 0.5rem;
 }
 
 .ts-footer a:first-child {
