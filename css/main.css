@@ -153,7 +153,7 @@ td.hex-value {
 }
 
 .github-corner:hover svg {
-	fill: #ca228e !important;
+	fill: url(#static) !important;
 }
 
 .github-corner:hover .octo-arm {
