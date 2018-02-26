@@ -152,6 +152,10 @@ td.hex-value {
 	margin: 1.5rem 0;
 }
 
+.ts-footer a:first-child {
+	margin-right: 2rem;
+}
+
 .github-corner:hover svg {
 	fill: url(#static) !important;
 }
