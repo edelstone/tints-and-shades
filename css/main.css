@@ -30,7 +30,7 @@ a:hover, a:focus {
 .ts-wrapper {
 	padding: 2rem;
 	max-width: 80rem;
-	margin: auto;
+	margin: 0 auto 4rem;
 }
 
 .ts-header {
