@@ -22,7 +22,7 @@ The given hex color is first converted to RGB. Then each component of the RGB co
 The new value is rounded if necessary, and then converted back to hex for display.
 
 ## Example Calculation
-Let's say we want tints and shades of [Rebecca Purple](http://www.economist.com/blogs/babbage/2014/06/digital-remembrance), #663399.
+Let's say we want tints and shades of [Rebecca Purple](https://meyerweb.com/eric/thoughts/2014/06/19/rebeccapurple/), #663399.
 
 #### 10% Tint
 1. #663399 is converted to the RGB equivalent of 102, 51, 153

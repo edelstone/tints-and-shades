@@ -6,6 +6,10 @@ html {
 	font-size: 62.5%;
 }
 
+*, *:before, *:after {
+	box-sizing: border-box;
+}
+
 body {
 	font-size: 1.8rem;
 	line-height: 1.618;
@@ -51,7 +55,7 @@ a:hover, a:focus {
 	color: #fff;
 	text-decoration: none;
 	border: none;
-	padding: 0.5rem 2.5rem;
+	padding: 0.5rem 3rem;
 	box-decoration-break: clone;
 	-webkit-box-decoration-break: clone;
 }
