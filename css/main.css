@@ -27,8 +27,9 @@ a:hover, a:focus {
 
 code {
   background: #f0f0f0;
-  font-size: 90%;
+  font-size: 85%;
   padding: 0.2rem 0.6rem;
+	border-radius: 3px;
 }
 
 .ts-wrapper {
