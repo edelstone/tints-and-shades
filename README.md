@@ -42,7 +42,7 @@ Let's say we want tints and shades of [Rebecca Purple](http://www.economist.com/
 This application is inspired by a similar app once maintained by [North Krimsly](http://highintegritydesign.com/), with significant modifications made to the calculation method and design.
 
 ## Credits
-[Michael Edelstone](http://michaeledelstone.com) designed and organized it. Nick Wing gave some great feedback.
+[Michael Edelstone](http://michaeledelstone.com) designed and organized it. Nick Wing helped with the JavaScript.
 
 ## License
 Open source; please use. [CC BY-SA 3.0 US](http://creativecommons.org/licenses/by-sa/3.0/us/)

@@ -64,40 +64,16 @@ a:hover, a:focus {
 	margin-bottom: 10rem;
 }
 
-.ts-documentation {
-	text-align: left;
-}
-
-.ts-documentation p {
-	margin: 1rem 0;
-}
-
-.ts-documentation h2 {
-	margin-top: 3rem;
-	margin-bottom: -0.5rem;
-}
-
-.ts-documentation h3 {
-	font-weight: bold;
-	margin-top: 2rem;
-	margin-bottom: -0.5rem;
-}
-
-.ts-documentation ul, .ts-documentation ol {
-	padding-left: 3rem;
-	margin: 1.5rem 0;
-}
-
 .ts-form h2 {
 	font-weight: normal;
-  font-size: 2.8rem;
+  font-size: 2.7rem;
   line-height: 1.3;
 	margin: 0;
 }
 
 .ts-form textarea {
 	width: 100%;
-	max-width: 55rem;
+	max-width: 52rem;
 	padding: 1.2rem;
 	margin: 1.5rem auto 2rem;
 	font-weight: 400;
@@ -113,7 +89,7 @@ a:hover, a:focus {
 input[type="submit"] {
 	padding: 2rem 4rem;
 	width: 100%;
-	max-width: 55rem;
+	max-width: 52rem;
 	border: none;
 	background: #000;
 	color: #fff;
@@ -149,6 +125,31 @@ td.hex-value {
 	text-align: center;
 	padding: 0.5rem 0 2.5rem;
 	text-transform: lowercase;
+}
+
+.ts-documentation {
+	text-align: left;
+}
+
+.ts-documentation p {
+	margin: 1rem 0;
+}
+
+.ts-documentation h2 {
+	margin-top: 3rem;
+	margin-bottom: 0;
+	font-size: 2.7rem;
+	line-height: 1.3;
+}
+
+.ts-documentation h3 {
+	margin-top: 2rem;
+	margin-bottom: -0.5rem;
+}
+
+.ts-documentation ul, .ts-documentation ol {
+	padding-left: 3rem;
+	margin: 1.5rem 0;
 }
 
 .github-corner:hover svg {
