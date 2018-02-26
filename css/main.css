@@ -160,6 +160,7 @@ td.hex-value {
 	font-weight: 900;
 	font-size: 6rem;
 	line-height: 1;
+	margin: 0;
 }
 
 .github-corner:hover svg {
