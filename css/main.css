@@ -192,9 +192,21 @@ td.hex-value {
 	}
 }
 
+@media (max-width: 450px) {
+	.ts-form h2 {
+		font-size: 2.2rem;
+	}
+}
+
 @media (max-width: 400px) {
 	.ts-headline h1 a {
 		font-size: 5rem;
+	}
+}
+
+@media (max-width: 375px) {
+	.ts-form h2 {
+		font-size: 1.8rem;
 	}
 }
 
