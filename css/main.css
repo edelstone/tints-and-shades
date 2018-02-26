@@ -7,264 +7,198 @@ html {
 }
 
 body {
-	font-size: 1.6rem;
-	font-family: 'Open Sans', sans-serif;
+	font-size: 1.8rem;
+	line-height: 1.618;
+	font-family: 'Work Sans', sans-serif;
 	font-weight: 400;
 	margin: auto;
 	text-align: center;
-	background: #f5f7f7;
+	background: #fff;
+	color: #000;
 }
 
-b, strong {
-    font-weight: bold;
+a {
+	color: #000;
+	text-decoration: none;
+	border-bottom: 3px solid #000;
+}
+
+a:hover, a:focus {
+	border-color: #ca228e;
 }
 
 .ts-wrapper {
-	font-size: 2rem;
-	line-height: 2.5rem;
-}
-
-.ts-app {
-	min-height: 100%;
-	margin-bottom: -25rem;
-}
-
-.ts-app:after {
-	content: "";
-	display: block;
-}
-
-.ts-header-wrapper {
-	background: url("../images/dome.jpg");
-    background-size: cover;
-    background-position: 50%;
-}
-
-.ts-header {
-	background: #C02942;
-	background: linear-gradient(to bottom right, rgba(192,41,66,0.95), rgba(217,91,67,0.95));
-    color: #fff;
-    padding: 9rem 1.5rem;
-    border-bottom: 1px solid #333;
-}
-
-.ts-headline {
-    max-width: 80rem;
-    margin: auto;
-}
-
-.ts-headline h1 {
-	font-family: 'Patua One', serif;
- 	font-size: 6rem;
-    font-weight: 700;
-    line-height: 6rem;
-    letter-spacing: 1px;
-}
-
-.ts-headline p {
-    margin-top: 2rem;
-    font-size: 1.6rem;
-}
-
-.ts-headline h1 a {
-	color: #ffffff;
-	text-decoration: none;
-	text-shadow: 1px 1px 0 #333, 2px 2px 0 #333, 3px 3px 0 #333, 4px 4px 0 #333;
-}
-
-.ts-content {
-	padding: 4rem 1.5rem;
+	padding: 2rem;
 	max-width: 80rem;
 	margin: auto;
 }
 
+.ts-header {
+	margin: 7rem auto 10rem;
+}
+
+.ts-header h1 {
+	margin: 0;
+}
+
+.ts-headline h1 a {
+	background: linear-gradient(to right, #e96443, #ca228e);
+  border-radius: 3px;
+	margin-bottom: 0;
+	font-size: 6rem;
+	font-weight: 900;
+	line-height: 1.1;
+	color: #fff;
+	text-decoration: none;
+	border: none;
+	padding: 0.5rem 2.5rem;
+	box-decoration-break: clone;
+	-webkit-box-decoration-break: clone;
+}
+
+.ts-subhead {
+	margin-top: 1.5rem;
+}
+
+.ts-content {
+	margin-bottom: 10rem;
+}
+
 .ts-documentation {
-    text-align: left;
-    padding-top: 1.5rem;
-    font-size: 1.6rem;
+	text-align: left;
 }
 
 .ts-documentation p {
-    margin: 1rem 0;
+	margin: 1rem 0;
 }
 
 .ts-documentation h2 {
-    margin-bottom: 1.2rem;
-    margin-top: 2.5rem;
+	margin-top: 3rem;
+	margin-bottom: -0.5rem;
 }
 
 .ts-documentation h3 {
-    font-weight: bold;
-    margin-top: 2rem;
-    margin-bottom: 0.5rem;
-    font-size: 1.6rem;
+	font-weight: bold;
+	margin-top: 2rem;
+	margin-bottom: -0.5rem;
 }
 
 .ts-documentation ul, .ts-documentation ol {
 	padding-left: 3rem;
-	margin: 1rem 0;
+	margin: 1.5rem 0;
 }
 
-.ts-documentation ol {
-	list-style-type: decimal;
+.ts-form h2 {
+	font-weight: normal;
+  font-size: 2.8rem;
+  line-height: 1.3;
+	margin: 0;
 }
 
-.ts-documentation ul {
-	list-style-type: disc;
-}
-
-.ts-content a {
-    color: #542437;
-    text-decoration: none;
-    border-bottom: 1px solid #ecd078;
-}
-
-.ts-content a:hover {
-	border-width: 2px;
-}
-
-.ts-content h2 {
-	font-size: 2.4rem;
-	line-height: 3rem;
-	font-weight: bold;
-	color: #333;
-}
-
-.ts-hint {
-	font-size: 1.4rem;
-}
-
-.ts-content textarea {
-    display: block;
-    min-width: 48rem;
-    padding: .8rem 1.2rem;
-    margin: 1.5rem auto 3rem auto;
-    font-size: 16px;
-    font-weight: 400;
-    min-height: 18rem;
-    line-height: 2.4rem;
-    border: 1px solid #333;
-    word-spacing: 0.5rem;
-    border-radius: 2px;
+.ts-form textarea {
+	width: 100%;
+	max-width: 55rem;
+	padding: 1.2rem;
+	margin: 1.5rem auto 2rem;
+	font-weight: 400;
+	min-height: 20rem;
+	border: none;
+	background: #f0f0f0;
+	border: 1px solid #dbdbdb;
+	word-spacing: 0.5rem;
+	border-radius: 3px;
+	-webkit-appearance: none;
 }
 
 input[type="submit"] {
-    display: block;
-    margin: auto;
-    padding: 1.8rem 2.5rem;
-    border: none;
-    background: #53777a;
-    margin-bottom: 0.8rem;
-    color: #fff;
-    font-weight: bold;
-    border-radius: 3px;
-    font-size: 1.6rem;
-    cursor: pointer;
-    position: relative;
-    outline: none;
-    -webkit-appearance: none;
-	transition: background 0.1s ease-in-out;
-	text-transform: uppercase;
+	padding: 2rem 4rem;
+	width: 100%;
+	max-width: 55rem;
+	border: none;
+	background: #000;
+	color: #fff;
+	border-radius: 3px;
+	-webkit-appearance: none;
 }
 
 input[type="submit"]:hover {
-	background: #4b6b6e;
+	background: #ca228e;
 }
 
-input[type="submit"]:active {
-	background: #425f62;
-}
-
-#shades-tints {
-    overflow-x: auto;
-    width: 100%;
+#tints-and-shades {
+	overflow-x: auto;
+	width: 100%;
 }
 
 .ts-content table {
 	width: 100%;
-	margin: 3rem 0;
+	border-collapse: collapse;
 }
 
 .ts-colors {
-    min-height: 20rem;
-    margin-top: 2rem;
+	margin-top: 8rem;
 }
 
 td.hex-color {
-    height: 7rem;
-    width: calc(100%/11);
-    min-width: 6rem;
+	height: 7rem;
+	min-width: 6.5rem;
 }
 
 td.hex-value {
-	font-size: 1.2rem;
+	font-size: 1.3rem;
 	text-align: center;
-	padding-bottom: 2rem;
+	padding: 0.5rem 0 2.5rem;
 	text-transform: lowercase;
 }
 
-.ts-footer {
-    background: linear-gradient(to bottom, #542437, #3b1927);
-    padding: 0 1.5rem;
-    color: #ecd078;
-    font-size: 1.6rem;
-    line-height: 2rem;
+.github-corner:hover svg {
+	fill: #ca228e !important;
 }
 
-.ts-footer, .ts-app:after {
-    height: 25rem; 
+.github-corner:hover .octo-arm {
+	animation: octocat-wave 560ms ease-in-out;
 }
 
-.ts-footer-content {
-	padding: 5rem 0;
+@keyframes octocat-wave {
+	0%, 100% { transform: rotate(0) }
+  20%, 60% { transform: rotate(-25deg) }
+  40%, 80% { transform: rotate(10deg) }
 }
 
-.ts-footer a {
-    color: #ecd078;
-    text-decoration: none;
-    border-bottom: 1px solid #ecd078;
-}
-
-.ts-footer a:hover {
-    background: transparent;
-    border-bottom-width: 2px;
-}
-
-.ts-source {
-	margin-bottom: 4rem;
-}
-
-.ts-source a {
-	border: none;
-	display: inline-block;
-}
-
-.ts-source-logo {
-    margin-bottom: 0.8rem;
-    font-size: 5rem;
-    transition: transform .1s ease-in-out;
-}
-
-.ts-source-text {
-	display: inline;
-    border-bottom: 1px solid #ecd078;
-}
-
-.ts-source a:hover .ts-source-logo {
-    border: none;
-    transform: scale(1.1);
-    background: transparent;
-}
-
-.ts-source a:hover .ts-source-text {
-    border-bottom-width: 2px;
+@media (pointer: coarse) {
+	.ts-content textarea {
+		font-size: 16px;
+	}
 }
 
 @media (max-width: 1000px) {
-	html {font-size: 55%;}
+	html {
+		font-size: 55%;
+	}
 }
 
-@media (max-width: 640px) {
-	html {font-size: 50%;}
-	.ts-content textarea, input[type="submit"] {min-width: 100%;}
+@media (max-width: 600px) {
+	html {
+		font-size: 50%;
+	}
+
+	.github-corner:hover .octo-arm {
+		animation: none;
+	}
+
+	.github-corner .octo-arm {
+		animation: octocat-wave 560ms ease-in-out
+	}
+}
+
+@media (max-width: 400px) {
+	.ts-headline h1 a {
+		font-size: 5rem;
+	}
+}
+
+@media (max-width: 340px) {
+	.ts-headline h1 a {
+		font-size: 4rem;
+	}
 }

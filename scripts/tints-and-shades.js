@@ -1,6 +1,6 @@
 //*********************************************************************
 // parse an input string, looking for any number of hexadecimal color
-// values, possibly with whitespace or garbage in between.  Return an array of 
+// values, possibly with whitespace or garbage in between.  Return an array of
 // color values.
 function parseColorValues(colorValues) {
   var colorValuesArray = colorValues.match(/[0-9A-Fa-f]{6}\b/g);
@@ -76,7 +76,7 @@ function calculate(colorValue, shadeOrTint) {
 }
 
 //*********************************************************************
-// given a hexadecimal string color value, return a string array of ten hex shades 
+// given a hexadecimal string color value, return a string array of ten hex shades
 // from the color to black
 function calculateShades(colorValue) {
   return calculate(colorValue, rgbShade).concat("000000");
@@ -141,8 +141,8 @@ $(document).ready(function() {
       // wrap the rows into an HTML table
       var colorDisplayTable = "<table>" + colorDisplayRows.join("") + "</table>";
 
-      // replace the shades-tints div with the color display table wrapped by the same div
-      $("#shades-tints").html(colorDisplayTable);
+      // replace the tints-and-shades div with the color display table wrapped by the same div
+      $("#tints-and-shades").html(colorDisplayTable);
     }
     return false;
   });
