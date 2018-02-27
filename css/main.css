@@ -30,6 +30,8 @@ code {
   font-size: 85%;
   padding: 0.2rem 0.6rem;
 	border-radius: 3px;
+	box-decoration-break: clone;
+	-webkit-box-decoration-break: clone;
 }
 
 .ts-wrapper {
@@ -90,7 +92,7 @@ code {
 }
 
 input[type="submit"] {
-	padding: 2rem 4rem;
+	padding: 1.6rem;
 	width: 100%;
 	max-width: 52rem;
 	border: none;
@@ -98,6 +100,8 @@ input[type="submit"] {
 	color: #fff;
 	border-radius: 3px;
 	-webkit-appearance: none;
+	line-height: inherit;
+	white-space: normal;
 }
 
 input[type="submit"]:hover, input[type="submit"]:focus {
@@ -135,7 +139,7 @@ td.hex-value {
 }
 
 .ts-documentation p {
-	margin: 1rem 0;
+	margin: 1.5rem 0;
 }
 
 .ts-documentation h2 {
@@ -193,20 +197,24 @@ td.hex-value {
 	}
 }
 
-@media (max-width: 600px) {
-	html {
-		font-size: 50%;
-	}
-}
-
-@media (max-width: 400px) {
+@media (max-width: 500px) {
 	.ts-headline h1 a {
 		font-size: 5rem;
 	}
 }
 
+@media (max-width: 370px) {
+	.ts-headline h1 a {
+		font-size: 4.5rem;
+		padding: 0.5rem 1.5rem;
+	}
+	.ts-form h2 {
+		font-size: 2rem;
+	}
+}
+
 @media (max-width: 340px) {
 	.ts-headline h1 a {
-		font-size: 4rem;
+		font-size: 3.5rem;
 	}
 }
