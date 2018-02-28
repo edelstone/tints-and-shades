@@ -1,5 +1,7 @@
 # [<img src="https://maketintsandshades.com/images/favicon.png" width="25px" />](https://maketintsandshades.com) &nbsp;[Tint & Shade Generator](https://maketintsandshades.com)
 
+<img src="https://i.imgur.com/q0ZuVYE.png" />
+
 ## What is the Tint & Shade Generator?
 The purpose of this tool is to accurately produce tints (lighter variants) and shades (darker variants) of a given hex color in 10% increments.
 
