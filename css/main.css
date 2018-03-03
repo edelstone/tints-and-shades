@@ -208,6 +208,12 @@ td.hex-value {
 	}
 }
 
+@media (max-width: 400px) {
+	.ts-header {
+		margin: 7rem auto 7rem;
+	}
+}
+
 @media (max-width: 370px) {
 	.ts-headline h1 a {
 		font-size: 4.5rem;
