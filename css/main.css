@@ -185,6 +185,20 @@ td.hex-value {
 	fill: #ca228e !important;
 }
 
+.alert-cta-button {
+	font-weight: normal !important;
+	text-transform: none !important;
+	padding-right: .9em !important
+}
+
+.alert-cta-button:after {
+	display: none !important;
+}
+
+alert-dismiss, alert-dismiss:hover, alert-dismiss:focus {
+	color: #fff !important;
+}
+
 @media (pointer: coarse) {
 	.ts-content textarea {
 		font-size: 16px;
