@@ -189,9 +189,9 @@ html body cloudflare-app[app="welcome-bar"][data-style="prominent"] .alert-cta-b
 	font-weight: normal !important;
 	text-transform: none !important;
 	padding-right: .9em !important;
+	letter-spacing: 0 !important;
+	opacity: 0 !important;
 }
-
-html body cloudflare-app[app="welcome-bar"][data-style="prominent"] .alert-cta-button
 
 html body cloudflare-app[app="welcome-bar"][data-style="prominent"] .alert-cta-button:after {
 	display: none !important;
