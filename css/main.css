@@ -185,12 +185,21 @@ td.hex-value {
 	fill: #ca228e !important;
 }
 
+html > body > cloudflare-app[app="welcome-bar"] {
+	font-size: 1.8rem !important;
+}
+
+html body cloudflare-app[app="welcome-bar"] alert-message-content {
+	font-size: inherit !important;
+}
+
 html body cloudflare-app[app="welcome-bar"][data-style="prominent"] .alert-cta-button {
 	font-weight: normal !important;
 	text-transform: none !important;
 	padding-right: .9em !important;
 	letter-spacing: 0 !important;
 	opacity: 1 !important;
+	font-size: inherit !important;
 }
 
 html body cloudflare-app[app="welcome-bar"][data-style="prominent"] .alert-cta-button:after {
