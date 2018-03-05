@@ -185,13 +185,15 @@ td.hex-value {
 	fill: #ca228e !important;
 }
 
-cloudflare-app[app="welcome-bar"][data-style="prominent"] .alert-cta-button {
+html body cloudflare-app[app="welcome-bar"][data-style="prominent"] .alert-cta-button {
 	font-weight: normal !important;
 	text-transform: none !important;
-	padding-right: .9em !important
+	padding-right: .9em !important;
 }
 
-cloudflare-app[app="welcome-bar"][data-style="prominent"] .alert-cta-button:after {
+html body cloudflare-app[app="welcome-bar"][data-style="prominent"] .alert-cta-button
+
+html body cloudflare-app[app="welcome-bar"][data-style="prominent"] .alert-cta-button:after {
 	display: none !important;
 }
 
