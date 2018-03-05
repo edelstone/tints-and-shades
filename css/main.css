@@ -191,12 +191,19 @@ td.hex-value {
 	padding-right: .9em !important
 }
 
+.alert-cta-button:hover, .alert-cta-button:focus {
+	background: #ca228e !important;
+	color: #fff !important;
+}
+
 .alert-cta-button:after {
 	display: none !important;
 }
 
 alert-dismiss, alert-dismiss:hover, alert-dismiss:focus {
 	color: #fff !important;
+	position: absolute !important;
+	right: 0 !important;
 }
 
 @media (pointer: coarse) {
