@@ -186,7 +186,7 @@ td.hex-value {
 }
 
 html > body > cloudflare-app[app="welcome-bar"] {
-	font-size: 1.8rem !important;
+	font-size: 1.6rem !important;
 }
 
 html body cloudflare-app[app="welcome-bar"] alert-message-content {
