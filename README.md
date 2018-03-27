@@ -1,4 +1,4 @@
-# [<img src="https://maketintsandshades.com/images/favicon.png" width="25px" />](https://maketintsandshades.com) &nbsp;[Tint & Shade Generator](https://maketintsandshades.com)
+# [<img src="https://maketintsandshades.com/favicon.ico" width="25px" />](https://maketintsandshades.com) &nbsp;[Tint & Shade Generator](https://maketintsandshades.com)
 
 <img src="https://i.imgur.com/WplKMjG.png" />
 
