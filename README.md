@@ -6,9 +6,9 @@
 The purpose of this tool is to accurately produce tints (lighter variants) and shades (darker variants) of a given hex color in 10% increments.
 
 ## Why is this tool unique?
-Testing shows that the color output matches that of the classic [W3Schools color picker](http://www.w3schools.com/colors/colors_picker.asp), and the [standard Sass function](https://sindresorhus.com/sass-extras/#color-function-tint) that mixes color variables with percentages of pure white or black.
+Testing shows that the color output matches that of the classic [W3Schools color picker](http://www.w3schools.com/colors/colors_picker.asp), and the [Sass function](https://sindresorhus.com/sass-extras/#color-function-tint) that mixes color variables with percentages of pure white or black.
 
-The W3Schools color picker no longer shows tints and shades in exact 10% increments from the base color, and most other tools out there get the calculation incorrect due to rounding errors.
+The W3Schools color picker no longer shows tints and shades in exact 10% increments from the base color, and most other tools out there get the calculation incorrect due to rounding errors or other inconsistencies.
 
 ## When would I use this?
 It's best used when you already have a base color palette but would like some complimentary colors for gradients, borders, backgrounds, shadows or other elements.
@@ -51,6 +51,9 @@ This application is inspired by a similar app once maintained by [North Krimsly]
 
 ## License
 Open source; please use. [CC BY-SA 3.0 US](http://creativecommons.org/licenses/by-sa/3.0/us/)
+
+## Contributing
+If you'd like to help improve this tool, feel free to [file an issue](https://github.com/edelstone/tints-and-shades/issues) or [make a pull request](https://github.com/edelstone/tints-and-shades/pulls).
 
 ## Resources
 * [Convert other color formats to hex](http://rgb.to)
