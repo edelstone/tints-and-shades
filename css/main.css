@@ -179,10 +179,16 @@ td.hex-value {
 	top: 0;
 	border: none;
 	right: 0;
+	display: none !important;
 }
 
 .github-corner:hover svg {
 	fill: #ca228e !important;
+}
+
+.anchorjs-link {
+	padding-left: 0 !important;
+	margin-left: 0.375em !important;
 }
 
 html > body > cloudflare-app[app="welcome-bar"] {
@@ -208,10 +214,6 @@ cloudflare-app[app="welcome-bar"] .alert-cta-button {
 
 cloudflare-app[app="welcome-bar"] .alert-cta-button:hover {
 	opacity: 0.95 !important;
-}
-
-.github-corner {
-	display: none !important;
 }
 
 @media (max-width: 780px) {
