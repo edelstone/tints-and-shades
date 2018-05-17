@@ -210,9 +210,16 @@ cloudflare-app[app="welcome-bar"] .alert-cta-button:hover {
 	opacity: 0.95 !important;
 }
 
+.github-corner {
+	display: none !important;
+}
+
 @media (max-width: 780px) {
 	html > body > cloudflare-app[app="welcome-bar"] {
 		display: none !important;
+	}
+	.github-corner {
+		display: block !important;
 	}
 }
 
