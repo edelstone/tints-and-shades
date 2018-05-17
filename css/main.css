@@ -201,7 +201,7 @@ cloudflare-app[app="welcome-bar"] .alert-cta-button:hover {
 	opacity: 1 !important;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 780px) {
 	html > body > cloudflare-app[app="welcome-bar"] {
 		display: none !important;
 	}
