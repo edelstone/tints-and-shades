@@ -16,7 +16,7 @@ It's best used when you already have a base color palette but would like some co
 This is useful for designers who may be communicating color intent to developers that use Sass color functions in their builds. It's also a solid way to quickly preview what tints and shades look like for a base color you may be considering for your design.
 
 ## Why 10% increments?
-That’s the standard I developed for [my design process at Texas State University](http://www.styleguide.txstate.edu/colors/template.html) and in other projects. I think choosing tints and shades based on a flat percentage is a clean, reproducible way to augment brand palettes and produce designs with depth.
+That’s the standard I developed for [my design process at Texas State University](http://www.styleguide.txstate.edu/colors.html) and in other projects. I think choosing tints and shades based on a flat percentage is a clean, reproducible way to augment brand palettes and produce designs with depth.
 
 ## Calculation Method
 The given hex color is first converted to RGB. Then each component of the RGB color has the following calculation performed on it, respectively.
