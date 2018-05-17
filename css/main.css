@@ -185,6 +185,11 @@ td.hex-value {
 	fill: #ca228e !important;
 }
 
+html > body > cloudflare-app[app="welcome-bar"] {
+	position: absolute !important;
+	top: -49px !important;
+}
+
 cloudflare-app[app="welcome-bar"] alert-message {
 	margin-left: 2.5em !important;
 }
@@ -194,11 +199,11 @@ cloudflare-app[app="welcome-bar"] alert-dismiss {
 }
 
 cloudflare-app[app="welcome-bar"] alert-dismiss:hover {
-	color: #fff !important;
+	color: rgba(255,255,255,0.90) !important;
 }
 
 cloudflare-app[app="welcome-bar"] .alert-cta-button:hover {
-	opacity: 1 !important;
+	opacity: 0.9 !important;
 }
 
 @media (max-width: 780px) {
