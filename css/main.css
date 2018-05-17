@@ -195,15 +195,19 @@ cloudflare-app[app="welcome-bar"] alert-message {
 }
 
 cloudflare-app[app="welcome-bar"] alert-dismiss {
-	color: rgba(255,255,255,0.85) !important;
+	color: rgba(255,255,255,0.9) !important;
 }
 
 cloudflare-app[app="welcome-bar"] alert-dismiss:hover {
-	color: rgba(255,255,255,0.90) !important;
+	color: rgba(255,255,255,0.95) !important;
+}
+
+cloudflare-app[app="welcome-bar"] .alert-cta-button {
+	opacity: 0.9 !important;
 }
 
 cloudflare-app[app="welcome-bar"] .alert-cta-button:hover {
-	opacity: 0.9 !important;
+	opacity: 0.95 !important;
 }
 
 @media (max-width: 780px) {
