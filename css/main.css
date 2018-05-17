@@ -185,6 +185,28 @@ td.hex-value {
 	fill: #ca228e !important;
 }
 
+cloudflare-app[app="welcome-bar"] alert-message {
+	margin-left: 2.5em !important;
+}
+
+cloudflare-app[app="welcome-bar"] alert-dismiss {
+	color: rgba(255,255,255,0.85) !important;
+}
+
+cloudflare-app[app="welcome-bar"] alert-dismiss:hover {
+	color: #fff !important;
+}
+
+cloudflare-app[app="welcome-bar"] .alert-cta-button:hover {
+	opacity: 1 !important;
+}
+
+@media (max-width: 1000px) {
+	html > body > cloudflare-app[app="welcome-bar"] {
+		display: none !important;
+	}
+}
+
 @media (pointer: coarse) {
 	.ts-content textarea {
 		font-size: 16px;
