@@ -201,11 +201,11 @@ html > body > cloudflare-app[app="welcome-bar"] alert-message {
 }
 
 html > body > cloudflare-app[app="welcome-bar"] alert-dismiss {
-	color: rgba(255,255,255,0.9) !important;
+	color: rgba(255,255,255,0.85) !important;
 }
 
 html > body > cloudflare-app[app="welcome-bar"] alert-dismiss:hover {
-	color: rgba(255,255,255,0.95) !important;
+	color: #fff !important;
 }
 
 html > body > cloudflare-app[app="welcome-bar"] .alert-cta-button {
@@ -215,6 +215,10 @@ html > body > cloudflare-app[app="welcome-bar"] .alert-cta-button {
 
 html > body > cloudflare-app[app="welcome-bar"] .alert-cta-button:hover {
 	opacity: 0.95 !important;
+}
+
+html > body > cloudflare-app[app="welcome-bar"] .alert-cta-button::after {
+	font-weight: 700 !important;
 }
 
 @media (max-width: 780px) {
