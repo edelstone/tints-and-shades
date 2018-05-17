@@ -210,6 +210,7 @@ cloudflare-app[app="welcome-bar"] alert-dismiss:hover {
 
 cloudflare-app[app="welcome-bar"] .alert-cta-button {
 	opacity: 0.9 !important;
+	font-weight: 400 !important;
 }
 
 cloudflare-app[app="welcome-bar"] .alert-cta-button:hover {
