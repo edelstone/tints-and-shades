@@ -1,6 +1,6 @@
 # [<img src="https://maketintsandshades.com/favicon.ico" width="25px" />](https://maketintsandshades.com) &nbsp;[Tint & Shade Generator](https://maketintsandshades.com)
 
-<img src="https://i.imgur.com/7LBD41G.jpg" />
+<img src="screenshot.jpg" />
 
 ## What is the Tint & Shade Generator?
 The purpose of this tool is to accurately produce tints (lighter variants) and shades (darker variants) of a given hex color in 10% increments.
@@ -55,7 +55,11 @@ Open source; please use. [CC BY-SA 3.0 US](http://creativecommons.org/licenses/b
 ## Contributing
 If you'd like to help improve this tool, feel free to [file an issue](https://github.com/edelstone/tints-and-shades/issues) or [make a pull request](https://github.com/edelstone/tints-and-shades/pulls).
 
+## Styles
+
+- **Typography:** [Work Sans](http://weiweihuanghuang.github.io/Work-Sans/) by Wei Huang</li>
+- **Colors:** [#000](http://color.aurlien.net/#000000), [#fff](http://color.aurlien.net/#FFFFFF), [#e96443](http://color.aurlien.net/#E96443), and [ca288e](http://color.aurlien.net/#CA288E)
+
 ## Resources
 * [Convert other color formats to hex](http://rgb.to)
 * [Stack Overflow discussion about the calculation method](https://stackoverflow.com/questions/6615002)
-* [W3Schools Color Picker](https://w3schools.com/colors/colors_picker.asp)
