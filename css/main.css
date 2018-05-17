@@ -196,24 +196,24 @@ html > body > cloudflare-app[app="welcome-bar"] {
 	top: -49px !important;
 }
 
-cloudflare-app[app="welcome-bar"] alert-message {
+html > body > cloudflare-app[app="welcome-bar"] alert-message {
 	margin-left: 2.5em !important;
 }
 
-cloudflare-app[app="welcome-bar"] alert-dismiss {
+html > body > cloudflare-app[app="welcome-bar"] alert-dismiss {
 	color: rgba(255,255,255,0.9) !important;
 }
 
-cloudflare-app[app="welcome-bar"] alert-dismiss:hover {
+html > body > cloudflare-app[app="welcome-bar"] alert-dismiss:hover {
 	color: rgba(255,255,255,0.95) !important;
 }
 
-cloudflare-app[app="welcome-bar"] .alert-cta-button {
+html > body > cloudflare-app[app="welcome-bar"] .alert-cta-button {
 	opacity: 0.9 !important;
 	font-weight: 400 !important;
 }
 
-cloudflare-app[app="welcome-bar"] .alert-cta-button:hover {
+html > body > cloudflare-app[app="welcome-bar"] .alert-cta-button:hover {
 	opacity: 0.95 !important;
 }
 
