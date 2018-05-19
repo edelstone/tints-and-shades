@@ -179,7 +179,6 @@ td.hex-value {
 	top: 0;
 	border: none;
 	right: 0;
-	display: none !important;
 }
 
 .github-corner:hover svg {
@@ -189,45 +188,6 @@ td.hex-value {
 .anchorjs-link {
 	padding-left: 0 !important;
 	margin-left: 0.375em !important;
-}
-
-html > body > cloudflare-app[app="welcome-bar"] {
-	position: absolute !important;
-	top: -49px !important;
-}
-
-html > body > cloudflare-app[app="welcome-bar"] alert-message {
-	margin-left: 2.5em !important;
-}
-
-html > body > cloudflare-app[app="welcome-bar"] alert-dismiss {
-	color: rgba(255,255,255,0.85) !important;
-}
-
-html > body > cloudflare-app[app="welcome-bar"] alert-dismiss:hover {
-	color: #fff !important;
-}
-
-html > body > cloudflare-app[app="welcome-bar"] .alert-cta-button {
-	opacity: 0.9 !important;
-	font-weight: 400 !important;
-}
-
-html > body > cloudflare-app[app="welcome-bar"] .alert-cta-button:hover {
-	opacity: 0.95 !important;
-}
-
-html > body > cloudflare-app[app="welcome-bar"] .alert-cta-button::after {
-	font-weight: 700 !important;
-}
-
-@media (max-width: 780px) {
-	html > body > cloudflare-app[app="welcome-bar"] {
-		display: none !important;
-	}
-	.github-corner {
-		display: block !important;
-	}
 }
 
 @media (pointer: coarse) {
