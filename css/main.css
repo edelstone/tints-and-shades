@@ -86,7 +86,7 @@ code {
 	min-height: 20rem;
 	background: #f0f0f0;
 	border: 1px solid #dbdbdb;
-	word-spacing: 1rem;
+	word-spacing: 0.25rem;
 	border-radius: 3px;
 	-webkit-appearance: none;
 }
@@ -108,6 +108,12 @@ code {
 	background: #ca228e;
 }
 
+#tints-and-shades {
+	overflow-x: auto;
+	width: 100%;
+	padding-top: 4rem;
+}
+
 .ts-content table {
 	width: 100%;
 	border-collapse: collapse;
@@ -115,12 +121,6 @@ code {
 
 .ts-colors {
 	margin-top: 4rem;
-}
-
-#tints-and-shades {
-	overflow-x: auto;
-	width: 100%;
-	padding-top: 4rem;
 }
 
 td.hex-color {
