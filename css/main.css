@@ -91,7 +91,7 @@ code {
 	-webkit-appearance: none;
 }
 
-input[type="submit"] {
+.button {
 	padding: 1.6rem;
 	width: 100%;
 	max-width: 52rem;
@@ -104,13 +104,8 @@ input[type="submit"] {
 	white-space: normal;
 }
 
-input[type="submit"]:hover, input[type="submit"]:focus {
+.button:hover, .button:focus {
 	background: #ca228e;
-}
-
-#tints-and-shades {
-	overflow-x: auto;
-	width: 100%;
 }
 
 .ts-content table {
@@ -123,6 +118,8 @@ input[type="submit"]:hover, input[type="submit"]:focus {
 }
 
 #tints-and-shades {
+	overflow-x: auto;
+	width: 100%;
 	padding-top: 4rem;
 }
 
