@@ -119,7 +119,11 @@ input[type="submit"]:hover, input[type="submit"]:focus {
 }
 
 .ts-colors {
-	margin-top: 8rem;
+	margin-top: 4rem;
+}
+
+#tints-and-shades {
+	padding-top: 4rem;
 }
 
 td.hex-color {
@@ -231,7 +235,11 @@ td.hex-value {
 }
 
 @media (max-width: 340px) {
+	.ts-headline h1 {
+		line-height: 1.2;
+	}
+
 	.ts-headline h1 a {
-		font-size: 3.5rem;
+		font-size: 3.6rem;
 	}
 }

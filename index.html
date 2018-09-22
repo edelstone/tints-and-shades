@@ -44,7 +44,7 @@
 				<h2><label for="color-values">Enter hex colors (separated by spaces)</label></h2>
 				<form class="pure-form" id="color-entry-form" action="#" method="post" name="color-entry-form">
 					<textarea id="color-values" name="color-values" required></textarea>
-					<input type="submit" value="Make tints and shades 👉" />
+					<input class="button" type="submit" value="Make tints and shades 👉" />
 				</form>
 			</div>
 
@@ -62,6 +62,13 @@
 
 <script src="/scripts/jquery-3.3.1.min.js"></script>
 <script src="/scripts/tints-and-shades.js"></script>
+<script>
+$(".button").click(function() {
+	$('html,body').animate({
+  	scrollTop: $("#tints-and-shades").offset().top},
+  	400);
+});
+</script>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

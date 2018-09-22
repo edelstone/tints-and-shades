@@ -6,14 +6,14 @@
 The purpose of this tool is to accurately produce tints (lighter variants) and shades (darker variants) of a given hex color in 10% increments.
 
 ## Why is this tool unique?
-Testing shows that the color output matches that of the classic [W3Schools color picker](http://www.w3schools.com/colors/colors_picker.asp), and the [Sass function](https://sindresorhus.com/sass-extras/#color-function-tint) that mixes color variables with percentages of pure white or black.
+Testing shows that the color output matches that of the classic [W3Schools color picker](http://www.w3schools.com/colors/colors_picker.asp), the [Sass color function](https://sindresorhus.com/sass-extras/#color-function-tint), and the [PostCSS color-mod function](https://preset-env.cssdb.org/features#color-mod-function).
 
 The W3Schools color picker no longer shows tints and shades in exact 10% increments from the base color, and most other tools out there get the calculation incorrect due to rounding errors or other inconsistencies.
 
 ## When would I use this?
 It's best used when you already have a base color palette but would like some complimentary colors for gradients, borders, backgrounds, shadows or other elements.
 
-This is useful for designers who may be communicating color intent to developers that use Sass color functions in their builds. It's also a solid way to quickly preview what tints and shades look like for a base color you may be considering for your design.
+This is useful for designers who may be communicating color intent to developers that use Sass or PostCSS in their builds. It's also a solid way to quickly preview what tints and shades look like for a base color you may be considering for your design.
 
 ## Why 10% increments?
 That’s the standard I developed for [my design process at Texas State University](http://www.styleguide.txstate.edu/colors.html) and in other projects. I think choosing tints and shades based on a flat percentage is a clean, reproducible way to augment brand palettes and produce designs with depth.
@@ -58,7 +58,7 @@ If you'd like to help improve this tool, feel free to [file an issue](https://gi
 ## Styles
 
 - **Typography:** [Work Sans](http://weiweihuanghuang.github.io/Work-Sans/) by Wei Huang</li>
-- **Colors:** [#000](http://color.aurlien.net/#000000), [#fff](http://color.aurlien.net/#FFFFFF), [#e96443](http://color.aurlien.net/#E96443), and [ca288e](http://color.aurlien.net/#CA288E)
+- **Colors:** [#000](https://colorme.io/?color=000), [#fff](https://colorme.io/?color=fff), [#e96443](https://colorme.io/?color=e96443), and [ca288e](https://colorme.io/?color=ca288e)
 
 ## Resources
 * [Convert other color formats to hex](http://rgb.to)
