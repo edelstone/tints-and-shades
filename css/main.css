@@ -21,7 +21,7 @@ a {
 	border-bottom: 3px solid #000;
 }
 
-a:hover, a:focus {
+a:hover, a:focus, a:active {
 	border-color: #ca228e;
 }
 
@@ -102,6 +102,7 @@ code {
 	-webkit-appearance: none;
 	line-height: inherit;
 	white-space: normal;
+	outline: 0;
 }
 
 .button:hover, .button:focus {
@@ -168,6 +169,13 @@ td.hex-value {
 	margin-right: 2.5rem;
 }
 
+.not-found {
+	background: #000;
+  color: #fff;
+	display: inline-block;
+  padding: 4rem 4rem 3rem;
+}
+
 .not-found h2 {
 	font-weight: 900;
 	font-size: 6rem;
@@ -205,6 +213,10 @@ td.hex-value {
 @media (max-width: 1000px) {
 	html {
 		font-size: 55%;
+	}
+
+	td.hex-value {
+		font-size: 12px;
 	}
 }
 
