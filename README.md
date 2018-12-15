@@ -7,7 +7,7 @@
 The purpose of this tool is to accurately produce tints (lighter variants) and shades (darker variants) of a given hex color in 10% increments.
 
 ## Why is this tool unique?
-Testing shows that the color output matches that of the classic [W3Schools color picker](http://www.w3schools.com/colors/colors_picker.asp), the [Sass color function](https://sindresorhus.com/sass-extras/#color-function-tint), and the [PostCSS color-mod function](https://github.com/jonathantneal/postcss-color-mod-function#postcss-color-mod-function-).
+Testing shows that the color output matches that of the classic [W3Schools color picker](http://www.w3schools.com/colors/colors_picker.asp), the [Sass color function](https://sindresorhus.com/sass-extras/#color-function-tint), and the [PostCSS color-mod function](https://github.com/jonathantneal/postcss-color-mod-function#postcss-color-mod-function-) (currently [defunct](https://github.com/csstools/cssdb/commit/96bb8e8547a946dcbc29b866ac13330fed6ca04b)).
 
 The W3Schools color picker no longer shows tints and shades in exact 10% increments from the base color, and most other tools out there get the calculation incorrect due to rounding errors or other inconsistencies.
 
