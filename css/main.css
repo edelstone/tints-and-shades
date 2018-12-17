@@ -102,7 +102,6 @@ code {
 	-webkit-appearance: none;
 	line-height: inherit;
 	white-space: normal;
-	outline: 0;
 }
 
 .button:hover, .button:focus {
