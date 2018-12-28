@@ -102,6 +102,7 @@ code {
 	-webkit-appearance: none;
 	line-height: inherit;
 	white-space: normal;
+	outline: none;
 }
 
 .button:hover, .button:focus {
@@ -125,7 +126,7 @@ code {
 
 td.hex-color {
 	height: 6.5rem;
-	min-width: 6.5rem;
+	min-width: 7.5rem;
 }
 
 td.hex-value {
