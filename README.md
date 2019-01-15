@@ -9,10 +9,10 @@ The purpose of this tool is to accurately produce tints (lighter variants) and s
 ## Why is this tool unique?
 Testing shows that the color output matches that of the classic [W3Schools color picker](http://www.w3schools.com/colors/colors_picker.asp), the Sass [tint](https://sindresorhus.com/sass-extras/#color-function-tint) and [shade](https://sindresorhus.com/sass-extras/#color-function-shade) color functions, and the [PostCSS color-mod function](https://github.com/jonathantneal/postcss-color-mod-function#postcss-color-mod-function-) (currently [defunct](https://github.com/w3c/csswg-drafts/issues/813)).
 
-The W3Schools color picker no longer shows tints and shades in exact 10% increments from the base color, and most other tools out there get the calculation incorrect due to rounding errors or other inconsistencies.
+The W3Schools color picker no longer shows tints and shades in exact 10% increments from all base colors, and most other tools out there get the calculation incorrect due to rounding errors or other inconsistencies.
 
 ## When would I use this?
-It's best used when you already have a base color palette but would like some complimentary colors for gradients, borders, backgrounds, shadows or other elements.
+It's best used when you already have some base colors but would like some complimentary colors for gradients, borders, backgrounds, shadows or other elements.
 
 This is useful for designers who may be communicating color intent to developers that use Sass or PostCSS in their builds. It's also a solid way to quickly preview what tints and shades look like for a base color you may be considering for your design.
 

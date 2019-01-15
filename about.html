@@ -6,7 +6,8 @@
 	<meta name="author" content="Michael Edelstone">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>About | Tint and Shade Generator</title>
-	<link rel="canonical" href="https://maketintsandshades.com/about">
+	<meta name="title" content="Tint and Shade Generator">
+	<link rel="canonical" href="https://maketintsandshades.com/404">
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -14,12 +15,16 @@
 	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#ca228e">
 	<meta name="msapplication-TileColor" content="#2b5797">
 	<meta name="theme-color" content="#ca228e">
-	<meta property="og:image" content="https://maketintsandshades.com/images/og-image.jpg">
-	<meta property="og:image:width" content="1146">
-	<meta property="og:image:height" content="600">
-	<meta property="og:description" content="Easily make tints and shades in 10% increments.">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://maketintsandshades.com/">
 	<meta property="og:title" content="Tint and Shade Generator">
-	<meta property="og:url" content="https://maketintsandshades.com">
+	<meta property="og:description" content="Easily make tints and shades that match the output of Chrome DevTools, PostCSS, and Sass.">
+	<meta property="og:image" content="https://maketintsandshades.com/images/og-image.jpg">
+	<meta property="twitter:card" content="summary_large_image">
+	<meta property="twitter:url" content="https://maketintsandshades.com/">
+	<meta property="twitter:title" content="Tint and Shade Generator">
+	<meta property="twitter:description" content="Easily make tints and shades that match the output of Chrome DevTools, PostCSS, and Sass.">
+	<meta property="twitter:image" content="https://maketintsandshades.com/images/og-image.jpg">
 	<link rel="stylesheet" href="/css/normalize.css">
 	<link rel="stylesheet" href="/css/fonts.css">
 	<link rel="stylesheet" href="/css/main.css">
@@ -48,11 +53,11 @@
 
 			<p>Testing shows that the color output matches that of the classic <a href="http://www.w3schools.com/colors/colors_picker.asp">W3Schools color picker</a>, the Sass <a href="https://sindresorhus.com/sass-extras/#color-function-tint">tint</a> and <a href="https://sindresorhus.com/sass-extras/#color-function-shade">shade</a> color functions</a>, and the <a href="https://github.com/jonathantneal/postcss-color-mod-function#postcss-color-mod-function-">PostCSS color-mod function</a> (currently <a href="https://github.com/w3c/csswg-drafts/issues/813">defunct</a>).</p>
 
-			<p>The W3Schools color picker no longer shows tints and shades in exact 10% increments from the base color, and most other tools out there get the calculation incorrect due to rounding errors or other inconsistencies.</p>
+			<p>The W3Schools color picker no longer shows tints and shades in exact 10% increments from all base colors, and most other tools out there get the calculation incorrect due to rounding errors or other inconsistencies.</p>
 
 			<h2>When would I use this?</h2>
 
-			<p>It's best used when you already have a base color palette but would like some complimentary colors for gradients, borders, backgrounds, shadows or other elements.</p>
+			<p>It's best used when you already have some base colors but would like some complimentary colors for gradients, borders, backgrounds, shadows or other elements.</p>
 			<p>This is useful for designers who may be communicating color intent to developers that use Sass or PostCSS in their builds. It's also a solid way to quickly preview what tints and shades look like for a base color you may be considering for your design.</p>
 
 			<h2>Why 10% increments?</h2>
