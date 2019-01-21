@@ -41,7 +41,7 @@ code {
 }
 
 .ts-header {
-	margin: 7rem auto 10rem;
+	margin: 7rem auto 9rem;
 }
 
 .ts-header h1 {
@@ -71,6 +71,13 @@ code {
 	margin-bottom: 10rem;
 }
 
+.ts-form form {
+	display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .ts-form h2 {
 	font-weight: normal;
   font-size: 2.7rem;
@@ -82,7 +89,7 @@ code {
 	width: 100%;
 	max-width: 52rem;
 	padding: 1.2rem;
-	margin: 1.5rem auto 2rem;
+	margin: 1.5rem auto 2.5rem;
 	min-height: 20rem;
 	background: #f0f0f0;
 	border: 1px solid #dbdbdb;
@@ -229,7 +236,7 @@ td.hex-value {
 
 @media (max-width: 400px) {
 	.ts-header {
-		margin: 7rem auto 7rem;
+		margin: 7rem auto 6rem;
 	}
 }
 
