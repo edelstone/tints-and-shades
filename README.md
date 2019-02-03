@@ -1,6 +1,6 @@
 # [<img src="https://maketintsandshades.com/favicon.ico" width="25px" />](https://maketintsandshades.com) &nbsp;[Tint & Shade Generator](https://maketintsandshades.com)
 
-<img src="/images/screenshot-1.png" />
+<img src="/images/screenshot.png" />
 <img src="/images/screenshot-2.png" />
 
 ## What is the Tint & Shade Generator?
