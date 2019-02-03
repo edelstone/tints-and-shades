@@ -71,20 +71,16 @@
 
 			<h2>Why is this tool unique?</h2>
 
-			<p>Testing shows that the color output matches that of the classic <a href="http://www.w3schools.com/colors/colors_picker.asp">W3Schools color picker</a>, the Sass <a href="https://sindresorhus.com/sass-extras/#color-function-tint">tint</a> and <a href="https://sindresorhus.com/sass-extras/#color-function-shade">shade</a> color functions</a>, and the <a href="https://github.com/jonathantneal/postcss-color-mod-function#postcss-color-mod-function-">PostCSS color-mod function</a> (currently <a href="https://github.com/w3c/csswg-drafts/issues/813">defunct</a>).</p>
+			<p>It takes the math seriously. In my experience similar tools get the calculation incorrect due to rounding errors or other inconsistencies.</p>
 
-			<p>The W3Schools color picker no longer shows tints and shades in exact 10% increments from all base colors, and most other tools out there get the calculation incorrect due to rounding errors or other inconsistencies.</p>
+			<p>Testing shows that the output matches Chrome DevTools' calculation method, Sass <a href="https://sindresorhus.com/sass-extras/#color-function-tint">tint</a> and <a href="https://sindresorhus.com/sass-extras/#color-function-shade">shade</a> functions</a>, and the <a href="https://github.com/jonathantneal/postcss-color-mod-function#postcss-color-mod-function-">PostCSS color-mod function</a> (currently <a href="https://github.com/w3c/csswg-drafts/issues/813">defunct</a>).</p>
 
 			<h2>When would I use this?</h2>
 
-			<p>It's best used when you already have some base colors but would like some complimentary colors for gradients, borders, backgrounds, shadows or other elements.</p>
-			<p>This is useful for designers who may be communicating color intent to developers that use Sass or PostCSS in their builds. It's also a solid way to quickly preview what tints and shades look like for a base color you may be considering for your design.</p>
+			<p>It's best used when you already have some base colors but would like complimentary colors for gradients, borders, backgrounds, shadows or other elements.</p>
+			<p>This is useful for designers who may be communicating color intent to developers who use Sass or PostCSS in their builds. It's also a solid way to quickly preview what tints and shades look like for a base color you may be considering for your design.</p>
 
-			<h2>Why 10% increments?</h2>
-
-			<p>That’s the standard I developed for <a href="http://www.styleguide.txstate.edu/colors.html">my design process at Texas State University</a> and in other projects. I think choosing tints and shades based on a flat percentage is a clean, reproducible way to augment brand palettes and produce designs with depth.</p>
-
-			<h2>Calculation Method</h2>
+			<h2>Calculation method</h2>
 
 			<p>The given hex color is first converted to RGB. Then each component of the RGB color has the following calculation performed on it, respectively.</p>
 
@@ -95,11 +91,11 @@
 
 			<p>The new value is rounded if necessary, and then converted back to hex for display.</p>
 
-			<h2>Example Calculation</h2>
+			<h2>Example calculation</h2>
 
 			<p>Let’s say we want tints and shades of <a href="https://meyerweb.com/eric/thoughts/2014/06/19/rebeccapurple/">Rebecca Purple</a>, #663399.</p>
 
-			<h3>10% Tint</h3>
+			<h3>10% tint</h3>
 
 			<ol>
 				<li>#663399 is converted to the RGB equivalent of 102, 51, 153</li>
@@ -109,7 +105,7 @@
 				<li>RGB 117, 71, 163 is converted to the hex equivalent of #7547a3</li>
 			</ol>
 
-			<h3>10% Shade</h3>
+			<h3>10% shade</h3>
 
 			<ol>
 				<li>#663399 is converted to the RGB equivalent of 102, 51, 153</li>
@@ -121,32 +117,25 @@
 
 			<h2>Attribution</h2>
 
-			<p>This application is inspired by a similar app once maintained by <a href="http://highintegritydesign.com/">North Krimsly</a>, with significant modifications made to the calculation method and interface design.</p>
+			<p>This application is inspired by a similar app once maintained by <a href="https://highintegritydesign.com/">North Krimsly</a>, with significant modifications made to the calculation method and interface design.</p>
 
 			<h2>Credits</h2>
 
-			<p><a href="https://michaeledelstone.com">Michael Edelstone</a> designed and organized it. Nick Wing helped with the JavaScript.</p>
+			<p><a href="https://michaeledelstone.com">Michael Edelstone</a> designed and organized it. <a href="https://github.com/wickning1">Nick Wing</a> helped with the JavaScript.</p>
 
 			<h2>License</h2>
 
-			<p>Open source and <a href="https://github.com/edelstone/tints-and-shades">available on GitHub</a>; please use. <a href="http://creativecommons.org/licenses/by-sa/3.0/us/">CC BY-SA 3.0 US</a></p>
+			<p>Open source; <a href="https://creativecommons.org/licenses/by-sa/3.0/us/">CC BY-SA 3.0 US</a>.</p>
 
-			<h2>Contributing</h2>
+			<h2>Feedback and contributing</h2>
 
-			<p>If you'd like to help improve this tool, feel free to <a href="https://github.com/edelstone/tints-and-shades/issues">create/review open issues</a> or <a href="https://github.com/edelstone/tints-and-shades/pulls">make a pull request</a>.</p>
+			<p>If you have a problem or would like to help improve this tool, feel free to <a href="https://github.com/edelstone/tints-and-shades/issues">create/review open issues</a> or <a href="https://github.com/edelstone/tints-and-shades/pulls">make a pull request</a>.</p>
 
 			<h2>Styles</h2>
 
 			<ul>
-				<li><b>Typography:</b> <a href="http://weiweihuanghuang.github.io/Work-Sans/">Work Sans</a> by Wei Huang</li>
+				<li><b>Typography:</b> <a href="https://weiweihuanghuang.github.io/Work-Sans/">Work Sans</a> by Wei Huang</li>
 				<li><b>Colors:</b> <a href="https://colorme.io/?color=000">#000</a>, <a href="https://colorme.io/?color=fff">#fff</a>, <a href="https://colorme.io/?color=e96443">#e96443</a>, and <a href="https://colorme.io/?color=ca228e">#ca228e</a></li>
-			</ul>
-
-			<h2>Resources</h2>
-
-			<ul>
-				<li><a href="http://rgb.to">Convert other color formats to hex</a></li>
-				<li><a href="http://stackoverflow.com/questions/6615002/given-an-rgb-value-how-do-i-create-a-tint-or-shade">Stack Overflow discussion about the calculation method</a></li>
 			</ul>
 
 		</main>
