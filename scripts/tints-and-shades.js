@@ -133,6 +133,9 @@ $(document).ready(function() {
 
       // replace tints-and-shades div with color display table wrapped by the same div
       $("#tints-and-shades").html(colorDisplayTable);
+
+      // set url hash to a comma seperated list of hex codes
+      window.location.hash = parsedColorsArray.join(",");
     }
     return false;
   });
