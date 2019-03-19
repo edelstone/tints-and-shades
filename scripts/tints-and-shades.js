@@ -100,6 +100,8 @@ function makeTableRowColors(colors, displayType) {
 // main application code. Parse the inputted color numbers, make an HTML
 // with the colors in it, and render the table into the page.
 $(document).ready(function() {
+  // get url hash and set it as the text area value
+  $("#color-values").val(window.location.hash.slice(1).replace(/,/g, " "));
 
   // connect the form submit button to all of the guts
   $("#color-entry-form").submit(function() {
