@@ -97,43 +97,53 @@ function makeTableRowColors(colors, displayType) {
   return tableRow;
 }
 
+function createTintsAndShades() {
+  var parsedColorsArray = parseColorValues($("#color-values").val());
+  if (parsedColorsArray !== null) {
+    // make sure we got value color values back from parsing
+    var colorDisplayRows = []; // holds html table rows for the colors to display
+    var tableRowCounter = 0;
+
+    for (var i = 0; i < parsedColorsArray.length; i++) { // iterate through each inputted color value
+
+      // calculate an array of shades from the inputted color, then make a table row
+      // from the shades, and a second table row for the hex values of the shades
+      var calculatedShades = calculateShades(parsedColorsArray[i]);
+      colorDisplayRows[tableRowCounter] = makeTableRowColors(calculatedShades, "colors");
+      tableRowCounter++;
+      colorDisplayRows[tableRowCounter] = makeTableRowColors(calculatedShades, "RGBValues");
+      tableRowCounter++;
+
+      // calculate an array of tints from the inputted color, then make a table row
+      // from the tints, and a second table row for the hex values of the tints
+      var calculatedTints = calculateTints(parsedColorsArray[i]);
+      colorDisplayRows[tableRowCounter] = makeTableRowColors(calculatedTints, "colors");
+      tableRowCounter++;
+      colorDisplayRows[tableRowCounter] = makeTableRowColors(calculatedTints, "RGBValues");
+      tableRowCounter++;
+    }
+
+    // wrap the rows into an HTML table
+    var colorDisplayTable = "<table>" + colorDisplayRows.join("") + "</table>";
+
+    // replace tints-and-shades div with color display table wrapped by the same div
+    $("#tints-and-shades").html(colorDisplayTable);
+
+    // set url hash to a comma seperated list of hex codes
+    window.location.hash = parsedColorsArray.join(",");
+  }
+  return false;
+}
+
 // main application code. Parse the inputted color numbers, make an HTML
 // with the colors in it, and render the table into the page.
 $(document).ready(function() {
+  // get url hash and set it as the text area value
+  $("#color-values").val(window.location.hash.slice(1).replace(/,/g, " "));
+
+  // create tints and shades with hash hex codes
+  createTintsAndShades();
 
   // connect the form submit button to all of the guts
-  $("#color-entry-form").submit(function() {
-    var parsedColorsArray = parseColorValues($("#color-values").val());
-    if (parsedColorsArray !== null) {
-      // make sure we got value color values back from parsing
-      var colorDisplayRows = []; // holds html table rows for the colors to display
-      var tableRowCounter = 0;
-
-      for (var i = 0; i < parsedColorsArray.length; i++) { // iterate through each inputted color value
-
-        // calculate an array of shades from the inputted color, then make a table row
-        // from the shades, and a second table row for the hex values of the shades
-        var calculatedShades = calculateShades(parsedColorsArray[i]);
-        colorDisplayRows[tableRowCounter] = makeTableRowColors(calculatedShades, "colors");
-        tableRowCounter++;
-        colorDisplayRows[tableRowCounter] = makeTableRowColors(calculatedShades, "RGBValues");
-        tableRowCounter++;
-
-        // calculate an array of tints from the inputted color, then make a table row
-        // from the tints, and a second table row for the hex values of the tints
-        var calculatedTints = calculateTints(parsedColorsArray[i]);
-        colorDisplayRows[tableRowCounter] = makeTableRowColors(calculatedTints, "colors");
-        tableRowCounter++;
-        colorDisplayRows[tableRowCounter] = makeTableRowColors(calculatedTints, "RGBValues");
-        tableRowCounter++;
-      }
-
-      // wrap the rows into an HTML table
-      var colorDisplayTable = "<table>" + colorDisplayRows.join("") + "</table>";
-
-      // replace tints-and-shades div with color display table wrapped by the same div
-      $("#tints-and-shades").html(colorDisplayTable);
-    }
-    return false;
-  });
+  $("#color-entry-form").submit(createTintsAndShades);
 });
