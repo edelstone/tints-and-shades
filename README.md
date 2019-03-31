@@ -55,4 +55,4 @@ If you have a problem or would like to help improve this tool, feel free to [cre
 
 ## Styles
 - **Typography:** [Work Sans](https://weiweihuanghuang.github.io/Work-Sans/) by Wei Huang</li>
-- **Colors:** [#000](https://colorme.io/?color=000), [#fff](https://colorme.io/?color=fff), [#e96443](https://colorme.io/?color=e96443), and [ca288e](https://colorme.io/?color=ca288e)
+- **Colors:** [#000000](https://maketintsandshades.com/#000000), [#ffffff](https://maketintsandshades.com/#ffffff), [#e96443](https://maketintsandshades.com/#e96443), and [#ca228e](https://maketintsandshades.com/#ca228e)
