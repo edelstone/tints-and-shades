@@ -135,6 +135,39 @@ code {
 td.hex-color {
 	height: 6.5rem;
 	min-width: 6.5rem;
+	cursor: pointer;
+	position: relative;
+}
+
+td.hex-color:before {
+  content: "";
+  display: block;
+  opacity: 0;
+  height: 24px;
+  width: 24px;
+  border-radius: 12px;
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,.5);
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE5IDIxSDhWN0gxOVYyMVpNMTkgNUg4QzYuOSA1IDYgNS45IDYgN1YyMUM2IDIyLjEgNi45IDIzIDggMjNIMTlDMjAuMSAyMyAyMSAyMi4xIDIxIDIxVjdDMjEgNS45IDIwLjEgNSAxOSA1Wk0xNiAxSDRDMi45IDEgMiAxLjkgMiAzVjE3SDRWM0gxNlYxWiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg==");
+  background-size: 16px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #fff;
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  transform: translate(-50%, -50%);
+  transition: all .2s ease-in;
+}
+
+td.hex-color:hover:before {
+  opacity: 1;
+  top: 50%;
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+}
+td.hex-color:active:before {
+  opacity: 0;
 }
 
 td.hex-value {
