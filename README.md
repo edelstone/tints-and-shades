@@ -45,7 +45,7 @@ Let's say we want tints and shades of [Rebecca Purple](https://meyerweb.com/eric
 This application is inspired by a similar app once maintained by [North Krimsly](https://highintegritydesign.com/), with significant modifications made to the calculation method and interface design.
 
 ## Credits
-[Michael Edelstone](https://michaeledelstone.com) designed and organized it. [Nick Wing](https://github.com/wickning1) helped him with the JavaScript. Many thanks to [Joel Carr](https://github.com/joelcarr) for contributing as well.</p>
+[Michael Edelstone](https://michaeledelstone.com) designed and organized the project. [Nick Wing](https://github.com/wickning1) helped him with the color scripts. Many thanks to [Joel Carr](https://github.com/joelcarr) and [Sebastian Gutierrez](https://github.com/pepas24) for contributing as well.</p>
 
 ## License
 Open source; [CC BY-SA 3.0 US](https://creativecommons.org/licenses/by-sa/3.0/us/).

@@ -145,8 +145,8 @@ td.hex-color:before {
   opacity: 0;
   height: 24px;
   width: 24px;
-  border-radius: 12px;
-  box-shadow: 0px 1px 2px 0px rgba(0,0,0,.5);
+  border-radius: 6px;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,.5);
   background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE5IDIxSDhWN0gxOVYyMVpNMTkgNUg4QzYuOSA1IDYgNS45IDYgN1YyMUM2IDIyLjEgNi45IDIzIDggMjNIMTlDMjAuMSAyMyAyMSAyMi4xIDIxIDIxVjdDMjEgNS45IDIwLjEgNSAxOSA1Wk0xNiAxSDRDMi45IDEgMiAxLjkgMiAzVjE3SDRWM0gxNlYxWiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg==");
   background-size: 16px;
   background-position: center;
@@ -156,7 +156,7 @@ td.hex-color:before {
   left: 50%;
   top: 55%;
   transform: translate(-50%, -50%);
-  transition: all .2s ease-in;
+  transition: all .2s ease-in-out;
 }
 
 td.hex-color:hover:before {
@@ -164,10 +164,11 @@ td.hex-color:hover:before {
   top: 50%;
   width: 40px;
   height: 40px;
-  border-radius: 4px;
+  border-radius: 3px;
 }
+
 td.hex-color:active:before {
-  opacity: 0;
+  opacity: 0.25;
 }
 
 td.hex-value {
