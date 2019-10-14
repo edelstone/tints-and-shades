@@ -107,7 +107,7 @@ code {
 	-webkit-appearance: none;
 	line-height: inherit;
 	white-space: normal;
-	outline: none;
+	outline: 0;
 	cursor: pointer;
 }
 
@@ -135,6 +135,7 @@ td.hex-color {
 	min-width: 6.5rem;
 	cursor: pointer;
 	position: relative;
+	outline: 0;
 }
 
 td.hex-color:before {
@@ -157,6 +158,7 @@ td.hex-color:before {
   transition: all .2s ease-in-out;
 }
 
+td.hex-color:focus:before,
 td.hex-color:hover:before {
   opacity: 1;
   top: 50%;
