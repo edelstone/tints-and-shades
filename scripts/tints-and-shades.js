@@ -88,7 +88,7 @@ function makeTableRowColors(colors, displayType) {
   var tableRow = "<tr>";
   for (var i = 0; i < colors.length; i++) {
     if (displayType == "colors") { // make a row of colors
-      tableRow += "<td class=\"hex-color\" style=\"background-color:" + "#" + colors[i].toString(16) + "\" data-clipboard-text=\"" + "#" + colors[i].toString(16) + "\"></td>";
+      tableRow += "<td tabindex=\"0\" role=\"button\" class=\"hex-color\" style=\"background-color:" + "#" + colors[i].toString(16) + "\" data-clipboard-text=\"" + "#" + colors[i].toString(16) + "\"></td>";
     } else { // make a row of RGB values
       tableRow += "<td class=\"hex-value\">" + colors[i].toString(16).toUpperCase() + "</td>";
     }
