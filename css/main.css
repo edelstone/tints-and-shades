@@ -157,6 +157,10 @@ td.hex-color:before {
   transition: all .2s ease-in-out;
 }
 
+td.hex-color.copied:before {
+	box-shadow: 0 1px 3px 0 rgba(0,0,0,0);
+}
+
 td.hex-color:hover:before {
   opacity: 1;
   top: 50%;
@@ -167,6 +171,30 @@ td.hex-color:hover:before {
 
 td.hex-color:active:before {
   opacity: 0.25;
+}
+
+td.hex-color:after {
+  content: "";
+  display: block;
+  opacity: 0;
+  height: 40px;
+  width: 40px;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,.5);
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNOSAyMS4wMzVsLTktOC42MzggMi43OTEtMi44NyA2LjE1NiA1Ljg3NCAxMi4yMS0xMi40MzYgMi44NDMgMi44MTd6Ii8+PC9zdmc+");
+  background-size: 16px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #fff;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: all .2s ease-in-out;
+}
+
+td.hex-color.copied:after {
+  opacity: 1;
 }
 
 td.hex-value {
