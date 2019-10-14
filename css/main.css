@@ -162,7 +162,8 @@ td.hex-color.copied:before {
 	box-shadow: 0 1px 3px 0 rgba(0,0,0,0);
 }
 
-td.hex-color:focus:before {
+td.hex-color:focus:before,
+td.hex-color:hover:before {
   opacity: 1;
   top: 50%;
   width: 40px;
