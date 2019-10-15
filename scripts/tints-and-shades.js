@@ -147,3 +147,9 @@ $(document).ready(function() {
   // connect the form submit button to all of the guts
   $("#color-entry-form").submit(createTintsAndShades);
 });
+
+// Checks if the enter key is pressed and simulates a click on the focused element
+$(document).keypress(function(event){
+	if ((event.keyCode ? event.keyCode : event.which) == "13")
+		$(":focus").click();
+});
