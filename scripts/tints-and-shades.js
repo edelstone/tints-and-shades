@@ -131,6 +131,11 @@ function createTintsAndShades() {
 
     // set url hash to a comma seperated list of hex codes
     window.location.hash = parsedColorsArray.join(",");
+  } else {
+    $('html,body').stop().animate({scrollTop: 0}, 200, function() {
+      $("#tints-and-shades").html("");
+    });
+
   }
   return false;
 }
