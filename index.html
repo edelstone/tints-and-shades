@@ -90,9 +90,16 @@
 <script src="/scripts/clipboard.min.js"></script>
 <script>
 	$(".button").click(function() {
-		$('html,body').animate({
+		var page = $('html,body');
+    page.on("scroll mousedown wheel DOMMouseScroll mousewheel keyup touchmove", function(){
+       page.stop();
+    });
+		page.animate({
 	  	scrollTop: $("#tints-and-shades").offset().top},
-	  	400);
+	  	400,
+			function() {
+	      page.off("scroll mousedown wheel DOMMouseScroll mousewheel keyup touchmove");
+	    });
 	});
 
 	var clipboard = new ClipboardJS('.hex-color');
