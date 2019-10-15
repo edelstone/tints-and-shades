@@ -89,13 +89,25 @@
 <script src="/scripts/tints-and-shades.js"></script>
 <script src="/scripts/clipboard.min.js"></script>
 <script>
-$(".button").click(function() {
-	$('html,body').animate({
-  	scrollTop: $("#tints-and-shades").offset().top},
-  	400);
-});
+	$(".button").click(function() {
+		$('html,body').animate({
+	  	scrollTop: $("#tints-and-shades").offset().top},
+	  	400);
+	});
 
-new ClipboardJS('.hex-color');
+	var clipboard = new ClipboardJS('.hex-color');
+
+	clipboard.on('success', function(e) {
+		e.trigger.classList.add("copied");
+		setTimeout(function(){
+			e.trigger.blur();
+		}, 0);
+		setTimeout(function(){
+			e.trigger.classList.remove("copied");
+		}, 1500);
+
+		e.clearSelection();
+	});
 </script>
 
 </body>
