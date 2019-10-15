@@ -142,12 +142,12 @@ td.hex-color:before {
   content: "";
   display: block;
   opacity: 0;
-  height: 24px;
-  width: 24px;
-  border-radius: 6px;
-  box-shadow: 0 1px 3px 0 rgba(0,0,0,.5);
-  background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE5IDIxSDhWN0gxOVYyMVpNMTkgNUg4QzYuOSA1IDYgNS45IDYgN1YyMUM2IDIyLjEgNi45IDIzIDggMjNIMTlDMjAuMSAyMyAyMSAyMi4xIDIxIDIxVjdDMjEgNS45IDIwLjEgNSAxOSA1Wk0xNiAxSDRDMi45IDEgMiAxLjkgMiAzVjE3SDRWM0gxNlYxWiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg==");
-  background-size: 16px;
+  height: 4rem;
+  width: 4rem;
+	border-radius: 3px;
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,.5);
+	background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPjwhLS1HZW5lcmF0ZWQgYnkgSUpTVkcgKGh0dHBzOi8vZ2l0aHViLmNvbS9pY29uamFyL0lKU1ZHKS0tPjxwYXRoIGQ9Ik0wLDBoMjR2MjRoLTI0WiIgZmlsbD0ibm9uZSI+PC9wYXRoPjxwYXRoIGZpbGw9IiMwMDAiIGQ9Ik0xNiwxaC0xMmMtMS4xLDAgLTIsMC45IC0yLDJ2MTRoMnYtMTRoMTJ2LTJabTMsNGgtMTFjLTEuMSwwIC0yLDAuOSAtMiwydjE0YzAsMS4xIDAuOSwyIDIsMmgxMWMxLjEsMCAyLC0wLjkgMiwtMnYtMTRjMCwtMS4xIC0wLjksLTIgLTIsLTJabTAsMTZoLTExdi0xNGgxMXYxNFoiPjwvcGF0aD48L3N2Zz4=);
+  background-size: 18px;
   background-position: center;
   background-repeat: no-repeat;
   background-color: #fff;
@@ -155,35 +155,36 @@ td.hex-color:before {
   left: 50%;
   top: 55%;
   transform: translate(-50%, -50%);
-  transition: all .2s ease-in-out;
+  transition: all .15s ease-in-out;
 }
 
 td.hex-color.copied:before {
-	box-shadow: 0 1px 3px 0 rgba(0,0,0,0);
+	box-shadow: none;
 }
 
 td.hex-color:focus:before,
 td.hex-color:hover:before {
   opacity: 1;
-  top: 50%;
-  width: 40px;
-  height: 40px;
-  border-radius: 3px;
+	top: 50%;
+  width: 4rem;
+  height: 4rem;
 }
 
 td.hex-color:active:before {
-  opacity: 0.25;
+  opacity: 0.2;
+	height: 3.6rem;
+	width: 3.6rem;
 }
 
 td.hex-color:after {
   content: "";
   display: block;
   opacity: 0;
-  height: 40px;
-  width: 40px;
+  height: 4rem;
+  width: 4rem;
   border-radius: 3px;
-  box-shadow: 0 1px 3px 0 rgba(0,0,0,.5);
-  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNOSAyMS4wMzVsLTktOC42MzggMi43OTEtMi44NyA2LjE1NiA1Ljg3NCAxMi4yMS0xMi40MzYgMi44NDMgMi44MTd6Ii8+PC9zdmc+");
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,.5);
+	background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPjwhLS1HZW5lcmF0ZWQgYnkgSUpTVkcgKGh0dHBzOi8vZ2l0aHViLmNvbS9pY29uamFyL0lKU1ZHKS0tPjxwYXRoIGQ9Ik0yMy4zNzQsMC4yODdsMy41OTg3NmUtMDgsMi41ODAwNGUtMDhjLTAuNjczMjQyLC0wLjQ4MjY2NSAtMS42MTAyOSwtMC4zMjgyMDggLTIuMDkzLDAuMzQ1bC0xNC4wMzUsMTkuNTY4bC00LjY4NSwtNC42ODlsMi40MjM2OGUtMDgsMi40MjQ4MmUtMDhjLTAuNTg1Njk4LC0wLjU4NTk3NCAtMS41MzU1MywtMC41ODYxOTggLTIuMTIxNSwtMC4wMDA1MDAwNjhjLTAuNTg1OTc0LDAuNTg1Njk4IC0wLjU4NjE5OCwxLjUzNTUzIC0wLjAwMDUwMDA2OCwyLjEyMTVjMS40ODk4OWUtMDgsMS40OTA1OWUtMDggNy40NDk0NWUtMDksNy40NTI5N2UtMDkgMi4yMzQ4NGUtMDgsMi4yMzU4OWUtMDhsNS45MzUsNS45MzRsNC41MjA4M2UtMDgsNC4zNTAyNGUtMDhjMC42MDY4OSwwLjU4Mzk4OSAxLjU3MjI5LDAuNTY1NDI1IDIuMTU2MjgsLTAuMDQxNDY0OWMwLjA0Mzg2NiwtMC4wNDU1ODYyIDAuMDg0ODUyOSwtMC4wOTM4NTc5IDAuMTIyNzIzLC0wLjE0NDUzNWwxNS4wNjYsLTIxbDUuMjgwOThlLTA4LC03LjM2NjE0ZS0wOGMwLjQ4MjY2NSwtMC42NzMyNDMgMC4zMjgyMDcsLTEuNjEwMjkgLTAuMzQ1LC0yLjA5M1oiIGZpbGw9IiMwOTAiPjwvcGF0aD48L3N2Zz4=);
   background-size: 16px;
   background-position: center;
   background-repeat: no-repeat;
@@ -192,7 +193,7 @@ td.hex-color:after {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  transition: all .2s ease-in-out;
+  transition: all .15s ease-in-out;
 }
 
 td.hex-color.copied:after {
