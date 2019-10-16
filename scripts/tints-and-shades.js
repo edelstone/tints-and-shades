@@ -131,15 +131,25 @@ function createTintsAndShades(firstTime) {
 
     // set url hash to a comma seperated list of hex codes
     window.location.hash = parsedColorsArray.join(",");
-  } else if (firstTime != true) {
+  } else if (firstTime != true) { // doesn't run on page load (the first time it runs)
+    // scroll back to top of page
     $('html,body').stop().animate({scrollTop: 0}, 200, function() {
+      // remove any existing content from tints-and-shades div
       $("#tints-and-shades").html("");
+
+      // reset the url hash
       window.location.hash = "";
+
+      // show warning
       $("#warning").addClass("visible");
+
+      // hide warning after 3 seconds
       setTimeout(function(){
         $("#warning").removeClass("visible");
   		}, 3000);
     });
+
+    // send focus back to the text area
     $("#color-values").focus();
   }
   return false;
