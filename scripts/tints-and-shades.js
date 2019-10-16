@@ -97,7 +97,7 @@ function makeTableRowColors(colors, displayType) {
   return tableRow;
 }
 
-function createTintsAndShades() {
+function createTintsAndShades(firstTime) {
   var parsedColorsArray = parseColorValues($("#color-values").val());
   if (parsedColorsArray !== null) {
     // make sure we got value color values back from parsing
@@ -131,12 +131,16 @@ function createTintsAndShades() {
 
     // set url hash to a comma seperated list of hex codes
     window.location.hash = parsedColorsArray.join(",");
-  } else {
+  } else if (firstTime != true) {
     $('html,body').stop().animate({scrollTop: 0}, 200, function() {
       $("#tints-and-shades").html("");
+      $("#warning").addClass("visible");
+      setTimeout(function(){
+        $("#warning").removeClass("visible");
+  		}, 3000);
     });
-
   }
+  $("#color-values").focus();
   return false;
 }
 
@@ -147,7 +151,7 @@ $(document).ready(function() {
   $("#color-values").val(window.location.hash.slice(1).replace(/,/g, " "));
 
   // create tints and shades with hash hex codes
-  createTintsAndShades();
+  createTintsAndShades(true);
 
   // connect the form submit button to all of the guts
   $("#color-entry-form").submit(createTintsAndShades);
