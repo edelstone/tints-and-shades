@@ -134,13 +134,14 @@ function createTintsAndShades(firstTime) {
   } else if (firstTime != true) {
     $('html,body').stop().animate({scrollTop: 0}, 200, function() {
       $("#tints-and-shades").html("");
+      window.location.hash = "";
       $("#warning").addClass("visible");
       setTimeout(function(){
         $("#warning").removeClass("visible");
   		}, 3000);
     });
+    $("#color-values").focus();
   }
-  $("#color-values").focus();
   return false;
 }
 
