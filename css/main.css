@@ -205,6 +205,7 @@ td.hex-value {
 	text-align: center;
 	padding: 0.5rem 0 2.5rem;
 	text-transform: lowercase;
+	cursor: default;
 }
 
 .ts-documentation {
@@ -278,6 +279,10 @@ td.hex-value {
 	#tints-and-shades {
 		overflow-y: scroll;
 	  -webkit-overflow-scrolling: touch;
+	}
+
+	td.hex-color:before {
+		display: none;
 	}
 }
 
