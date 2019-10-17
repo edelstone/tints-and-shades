@@ -132,11 +132,14 @@ function createTintsAndShades(firstTime) {
     // set url hash to a comma seperated list of hex codes
     window.location.hash = parsedColorsArray.join(",");
 
-    // set focus to the color display table
-    $(".ts-colors").first().focus();
-
     // scroll down to show the tints-and-shades div
     $('html,body').animate({scrollTop: $("#tints-and-shades").offset().top}, 400);
+
+    // set focus to the color display table after 400 milliseconds
+    setTimeout(function(){
+      $(".ts-colors").first().focus();
+    }, 400);
+
   } else if (firstTime != true) { // doesn't run on page load (the first time it runs)
     // scroll back to top of page
     $('html,body').stop().animate({scrollTop: 0}, 200, function() {
