@@ -132,8 +132,8 @@ function createTintsAndShades(firstTime) {
     // set url hash to a comma seperated list of hex codes
     window.location.hash = parsedColorsArray.join(",");
 
-    // set focus to the first color in the table
-    $(".hex-color").first().focus();
+    // set focus to the color display table
+    $(".ts-colors").first().focus();
 
     // scroll down to show the tints-and-shades div
     $('html,body').animate({scrollTop: $("#tints-and-shades").offset().top}, 400);
