@@ -131,6 +131,12 @@ function createTintsAndShades(firstTime) {
 
     // set url hash to a comma seperated list of hex codes
     window.location.hash = parsedColorsArray.join(",");
+
+    // set focus to the first color in the table
+    $(".hex-color").first().focus();
+
+    // scroll down to show the tints-and-shades div
+    $('html,body').animate({scrollTop: $("#tints-and-shades").offset().top}, 400);
   } else if (firstTime != true) { // doesn't run on page load (the first time it runs)
     // scroll back to top of page
     $('html,body').stop().animate({scrollTop: 0}, 200, function() {
@@ -149,7 +155,7 @@ function createTintsAndShades(firstTime) {
   		}, 3000);
     });
 
-    // send focus back to the text area
+    // set focus back to the text area
     $("#color-values").focus();
   }
   return false;
