@@ -165,6 +165,7 @@ code {
 	overflow-x: auto;
 	width: 100%;
 	padding-top: 4rem;
+	outline: 0;
 }
 
 .ts-content table {

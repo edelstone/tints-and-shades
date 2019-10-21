@@ -92,12 +92,6 @@
 <script src="/scripts/tints-and-shades.js"></script>
 <script src="/scripts/clipboard.min.js"></script>
 <script>
-	$(".button").click(function() {
-		$('html,body').animate({
-	  	scrollTop: $("#tints-and-shades").offset().top},
-	  	400);
-	});
-
 	var clipboard = new ClipboardJS('.hex-color');
 
 	clipboard.on('success', function(e) {
