@@ -51,7 +51,7 @@ This application is inspired by a similar app once maintained by [North Krimsly]
 Open source; [CC BY-SA 3.0 US](https://creativecommons.org/licenses/by-sa/3.0/us/).
 
 ## Feedback and contributing
-If you have a problem or would like to help improve this tool, feel free to [create/review open issues](https://github.com/edelstone/tints-and-shades/issues) or [make a pull request](https://github.com/edelstone/tints-and-shades/pulls).
+If you have a problem or would like to help improve this tool, feel free to [create/review open issues](https://github.com/edelstone/tints-and-shades/issues) or [make a pull request](https://github.com/edelstone/tints-and-shades/pulls). You can also just [contact the project maintainer](https://michaeledelstone.com/contact) directly.
 
 ## Styles
 - **Typography:** [Work Sans](https://weiweihuanghuang.github.io/Work-Sans/) by Wei Huang</li>
