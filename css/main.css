@@ -68,6 +68,10 @@ code {
 	margin-bottom: 10rem;
 }
 
+.ts-form {
+	padding-bottom: 4rem;
+}
+
 .ts-form form {
 	display: flex;
   flex-direction: column;
@@ -164,7 +168,6 @@ code {
 #tints-and-shades {
 	overflow-x: auto;
 	width: 100%;
-	padding-top: 4rem;
 	outline: 0;
 }
 
