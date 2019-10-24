@@ -97,7 +97,8 @@
 	clipboard.on('success', function(e) {
 		e.trigger.classList.add("copied");
 		setTimeout(function(){
-			e.trigger.blur();
+			$("#tints-and-shades").attr("tabindex", "0");
+			$("#tints-and-shades").focus();
 		}, 250);
 		setTimeout(function(){
 			e.trigger.classList.remove("copied");
