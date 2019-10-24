@@ -94,7 +94,7 @@ function calculateShades(colorValue) {
 
 // given a color value, return an array of ten tints in 10% increments
 function calculateTints(colorValue) {
-  return calculate(colorValue, rgbTint).concat("FFFFFF");
+  return calculate(colorValue, rgbTint).concat("ffffff");
 }
 
 // create a table row holding either the color values as blocks of color
