@@ -1,6 +1,6 @@
 // parse an input string, looking for any number of hexadecimal color
 // values, possibly with whitespace or garbage in between.  Return an array of
-// color values.
+// color values. Supports hex shorthand.
 function parseColorValues(colorValues) {
   var colorValuesArray = colorValues.match(/\b[0-9A-Fa-f]{3}\b|[0-9A-Fa-f]{6}\b/g);
   if (colorValuesArray) {

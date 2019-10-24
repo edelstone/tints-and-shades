@@ -45,13 +45,13 @@ Let's say we want tints and shades of [Rebecca Purple](https://meyerweb.com/eric
 This application is inspired by a similar app once maintained by [North Krimsly](https://highintegritydesign.com/), with significant modifications made to the calculation method and interface design.
 
 ## Credits
-[Michael Edelstone](https://michaeledelstone.com) designed and organized the project. [Nick Wing](https://github.com/wickning1) helped him with the color scripts. Many thanks to [Joel Carr](https://github.com/joelcarr), [Sebastian Gutierrez](https://github.com/pepas24), and [Tim Scalzo](https://github.com/TJScalzo) for contributing as well.</p>
+[Michael Edelstone](https://michaeledelstone.com) designed and organized the project. [Nick Wing](https://github.com/wickning1) helped him with the color scripts. Many thanks to [Joel Carr](https://github.com/joelcarr), [Sebastian Gutierrez](https://github.com/pepas24), [Tim Scalzo](https://github.com/TJScalzo), and [Aman Agarwal](https://github.com/AmanAgarwal041) for contributing as well.</p>
 
 ## License
 Open source; [CC BY-SA 3.0 US](https://creativecommons.org/licenses/by-sa/3.0/us/).
 
 ## Feedback and contributing
-If you have a problem or would like to help improve this tool, feel free to [create/review open issues](https://github.com/edelstone/tints-and-shades/issues) or [make a pull request](https://github.com/edelstone/tints-and-shades/pulls). You can also just [contact the project maintainer](https://michaeledelstone.com/contact) directly.
+If you have a problem or would like to help improve this tool, feel free to [create/review open issues](https://github.com/edelstone/tints-and-shades/issues) or [make a pull request](https://github.com/edelstone/tints-and-shades/pulls). You can also just [email the project maintainer](mailto:michael.edelstone@gmail.com).
 
 ## Styles
 - **Typography:** [Work Sans](https://weiweihuanghuang.github.io/Work-Sans/) by Wei Huang</li>
