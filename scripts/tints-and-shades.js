@@ -2,7 +2,23 @@
 // values, possibly with whitespace or garbage in between.  Return an array of
 // color values.
 function parseColorValues(colorValues) {
-  var colorValuesArray = colorValues.match(/[0-9A-Fa-f]{6}\b/g);
+  var colorValuesArray = colorValues.match(/\b[0-9A-Fa-f]{3}\b|[0-9A-Fa-f]{6}\b/g);
+  if (colorValuesArray) {
+    colorValuesArray = colorValuesArray.map(
+      function (item) {
+        if (item.length === 3) {
+          var newItem = item.toString().split('');
+          newItem = newItem.reduce(function(acc, it){
+            return acc + it + it;
+          }, '');
+          return newItem;
+        }
+
+        return item;
+      }
+    );
+  }
+
   return colorValuesArray; // this could be null if there are no matches
 }
 
