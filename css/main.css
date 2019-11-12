@@ -88,6 +88,9 @@ code {
 .ts-ad {
 	min-width: 17rem;
 	order: 2;
+	border: 1px solid #dbdbdb;
+  box-sizing: content-box;
+	border-radius: 3px;
 }
 
 .ts-form textarea {
