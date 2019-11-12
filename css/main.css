@@ -39,7 +39,7 @@ code {
 }
 
 .ts-header {
-	margin: 4rem auto 9rem;
+	margin: 4rem auto 8rem;
 }
 
 .ts-header h1 {
@@ -345,6 +345,10 @@ td.hex-value {
 
 	.ts-input {
 		flex-direction: column;
+	}
+
+	.not-found {
+		min-width: 100%;
 	}
 }
 
