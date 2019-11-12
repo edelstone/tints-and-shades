@@ -47,12 +47,22 @@
 
 /* Custom overrides */
 
+.ts-ad {
+	min-width: 17rem;
+	order: 2;
+	border: 1px solid #dbdbdb;
+  box-sizing: content-box;
+	border-radius: 3px;
+  margin-left: 1rem;
+}
+
 #carbonads {
   min-width: 17rem;
   padding: 0.5rem;
   display: flex;
   height: 100%;
   align-items: center;
+  border-radius: 3px;
 }
 
 #carbonads a {
@@ -73,6 +83,7 @@
 @media (max-width: 500px) {
   .ts-ad {
     margin-top: 1rem;
+    margin-left: 0;
     min-height: 118px;
   }
 

@@ -85,14 +85,6 @@ code {
 	width: 100%;
 }
 
-.ts-ad {
-	min-width: 17rem;
-	order: 2;
-	border: 1px solid #dbdbdb;
-  box-sizing: content-box;
-	border-radius: 3px;
-}
-
 .ts-form textarea {
 	padding: 1.2rem;
 	min-height: 25rem;
@@ -102,7 +94,6 @@ code {
 	border-radius: 3px;
 	-webkit-appearance: none;
 	resize: vertical;
-	margin-right: 1rem;
 	width: 100%;
 }
 
@@ -303,6 +294,7 @@ td.hex-value {
   color: #fff;
 	display: inline-block;
   padding: 4rem 4rem 3rem;
+	min-width: 48rem;
 }
 
 .not-found h2 {
