@@ -39,7 +39,7 @@ code {
 }
 
 .ts-header {
-	margin: 5.5rem auto 9rem;
+	margin: 4rem auto 9rem;
 }
 
 .ts-header h1 {
@@ -56,8 +56,8 @@ code {
 	color: #fff;
 	text-decoration: none;
 	border: none;
-	padding: 0.7rem 3rem;
-	display: block;
+	padding: 0.75rem 2.5rem;
+	display: inline-block;
 }
 
 .ts-subhead {
@@ -82,18 +82,32 @@ code {
 	margin: 0;
 }
 
-.ts-form textarea {
+.ts-input {
+	display: flex;
+  max-width: 55rem;
+  margin: 1rem auto 2rem;
 	width: 100%;
-	max-width: 52rem;
+}
+
+.ts-ad {
+	display: flex;
+  align-items: center;
+	border: 1px solid #dbdbdb;
+  border-radius: 3px;
+	min-width: calc(17rem + 2px);
+}
+
+.ts-form textarea {
 	padding: 1.2rem;
-	margin: 1rem auto 2.5rem;
-	min-height: 20rem;
+	min-height: 23rem;
 	background: #f0f0f0;
 	border: 1px solid #dbdbdb;
 	word-spacing: 0.25rem;
 	border-radius: 3px;
 	-webkit-appearance: none;
 	resize: vertical;
+	margin-right: 1rem;
+	width: 100%;
 }
 
 .labels {
@@ -145,7 +159,7 @@ code {
 .button {
 	padding: 1.6rem;
 	width: 100%;
-	max-width: 52rem;
+	max-width: 55rem;
 	border: none;
 	background: #000;
 	color: #fff;
@@ -301,17 +315,6 @@ td.hex-value {
 	margin: 0;
 }
 
-.github-corner {
-	position: absolute;
-	top: 0;
-	border: none;
-	right: 0;
-}
-
-.github-corner:hover svg {
-	fill: #ca228e !important;
-}
-
 .anchorjs-link {
 	padding-left: 0 !important;
 	margin-left: 0.375em !important;
@@ -337,6 +340,10 @@ td.hex-value {
 		font-size: 55%;
 	}
 
+	.ts-header {
+		margin: 7rem auto 6rem;
+	}
+
 	td.hex-value {
 		font-size: 12px;
 	}
@@ -345,12 +352,6 @@ td.hex-value {
 @media (max-width: 500px) {
 	.ts-headline h1 a {
 		font-size: 5rem;
-	}
-}
-
-@media (max-width: 400px) {
-	.ts-header {
-		margin: 7rem auto 6rem;
 	}
 }
 
