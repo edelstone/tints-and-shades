@@ -57,8 +57,7 @@
   border-radius: 3px;
 }
 
-#carbonads a,
-#carbonads a:hover {
+#carbonads a {
   border: none;
 }
 
@@ -80,7 +79,7 @@
 
   #carbonads {
     min-width: 100%;
-    padding: 1rem 1rem 0.8rem;
+    padding: 1rem;
   }
 
   .carbon-text {
@@ -91,6 +90,7 @@
   .carbon-img {
     float: left;
     margin: 0 1rem 0 0;
+    line-height: 0;
   }
 
   #carbonads span {
