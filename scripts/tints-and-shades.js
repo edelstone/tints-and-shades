@@ -203,3 +203,11 @@ $(document).keypress(function(event){
 	if ((event.keyCode ? event.keyCode : event.which) == "13")
 		$(":focus").click();
 });
+
+// Show a new Carbon ad every time the submit button is clicked
+$('#loadmore').on('click', function() {
+  // If the ad hasn't loaded yet, don't refresh it while it's still loading, or it will return two (or more) ads
+  if (!$("#carbonads")[0]) return;
+  // If the script hasn't loaded, don't try calling it
+  if (typeof _carbonads !== 'undefined') _carbonads.refresh();
+});
