@@ -84,7 +84,7 @@ code {
 
 .ts-input {
 	display: flex;
-  max-width: 55rem;
+  max-width: 60rem;
   margin: 1rem auto 2rem;
 	width: 100%;
 }
@@ -159,7 +159,7 @@ code {
 .button {
 	padding: 1.6rem;
 	width: 100%;
-	max-width: 55rem;
+	max-width: 60rem;
 	border: none;
 	background: #000;
 	color: #fff;
