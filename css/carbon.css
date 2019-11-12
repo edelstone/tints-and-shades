@@ -47,6 +47,14 @@
 
 /* Custom overrides */
 
+.ts-ad {
+	min-width: 17rem;
+	order: 2;
+	border: 1px solid #dbdbdb;
+  box-sizing: content-box;
+	border-radius: 3px;
+}
+
 #carbonads {
   min-width: 17rem;
   padding: 0.5rem;
