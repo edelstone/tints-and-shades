@@ -41,9 +41,6 @@ Let's say we want tints and shades of [Rebecca Purple](https://meyerweb.com/eric
 1. **B:** `153 x .9 = 137.7`, rounded to 138
 1. RGB 92, 46, 138 is converted to the hex equivalent of #5c2e8a
 
-## Attribution
-This application is inspired by a similar app once maintained by [North Krimsly](https://highintegritydesign.com/), with significant modifications made to the calculation method and interface design.
-
 ## Credits
 [Michael Edelstone](https://michaeledelstone.com) designed and organized the project. [Nick Wing](https://github.com/wickning1) helped him with the color scripts. Many thanks to [Joel Carr](https://github.com/joelcarr), [Sebastian Gutierrez](https://github.com/pepas24), [Tim Scalzo](https://github.com/TJScalzo), and [Aman Agarwal](https://github.com/AmanAgarwal041) for contributing as well.</p>
 
