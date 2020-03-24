@@ -1,3 +1,8 @@
+// e.g., whether the user wants copying to use a hashtag or not
+var settings = {
+  copyWithHashtag: false
+};
+
 // parse an input string, looking for any number of hexadecimal color
 // values, possibly with whitespace or garbage in between.  Return an array of
 // color values. Supports hex shorthand.
@@ -97,16 +102,34 @@ function calculateTints(colorValue) {
   return calculate(colorValue, rgbTint).concat("ffffff");
 }
 
+function updateClipboardData() {
+  // basically, all cells that have a data-clipboard-text attribute
+  var colorCells = $("#tints-and-shades td[data-clipboard-text]");
+  $.each(colorCells, function(i, cell) {
+    var colorCode = $(cell).attr("data-clipboard-text");
+
+    if (settings.copyWithHashtag) {
+      $(cell).attr("data-clipboard-text", "#" + colorCode);
+    } else {
+      // strip the existing hashtag from the color code
+      $(cell).attr("data-clipboard-text", colorCode.substr(1));
+    }
+  });
+}
+
 // create a table row holding either the color values as blocks of color
 // or the hexadecimal color values in table cells, depending on the
 // parameter 'displayType'
 function makeTableRowColors(colors, displayType) {
   var tableRow = "<tr>";
   for (var i = 0; i < colors.length; i++) {
+    var color = colors[i].toString(16);
     if (displayType == "colors") { // make a row of colors
-      tableRow += "<td tabindex=\"0\" role=\"button\" class=\"hex-color\" style=\"background-color:" + "#" + colors[i].toString(16) + "\" data-clipboard-text=\"" + colors[i].toString(16) + "\"></td>";
+      // we have to account for the prefix here in case the user toggled the checkbox before generating another palette
+      var colorPrefix = settings.copyWithHashtag ? "#" : "";
+      tableRow += "<td tabindex=\"0\" role=\"button\" class=\"hex-color\" style=\"background-color:" + "#" + color + "\" data-clipboard-text=\"" + colorPrefix + color + "\"></td>";
     } else { // make a row of RGB values
-      tableRow += "<td class=\"hex-value\">" + colors[i].toString(16).toUpperCase() + "</td>";
+      tableRow += "<td class=\"hex-value\">" + color.toUpperCase() + "</td>";
     }
   }
   tableRow += "</tr>";
@@ -196,6 +219,12 @@ $(document).ready(function() {
 
   // connect the form submit button to all of the guts
   $("#color-entry-form").submit(createTintsAndShades);
+
+  $("#copy-with-hashtag").on("click", function(e) {
+    settings.copyWithHashtag = e.target.checked;
+    // this will just fail-fast if the tables haven't been generated yet
+    updateClipboardData();
+  });
 });
 
 // Checks if the enter key is pressed and simulates a click on the focused element

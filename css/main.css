@@ -167,11 +167,16 @@ code {
 	overflow-x: auto;
 	width: 100%;
 	outline: 0;
+	margin-top: 8rem;
 }
 
 .ts-content table {
 	width: 100%;
 	border-collapse: collapse;
+}
+
+#ts-settings #copy-with-hashtag {
+	margin-right: 0.5rem;
 }
 
 .ts-colors {
