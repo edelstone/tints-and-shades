@@ -172,7 +172,7 @@ function createTintsAndShades(firstTime) {
     window.location.hash = parsedColorsArray.join(",");
 
     // scroll down to show the tints-and-shades div
-    $('html,body').animate({scrollTop: $("#tints-and-shades").offset().top}, 400);
+    $('html,body').animate({scrollTop: $("#ts-scroll-top").offset().top}, 400);
 
     // set focus to the color display table after 400 milliseconds
     setTimeout(function(){
