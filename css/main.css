@@ -50,7 +50,7 @@ code {
 	background: linear-gradient(to right, #e96443, #ca228e);
   border-radius: 3px;
 	margin-bottom: 0;
-	font-size: 5.4rem;
+	font-size: 5.6rem;
 	font-weight: 900;
 	line-height: 1.1;
 	color: #fff;
@@ -58,6 +58,7 @@ code {
 	border: none;
 	padding: 1rem 2.5rem;
 	display: inline-block;
+	width: 100%;
 }
 
 .ts-content {
