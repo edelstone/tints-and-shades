@@ -50,13 +50,13 @@ code {
 	background: linear-gradient(to right, #e96443, #ca228e);
   border-radius: 3px;
 	margin-bottom: 0;
-	font-size: 6rem;
+	font-size: 5.4rem;
 	font-weight: 900;
 	line-height: 1.1;
 	color: #fff;
 	text-decoration: none;
 	border: none;
-	padding: 0.75rem 2.5rem;
+	padding: 1rem 2.5rem;
 	display: inline-block;
 }
 
@@ -355,7 +355,7 @@ td.hex-value {
 
 @media (max-width: 500px) {
 	.ts-headline h1 a {
-		font-size: 5rem;
+		font-size: 4.8rem;
 	}
 
 	.ts-input {
@@ -367,23 +367,16 @@ td.hex-value {
 	}
 }
 
-@media (max-width: 370px) {
-	.ts-headline h1 a {
-		font-size: 4.5rem;
-	}
-
-	.ts-form h2 {
-		font-size: 2rem;
-	}
-}
-
-@media (max-width: 340px) {
+@media (max-width: 350px) {
 	.ts-headline h1 {
 		line-height: 1.2;
 	}
 
 	.ts-headline h1 a {
 		font-size: 3.6rem;
-		padding: 1.5rem;
+	}
+
+	.ts-form h2 {
+		font-size: 2rem;
 	}
 }
