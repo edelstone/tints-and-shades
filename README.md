@@ -1,7 +1,7 @@
 # [<img src="https://maketintsandshades.com/favicon.ico" width="25px" />](https://maketintsandshades.com) &nbsp;[Tint & Shade Generator](https://maketintsandshades.com)
 
-[<img src="images/screenshot-1.png" />](https://maketintsandshades.com)
-[<img src="images/screenshot-2.png" />](https://maketintsandshades.com)
+[<img src="images/shot-1.png" />](https://maketintsandshades.com)
+[<img src="images/shot-2.png" />](https://maketintsandshades.com)
 
 ## What is the Tint & Shade Generator?
 The purpose of this tool is to accurately produce tints (lighter variants) and shades (darker variants) of a given hex color in 10% increments.
@@ -9,7 +9,7 @@ The purpose of this tool is to accurately produce tints (lighter variants) and s
 ## Why is this tool unique?
 It takes the math seriously. In my experience similar tools get the calculation incorrect due to rounding errors or other inconsistencies.
 
-Testing shows that the output matches Chrome DevTools' calculation method, Sass [tint](https://sindresorhus.com/sass-extras/#color-function-tint) and [shade](https://sindresorhus.com/sass-extras/#color-function-shade) functions, and the [PostCSS color-mod function](https://github.com/jonathantneal/postcss-color-mod-function#postcss-color-mod-function-) (currently [defunct](https://github.com/w3c/csswg-drafts/issues/813)).
+Testing shows that the output matches Chrome DevTools' calculation method as well as the Sass [tint](https://sindresorhus.com/sass-extras/#color-function-tint) and [shade](https://sindresorhus.com/sass-extras/#color-function-shade) functions.
 
 ## When would I use this?
 It's best used when you already have some base colors but would like complimentary colors for gradients, borders, backgrounds, shadows or other elements.
@@ -19,8 +19,8 @@ This is useful for designers who may be communicating color intent to developers
 ## Calculation method
 The given hex color is first converted to RGB. Then each component of the RGB color has the following calculation performed on it, respectively.
 
-* **Tints:** `New value = current value + ((255 - current value) x tint factor)`
-* **Shades:** `New value = current value x shade factor`
+- **Tints:** `New value = current value + ((255 - current value) x tint factor)`
+- **Shades:** `New value = current value x shade factor`
 
 The new value is rounded if necessary, and then converted back to hex for display.
 
@@ -41,15 +41,30 @@ Let's say we want tints and shades of [Rebecca Purple](https://meyerweb.com/eric
 1. **B:** `153 x .9 = 137.7`, rounded to 138
 1. RGB 92, 46, 138 is converted to the hex equivalent of #5c2e8a
 
-## Credits
-[Michael Edelstone](https://michaeledelstone.com) designed and organized the project. [Nick Wing](https://github.com/wickning1) helped him with the color scripts. Many thanks to [Joel Carr](https://github.com/joelcarr), [Sebastian Gutierrez](https://github.com/pepas24), [Tim Scalzo](https://github.com/TJScalzo), [Aman Agarwal](https://github.com/AmanAgarwal041), and [Aleksandr Hovhannisyan](https://github.com/AleksandrHovhannisyan) for contributing as well.</p>
-
-## License
-Open source; [CC BY-SA 3.0 US](https://creativecommons.org/licenses/by-sa/3.0/us/).
-
 ## Feedback and contributing
-If you have a problem or would like to help improve this tool, feel free to [create/review open issues](https://github.com/edelstone/tints-and-shades/issues) or [make a pull request](https://github.com/edelstone/tints-and-shades/pulls). You can also just [email the project maintainer](mailto:michael.edelstone@gmail.com).
+This project is open source and I'd love your help!
 
-## Styles
-- **Typography:** [Work Sans](https://weiweihuanghuang.github.io/Work-Sans/) by Wei Huang</li>
-- **Colors:** [#000000](https://maketintsandshades.com/#000000), [#ffffff](https://maketintsandshades.com/#ffffff), [#e96443](https://maketintsandshades.com/#e96443), and [#ca228e](https://maketintsandshades.com/#ca228e)
+If you notice a bug or want a feature added please [file an issue on GitHub](https://github.com/edelstone/tints-and-shades/issues/new). If you don't have an account there, just [email me](mailto:michael.edelstone@gmail.com) the details.
+
+If you're a developer and want to help with the project, please comment on [open issues](https://github.com/edelstone/tints-and-shades/issues) or create a new one and communicate your intentions. Once we agree on a path forward you can just make a pull request and take it to the finish line.
+
+## Support this project
+The Tint & Shade Generator will always be free but your support is greatly appreciated.
+
+- [Buy Me a Coffee](https://www.buymeacoffee.com/edelstone)
+- [Venmo](https://venmo.com/michaeledelstone)
+- [Cash App](https://cash.app/$edelstone)
+- [Paypal](https://www.paypal.me/edelstone)
+- [GitHub Sponsors](https://github.com/sponsors/edelstone)
+- Bitcoin: `39t7oofR7AoZoAdH7gJLBrGnrgcJbsqmiP`
+- Other crypto: [email me](mailto:michael.edelstone@gmail.com)
+
+## Credits
+[Michael Edelstone](https://michaeledelstone.com) designed and organized the project with big-time assistance from [Nick Wing](https://github.com/wickning1) on the color scripts.
+
+Many thanks to [Joel Carr](https://github.com/joelcarr), [Sebastian Gutierrez](https://github.com/pepas24), [Tim Scalzo](https://github.com/TJScalzo), [Aman Agarwal](https://github.com/AmanAgarwal041), and [Aleksandr Hovhannisyan](https://github.com/AleksandrHovhannisyan) for their valuable contributions.</p>
+
+## Fine print
+- Typography: [Work Sans](https://weiweihuanghuang.github.io/Work-Sans/) by Wei Huang</li>
+- Colors: [#000000](https://maketintsandshades.com/#000000), [#ffffff](https://maketintsandshades.com/#ffffff), [#e96443](https://maketintsandshades.com/#e96443), and [#ca228e](https://maketintsandshades.com/#ca228e)
+- License: [CC BY-SA 3.0 US](https://creativecommons.org/licenses/by-sa/3.0/us/)
