@@ -1,4 +1,0 @@
-This is a Brave Rewards publisher verification file.
-
-Domain: maketintsandshades.com
-Token: 1976ef747d4853b52db07d56b76d52e56a82e91626ad20547e7ea529a1e3fa2f
