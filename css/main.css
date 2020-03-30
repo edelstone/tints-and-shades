@@ -281,8 +281,8 @@ td.hex-value {
 }
 
 .ts-documentation h2 {
-	margin-top: 3.5rem;
-	margin-bottom: 0;
+	padding-top: 2rem;
+	margin: 0;
 	font-size: 2.7rem;
 	line-height: 1.3;
 }
