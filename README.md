@@ -68,3 +68,4 @@ Many thanks to [Joel Carr](https://github.com/joelcarr), [Sebastian Gutierrez](h
 - Typography: [Work Sans](https://weiweihuanghuang.github.io/Work-Sans/) by Wei Huang</li>
 - Colors: [#000000](https://maketintsandshades.com/#000000), [#ffffff](https://maketintsandshades.com/#ffffff), [#e96443](https://maketintsandshades.com/#e96443), and [#ca228e](https://maketintsandshades.com/#ca228e)
 - License: [CC BY-SA 3.0 US](https://creativecommons.org/licenses/by-sa/3.0/us/)
+- Like Google's Material Design? Try [this other thing I made](https://materialpalettes.com).
