@@ -175,21 +175,6 @@ code {
 	border-collapse: collapse;
 }
 
-.ts-settings {
-	padding-top: 2.5rem;
-	line-height: 1.2;
-}
-
-#ts-settings #copy-with-hashtag {
-	position: relative;
-	bottom: 1px;
-	right: 5px;
-}
-
-.copy-label {
-	font-size: 1.6rem;
-}
-
 .ts-colors {
 	margin-top: 8rem;
 }
@@ -329,6 +314,102 @@ td.hex-value {
 	margin-left: 0.375em !important;
 }
 
+.ts-settings {
+	padding-top: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.copy-label {
+	font-size: 1.6rem;
+	line-height: 1.4;
+}
+
+/* Switch */
+.switch * {
+	box-sizing: content-box;
+}
+
+.switch {
+  position: relative;
+	width: 70px;
+  -webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	text-align: left;
+	margin-right: 1.2rem;
+}
+
+.switch-checkbox {
+  display: none;
+}
+
+.switch-label {
+  display: block;
+	overflow: hidden;
+	cursor: pointer;
+	border-radius: 20px;
+}
+
+.switch-inner {
+  display: block;
+	width: 200%;
+	margin-left: -100%;
+  transition: margin 0.3s ease-in 0s;
+}
+
+.switch-inner:before,
+.switch-inner:after {
+  display: block;
+	float: left;
+	width: 50%;
+	height: 30px;
+	padding: 0;
+	line-height: 30px;
+  font-size: 13px;
+	font-weight: 500;
+	color: white;
+}
+
+.switch-inner:before {
+  content: "ON";
+  padding-left: 10px;
+  background-color: #ca228e;
+	color: #fff;
+}
+
+.switch-inner:after {
+  content: "OFF";
+  padding-right: 10px;
+  background-color: #d9d9d9;
+	color: #5f5f5f;
+  text-align: right;
+}
+
+.switch-toggle {
+  display: block;
+	width: 14px;
+	margin: 6px;
+  background: #fff;
+  position: absolute;
+	top: 0;
+	bottom: 0;
+  right: 39px;
+  border: 2px solid #5f5f5f;
+	border-radius: 20px;
+  transition: all 0.3s ease-in 0s;
+}
+
+.switch-checkbox:checked + .switch-label .switch-inner {
+  margin-left: 0;
+}
+
+.switch-checkbox:checked + .switch-label .switch-toggle {
+  right: 0px;
+	border-color: #000;
+}
+
 @media (pointer: coarse) {
 	.ts-content textarea {
 		font-size: 16px;
@@ -383,5 +464,14 @@ td.hex-value {
 
 	.ts-form h2 {
 		font-size: 2rem;
+	}
+
+	.ts-settings {
+		flex-direction: column-reverse;
+	}
+
+	.switch {
+		margin-right: 0;
+		margin-top: 0.8rem;
 	}
 }

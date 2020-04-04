@@ -9,6 +9,14 @@
 @font-face {
   font-family: 'Work Sans';
   font-style: normal;
+  font-weight: 500;
+  src: url('/fonts/WorkSans-Medium.woff2') format('woff2'),
+       url('/fonts/WorkSans-Medium.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Work Sans';
+  font-style: normal;
   font-weight: 700;
   src: url('/fonts/WorkSans-Bold.woff2') format('woff2'),
        url('/fonts/WorkSans-Bold.woff') format('woff');
