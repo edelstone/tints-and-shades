@@ -32,6 +32,13 @@ code {
 	border-radius: 3px;
 }
 
+.github-corner {
+	position: absolute;
+	top: 0;
+	right: 0;
+	border: none;
+}
+
 .ts-wrapper {
 	padding: 2rem;
 	max-width: 80rem;
@@ -342,7 +349,13 @@ td.hex-value {
 }
 
 .switch-checkbox {
-  display: none;
+	position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.switch-checkbox:focus + .switch-label {
+	box-shadow: 0 0 1px #000, 0 0 1px #000, 0 0 2px #000, 0 0 2px #000;
 }
 
 .switch-label {
