@@ -70,6 +70,10 @@
   border: none;
 }
 
+#carbonads span {
+  margin: auto;
+}
+
 #carbonads .carbon-poweredby,
 #carbonads .carbon-poweredby:hover {
   color: #767676;
