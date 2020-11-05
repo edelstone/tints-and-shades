@@ -30,6 +30,7 @@ code {
   font-size: 85%;
   padding: 0.2rem 0.6rem;
 	border-radius: 3px;
+	word-break: break-word;
 }
 
 .github-corner {
