@@ -40,6 +40,20 @@ code {
 	border: none;
 }
 
+.feature {
+	margin-top: 1rem;
+}
+
+.feature a {
+	border: none;
+	display: block;
+}
+
+.feature img {
+	display: block;
+	margin: auto;
+}
+
 .ts-wrapper {
 	padding: 2rem;
 	max-width: 80rem;
