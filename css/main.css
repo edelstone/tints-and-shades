@@ -42,21 +42,22 @@ code {
 
 .feature {
 	margin-top: 1rem;
+	display: flex;
+  justify-content: center;
 }
 
 .feature a {
 	border: none;
-	display: block;
 }
 
 .feature img {
 	display: block;
-	margin: auto;
 }
 
 .feature-card {
 	margin: 3rem 0 1rem;
 }
+
 .feature-card iframe {
 	width: 100%;
 	border-radius: 3px;
