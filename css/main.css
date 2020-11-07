@@ -54,6 +54,15 @@ code {
 	margin: auto;
 }
 
+.feature-card {
+	margin: 3rem 0 1rem;
+}
+.feature-card iframe {
+	width: 100%;
+	border-radius: 3px;
+	background: #f0f0f0;
+}
+
 .ts-wrapper {
 	padding: 2rem;
 	max-width: 80rem;
