@@ -4,10 +4,10 @@
 [<img src="images/ss-2.png" />](https://maketintsandshades.com)
 
 ## What is the Tint & Shade Generator?
-The purpose of this tool is to accurately produce tints (lighter variants) and shades (darker variants) of a given hex color in 10% increments.
+The purpose of this tool is to accurately produce tints (pure white added) and shades (pure black added) of a given hex color in 10% increments.
 
 ## Why is this tool unique?
-It takes the math seriously. In my experience similar tools get the calculation incorrect due to rounding errors or other inconsistencies.
+It takes the math seriously. In my experience similar tools get the calculation incorrect due to rounding errors, creator preferences, or other inconsistencies.
 
 Testing shows that the output matches Chrome DevTools' calculation method as well as the Sass [tint](https://sindresorhus.com/sass-extras/#color-function-tint) and [shade](https://sindresorhus.com/sass-extras/#color-function-shade) functions.
 
