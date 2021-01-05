@@ -1,0 +1,39 @@
+.darkmode-active {
+  background: #1a1a1a;
+  color: #e6e6e6;
+}
+
+.darkmode-active .ts-form textarea {
+  background: #4d4d4d;
+  border: #000;
+  color: #e6e6e6;
+}
+
+.darkmode-active .ts-ad {
+  border-color: #000;
+}
+
+.darkmode-active #carbonads {
+  background: #000;
+  border-color: #000;
+}
+
+.darkmode-active #carbonads .carbon-poweredby,
+.darkmode-active #carbonads .carbon-poweredby:hover {
+  background: #000;
+}
+
+.darkmode-active a {
+  color: #e6e6e6;
+  border-color: #e6e6e6;
+}
+
+.darkmode-active a:hover,
+.darkmode-active a:focus,
+.darkmode-active a:active {
+    border-color: #ca228e;
+}
+
+.darkmode-active code {
+  background: #4a4a4a;
+}
