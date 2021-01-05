@@ -102,7 +102,7 @@ code {
 	word-spacing: 0.25rem;
 	border-radius: 3px;
 	-webkit-appearance: none;
-	resize: vertical;
+	resize: none;
 	width: 100%;
 }
 
