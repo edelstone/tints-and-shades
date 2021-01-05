@@ -59,9 +59,15 @@ The Tint & Shade Generator will always be free but your support is greatly appre
 - Bitcoin: `39t7oofR7AoZoAdH7gJLBrGnrgcJbsqmiP`
 
 ## Credits
-[Michael Edelstone](https://michaeledelstone.com) designed and organized the project with big-time assistance from [Nick Wing](https://github.com/wickning1) on the color scripts.
+[Michael Edelstone](https://michaeledelstone.com) designed and organized the project with big-time assistance from [Nick Wing](https://github.com/wickning1) on the color calculations.
 
-Many thanks to [Joel Carr](https://github.com/joelcarr), [Sebastian Gutierrez](https://github.com/pepas24), [Tim Scalzo](https://github.com/TJScalzo), [Aman Agarwal](https://github.com/AmanAgarwal041), and [Aleksandr Hovhannisyan](https://github.com/AleksandrHovhannisyan) for their valuable contributions.</p>
+We use these amazing open-source libraries across the project:
+
+- [Darken](https://colinespinas.github.io/darken/)
+- [clipboard.js](https://clipboardjs.com/)
+- [jQuery](https://jquery.com/)
+
+Many thanks to [Joel Carr](https://github.com/joelcarr), [Sebastian Gutierrez](https://github.com/pepas24), [Tim Scalzo](https://github.com/TJScalzo), [Aman Agarwal](https://github.com/AmanAgarwal041), and [Aleksandr Hovhannisyan](https://github.com/AleksandrHovhannisyan) for their valuable contributions.
 
 ## Fine print
 - Typography: [Work Sans](https://weiweihuanghuang.github.io/Work-Sans/) by Wei Huang</li>
