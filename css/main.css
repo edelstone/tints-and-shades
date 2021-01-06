@@ -172,6 +172,19 @@ code {
 	background: #ca228e;
 }
 
+.header-table td {
+	font-size: 1.3rem;
+	font-weight: 500;
+	padding: 0.5rem 0 2.5rem;
+  min-width: 6.5rem;
+}
+
+.header-table td span {
+	background: #e6e6e6;
+	padding: 0.5rem 1rem;
+	border-radius: 5px;
+}
+
 #tints-and-shades {
 	overflow-x: auto;
 	width: 100%;
@@ -295,7 +308,7 @@ td.hex-value {
 }
 
 .switch input:checked ~ .control:after {
-  left: 23px;
+  left: 24px;
 }
 
 .switch .control {
@@ -312,10 +325,10 @@ td.hex-value {
 .switch .control:after {
   content: "";
   position: absolute;
-	left: 3px;
-	top: 3px;
-	width: 14px;
-	height: 14px;
+	left: 4px;
+	top: 4px;
+	width: 12px;
+	height: 12px;
   border-radius: 50%;
   background: white;
   transition: left 0.15s ease-in;
