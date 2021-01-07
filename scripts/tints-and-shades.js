@@ -162,8 +162,8 @@ function createTintsAndShades(firstTime) {
       tableRowCounter++;
     }
 
-    // wrap the rows into an HTML table with a faux header table
-    var colorDisplayTable = "<table class=\"header-table\"><tr><td><span>0%</span></td><td><span>10%</span></td><td><span>20%</span></td><td><span>30%</span></td><td><span>40%</span></td><td><span>50%</span></td><td><span>60%</span></td><td><span>70%</span></td><td><span>80%</span></td><td><span>90%</span></td><td><span>100%</span></td></tr></table><table>" + colorDisplayRows.join("") + "</table>";
+    // wrap the rows into an HTML table with a hard-coded header row
+    var colorDisplayTable = "<table><thead><tr class=\"table-header\"><td><span>0%</span></td><td><span>10%</span></td><td><span>20%</span></td><td><span>30%</span></td><td><span>40%</span></td><td><span>50%</span></td><td><span>60%</span></td><td><span>70%</span></td><td><span>80%</span></td><td><span>90%</span></td><td><span>100%</span></td></tr></thead>" + colorDisplayRows.join("") + "</table>";
 
     // replace tints-and-shades div with color display table wrapped by the same div
     $("#tints-and-shades").html(colorDisplayTable);

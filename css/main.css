@@ -185,14 +185,14 @@ code {
 	background: #ca228e;
 }
 
-.header-table td {
+.table-header td {
 	font-size: 1.3rem;
 	font-weight: 500;
 	padding: 0.5rem 0 2.5rem;
   min-width: 6.5rem;
 }
 
-.header-table td span {
+.table-header td span {
 	background: #e6e6e6;
 	padding: 0.5rem 1rem;
 	border-radius: 5px;
