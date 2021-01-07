@@ -81,9 +81,7 @@
 }
 
 .carbon-text {
-  margin-bottom: 10px;
   font-size: 12px;
-  padding: 0 0.5rem;
 }
 
 @media (max-width: 500px) {
