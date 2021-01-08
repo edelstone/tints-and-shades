@@ -2,7 +2,6 @@
 
 [<img alt="Screenshot of app home page" src="images/screenshot-1.png" />](https://maketintsandshades.com)
 [<img alt="Screenshot of color swatches after submitting form" src="images/screenshot-2.png" />](https://maketintsandshades.com)
-[<img alt="Screenshot of app in dark mode" src="images/screenshot-3.png" />](https://maketintsandshades.com)
 [<img alt="Perfect score on Lighthouse" title="Click to see full Lighthouse report" src="images/lighthouse.png" />](https://maketintsandshades.com/lighthouse)
 
 ## What is the Tint & Shade Generator?
