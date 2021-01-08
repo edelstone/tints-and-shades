@@ -1,8 +1,9 @@
 # [<img src="https://maketintsandshades.com/favicon.ico" width="25px" />](https://maketintsandshades.com) &nbsp;[Tint & Shade Generator](https://maketintsandshades.com)
 
-[<img src="images/screenshot-1.png" />](https://maketintsandshades.com)
-[<img src="images/screenshot-2.png" />](https://maketintsandshades.com)
-[<img src="images/screenshot-3.png" />](https://maketintsandshades.com)
+[<img alt="Screenshot of app home page" src="images/screenshot-1.png" />](https://maketintsandshades.com)
+[<img alt="Screenshot of color swatches after submitting form" src="images/screenshot-2.png" />](https://maketintsandshades.com)
+[<img alt="Screenshot of app in dark mode" src="images/screenshot-3.png" />](https://maketintsandshades.com)
+[<img alt="Perfect score on Lighthouse" title="Click to see full Lighthouse report" src="images/lighthouse.png" />](https://maketintsandshades.com/lighthouse)
 
 ## What is the Tint & Shade Generator?
 The purpose of this tool is to accurately produce tints (pure white added) and shades (pure black added) of a given hex color in 10% increments.
