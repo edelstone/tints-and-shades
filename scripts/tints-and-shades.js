@@ -127,7 +127,7 @@ function makeTableRowColors(colors, displayType) {
     if (displayType == "colors") { // make a row of colors
       // we have to account for the prefix here in case the user toggled the checkbox before generating another palette
       var colorPrefix = settings.copyWithHashtag ? "#" : "";
-      tableRow += "<td tabindex=\"0\" role=\"button\" class=\"hex-color\" style=\"background-color:" + "#" + color + "\" data-clipboard-text=\"" + colorPrefix + color + "\"></td>";
+      tableRow += "<td tabindex=\"0\" role=\"button\" aria-label=\"Color swatch\" class=\"hex-color\" style=\"background-color:" + "#" + color + "\" data-clipboard-text=\"" + colorPrefix + color + "\"></td>";
     } else { // make a row of RGB values
       tableRow += "<td class=\"hex-value\">" + color.toUpperCase() + "</td>";
     }
