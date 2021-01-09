@@ -18,6 +18,10 @@
   background: #000;
 }
 
+.darkmode-active .ts-ad.ts-ad-secondary {
+  background: none;
+}
+
 .darkmode-active #carbonads {
   background: #000;
   border-color: #000;
