@@ -5,7 +5,7 @@
 
 .darkmode-active .ts-form textarea {
   background: #4d4d4d;
-  border: #000;
+  border-color: #4d4d4d;
   color: #e6e6e6;
 }
 
