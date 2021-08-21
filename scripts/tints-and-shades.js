@@ -234,7 +234,7 @@ $(document).keypress(function(event){
 });
 
 // Show a new Carbon ad every time certain elements are clicked
-$(document).on('click', '#loadmore, .hex-color, .switch', function() {
+$(document).on('click', '#loadmore, .hex-color, .switch, #carbonads', function() {
   // If the ad hasn't loaded yet, don't refresh it while it's still loading, or it will return two (or more) ads
   if (!$("#carbonads")[0]) return;
   // If the script hasn't loaded, don't try calling it
