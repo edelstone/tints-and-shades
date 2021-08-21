@@ -77,5 +77,5 @@ Many thanks to [Joel Carr](https://github.com/joelcarr), [Sebastian Gutierrez](h
 - Colors: [#000000](https://maketintsandshades.com/#000000), [#ffffff](https://maketintsandshades.com/#ffffff), [#e96443](https://maketintsandshades.com/#e96443), and [#ca228e](https://maketintsandshades.com/#ca228e)
 - License: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
 - Performance: We have a perfect score on Google's web page auditing tool, Lighthouse. Check out [the full report](https://maketintsandshades.com/lighthouse).
-- Privacy: The Tint & Shade Generator uses Google Analytics, which records basic information about your visit. I use this data strictly to improve the application and to understand the people who use it.
+- Privacy: We use Google Analytics to record basic information about your visit strictly to improve the application and understand the people who use it.
 - Like Google's Material Design? Try [this other thing I made](https://materialpalettes.com).
