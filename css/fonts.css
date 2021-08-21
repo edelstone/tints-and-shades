@@ -2,7 +2,8 @@
   font-family: 'Work Sans';
   font-style: normal;
   font-weight: 400;
-  src: url('/fonts/WorkSans-Regular.woff2') format('woff2'),
+  font-display: swap;
+  src: local('Work Sans Regular'), url('/fonts/WorkSans-Regular.woff2') format('woff2'),
        url('/fonts/WorkSans-Regular.woff') format('woff');
 }
 
@@ -10,7 +11,8 @@
   font-family: 'Work Sans';
   font-style: normal;
   font-weight: 500;
-  src: url('/fonts/WorkSans-Medium.woff2') format('woff2'),
+  font-display: swap;
+  src: local('Work Sans Medium'), url('/fonts/WorkSans-Medium.woff2') format('woff2'),
        url('/fonts/WorkSans-Medium.woff') format('woff');
 }
 
@@ -18,7 +20,8 @@
   font-family: 'Work Sans';
   font-style: normal;
   font-weight: 700;
-  src: url('/fonts/WorkSans-Bold.woff2') format('woff2'),
+  font-display: swap;
+  src: local('Work Sans Bold'), url('/fonts/WorkSans-Bold.woff2') format('woff2'),
        url('/fonts/WorkSans-Bold.woff') format('woff');
 }
 
@@ -26,6 +29,7 @@
   font-family: 'Work Sans';
   font-style: normal;
   font-weight: 900;
-  src: url('/fonts/WorkSans-Black.woff2') format('woff2'),
+  font-display: swap;
+  src: local('Work Sans Black'), url('/fonts/WorkSans-Black.woff2') format('woff2'),
        url('/fonts/WorkSans-Black.woff') format('woff');
 }
