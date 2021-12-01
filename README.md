@@ -70,7 +70,7 @@ We use these amazing open-source libraries across the project:
 - [clipboard.js](https://clipboardjs.com/)
 - [jQuery](https://jquery.com/)
 
-Many thanks to [Joel Carr](https://github.com/joelcarr), [Sebastian Gutierrez](https://github.com/pepas24), [Tim Scalzo](https://github.com/TJScalzo), [Aman Agarwal](https://github.com/AmanAgarwal041), and [Aleksandr Hovhannisyan](https://github.com/AleksandrHovhannisyan) for their valuable contributions.
+Many thanks to [Joel Carr](https://github.com/joelcarr), [Sebastian Gutierrez](https://github.com/pepas24), [Tim Scalzo](https://github.com/TJScalzo), [Aman Agarwal](https://github.com/AmanAgarwal041), [Aleksandr Hovhannisyan](https://github.com/AleksandrHovhannisyan), and [Shubhendu Sen](https://github.com/Sen-442b) for their valuable contributions.
 
 ## Fine print
 - Typography: [Work Sans](https://weiweihuanghuang.github.io/Work-Sans/) by Wei Huang</li>
