@@ -123,7 +123,7 @@
 		// Get the checkbox element from DOM.
 		let darkmodeToggle = document.getElementById('darkmode-toggle');
 		let darkModeTextToggle = document.getElementById("darkmode-text-toggle");
-	
+
 
 		// Set options.
 		const darkmodeOptions = {
@@ -137,9 +137,9 @@
 		// If darkmode is active then check the checkbox.
 		if(active){
 		darkmodeToggle.checked = active;
-		darkModeTextToggle.innerText="Go Bright";
+		darkModeTextToggle.innerText="Go bright";
 		}else{
-			darkModeTextToggle.innerText="Go Dark";
+			darkModeTextToggle.innerText="Go dark";
 
 		}
 
@@ -152,14 +152,14 @@
 		// Add event listener on checkbox click.
 		darkmodeToggle.addEventListener('click', () => {
 		// Depending on the state of the checkbox, call the on/off methods.
-		if (darkmodeToggle.checked){ 
+		if (darkmodeToggle.checked){
 			darkmode.on();
-			darkModeTextToggle.innerText="Go Bright";
+			darkModeTextToggle.innerText="Go bright";
 
 		}
-		else{ 
+		else{
 			darkmode.off();
-			darkModeTextToggle.innerText="Go Dark";
+			darkModeTextToggle.innerText="Go dark";
 
 		}
 		});
