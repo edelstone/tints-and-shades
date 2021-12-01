@@ -48,7 +48,7 @@
 		<label for="darkmode-toggle" class="switch" tabindex="0">
 	  	<input id="darkmode-toggle" class="darkmode-toggle" type="checkbox" tabindex="-1">
 	  	<span class="control"></span>
-			<span class="label">Go dark</span>
+			<span class="label" id="darkmode-text-toggle">Go dark</span>
 		</label>
 	</div>
 
@@ -122,6 +122,8 @@
 	<script>
 		// Get the checkbox element from DOM.
 		let darkmodeToggle = document.getElementById('darkmode-toggle');
+		let darkModeTextToggle = document.getElementById("darkmode-text-toggle");
+	
 
 		// Set options.
 		const darkmodeOptions = {
@@ -133,7 +135,14 @@
 		// Instantiate darken with options and callback.
 		const darkmode = new darken(darkmodeOptions, active => {
 		// If darkmode is active then check the checkbox.
+		if(active){
 		darkmodeToggle.checked = active;
+		darkModeTextToggle.innerText="Go Bright";
+		}else{
+			darkModeTextToggle.innerText="Go Dark";
+
+		}
+
 
 		// Same as
 		// if (active) darkmodeToggle.checked = true;
@@ -143,8 +152,16 @@
 		// Add event listener on checkbox click.
 		darkmodeToggle.addEventListener('click', () => {
 		// Depending on the state of the checkbox, call the on/off methods.
-		if (darkmodeToggle.checked) darkmode.on();
-		else darkmode.off();
+		if (darkmodeToggle.checked){ 
+			darkmode.on();
+			darkModeTextToggle.innerText="Go Bright";
+
+		}
+		else{ 
+			darkmode.off();
+			darkModeTextToggle.innerText="Go Dark";
+
+		}
 		});
 	</script>
 </body>
