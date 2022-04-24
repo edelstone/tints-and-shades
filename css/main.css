@@ -319,6 +319,7 @@ td.hex-value {
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
+	user-select: none;
 	position: relative;
 	display: flex;
 }
