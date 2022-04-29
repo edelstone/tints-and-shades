@@ -10,7 +10,8 @@ The purpose of this tool is to accurately produce tints (pure white added) and s
 ## Why is this tool unique?
 It takes the math seriously. In my experience similar tools get the calculation incorrect due to rounding errors, creator preferences, or other inconsistencies.
 
-Testing shows that the output matches Chrome DevTools' calculation method as well as the Sass [tint](https://sindresorhus.com/sass-extras/#color-function-tint) and [shade](https://sindresorhus.com/sass-extras/#color-function-shade) functions.
+Testing shows that the output matches Chrome DevTools' calculation method as well as some [established](https://css-tricks.com/snippets/sass/tint-shade-functions), [popular](https://sindresorhus.com/sass-extras/#color-function-tint) methods to derive tints and shades via Sass.
+
 
 ## When would I use this?
 It's best used when you already have some base colors but would like complimentary colors for gradients, borders, backgrounds, shadows or other elements.
