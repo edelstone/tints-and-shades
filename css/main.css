@@ -44,12 +44,11 @@ a.offscreen:focus, a.offscreen:active, a.offscreen:hover {
 	height: auto;
 	width: auto;
 	color: #fff;
-	text-decoration: none;
 	background-color: #000;
 	padding: 1rem 2rem;
 	z-index: 1;
 	border-radius: 3px;
-	border: none;;
+	border: none;
 	top: 1rem;
 	left: 1rem;
 }
