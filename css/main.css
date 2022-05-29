@@ -29,6 +29,31 @@ a:active {
 	border-color: #ca228e;
 }
 
+a.offscreen {
+	position: absolute;
+	left: -999px;
+	top: -999px;
+	width: 1px;
+	height: 1px;
+	text-align: left;
+	overflow: hidden;
+}
+
+a.offscreen:focus, a.offscreen:active, a.offscreen:hover {
+	position: absolute;
+	height: auto;
+	width: auto;
+	color: #fff;
+	text-decoration: none;
+	background-color: #000;
+	padding: 1rem 2rem;
+	z-index: 1;
+	border-radius: 3px;
+	border: none;;
+	top: 1rem;
+	left: 1rem;
+}
+
 code {
 	background: #f0f0f0;
 	font-size: 85%;
