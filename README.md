@@ -73,10 +73,9 @@ We use these amazing open-source libraries across the project:
 
 Many thanks to [Joel Carr](https://github.com/joelcarr), [Sebastian Gutierrez](https://github.com/pepas24), [Tim Scalzo](https://github.com/TJScalzo), [Aman Agarwal](https://github.com/AmanAgarwal041), [Aleksandr Hovhannisyan](https://github.com/AleksandrHovhannisyan), and [Shubhendu Sen](https://github.com/Sen-442b) for their valuable contributions.
 
-## Fine print
+## Other details
 - Typography: [Work Sans](https://weiweihuanghuang.github.io/Work-Sans/) by Wei Huang</li>
 - Colors: [#000000](https://maketintsandshades.com/#000000), [#ffffff](https://maketintsandshades.com/#ffffff), [#e96443](https://maketintsandshades.com/#e96443), and [#ca228e](https://maketintsandshades.com/#ca228e)
-- License: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
 - Performance: We have a perfect score on Google's web page auditing tool, Lighthouse. Check out [the full report](https://maketintsandshades.com/lighthouse).
 - Privacy: We use Google Analytics to record basic information about your visit strictly to improve the application and understand the people who use it.
 - Like Google's Material Design? Try [this other thing I made](https://materialpalettes.com).
