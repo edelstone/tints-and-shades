@@ -57,10 +57,6 @@ The Tint & Shade Generator will always be free but your support is greatly appre
 - [Venmo](https://venmo.com/michaeledelstone)
 - [Cash App](https://cash.app/$edelstone)
 - [Paypal](https://www.paypal.me/edelstone)
-- Bitcoin: `39t7oofR7AoZoAdH7gJLBrGnrgcJbsqmiP`
-- Dogecoin: `D8TNA7iSD4i5Z3fpbTv5fpgTbq9udo8r1n`
-- Ethereum: `0x830bFE848a8fda9d73bc5A93F0307401d7050A44`
-- Litecoin: `MKazMHFCn3k6cQYuY37GHwrQVwhsrRf8aY`
 
 ## Credits
 [Michael Edelstone](https://michaeledelstone.com) designed and organized the project with big-time assistance from [Nick Wing](https://github.com/wickning1) on the color calculations.
