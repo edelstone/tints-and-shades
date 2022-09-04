@@ -1,6 +1,6 @@
 {
-    "name": "",
-    "short_name": "",
+    "name": "Tints and Shades",
+    "short_name": "Tint and Shade Generator",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
