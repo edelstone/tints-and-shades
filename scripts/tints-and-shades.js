@@ -220,7 +220,7 @@ $(document).ready(function() {
   // connect the form submit button to all of the guts
   $("#color-entry-form").submit(createTintsAndShades);
 
-  $("#copy-with-hashtag").on("click", function(e) {
+  $("#copy-with-hashtag").on("change", function(e) {
     settings.copyWithHashtag = e.target.checked;
     // this will just fail-fast if the tables haven't been generated yet
     updateClipboardData();
