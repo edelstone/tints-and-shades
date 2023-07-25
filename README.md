@@ -18,6 +18,8 @@ It's best used when you already have some base colors but would like complimenta
 
 This is useful for designers who may be communicating color intent to developers who use Sass or PostCSS in their builds. It's also a solid way to quickly preview what tints and shades look like for a base color you may be considering for your design.
 
+I've also heard feedback that this tool is useful for teachers, data professionals, and people who make presentations.
+
 ## Calculation method
 The given hex color is first converted to RGB. Then each component of the RGB color has the following calculation performed on it, respectively.
 
