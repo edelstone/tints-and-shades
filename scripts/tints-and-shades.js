@@ -13,7 +13,7 @@ function parseColorValues(colorValues) {
       function (item) {
         if (item.length === 3) {
           var newItem = item.toString().split('');
-          newItem = newItem.reduce(function(acc, it){
+          newItem = newItem.reduce(function (acc, it) {
             return acc + it + it;
           }, '');
           return newItem;
@@ -105,7 +105,7 @@ function calculateTints(colorValue) {
 function updateClipboardData() {
   // basically, all cells that have a data-clipboard-text attribute
   var colorCells = $("#tints-and-shades td[data-clipboard-text]");
-  $.each(colorCells, function(i, cell) {
+  $.each(colorCells, function (i, cell) {
     var colorCode = $(cell).attr("data-clipboard-text");
 
     if (settings.copyWithHashtag) {
@@ -172,21 +172,21 @@ function createTintsAndShades(firstTime) {
     window.location.hash = parsedColorsArray.join(",");
 
     // scroll down to show the tints-and-shades div
-    $('html,body').animate({scrollTop: $("#ts-scroll-top").offset().top}, 400);
+    $('html,body').animate({ scrollTop: $("#ts-scroll-top").offset().top }, 400);
 
     // set focus to the color display table after 400 milliseconds
-    setTimeout(function(){
+    setTimeout(function () {
       $("#tints-and-shades").attr("tabindex", "0");
       $("#tints-and-shades").focus();
     }, 400);
 
     // when color display table loses focus, make it not focusable again
-    $("#tints-and-shades").blur(function() {
+    $("#tints-and-shades").blur(function () {
       $("#tints-and-shades").attr("tabindex", "-1");
     })
   } else if (firstTime != true) { // doesn't run on page load (the first time it runs)
     // scroll back to top of page
-    $('html,body').stop().animate({scrollTop: 0}, 200, function() {
+    $('html,body').stop().animate({ scrollTop: 0 }, 200, function () {
       // remove any existing content from tints-and-shades div
       $("#tints-and-shades").html("");
 
@@ -197,9 +197,9 @@ function createTintsAndShades(firstTime) {
       $("#warning").addClass("visible");
 
       // hide warning after 3 seconds
-      setTimeout(function(){
+      setTimeout(function () {
         $("#warning").removeClass("visible");
-  		}, 3000);
+      }, 3000);
     });
 
     // set focus back to the text area
@@ -210,7 +210,7 @@ function createTintsAndShades(firstTime) {
 
 // main application code. Parse the inputted color numbers, make an HTML
 // with the colors in it, and render the table into the page.
-$(document).ready(function() {
+$(document).ready(function () {
   // get url hash and set it as the text area value
   $("#color-values").val(window.location.hash.slice(1).replace(/,/g, " "));
 
@@ -220,7 +220,7 @@ $(document).ready(function() {
   // connect the form submit button to all of the guts
   $("#color-entry-form").submit(createTintsAndShades);
 
-  $("#copy-with-hashtag").on("change", function(e) {
+  $("#copy-with-hashtag").on("change", function (e) {
     settings.copyWithHashtag = e.target.checked;
     // this will just fail-fast if the tables haven't been generated yet
     updateClipboardData();
@@ -228,13 +228,13 @@ $(document).ready(function() {
 });
 
 // Checks if the enter key is pressed and simulates a click on the focused element
-$(document).keypress(function(event){
-	if ((event.keyCode ? event.keyCode : event.which) == "13")
-		$(":focus").click();
+$(document).keypress(function (event) {
+  if ((event.keyCode ? event.keyCode : event.which) == "13")
+    $(":focus").click();
 });
 
-// Show a new Carbon ad every time certain elements are clicked
-$(document).on('click', '#loadmore, .hex-color, .switch, .carbon-img, .carbon-text, .carbon-poweredby', function() {
+// Show a new Carbon ad when the button is clicked
+$(document).on('#make', function () {
   // If the ad hasn't loaded yet, don't refresh it while it's still loading, or it will return two (or more) ads
   if (!$("#carbonads")[0]) return;
   // If the script hasn't loaded, don't try calling it
