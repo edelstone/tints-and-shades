@@ -233,8 +233,8 @@ $(document).keypress(function (event) {
     $(":focus").click();
 });
 
-// Show a new Carbon ad when the button is clicked
-$(document).on('#loadmore', function () {
+// Show a new Carbon ad every time certain elements are clicked
+$(document).on('click', '#loadmore', function () {
   // If the ad hasn't loaded yet, don't refresh it while it's still loading, or it will return two (or more) ads
   if (!$("#carbonads")[0]) return;
   // If the script hasn't loaded, don't try calling it
