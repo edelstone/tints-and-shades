@@ -3,6 +3,35 @@ const settings = {
   copyWithHashtag: false
 };
 
+// Load the state from localStorage
+const loadSettings = () => {
+  const savedSettings = localStorage.getItem('settings');
+  if (savedSettings) {
+    Object.assign(settings, JSON.parse(savedSettings));
+  }
+};
+
+// Save the state to localStorage
+const saveSettings = () => {
+  localStorage.setItem('settings', JSON.stringify(settings));
+};
+
+// Initialize the settings and checkbox state
+const initializeSettings = () => {
+  loadSettings();
+  const checkbox = document.getElementById('copy-with-hashtag');
+  if (checkbox) {
+    checkbox.checked = settings.copyWithHashtag;
+    checkbox.addEventListener('change', () => {
+      settings.copyWithHashtag = checkbox.checked;
+      saveSettings();
+    });
+  }
+};
+
+// Call initializeSettings when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', initializeSettings);
+
 // Parse an input string, looking for any number of hexadecimal color values, possibly with whitespace or garbage in between. Return an array of color values. Supports hex shorthand.
 const parseColorValues = (colorValues) => {
   let colorValuesArray = colorValues.match(/\b[0-9A-Fa-f]{3}\b|[0-9A-Fa-f]{6}\b/g);
@@ -149,7 +178,7 @@ const createTintsAndShades = (firstTime) => {
       const startPosition = window.scrollY;
       const distance = targetPosition - startPosition;
       let startTime = null;
-    
+
       const animation = (currentTime) => {
         if (startTime === null) startTime = currentTime;
         const timeElapsed = currentTime - startTime;
@@ -157,14 +186,14 @@ const createTintsAndShades = (firstTime) => {
         window.scrollTo(0, run);
         if (timeElapsed < duration) requestAnimationFrame(animation);
       };
-    
+
       const ease = (t, b, c, d) => {
         t /= d / 2;
         if (t < 1) return c / 2 * t * t + b;
         t--;
         return -c / 2 * (t * (t - 2) - 1) + b;
       };
-    
+
       requestAnimationFrame(animation);
     };
 
