@@ -1,8 +1,20 @@
 # [<img src="https://maketintsandshades.com/favicon.ico" width="25px" />](https://maketintsandshades.com) &nbsp;[Tint & Shade Generator](https://maketintsandshades.com)
 
-[<img alt="Screenshot of app home page" src="images/screenshot-1.png" />](https://maketintsandshades.com)
-[<img alt="Screenshot of color swatches after submitting form" src="images/screenshot-2.png" />](https://maketintsandshades.com)
-[<img alt="Perfect score on Lighthouse" title="Click to see full Lighthouse report" src="images/lighthouse.png" />](https://maketintsandshades.com/lighthouse)
+<a href="https://maketintsandshades.com">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="images/home-dark.png" />
+   <source media="(prefers-color-scheme: light)" srcset="images/home-light.png" />
+   <img alt="Screenshot of app home page" src="images/home-light.png" />
+ </picture>
+</a>
+
+<a href="https://maketintsandshades.com">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="images/colors-dark.png" />
+   <source media="(prefers-color-scheme: light)" srcset="images/colors-light.png" />
+   <img alt="Screenshot of app home page" src="images/colors-light.png" />
+ </picture>
+</a>
 
 ## What is the Tint & Shade Generator?
 The purpose of this tool is to accurately produce tints (pure white added) and shades (pure black added) of a given hex color in 10% increments.
@@ -31,14 +43,14 @@ The new value is rounded if necessary, and then converted back to hex for displa
 ## Example calculation
 Let's say we want tints and shades of [Rebecca Purple](https://meyerweb.com/eric/thoughts/2014/06/19/rebeccapurple/), #663399.
 
-#### 10% tint
+### 10% tint
 1. #663399 is converted to the RGB equivalent of 102, 51, 153
 1. **R:** `102 + ((255 - 102) x .1) = 117.3`, rounded to 117
 1. **G:** `51 + ((255 - 51) x .1) = 71.4`, rounded to 71
 1. **B:** `153 + ((255 - 153) x .1) = 163.2`, rounded to 163
 1. RGB 117, 71, 163 is converted to the hex equivalent of #7547a3
 
-#### 10% shade
+### 10% shade
 1. #663399 is converted to the RGB equivalent of 102, 51, 153
 1. **R:** `102 x .9 = 91.8`, rounded to 92
 1. **G:** `51 x .9 = 45.9`, rounded to 46
@@ -74,6 +86,27 @@ Many thanks to [Joel Carr](https://github.com/joelcarr), [Sebastian Gutierrez](h
 ## Other details
 - Typography: [Work Sans](https://weiweihuanghuang.github.io/Work-Sans/) by Wei Huang</li>
 - Colors: [#000000](https://maketintsandshades.com/#000000), [#ffffff](https://maketintsandshades.com/#ffffff), [#e96443](https://maketintsandshades.com/#e96443), and [#ca228e](https://maketintsandshades.com/#ca228e)
-- Performance: We have a perfect score on Google's web page auditing tool, Lighthouse. Check out [the full report](https://maketintsandshades.com/lighthouse).
 - Privacy: We use Google Analytics to record basic information about your visit strictly to improve the application and understand the people who use it.
 - Like Google's Material Design? Try [this other thing I made](https://materialpalettes.com).
+
+## Stats
+
+### Lighthouse
+
+<a title="Click to see full Lighthouse report" href="https://maketintsandshades.com/lighthouse">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="images/lighthouse-dark.png" />
+   <source media="(prefers-color-scheme: light)" srcset="images/lighthouse-light.png" />
+   <img alt="Perfect score on Lighthouse" src="images/lighthouse-light.png" />
+ </picture>
+</a>
+
+### Star history
+
+<a title="Click to see star history" href="https://star-history.com/#edelstone/tints-and-shades&Date">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=edelstone/tints-and-shades&type=Date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=edelstone/tints-and-shades&type=Date" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=edelstone/tints-and-shades&type=Date" />
+ </picture>
+</a>
