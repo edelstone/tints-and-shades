@@ -77,8 +77,9 @@ The Tint & Shade Generator will always be free but your support is greatly appre
 
 We use these amazing open-source libraries across the project:
 
-- [Darken](https://github.com/ColinEspinas/darken)
+- [AnchorJS](https://github.com/bryanbraun/anchorjs)
 - [clipboard.js](https://github.com/zenorocha/clipboard.js)
+- [Darken](https://github.com/ColinEspinas/darken)
 
 Many thanks to [Joel Carr](https://github.com/joelcarr), [Sebastian Gutierrez](https://github.com/pepas24), [Tim Scalzo](https://github.com/TJScalzo), [Aman Agarwal](https://github.com/AmanAgarwal041), [Aleksandr Hovhannisyan](https://github.com/AleksandrHovhannisyan), [Shubhendu Sen](https://github.com/Sen-442b), and [Luis Escarrilla](https://github.com/latesc) for their valuable contributions.
 
