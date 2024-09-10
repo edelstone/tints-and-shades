@@ -2,26 +2,26 @@
   font-family: 'Work Sans';
   font-style: normal;
   font-weight: 400;
-  src: local('Work Sans Regular'), url('/fonts/WorkSans-Regular.woff2') format('woff2');
+  src: url('/fonts/WorkSans-Regular.woff2') format('woff2');
 }
 
 @font-face {
   font-family: 'Work Sans';
   font-style: normal;
   font-weight: 500;
-  src: local('Work Sans Medium'), url('/fonts/WorkSans-Medium.woff2') format('woff2');
+  src: url('/fonts/WorkSans-Medium.woff2') format('woff2');
 }
 
 @font-face {
   font-family: 'Work Sans';
   font-style: normal;
   font-weight: 700;
-  src: local('Work Sans Bold'), url('/fonts/WorkSans-Bold.woff2') format('woff2');
+  src: url('/fonts/WorkSans-Bold.woff2') format('woff2');
 }
 
 @font-face {
   font-family: 'Work Sans';
   font-style: normal;
   font-weight: 900;
-  src: local('Work Sans Black'), url('/fonts/WorkSans-Black.woff2') format('woff2');
+  src: url('/fonts/WorkSans-Black.woff2') format('woff2');
 }
