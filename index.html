@@ -6,24 +6,21 @@
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-GNR8WM6SC0"></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
+		function gtag() { dataLayer.push(arguments); }
 		gtag('js', new Date());
 
 		gtag('config', 'G-GNR8WM6SC0');
 	</script>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description"
-		content="Easily make tints and shades that match the output of Chrome DevTools, Sass, Less, and PostCSS.">
+	<meta name="description" content="Easily make tints and shades that match the output of Chrome DevTools, Sass, Less, and PostCSS.">
 	<meta property="og:type" content="website">
 	<meta property="og:title" content="Tint and Shade Generator">
-	<meta property="og:description"
-		content="Easily make tints and shades that match the output of Chrome DevTools, Sass, Less, and PostCSS.">
+	<meta property="og:description" content="Easily make tints and shades that match the output of Chrome DevTools, Sass, Less, and PostCSS.">
 	<meta property="og:image" content="https://maketintsandshades.com/images/share.jpg">
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="Tint and Shade Generator">
-	<meta name="twitter:description"
-		content="Easily make tints and shades that match the output of Chrome DevTools, Sass, Less, and PostCSS.">
+	<meta name="twitter:description" content="Easily make tints and shades that match the output of Chrome DevTools, Sass, Less, and PostCSS.">
 	<meta name="twitter:image" content="https://maketintsandshades.com/images/share.jpg">
 	<link rel="icon" href="/favicon.ico" sizes="32x32">
 	<link rel="icon" href="/icon.svg" type="image/svg+xml">
@@ -38,135 +35,107 @@
 	<title>Tint and Shade Generator</title>
 </head>
 
-<body id="body">
+<body>
 
-	<a href="#color-values" class="offscreen">Jump to the form</a>
-
-	<div class="dark-mode">
-		<label for="darkmode-toggle" class="switch" tabindex="0">
-			<input id="darkmode-toggle" class="darkmode-toggle" type="checkbox" tabindex="-1">
-			<span class="control"></span>
-			<span class="label" id="darkmode-text-toggle">Go dark</span>
-		</label>
-	</div>
-
-	<a href="https://github.com/edelstone/tints-and-shades" class="github-corner" aria-label="View source on GitHub"><svg
-			width="80" height="80" viewBox="0 0 250 250" style="fill:#000; color:#fff;" aria-hidden="true">
-			<path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
-			<path
-				d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
-				fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
-			<path
-				d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
-				fill="currentColor" class="octo-body"></path>
-		</svg></a>
-
-	<div class="ts-wrapper">
-
-		<header class="ts-header">
-			<div class="ts-headline">
-				<h1><a href="/">Tint &amp; Shade Generator</a></h1>
-			</div>
-		</header>
-
-		<main class="ts-content">
-
-			<div class="ts-form">
-				<form class="pure-form" id="color-entry-form" action="#" method="post" name="color-entry-form">
-					<div class="labels">
-						<div class="form-warning" id="warning">Please enter at least one valid hex color.</div>
-						<h2><label class="textarea-label" for="color-values">Enter hex colors (separated by spaces)</label></h2>
-					</div>
-					<div class="ts-input">
-						<div class="ts-ad item-ads">
-							<script async src="//cdn.carbonads.com/carbon.js?serve=CE7DP5QY&placement=maketintsandshadescom"
-								id="_carbonads_js"></script>
-						</div>
-						<textarea id="color-values" name="color-values" autocomplete="off" autocorrect="off" autocapitalize="off"
-							spellcheck="false"></textarea>
-					</div>
-					<input id="make" class="button" type="submit" value="Make tints and shades &nbsp;🎉" />
-				</form>
-			</div>
-
-			<div class="hashtags" id="ts-scroll-top">
-				<label class="switch" tabindex="0">
-					<input type="checkbox" id="copy-with-hashtag" tabindex="-1">
+	<header class="header">
+		<div class="preheader">
+			<a href="#color-values" class="offscreen">Jump to the form</a>
+			<div class="dark-mode-selector">
+				<label for="darkmode-toggle" class="switch" tabindex="0">
+					<input id="darkmode-toggle" class="darkmode-toggle" type="checkbox" tabindex="-1">
 					<span class="control"></span>
-					<span class="label">Include hashtag when copying</span>
+					<span class="label" id="darkmode-text-toggle">Go dark</span>
 				</label>
 			</div>
+			<a href="https://github.com/edelstone/tints-and-shades" class="github-corner" aria-label="View source on GitHub">
+				<svg width="80" height="80" viewBox="0 0 250 250" style="fill:#000; color:#fff;" aria-hidden="true">
+					<path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+					<path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+					<path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+				</svg>
+			</a>
+		</div>
+		<div class="headline">
+			<h1><a href="/">Tint &amp; Shade Generator</a></h1>
+		</div>
+	</header>
 
-			<div class="ts-colors">
-				<div id="tints-and-shades"></div>
-			</div>
+	<main class="main">
+		<div class="form">
+			<form class="pure-form" id="color-entry-form" action="#" method="post" name="color-entry-form">
+				<div class="labels">
+					<div class="form-warning" id="warning">Please enter at least one valid hex color.</div>
+					<h2><label class="textarea-label" for="color-values">Enter hex colors (separated by spaces)</label></h2>
+				</div>
+				<div class="input">
+					<div class="ts-ad item-ads">
+						<script async src="//cdn.carbonads.com/carbon.js?serve=CE7DP5QY&placement=maketintsandshadescom" id="_carbonads_js"></script>
+					</div>
+					<textarea id="color-values" name="color-values" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+				</div>
+				<input id="make" class="button" type="submit" value="Make tints and shades &nbsp;🎉" />
+			</form>
+		</div>
+		<div class="hashtag-selector" id="scroll-top">
+			<label class="switch" tabindex="0">
+				<input type="checkbox" id="copy-with-hashtag" tabindex="-1">
+				<span class="control"></span>
+				<span class="label">Include hashtag when copying</span>
+			</label>
+		</div>
+		<div class="palettes">
+			<div id="tints-and-shades"></div>
+		</div>
+	</main>
 
-		</main>
-
-		<footer class="ts-footer">
-			<p><a href="/about">About</a><a href="/about#support-this-project">Support this project</a></p>
-		</footer>
-
-	</div>
+	<footer class="footer">
+		<ul>
+			<li><a href="/about">About</a></li>
+			<li><a href="/about#support-this-project">Support this project</a></li>
+		</ul>
+	</footer>
 
 	<script src="/js/main.js"></script>
 	<script src="/js/clipboard.js"></script>
 	<script src="/js/darken.js"></script>
 	<script>
-		var clipboard = new ClipboardJS('.hex-color');
+		const clipboard = new ClipboardJS('.hex-color');
 
-		clipboard.on('success', function (e) {
+		clipboard.on('success', e => {
 			e.trigger.classList.add("copied");
-			setTimeout(function () {
-				e.trigger.blur();
-			}, 250);
-			setTimeout(function () {
-				e.trigger.classList.remove("copied");
-			}, 1500);
-
+			setTimeout(() => e.trigger.blur(), 250);
+			setTimeout(() => e.trigger.classList.remove("copied"), 1500);
 			e.clearSelection();
 		});
 	</script>
 	<script>
-		// Get the checkbox element from DOM.
-		let darkmodeToggle = document.getElementById('darkmode-toggle');
-		let darkModeTextToggle = document.getElementById("darkmode-text-toggle");
+		// Get the checkbox and text toggle elements from the DOM.
+		const darkmodeToggle = document.getElementById('darkmode-toggle');
+		const darkModeTextToggle = document.getElementById("darkmode-text-toggle");
 
 		// Set options.
 		const darkmodeOptions = {
-			class: "darkmode-active",
-			/* Add here any option but do not use the toggle
-			option as you manually added an event listener. */
-		}
+			class: "darkmode-active"
+		};
 
 		// Instantiate darken with options and callback.
 		const darkmode = new darken(darkmodeOptions, active => {
-			// If darkmode is active then check the checkbox.
-			if (active) {
-				darkmodeToggle.checked = active;
-				darkModeTextToggle.innerText = "Go bright";
-			} else {
-				darkModeTextToggle.innerText = "Go dark";
-			}
-
-			// Same as
-			// if (active) darkmodeToggle.checked = true;
-			// else darkmodeToggle.checked = false;
+			darkmodeToggle.checked = active;
+			darkModeTextToggle.innerText = active ? "Go bright" : "Go dark";
 		});
 
 		// Add event listener on checkbox click.
 		darkmodeToggle.addEventListener('click', () => {
-			// Depending on the state of the checkbox, call the on/off methods.
 			if (darkmodeToggle.checked) {
 				darkmode.on();
 				darkModeTextToggle.innerText = "Go bright";
-			}
-			else {
+			} else {
 				darkmode.off();
 				darkModeTextToggle.innerText = "Go dark";
 			}
 		});
 	</script>
+
 </body>
 
 </html>

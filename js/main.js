@@ -169,11 +169,11 @@ const createTintsAndShades = (firstTime) => {
     };
 
     // Scroll down to show the tints-and-shades div
-    const scrollElement = document.getElementById("ts-scroll-top");
+    const scrollElement = document.getElementById("scroll-top");
     if (scrollElement) {
       smoothScrollTo(scrollElement, 500);
     } else {
-      console.error("Element with id 'ts-scroll-top' not found.");
+      console.error("Element with id 'scroll-top' not found.");
     }
 
     // Set focus to the color display table

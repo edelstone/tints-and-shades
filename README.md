@@ -77,36 +77,12 @@ The Tint & Shade Generator will always be free but your support is greatly appre
 
 We use these amazing open-source libraries across the project:
 
-- [Darken](https://colinespinas.github.io/darken/)
-- [clipboard.js](https://clipboardjs.com/)
-- [jQuery](https://jquery.com/)
+- [Darken](https://github.com/ColinEspinas/darken)
+- [clipboard.js](https://github.com/zenorocha/clipboard.js)
 
 Many thanks to [Joel Carr](https://github.com/joelcarr), [Sebastian Gutierrez](https://github.com/pepas24), [Tim Scalzo](https://github.com/TJScalzo), [Aman Agarwal](https://github.com/AmanAgarwal041), [Aleksandr Hovhannisyan](https://github.com/AleksandrHovhannisyan), [Shubhendu Sen](https://github.com/Sen-442b), and [Luis Escarrilla](https://github.com/latesc) for their valuable contributions.
 
 ## Other details
 - Typography: [Work Sans](https://weiweihuanghuang.github.io/Work-Sans/) by Wei Huang</li>
 - Colors: [#000000](https://maketintsandshades.com/#000000), [#ffffff](https://maketintsandshades.com/#ffffff), [#e96443](https://maketintsandshades.com/#e96443), and [#ca228e](https://maketintsandshades.com/#ca228e)
-- Privacy: We use Google Analytics to record basic information about your visit strictly to improve the application and understand the people who use it.
 - Like Google's Material Design? Try [this other thing I made](https://materialpalettes.com).
-
-## Stats
-
-### Lighthouse
-
-<a title="Click to see full Lighthouse report" href="https://maketintsandshades.com/lighthouse">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="images/lighthouse-dark.png" />
-   <source media="(prefers-color-scheme: light)" srcset="images/lighthouse-light.png" />
-   <img alt="Perfect score on Lighthouse" src="images/lighthouse-light.png" />
- </picture>
-</a>
-
-### Star history
-
-<a title="Click to see star history" href="https://star-history.com/#edelstone/tints-and-shades&Date">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=edelstone/tints-and-shades&type=Date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=edelstone/tints-and-shades&type=Date" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=edelstone/tints-and-shades&type=Date" />
- </picture>
-</a>
