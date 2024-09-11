@@ -70,6 +70,7 @@ a.offscreen:hover {
 }
 
 code {
+	font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace;
 	background: var(--gray-50);
 	font-size: 85%;
 	padding: 0.2rem 0.6rem;
