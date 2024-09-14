@@ -1,0 +1,39 @@
+.darkmode-active {
+  background: #1a1a1a;
+  color: #e6e6e6;
+}
+.darkmode-active .form textarea {
+  background: #4d4d4d;
+  border-color: #4d4d4d;
+  color: #e6e6e6;
+}
+.darkmode-active .table-header td span {
+  background: #4d4d4d;
+}
+.darkmode-active .ts-ad {
+  border-color: #000000;
+  background: #000000;
+}
+.darkmode-active .ts-ad.ts-ad-secondary {
+  background: none;
+}
+.darkmode-active #carbonads {
+  background: #000000;
+  border-color: #000000;
+}
+.darkmode-active #carbonads .carbon-poweredby,
+.darkmode-active #carbonads .carbon-poweredby:hover {
+  background: #000000;
+}
+.darkmode-active a {
+  color: #e6e6e6;
+  border-color: #e6e6e6;
+}
+.darkmode-active a:hover, .darkmode-active a:focus, .darkmode-active a:active {
+  border-color: #ca228e;
+}
+.darkmode-active code {
+  background: #4d4d4d;
+}
+
+/*# sourceMappingURL=dark.css.map */
