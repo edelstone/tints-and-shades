@@ -1,0 +1,32 @@
+$white: #ffffff;
+$black: #000000;
+$orange: #e96443;
+$magenta: #ca228e;
+$alert: #cc0000;
+$gray-50: #f0f0f0;
+$gray-100: #e6e6e6;
+$gray-200: #dbdbdb;
+$gray-300: #a9a9a9;
+$gray-400: #767676;
+$gray-500: #4d4d4d;
+$gray-600: #1a1a1a;
+
+$font-family: "Work Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+
+@mixin breakpoint($point, $value: "") {
+  @if $point =='large' {
+    @media only screen and (max-width: 1000px) {
+      @content;
+    }
+  }
+  @else if $point =='medium' {
+    @media only screen and (max-width: 500px) {
+      @content;
+    }
+  }
+  @else if $point =='small' {
+    @media only screen and (max-width: 35px) {
+      @content;
+    }
+  }
+}

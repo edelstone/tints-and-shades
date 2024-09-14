@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  {% include "head.html" %}
+</head>
+
+<body>
+  {% include "header.html" %}
+  <main class="main {% if docs %}docs{% endif %}">
+    {{ content | safe }}
+  </main>
+  {% include "footer.html" %}
+  {% include "scripts.html" %}
+</body>
+
+</html>

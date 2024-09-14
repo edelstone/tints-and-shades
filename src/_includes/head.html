@@ -1,0 +1,35 @@
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GNR8WM6SC0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  gtag('config', 'G-GNR8WM6SC0');
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="{{ site.description }}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tint and Shade Generator">
+<meta property="og:description" content="Easily make tints and shades that match the output of Chrome DevTools, Sass, Less, and PostCSS.">
+<meta property="og:image" content="https://maketintsandshades.com/images/share.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tint and Shade Generator">
+<meta name="twitter:description" content="Easily make tints and shades that match the output of Chrome DevTools, Sass, Less, and PostCSS.">
+<meta name="twitter:image" content="https://maketintsandshades.com/images/share.jpg">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="canonical" href="{{ site.url }}{{ page.url }}">
+<link rel="stylesheet" href="/css/normalize.css">
+<link rel="stylesheet" href="/css/fonts.css">
+<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/css/dark.css">
+{% if main %}
+<link rel="stylesheet" href="/css/carbon.css">
+{% else %}
+<link rel="stylesheet" href="/css/carbon-alt.css">
+{% endif %}
+<title>{% if not main %} {{ title }} | {% endif %}{{ site.name }}</title>
