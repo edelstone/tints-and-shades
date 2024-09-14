@@ -1,0 +1,50 @@
+@import 'variables';
+
+.darkmode-active {
+  background: $gray-600;
+  color: $gray-100;
+
+  .form textarea {
+    background: $gray-500;
+    border-color: $gray-500;
+    color: $gray-100;
+  }
+
+  .table-header td span {
+    background: $gray-500;
+  }
+
+  .ts-ad {
+    border-color: $black;
+    background: $black;
+
+    &.ts-ad-secondary {
+      background: none;
+    }
+  }
+
+  #carbonads {
+    background: $black;
+    border-color: $black;
+
+    .carbon-poweredby,
+    .carbon-poweredby:hover {
+      background: $black;
+    }
+  }
+
+  a {
+    color: $gray-100;
+    border-color: $gray-100;
+
+    &:hover,
+    &:focus,
+    &:active {
+      border-color: $magenta;
+    }
+  }
+
+  code {
+    background: $gray-500;
+  }
+}

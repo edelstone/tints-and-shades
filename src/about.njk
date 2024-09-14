@@ -1,0 +1,96 @@
+---
+layout: layouts/base
+title: About
+permalink: /about/
+docs: true
+---
+
+<h2>What is the Tint & Shade Generator?</h2>
+
+<p>The purpose of this tool is to accurately produce tints (pure white added) and shades (pure black added) of a given hex color in 10% increments.</p>
+
+<h2>Why is this tool unique?</h2>
+
+<p>It takes the math seriously. In my experience similar tools get the calculation incorrect due to rounding errors, creator preferences, or other inconsistencies.</p>
+
+<p>Testing shows that the output matches Chrome DevTools' calculation method as well as some <a href="https://css-tricks.com/snippets/sass/tint-shade-functions">established</a>, <a href="https://sindresorhus.com/sass-extras/#color-function-tint">popular</a> methods to derive tints and shades via Sass.
+
+<h2>When would I use this?</h2>
+
+<p>It's best used when you already have some base colors but would like complimentary colors for gradients, borders, backgrounds, shadows or other elements.</p>
+<p>This is useful for designers who may be communicating color intent to developers who use Sass or PostCSS in their builds. It's also a solid way to quickly preview what tints and shades look like for a base color you may be considering for your design.</p>
+<p>I've also heard it's useful for teachers, data professionals, and people who make presentations.</p>
+
+<h2>Calculation method</h2>
+
+<p>The given hex color is first converted to RGB. Then each component of the RGB color has the following calculation performed on it, respectively.</p>
+
+<ul>
+  <li><b>Tints:</b> <code>New value = current value + ((255 - current value) x tint factor)</code></li>
+  <li><b>Shades:</b> <code>New value = current value x shade factor</code></li>
+</ul>
+
+<p>The new value is rounded if necessary, and then converted back to hex for display.</p>
+
+<h2>Example calculation</h2>
+
+<p>Let’s say we want tints and shades of <a href="https://meyerweb.com/eric/thoughts/2014/06/19/rebeccapurple/">Rebecca Purple</a>, #663399.</p>
+
+<h3>10% tint</h3>
+
+<ol>
+  <li>#663399 is converted to the RGB equivalent of 102, 51, 153</li>
+  <li><b>R:</b> <code>102 + ((255 - 102) x .1) = 117.3</code>, rounded to 117</li>
+  <li><b>G:</b> <code>51 + ((255 - 51) x .1) = 71.4</code>, rounded to 71</li>
+  <li><b>B:</b> <code>153 + ((255 - 153) x .1) = 163.2</code>, rounded to 163</li>
+  <li>RGB 117, 71, 163 is converted to the hex equivalent of #7547a3</li>
+</ol>
+
+<h3>10% shade</h3>
+
+<ol>
+  <li>#663399 is converted to the RGB equivalent of 102, 51, 153</li>
+  <li><b>R:</b> <code>102 x .9 = 91.8</code>, rounded to 92</li>
+  <li><b>G:</b> <code>51 x .9 = 45.9</code>, rounded to 46</li>
+  <li><b>B:</b> <code>153 x .9 = 137.7</code>, rounded to 138</li>
+  <li>RGB 92, 46, 138 is converted to the hex equivalent of #5c2e8a</li>
+</ol>
+
+<h2>Feedback and contributing</h2>
+
+<p>This project is open source and I'd love your help!</p>
+<p>If you notice a bug or want a feature added please <a href="https://github.com/edelstone/tints-and-shades/issues/new">file an issue on GitHub</a>. If you don't have an account there, just <a href="mailto:contact@maketintsandshades.com">email me</a> the details.</p>
+<p>If you're a developer and want to help with the project, please comment on <a href="https://github.com/edelstone/tints-and-shades/issues">open issues</a> or create a new one and communicate your intentions. Once we agree on a path forward you can just make a pull request and take it to the finish line.</p>
+
+<h2>Support this project</h2>
+
+<p>The Tint & Shade Generator will always be free but your support is greatly appreciated.</p>
+
+<ul>
+  <li><a href="https://www.buymeacoffee.com/edelstone">Buy Me a Coffee</a></li>
+  <li><a href="https://venmo.com/michaeledelstone">Venmo</a></li>
+  <li><a href="https://cash.app/$edelstone">Cash App</a></li>
+  <li><a href="https://www.paypal.me/edelstone">Paypal</a></li>
+</ul>
+
+<h2>Credits</h2>
+
+<p><a href="https://michaeledelstone.com">Michael Edelstone</a> designed and organized the project with big-time assistance from <a href="https://github.com/wickning1">Nick Wing</a> on the color calculations.</p>
+
+<p>We use these amazing open-source libraries across the project:</p>
+
+<ul>
+  <li><a href="https://github.com/bryanbraun/anchorjs">AnchorJS</a></li>
+  <li><a href="https://github.com/zenorocha/clipboard.js">clipboard.js</a></li>
+  <li><a href="https://github.com/ColinEspinas/darken">Darken</a></li>
+</ul>
+
+<p>Many thanks to <a href="https://github.com/joelcarr">Joel Carr</a>, <a href="https://github.com/pepas24">Sebastian Gutierrez</a>, <a href="https://github.com/TJScalzo">Tim Scalzo</a>, <a href="https://github.com/AmanAgarwal041">Aman Agarwal</a>, <a href="https://github.com/AleksandrHovhannisyan">Aleksandr Hovhannisyan</a>, <a href="https://github.com/Sen-442b">Shubhendu Sen</a>, and <a href="https://github.com/latesc">Luis Escarrilla</a> for their valuable contributions.</p>
+
+<h2>Other details</h2>
+
+<ul>
+  <li>Typography: <a href="https://weiweihuanghuang.github.io/Work-Sans/">Work Sans</a> by Wei Huang</li>
+  <li>Colors: <a href="https://maketintsandshades.com/#000000">#000000</a>, <a href="https://maketintsandshades.com/#ffffff">#ffffff</a>, <a href="https://maketintsandshades.com/#e96443">#e96443</a>, and <a href="https://maketintsandshades.com/#ca228e">#ca228e</a></li>
+  <li>Like Google's Material Design? Try <a href="https://materialpalettes.com">this other thing I made</a>.</li>
+</ul>

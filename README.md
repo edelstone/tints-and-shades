@@ -1,17 +1,17 @@
-# [<img src="icon.svg" width="28px" />](https://maketintsandshades.com) &nbsp;[Tint & Shade Generator](https://maketintsandshades.com)
+# [<img src="assets/icon.svg" width="28px" />](https://maketintsandshades.com) &nbsp;[Tint & Shade Generator](https://maketintsandshades.com)
 
 <a href="https://maketintsandshades.com">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="images/home-dark.png" />
-   <source media="(prefers-color-scheme: light)" srcset="images/home-light.png" />
+   <source media="(prefers-color-scheme: dark)" srcset="assets/home-dark.png" />
+   <source media="(prefers-color-scheme: light)" srcset="assets/home-light.png" />
    <img alt="Screenshot of app home page" src="images/home-light.png" />
  </picture>
 </a>
 
 <a href="https://maketintsandshades.com">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="images/colors-dark.png" />
-   <source media="(prefers-color-scheme: light)" srcset="images/colors-light.png" />
+   <source media="(prefers-color-scheme: dark)" srcset="assets/colors-dark.png" />
+   <source media="(prefers-color-scheme: light)" srcset="assets/colors-light.png" />
    <img alt="Screenshot of app home page" src="images/colors-light.png" />
  </picture>
 </a>

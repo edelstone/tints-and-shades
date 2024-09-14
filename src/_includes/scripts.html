@@ -1,0 +1,48 @@
+{% if main %}
+<script src="/js/main.js"></script>
+<script src="/js/clipboard.js"></script>
+<script>
+  const clipboard = new ClipboardJS('.hex-color');
+
+  clipboard.on('success', e => {
+    e.trigger.classList.add("copied");
+    setTimeout(() => e.trigger.blur(), 250);
+    setTimeout(() => e.trigger.classList.remove("copied"), 1500);
+    e.clearSelection();
+  });
+</script>
+{% endif %}
+
+{% if docs %}
+<script src="/js/anchor.js"></script>
+<script>anchors.add('h2');</script>
+{% endif %}
+
+<script src="/js/darken.js"></script>
+<script>
+  // Get the checkbox and text toggle elements from the DOM.
+  const darkmodeToggle = document.getElementById('darkmode-toggle');
+  const darkModeTextToggle = document.getElementById("darkmode-text-toggle");
+
+  // Set options.
+  const darkmodeOptions = {
+    class: "darkmode-active"
+  };
+
+  // Instantiate darken with options and callback.
+  const darkmode = new darken(darkmodeOptions, active => {
+    darkmodeToggle.checked = active;
+    darkModeTextToggle.innerText = active ? "Go bright" : "Go dark";
+  });
+
+  // Add event listener on checkbox click.
+  darkmodeToggle.addEventListener('click', () => {
+    if (darkmodeToggle.checked) {
+      darkmode.on();
+      darkModeTextToggle.innerText = "Go bright";
+    } else {
+      darkmode.off();
+      darkModeTextToggle.innerText = "Go dark";
+    }
+  });
+</script>
