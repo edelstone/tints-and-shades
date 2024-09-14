@@ -71,7 +71,7 @@ If you're a developer and want to help with the project, please comment on [open
 1. Clone this project.
 1. Navigate to the project in your terminal.
 1. Install dependencies: `npm install`.
-1. Start the server: `npm run serve`.
+1. Start the server: `npm run start`.
 1. Navigate to `localhost:8080` in your browser.
 
 ## Support this project
