@@ -64,6 +64,16 @@ If you notice a bug or want a feature added please [file an issue on GitHub](htt
 
 If you're a developer and want to help with the project, please comment on [open issues](https://github.com/edelstone/tints-and-shades/issues) or create a new one and communicate your intentions. Once we agree on a path forward you can just make a pull request and take it to the finish line.
 
+## Local development
+
+*Prerequisites: Node.js 14+*
+
+1. Clone this project.
+1. Navigate to the project in your terminal.
+1. Install dependencies: `npm install`.
+1. Start the server: `npm run serve`.
+1. Navigate to `localhost:8080` in your browser.
+
 ## Support this project
 The Tint & Shade Generator will always be free but your support is greatly appreciated.
 

@@ -26,6 +26,7 @@
     "@11ty/eleventy-dev-server": "^2.0.4",
     "concurrently": "^9.0.1",
     "gh-pages": "^6.1.1",
+    "nunjucks-date-filter": "^0.1.1",
     "sass": "^1.78.0"
   }
 }

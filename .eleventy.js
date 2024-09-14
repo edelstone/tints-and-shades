@@ -1,4 +1,7 @@
+const dateFilter = require('nunjucks-date-filter');
+
 module.exports = function (eleventyConfig) {
+  eleventyConfig.addNunjucksFilter('date', dateFilter);
   eleventyConfig.addPassthroughCopy("src/images");
   eleventyConfig.addPassthroughCopy("src/fonts");
   eleventyConfig.addPassthroughCopy("src/js");
