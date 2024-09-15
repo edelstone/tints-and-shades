@@ -81,7 +81,7 @@ _Prerequisites: Node.js 14+_
 4.  Start the server: `npm run start`.
 5.  Navigate to `localhost:8080` in your browser.
 
-Merges and pushes to the `main` branch automatically trigger a build on the `gh-pages` branch, which deploys to GitHub Pages.
+Merges and pushes to `main` automatically trigger a build on the `gh-pages` branch, which deploys to GitHub Pages.
 
 ## Support this project
 
