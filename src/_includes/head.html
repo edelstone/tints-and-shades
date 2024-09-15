@@ -11,13 +11,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="{{ site.description }}">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Tint and Shade Generator">
-<meta property="og:description" content="Easily make tints and shades that match the output of Chrome DevTools, Sass, Less, and PostCSS.">
-<meta property="og:image" content="https://maketintsandshades.com/images/share.jpg">
+<meta property="og:title" content="{{ site.name }}">
+<meta property="og:description" content="{{ site.description }}">
+<meta property="og:image" content="{{ site.shareImage }}">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Tint and Shade Generator">
-<meta name="twitter:description" content="Easily make tints and shades that match the output of Chrome DevTools, Sass, Less, and PostCSS.">
-<meta name="twitter:image" content="https://maketintsandshades.com/images/share.jpg">
+<meta name="twitter:title" content="{{ site.name }}">
+<meta name="twitter:description" content="{{ site.description }}">
+<meta name="twitter:image" content="{{ site.shareImage }}">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -32,4 +32,4 @@
 {% else %}
 <link rel="stylesheet" href="/css/carbon-alt.css">
 {% endif %}
-<title>{% if not main %} {{ title }} | {% endif %}{{ site.name }}</title>
+<title>{% if not main %}{{ title }} | {% endif %}{{ site.name }}</title>
