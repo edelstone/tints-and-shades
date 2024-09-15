@@ -11,7 +11,6 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/*.ico");
   eleventyConfig.addPassthroughCopy("src/*.webmanifest");
 
-  // Configure Eleventy Dev Server to watch CSS files for changes
   eleventyConfig.setServerOptions({
     watch: ["./_site/css/**/*.css"]
   });
