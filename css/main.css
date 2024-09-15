@@ -58,7 +58,6 @@ code {
   font-size: 85%;
   padding: 0.2rem 0.6rem;
   border-radius: 3px;
-  word-break: break-all;
 }
 
 .preheader {
@@ -226,8 +225,7 @@ code {
   bottom: 2px;
   pointer-events: auto !important;
 }
-.form-warning:after {
-  opacity: 0;
+.form-warning.visible:after {
   content: "";
   position: absolute;
   left: calc(50% - 1rem);
@@ -238,9 +236,6 @@ code {
   background: #cc0000;
   transition: opacity 0.2s linear;
   z-index: -5;
-}
-.form-warning:after.visible {
-  opacity: 1;
 }
 
 .button {
