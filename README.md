@@ -73,7 +73,7 @@ If you're a developer and want to help with the project, please comment on [open
 1. Start the server: `npm run start`.
 1. Navigate to `localhost:8080` in your browser.
 
-Merges and pushes to the `main` branch will automatically trigger a build onto the `gh-pages` branch, which deploys to GitHub Pages.
+Merges and pushes to the `main` branch automatically trigger a build on the `gh-pages` branch, which deploys to GitHub Pages.
 
 ## Support this project
 The Tint & Shade Generator will always be free but your support is greatly appreciated.
@@ -88,10 +88,10 @@ The Tint & Shade Generator will always be free but your support is greatly appre
 
 We use these amazing open-source libraries across the project:
 
-- [Eleventy](https://github.com/11ty/eleventy)
 - [AnchorJS](https://github.com/bryanbraun/anchorjs)
 - [clipboard.js](https://github.com/zenorocha/clipboard.js)
 - [Darken](https://github.com/ColinEspinas/darken)
+- [Eleventy](https://github.com/11ty/eleventy)
 
 Many thanks to [Joel Carr](https://github.com/joelcarr), [Sebastian Gutierrez](https://github.com/pepas24), [Tim Scalzo](https://github.com/TJScalzo), [Aman Agarwal](https://github.com/AmanAgarwal041), [Aleksandr Hovhannisyan](https://github.com/AleksandrHovhannisyan), [Shubhendu Sen](https://github.com/Sen-442b), and [Luis Escarrilla](https://github.com/latesc) for their valuable contributions.
 
