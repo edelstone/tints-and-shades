@@ -43,6 +43,16 @@ const readmeContent =
  </picture>
 </a>
 
+## Local development
+
+_Prerequisites: Node.js 14+_
+
+1.  Clone this project.
+2.  Navigate to the project in your terminal.
+3.  Install dependencies: \`npm install\`.
+4.  Start the server: \`npm run start\`.
+5.  Navigate to \`localhost:8080\` in your browser.
+
 ${markdownContent}`;
 
 // Write the content to README.md

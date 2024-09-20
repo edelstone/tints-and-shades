@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build:readme": "node build-readme.js",
-    "watch:readme": "nodemon --watch src/about.njk --exec \"npm run build:readme\"",
+    "watch:readme": "nodemon --watch src/about.njk --watch build-readme.js --exec \"npm run build:readme\"",
     "build:css": "sass src/scss:_site/css",
     "watch:css": "sass --watch src/scss:_site/css",
     "build:11ty": "eleventy",

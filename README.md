@@ -16,6 +16,16 @@
  </picture>
 </a>
 
+## Local development
+
+_Prerequisites: Node.js 14+_
+
+1.  Clone this project.
+2.  Navigate to the project in your terminal.
+3.  Install dependencies: `npm install`.
+4.  Start the server: `npm run start`.
+5.  Navigate to `localhost:8080` in your browser.
+
 ## What is the Tint & Shade Generator?
 
 The purpose of this tool is to accurately produce tints (pure white added) and shades (pure black added) of a given hex color in 10% increments.
@@ -70,18 +80,6 @@ This project is open source and I'd love your help!
 If you notice a bug or want a feature added please [file an issue on GitHub](https://github.com/edelstone/tints-and-shades/issues/new). If you don't have an account there, just [email me](mailto:contact@maketintsandshades.com) the details.
 
 If you're a developer and want to help with the project, please comment on [open issues](https://github.com/edelstone/tints-and-shades/issues) or create a new one and communicate your intentions. Once we agree on a path forward you can just make a pull request and take it to the finish line.
-
-## Local development
-
-_Prerequisites: Node.js 14+_
-
-1.  Clone this project.
-2.  Navigate to the project in your terminal.
-3.  Install dependencies: `npm install`.
-4.  Start the server: `npm run start`.
-5.  Navigate to `localhost:8080` in your browser.
-
-Merges and pushes to `main` automatically trigger a build on the `gh-pages` branch, which deploys to GitHub Pages.
 
 ## Support this project
 
