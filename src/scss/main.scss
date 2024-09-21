@@ -527,4 +527,9 @@ td.hex-value {
 .anchorjs-link {
 	padding-left: 0 !important;
 	margin-left: 0.375em !important;
+	border: none;
+
+	&:hover {
+		color: $magenta;
+	}
 }
