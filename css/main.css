@@ -484,6 +484,10 @@ td.hex-value {
 .anchorjs-link {
   padding-left: 0 !important;
   margin-left: 0.375em !important;
+  border: none;
+}
+.anchorjs-link:hover {
+  color: #ca228e;
 }
 
 /*# sourceMappingURL=main.css.map */
