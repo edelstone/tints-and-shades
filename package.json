@@ -4,13 +4,14 @@
   "description": "Easily make tints and shades that match the output of Chrome DevTools, Sass, Less, and PostCSS.",
   "main": "index.js",
   "scripts": {
-    "build:readme": "node build-readme.js",
     "watch:readme": "nodemon --watch src/about.njk --watch build-readme.js --exec \"npm run build:readme\"",
-    "build:css": "sass src/scss:_site/css",
+    "build:readme": "node build-readme.js",
     "watch:css": "sass --watch src/scss:_site/css",
+    "build:css": "sass src/scss:_site/css",
+    "watch:11ty": "eleventy --serve",
     "build:11ty": "eleventy",
-    "build": "npm run build:css && npm run build:11ty",
-    "start": "concurrently \"npm run watch:css\" \"npm run watch:readme\" \"eleventy --serve\"",
+    "build": "concurrently \"npm run build:css\" \"npm run build:11ty\"",
+    "start": "concurrently \"npm run watch:css\" \"npm run watch:readme\" \"npm run watch:11ty\"",
     "deploy": "npm run build && gh-pages -d _site"
   },
   "keywords": [
