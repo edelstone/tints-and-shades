@@ -4,7 +4,7 @@
   "description": "Easily make tints and shades that match the output of Chrome DevTools, Sass, Less, and PostCSS.",
   "main": "index.js",
   "scripts": {
-    "watch:readme": "nodemon --watch src/about.html --watch build-readme.js --exec \"npm run build:readme\"",
+    "watch:readme": "nodemon --watch src/about.njk --watch build-readme.js --exec \"npm run build:readme\"",
     "build:readme": "node build-readme.js",
     "watch:css": "sass --watch src/scss:_site/css",
     "build:css": "sass src/scss:_site/css",
