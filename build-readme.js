@@ -6,7 +6,7 @@ const TurndownService = require('turndown');
 const turndownService = new TurndownService({ headingStyle: 'atx', bulletListMarker: '-'})
 
 // Paths to the source and destination files
-const aboutPath = path.join(__dirname, 'src', 'about.njk');
+const aboutPath = path.join(__dirname, 'src', 'about.html');
 const readmePath = path.join(__dirname, 'README.md');
 
 // Read the content of the about.njk file
