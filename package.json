@@ -10,7 +10,7 @@
     "build:css": "sass src/scss:_site/css",
     "watch:11ty": "eleventy --serve",
     "build:11ty": "eleventy",
-    "build": "concurrently \"npm run build:css\" \"npm run build:11ty\"",
+    "build": "npm run build:css && npm run build:11ty",
     "start": "concurrently \"npm run watch:css\" \"npm run watch:readme\" \"npm run watch:11ty\"",
     "deploy": "npm run build && gh-pages -d _site"
   },
