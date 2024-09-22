@@ -2,16 +2,16 @@
 <html lang="en">
 
 <head>
-  {% include "head.html" %}
+  {% include "head.njk" %}
 </head>
 
 <body>
-  {% include "header.html" %}
+  {% include "header.njk" %}
   <main id="main" class="main {% if docs %}docs{% endif %}">
     {{ content | safe }}
   </main>
   {% include "footer.html" %}
-  {% include "scripts.html" %}
+  {% include "scripts.njk" %}
 </body>
 
 </html>
