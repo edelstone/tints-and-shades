@@ -31,7 +31,7 @@ const readmeContent =
  <picture>
    <source media="(prefers-color-scheme: dark)" srcset="assets/home-dark.png" />
    <source media="(prefers-color-scheme: light)" srcset="assets/home-light.png" />
-   <img alt="Screenshot of app home page" src="images/home-light.png" />
+   <img alt="Screenshot of app home page" src="assets/home-light.png" />
  </picture>
 </a>
 
@@ -39,7 +39,7 @@ const readmeContent =
  <picture>
    <source media="(prefers-color-scheme: dark)" srcset="assets/colors-dark.png" />
    <source media="(prefers-color-scheme: light)" srcset="assets/colors-light.png" />
-   <img alt="Screenshot of app home page" src="images/colors-light.png" />
+   <img alt="Screenshot of app home page" src="assets/colors-light.png" />
  </picture>
 </a>
 
