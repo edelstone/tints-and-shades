@@ -1,6 +1,10 @@
 <header class="header">
 	<div class="preface">
+		{% if main %}
 		<a href="#color-values" class="offscreen">Jump to the form</a>
+		{% else %}
+		<a href="#main" class="offscreen">Jump to main content</a>
+		{% endif %}
 		<div class="dark-mode-selector">
 			<label for="darkmode-toggle" class="switch" tabindex="0">
 				<input id="darkmode-toggle" class="darkmode-toggle" type="checkbox" tabindex="-1">

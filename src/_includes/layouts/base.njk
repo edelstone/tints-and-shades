@@ -7,7 +7,7 @@
 
 <body>
   {% include "header.html" %}
-  <main class="main {% if docs %}docs{% endif %}">
+  <main id="main" class="main {% if docs %}docs{% endif %}">
     {{ content | safe }}
   </main>
   {% include "footer.html" %}
