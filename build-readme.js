@@ -45,7 +45,7 @@ const readmeContent =
 
 ## Local development
 
-This project uses the [Eleventy static site generator](https://www.11ty.dev) and deploys to GitHub Pages using a clever [GitHub Action from Shohei Ueda](https://github.com/peaceiris/actions-gh-pages).
+This project uses the [Eleventy static site generator](https://www.11ty.dev) and deploys to GitHub Pages using a clever [GitHub Action from Shohei Ueda](https://github.com/marketplace/actions/github-pages-action).
 
 _Prerequisites: Node.js 14+_
 
