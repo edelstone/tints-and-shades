@@ -6,6 +6,9 @@
 #carbonads a {
   border: none;
 }
+#carbonads #carbon-cover {
+  font-family: "Work Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+}
 #carbonads #carbon-cover .carbon a:first-child {
   border-radius: 3px;
 }
