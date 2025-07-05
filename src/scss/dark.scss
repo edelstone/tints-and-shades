@@ -14,25 +14,6 @@
     background: $gray-500;
   }
 
-  .ts-ad {
-    border-color: $black;
-    background: $black;
-
-    &.ts-ad-secondary {
-      background: none;
-    }
-  }
-
-  #carbonads {
-    background: $black;
-    border-color: $black;
-
-    .carbon-poweredby,
-    .carbon-poweredby:hover {
-      background: $black;
-    }
-  }
-
   a {
     color: $gray-100;
     border-color: $gray-100;

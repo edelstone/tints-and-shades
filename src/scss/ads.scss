@@ -1,0 +1,106 @@
+@import 'variables';
+
+#carbonads {
+  display: flex;
+  justify-content: center;
+  margin-top: 6rem;
+
+  a {
+    border: none;
+  }
+
+  #carbon-cover {
+
+    .carbon {
+
+      a:first-child {
+        border-radius: 3px;
+      }
+
+      &-large-image {
+        border-radius: 3px;
+      }
+
+      &-tagline {
+        font-weight: 400;
+      }
+
+      &-cta {
+        font-weight: 500;
+        color: $black;
+      }
+
+      &-footer {
+
+        button {
+          background-color: $gray-50;
+          border-radius: 3px;
+
+          >svg {
+            stroke: $gray-400;
+          }
+        }
+
+        a {
+          color: $gray-400;
+        }
+      }
+    }
+  }
+
+  #carbon-responsive {
+    font-family: $font-family;
+
+    a,
+    a:hover {
+      color: $black;
+    }
+
+    .carbon-responsive-wrap {
+      background-color: $white;
+      border-color: $gray-200;
+      border-radius: 3px;
+    }
+  }
+}
+
+.darkmode-active {
+  #carbonads {
+    #carbon-cover {
+
+      .carbon-footer {
+
+        button {
+          background-color: $gray-500;
+
+          >svg {
+            stroke: $gray-200;
+          }
+        }
+
+        a {
+          color: $gray-300;
+        }
+      }
+    }
+
+    #carbon-responsive {
+      .carbon-responsive-wrap {
+        background-color: $black;
+        border-color: $black;
+      }
+
+      a,
+      a:hover {
+        color: $gray-100;
+      }
+    }
+  }
+}
+
+.ads-secondary {
+
+  #carbonads {
+    margin-top: 2rem;
+  }
+}
