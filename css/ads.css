@@ -22,14 +22,12 @@
   font-weight: 500;
   color: #000000;
 }
-#carbonads #carbon-cover .carbon-footer button {
-  background-color: #f0f0f0;
-  border-radius: 3px;
+#carbonads #carbon-cover .carbon-footer button,
+#carbonads #carbon-cover .carbon-footer .carbon-share {
+  visibility: hidden;
+  opacity: 0;
 }
-#carbonads #carbon-cover .carbon-footer button > svg {
-  stroke: #767676;
-}
-#carbonads #carbon-cover .carbon-footer a {
+#carbonads #carbon-cover .carbon-footer .carbon-via {
   color: #767676;
 }
 #carbonads #carbon-responsive {
@@ -45,13 +43,7 @@
   border-radius: 3px;
 }
 
-.darkmode-active #carbonads #carbon-cover .carbon-footer button {
-  background-color: #4d4d4d;
-}
-.darkmode-active #carbonads #carbon-cover .carbon-footer button > svg {
-  stroke: #dbdbdb;
-}
-.darkmode-active #carbonads #carbon-cover .carbon-footer a {
+.darkmode-active #carbonads #carbon-cover .carbon-footer .carbon-via {
   color: #a9a9a9;
 }
 .darkmode-active #carbonads #carbon-responsive .carbon-responsive-wrap {
