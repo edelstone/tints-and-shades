@@ -11,13 +11,10 @@
 
   #carbon-cover {
     font-family: $font-family;
-    
+
     .carbon {
 
-      a:first-child {
-        border-radius: 3px;
-      }
-
+      &-reveal,
       &-large-image {
         border-radius: 3px;
       }
@@ -37,7 +34,6 @@
         button,
         .carbon-share {
           visibility: hidden;
-          opacity: 0;
         }
 
         .carbon-via {
@@ -50,8 +46,7 @@
   #carbon-responsive {
     font-family: $font-family;
 
-    a,
-    a:hover {
+    a {
       color: $black;
     }
 
@@ -81,8 +76,7 @@
         border-color: $black;
       }
 
-      a,
-      a:hover {
+      a {
         color: $gray-100;
       }
     }
