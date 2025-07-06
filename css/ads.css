@@ -17,6 +17,7 @@
 }
 #carbonads #carbon-cover .carbon-tagline {
   font-weight: 400;
+  max-inline-size: 18ch;
 }
 #carbonads #carbon-cover .carbon-cta {
   font-weight: 500;
