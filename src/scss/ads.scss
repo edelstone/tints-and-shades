@@ -33,16 +33,13 @@
 
       &-footer {
 
-        button {
-          background-color: $gray-50;
-          border-radius: 3px;
-
-          >svg {
-            stroke: $gray-400;
-          }
+        button,
+        .carbon-share {
+          visibility: hidden;
+          opacity: 0;
         }
 
-        a {
+        .carbon-via {
           color: $gray-400;
         }
       }
@@ -71,15 +68,7 @@
 
       .carbon-footer {
 
-        button {
-          background-color: $gray-500;
-
-          >svg {
-            stroke: $gray-200;
-          }
-        }
-
-        a {
+        .carbon-via {
           color: $gray-300;
         }
       }
