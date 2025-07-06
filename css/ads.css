@@ -9,10 +9,7 @@
 #carbonads #carbon-cover {
   font-family: "Work Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
 }
-#carbonads #carbon-cover .carbon a:first-child {
-  border-radius: 3px;
-}
-#carbonads #carbon-cover .carbon-large-image {
+#carbonads #carbon-cover .carbon-reveal, #carbonads #carbon-cover .carbon-large-image {
   border-radius: 3px;
 }
 #carbonads #carbon-cover .carbon-tagline {
@@ -26,7 +23,6 @@
 #carbonads #carbon-cover .carbon-footer button,
 #carbonads #carbon-cover .carbon-footer .carbon-share {
   visibility: hidden;
-  opacity: 0;
 }
 #carbonads #carbon-cover .carbon-footer .carbon-via {
   color: #767676;
@@ -34,8 +30,7 @@
 #carbonads #carbon-responsive {
   font-family: "Work Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
 }
-#carbonads #carbon-responsive a,
-#carbonads #carbon-responsive a:hover {
+#carbonads #carbon-responsive a {
   color: #000000;
 }
 #carbonads #carbon-responsive .carbon-responsive-wrap {
@@ -51,8 +46,7 @@
   background-color: #000000;
   border-color: #000000;
 }
-.darkmode-active #carbonads #carbon-responsive a,
-.darkmode-active #carbonads #carbon-responsive a:hover {
+.darkmode-active #carbonads #carbon-responsive a {
   color: #e6e6e6;
 }
 
