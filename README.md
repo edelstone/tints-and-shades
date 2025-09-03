@@ -88,9 +88,9 @@ If you're a developer and want to help with the project, please comment on [open
 The Tint & Shade Generator will always be free but your support is greatly appreciated.
 
 -   [Buy Me a Coffee](https://www.buymeacoffee.com/edelstone)
--   [Venmo](https://venmo.com/michaeledelstone)
 -   [Cash App](https://cash.app/$edelstone)
 -   [Paypal](https://www.paypal.me/edelstone)
+-   [Venmo](https://venmo.com/michaeledelstone)
 
 ## Credits
 
