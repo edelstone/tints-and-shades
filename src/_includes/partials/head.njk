@@ -1,3 +1,4 @@
+<meta charset="utf-8">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-GNR8WM6SC0"></script>
 <script>
@@ -7,25 +8,19 @@
 
   gtag('config', 'G-GNR8WM6SC0');
 </script>
-<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="{{ site.description }}">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta property="og:type" content="website">
-<meta property="og:title" content="{{ site.name }}">
+<meta property="og:site_name" content="{{ site.name }}">
+<meta property="og:title" content="{% if title != 'Home' %}{{ title }} | {% endif %}{{ site.name }}">
 <meta property="og:description" content="{{ site.description }}">
 <meta property="og:image" content="{{ site.shareImage }}">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="{{ site.name }}">
-<meta name="twitter:description" content="{{ site.description }}">
-<meta name="twitter:image" content="{{ site.shareImage }}">
+<meta property="og:url" content="{{ site.url }}{{ page.url }}">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="canonical" href="{{ site.url }}{{ page.url }}">
-<link rel="stylesheet" href="/css/normalize.css">
-<link rel="stylesheet" href="/css/fonts.css">
-<link rel="stylesheet" href="/css/main.css">
-<link rel="stylesheet" href="/css/ads.css">
-<link rel="stylesheet" href="/css/dark.css">
+<link rel="stylesheet" href="/css/styles.css">
 <title>{% if not main %}{{ title }} | {% endif %}{{ site.name }}</title>

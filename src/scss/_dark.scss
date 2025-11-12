@@ -1,4 +1,4 @@
-@import 'variables';
+@use 'variables' as *;
 
 .darkmode-active {
   background: $gray-600;
