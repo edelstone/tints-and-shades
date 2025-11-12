@@ -16,11 +16,13 @@
 <meta property="og:title" content="{% if title != 'Home' %}{{ title }} | {% endif %}{{ site.name }}">
 <meta property="og:description" content="{{ site.description }}">
 <meta property="og:image" content="{{ site.shareImage }}">
+{% if page.url != '/404.html' %}
 <meta property="og:url" content="{{ site.url }}{{ page.url }}">
+<link rel="canonical" href="{{ site.url }}{{ page.url }}">
+{% endif %}
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/manifest.webmanifest">
-<link rel="canonical" href="{{ site.url }}{{ page.url }}">
 <link rel="stylesheet" href="/css/styles.css">
 <title>{% if not main %}{{ title }} | {% endif %}{{ site.name }}</title>
