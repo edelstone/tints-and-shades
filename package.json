@@ -29,7 +29,6 @@
     "@11ty/eleventy-dev-server": "^2.0.4",
     "concurrently": "^9.0.1",
     "gh-pages": "^6.1.1",
-    "html-minifier": "^4.0.0",
     "nodemon": "^3.1.4",
     "sass": "^1.78.0",
     "turndown": "^7.2.0"
