@@ -6,8 +6,8 @@
   "scripts": {
     "watch:readme": "nodemon --watch src/about.njk --watch build-readme.js --exec \"npm run build:readme\"",
     "build:readme": "node build-readme.js",
-    "watch:css": "sass --watch src/scss:_site/css",
-    "build:css": "sass src/scss:_site/css",
+    "watch:css": "sass --watch src/styles:_site/css --style=expanded",
+    "build:css": "sass src/styles:_site/css --style=compressed",
     "watch:11ty": "eleventy --serve",
     "build:11ty": "eleventy",
     "build": "npm run build:css && npm run build:11ty",
@@ -29,6 +29,7 @@
     "@11ty/eleventy-dev-server": "^2.0.4",
     "concurrently": "^9.0.1",
     "gh-pages": "^6.1.1",
+    "html-minifier": "^4.0.0",
     "nodemon": "^3.1.4",
     "sass": "^1.78.0",
     "turndown": "^7.2.0"
