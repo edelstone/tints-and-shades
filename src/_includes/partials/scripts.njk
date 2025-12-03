@@ -24,6 +24,7 @@
     const root = document.documentElement;
     const toggle = document.getElementById('darkmode-toggle');
     const toggleText = document.getElementById('darkmode-text-toggle');
+    const switches = document.querySelectorAll('.switch');
 
     const getStoredTheme = () => {
       try {
@@ -41,11 +42,12 @@
       }
     };
 
-    const applyTheme = (theme) => {
+    const applyTheme = (theme, persist = false) => {
       const isDark = theme === 'dark';
       root.classList.toggle('darkmode-active', isDark);
       if (toggle) toggle.checked = isDark;
       if (toggleText) toggleText.innerText = isDark ? "Go bright" : "Go dark";
+      if (persist) setStoredTheme(theme);
     };
 
     const preferred = getStoredTheme();
@@ -56,9 +58,13 @@
     if (toggle) {
       toggle.addEventListener('click', () => {
         const nextTheme = root.classList.contains('darkmode-active') ? 'light' : 'dark';
-        applyTheme(nextTheme);
-        setStoredTheme(nextTheme);
+        applyTheme(nextTheme, true);
       });
     }
+
+    // Reveal switches after initial state is applied.
+    window.requestAnimationFrame(() => {
+      switches.forEach(s => s.classList.add('switch-ready'));
+    });
   })();
 </script>

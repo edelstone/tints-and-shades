@@ -401,6 +401,7 @@ td.hex-value {
 	user-select: none;
 	position: relative;
 	display: flex;
+	visibility: hidden;
 
 	&:focus:not(.focus-visible) {
 		outline: none;
@@ -434,7 +435,7 @@ td.hex-value {
 		width: 40px;
 		border-radius: 2.5rem;
 		background-color: $gray-300;
-		transition: background-color 0.15s ease-in;
+		transition: none;
 
 		&:after {
 			content: "";
@@ -445,7 +446,19 @@ td.hex-value {
 			height: 12px;
 			border-radius: 50%;
 			background: $white;
-			transition: left 0.15s ease-in;
+			transition: none;
+		}
+	}
+
+	&.switch-ready {
+		visibility: visible;
+
+		.control {
+			transition: background-color 0.15s ease-in;
+
+			&:after {
+				transition: left 0.15s ease-in;
+			}
 		}
 	}
 }
