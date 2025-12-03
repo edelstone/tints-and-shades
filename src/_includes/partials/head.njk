@@ -25,7 +25,6 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/manifest.webmanifest">
 <script>
-  // Apply saved or preferred theme before CSS loads to avoid a flash.
   (function () {
     try {
       const stored = localStorage.getItem('darken-mode');
@@ -35,7 +34,6 @@
         document.documentElement.classList.add('darkmode-active');
       }
     } catch (e) {
-      // If storage is blocked, fall back to default (light).
     }
   })();
 </script>

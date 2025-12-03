@@ -38,7 +38,6 @@
       try {
         localStorage.setItem(storageKey, theme);
       } catch (e) {
-        // ignore storage errors
       }
     };
 
@@ -62,7 +61,6 @@
       });
     }
 
-    // Reveal switches after initial state is applied.
     window.requestAnimationFrame(() => {
       switches.forEach(s => s.classList.add('switch-ready'));
     });
