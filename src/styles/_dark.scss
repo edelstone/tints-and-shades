@@ -1,6 +1,7 @@
 @use 'variables' as *;
 
-.darkmode-active {
+.darkmode-active,
+.darkmode-active body {
   background: $gray-600;
   color: $gray-100;
 

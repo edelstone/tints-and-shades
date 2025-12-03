@@ -24,5 +24,20 @@
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/manifest.webmanifest">
+<script>
+  // Apply saved or preferred theme before CSS loads to avoid a flash.
+  (function () {
+    try {
+      const stored = localStorage.getItem('darken-mode');
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const useDark = stored ? stored === 'dark' : prefersDark;
+      if (useDark) {
+        document.documentElement.classList.add('darkmode-active');
+      }
+    } catch (e) {
+      // If storage is blocked, fall back to default (light).
+    }
+  })();
+</script>
 <link rel="stylesheet" href="/css/styles.css">
 <title>{% if not main %}{{ title }} | {% endif %}{{ site.name }}</title>

@@ -18,31 +18,47 @@
 <script>anchors.add('h2');</script>
 {% endif %}
 
-<script src="/js/darken.js"></script>
 <script>
-  // Get the checkbox and text toggle elements from the DOM.
-  const darkmodeToggle = document.getElementById('darkmode-toggle');
-  const darkModeTextToggle = document.getElementById("darkmode-text-toggle");
+  (function () {
+    const storageKey = 'darken-mode';
+    const root = document.documentElement;
+    const toggle = document.getElementById('darkmode-toggle');
+    const toggleText = document.getElementById('darkmode-text-toggle');
 
-  // Set options.
-  const darkmodeOptions = {
-    class: "darkmode-active"
-  };
+    const getStoredTheme = () => {
+      try {
+        return localStorage.getItem(storageKey);
+      } catch (e) {
+        return null;
+      }
+    };
 
-  // Instantiate darken with options and callback.
-  const darkmode = new darken(darkmodeOptions, active => {
-    darkmodeToggle.checked = active;
-    darkModeTextToggle.innerText = active ? "Go bright" : "Go dark";
-  });
+    const setStoredTheme = (theme) => {
+      try {
+        localStorage.setItem(storageKey, theme);
+      } catch (e) {
+        // ignore storage errors
+      }
+    };
 
-  // Add event listener on checkbox click.
-  darkmodeToggle.addEventListener('click', () => {
-    if (darkmodeToggle.checked) {
-      darkmode.on();
-      darkModeTextToggle.innerText = "Go bright";
-    } else {
-      darkmode.off();
-      darkModeTextToggle.innerText = "Go dark";
+    const applyTheme = (theme) => {
+      const isDark = theme === 'dark';
+      root.classList.toggle('darkmode-active', isDark);
+      if (toggle) toggle.checked = isDark;
+      if (toggleText) toggleText.innerText = isDark ? "Go bright" : "Go dark";
+    };
+
+    const preferred = getStoredTheme();
+    const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initialTheme = preferred || (systemPrefersDark ? 'dark' : 'light');
+    applyTheme(initialTheme);
+
+    if (toggle) {
+      toggle.addEventListener('click', () => {
+        const nextTheme = root.classList.contains('darkmode-active') ? 'light' : 'dark';
+        applyTheme(nextTheme);
+        setStoredTheme(nextTheme);
+      });
     }
-  });
+  })();
 </script>

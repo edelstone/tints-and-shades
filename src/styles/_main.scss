@@ -14,6 +14,16 @@ html {
 	}
 }
 
+body,
+a,
+code,
+.form textarea,
+.table-header td span,
+#carbonads .carbon-responsive-wrap,
+#carbonads .carbon-via {
+	transition: background-color 220ms ease, color 220ms ease, border-color 220ms ease;
+}
+
 body {
 	font-size: 1.8rem;
 	line-height: 1.618;
