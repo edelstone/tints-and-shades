@@ -8,6 +8,7 @@
 
 html {
 	font-size: 62.5%;
+	color-scheme: light;
 
 	@include breakpoint('large') {
 		font-size: 55%;
