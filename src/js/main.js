@@ -217,7 +217,7 @@ const createTintsAndShades = (firstTime) => {
     });
   } else if (!firstTime) { // Doesn't run on page load (the first time it runs)
     // Scroll back to top of page
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    smoothScrollTo(document.body, 500);
 
     // Remove any existing content from tints-and-shades div
     tableContainer.innerHTML = "";
