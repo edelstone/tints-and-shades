@@ -26,7 +26,6 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/manifest.webmanifest">
 <script>
-  // Apply saved or preferred theme before CSS loads to avoid a flash.
   (function () {
     try {
       const stored = localStorage.getItem('darken-mode');
@@ -36,7 +35,6 @@
         document.documentElement.classList.add('darkmode-active');
       }
     } catch (e) {
-      // If storage is blocked, fall back to default (light).
     }
   })();
 </script>
@@ -112,7 +110,6 @@
       try {
         localStorage.setItem(storageKey, theme);
       } catch (e) {
-        // ignore storage errors
       }
     };
 
@@ -136,13 +133,11 @@
       });
     }
 
-    // Reveal switches after initial state is applied.
     window.requestAnimationFrame(() => {
       switches.forEach(s => s.classList.add('switch-ready'));
     });
   })();
 </script>
-
 </body>
 
 </html>
