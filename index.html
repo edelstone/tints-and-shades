@@ -31,7 +31,7 @@
 <script>
   (function () {
     try {
-      const stored = localStorage.getItem('darken-mode');
+      const stored = localStorage.getItem('theme');
       const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
       const useDark = stored ? stored === 'dark' : prefersDark;
       if (useDark) {
@@ -125,7 +125,7 @@
 
 <script>
   (function () {
-    const storageKey = 'darken-mode';
+    const storageKey = 'theme';
     const root = document.documentElement;
     const toggle = document.getElementById('darkmode-toggle');
     const toggleText = document.getElementById('darkmode-text-toggle');
@@ -171,6 +171,7 @@
     });
   })();
 </script>
+
 </body>
 
 </html>
