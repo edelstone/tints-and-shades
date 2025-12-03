@@ -3,6 +3,31 @@ const settings = {
   copyWithHashtag: false
 };
 
+// Smooth scroll helper
+const smoothScrollTo = (element, duration) => {
+  const targetPosition = element.getBoundingClientRect().top + window.scrollY;
+  const startPosition = window.scrollY;
+  const distance = targetPosition - startPosition;
+  let startTime = null;
+
+  const ease = (t, b, c, d) => {
+    t /= d / 2;
+    if (t < 1) return c / 2 * t * t + b;
+    t--;
+    return -c / 2 * (t * (t - 2) - 1) + b;
+  };
+
+  const animation = (currentTime) => {
+    if (startTime === null) startTime = currentTime;
+    const timeElapsed = currentTime - startTime;
+    const run = ease(timeElapsed, startPosition, distance, duration);
+    window.scrollTo(0, run);
+    if (timeElapsed < duration) requestAnimationFrame(animation);
+  };
+
+  requestAnimationFrame(animation);
+};
+
 // Load the state from localStorage
 const loadSettings = () => {
   const savedSettings = localStorage.getItem('settings');
@@ -107,6 +132,8 @@ const calculateShades = (colorValue) => calculate(colorValue, rgbShade).concat("
 // Given a color value, return an array of ten tints in 10% increments
 const calculateTints = (colorValue) => calculate(colorValue, rgbTint).concat("ffffff");
 
+const TABLE_HEADER = `<thead><tr class="table-header"><td><span>0%</span></td><td><span>10%</span></td><td><span>20%</span></td><td><span>30%</span></td><td><span>40%</span></td><td><span>50%</span></td><td><span>60%</span></td><td><span>70%</span></td><td><span>80%</span></td><td><span>90%</span></td><td><span>100%</span></td></tr></thead>`;
+
 const updateClipboardData = () => {
   // Basically, all cells that have a data-clipboard-text attribute
   const colorCells = document.querySelectorAll("#tints-and-shades td[data-clipboard-text]");
@@ -124,78 +151,49 @@ const updateClipboardData = () => {
 
 // Create a table row holding either the color values as blocks of color
 // or the hexadecimal color values in table cells, depending on the parameter 'displayType'
-const makeTableRowColors = (colors, displayType) => {
-  let tableRow = "<tr>";
-  colors.forEach(color => {
-    const colorHex = color.toString(16);
-    if (displayType === "colors") { // Make a row of colors
-      // We have to account for the prefix here in case the user toggled the checkbox before generating another palette
-      const colorPrefix = settings.copyWithHashtag ? "#" : "";
-      tableRow += `<td tabindex="0" role="button" aria-label="Color swatch" class="hex-color" style="background-color:#${colorHex}" data-clipboard-text="${colorPrefix}${colorHex}"></td>`;
-    } else { // Make a row of RGB values
-      tableRow += `<td class="hex-value">${colorHex.toUpperCase()}</td>`;
-    }
-  });
-  tableRow += "</tr>";
-  return tableRow;
-};
+const makeTableRowColors = (colors, displayType, colorPrefix) => colors.map(colorHex => {
+  if (displayType === "colors") {
+    return `<td tabindex="0" role="button" aria-label="Color swatch" class="hex-color" style="background-color:#${colorHex}" data-clipboard-text="${colorPrefix}${colorHex}"></td>`;
+  }
+  return `<td class="hex-value">${colorHex.toUpperCase()}</td>`;
+}).join("");
 
 const createTintsAndShades = (firstTime) => {
-  const parsedColorsArray = parseColorValues(document.getElementById("color-values").value);
+  const colorInput = document.getElementById("color-values");
+  const tableContainer = document.getElementById("tints-and-shades");
+  const warning = document.getElementById("warning");
+  const parsedColorsArray = parseColorValues(colorInput.value);
+
   if (parsedColorsArray !== null) {
     // Make sure we got valid color values back from parsing
     const colorDisplayRows = []; // Holds HTML table rows for the colors to display
     let tableRowCounter = 0;
+    const colorPrefix = settings.copyWithHashtag ? "#" : "";
 
     parsedColorsArray.forEach(color => { // Iterate through each inputted color value
       // Calculate an array of shades from the inputted color, then make a table row from the shades, and a second table row for the hex values of the shades
       const calculatedShades = calculateShades(color);
-      colorDisplayRows[tableRowCounter] = makeTableRowColors(calculatedShades, "colors");
+      colorDisplayRows[tableRowCounter] = `<tr>${makeTableRowColors(calculatedShades, "colors", colorPrefix)}</tr>`;
       tableRowCounter++;
-      colorDisplayRows[tableRowCounter] = makeTableRowColors(calculatedShades, "RGBValues");
+      colorDisplayRows[tableRowCounter] = `<tr>${makeTableRowColors(calculatedShades, "RGBValues")}</tr>`;
       tableRowCounter++;
 
       // Calculate an array of tints from the inputted color, then make a table row from the tints, and a second table row for the hex values of the tints
       const calculatedTints = calculateTints(color);
-      colorDisplayRows[tableRowCounter] = makeTableRowColors(calculatedTints, "colors");
+      colorDisplayRows[tableRowCounter] = `<tr>${makeTableRowColors(calculatedTints, "colors", colorPrefix)}</tr>`;
       tableRowCounter++;
-      colorDisplayRows[tableRowCounter] = makeTableRowColors(calculatedTints, "RGBValues");
+      colorDisplayRows[tableRowCounter] = `<tr>${makeTableRowColors(calculatedTints, "RGBValues")}</tr>`;
       tableRowCounter++;
     });
 
     // Wrap the rows into an HTML table with a hard-coded header row
-    const colorDisplayTable = `<table><thead><tr class="table-header"><td><span>0%</span></td><td><span>10%</span></td><td><span>20%</span></td><td><span>30%</span></td><td><span>40%</span></td><td><span>50%</span></td><td><span>60%</span></td><td><span>70%</span></td><td><span>80%</span></td><td><span>90%</span></td><td><span>100%</span></td></tr></thead>${colorDisplayRows.join("")}</table>`;
+    const colorDisplayTable = `<table>${TABLE_HEADER}${colorDisplayRows.join("")}</table>`;
 
     // Replace tints-and-shades div with color display table wrapped by the same div
-    document.getElementById("tints-and-shades").innerHTML = colorDisplayTable;
+    tableContainer.innerHTML = colorDisplayTable;
 
     // Set URL hash to a comma-separated list of hex codes
     window.location.hash = parsedColorsArray.join(",");
-
-    // Custom smooth scroll function
-    const smoothScrollTo = (element, duration) => {
-      const targetPosition = element.getBoundingClientRect().top + window.scrollY;
-      const startPosition = window.scrollY;
-      const distance = targetPosition - startPosition;
-      let startTime = null;
-
-      const animation = (currentTime) => {
-        if (startTime === null) startTime = currentTime;
-        const timeElapsed = currentTime - startTime;
-        const run = ease(timeElapsed, startPosition, distance, duration);
-        window.scrollTo(0, run);
-        if (timeElapsed < duration) requestAnimationFrame(animation);
-      };
-
-      const ease = (t, b, c, d) => {
-        t /= d / 2;
-        if (t < 1) return c / 2 * t * t + b;
-        t--;
-        return -c / 2 * (t * (t - 2) - 1) + b;
-      };
-
-      requestAnimationFrame(animation);
-    };
 
     // Scroll down to show the tints-and-shades div
     const scrollElement = document.getElementById("scroll-top");
@@ -207,35 +205,34 @@ const createTintsAndShades = (firstTime) => {
 
     // Set focus to the color display table
     setTimeout(() => {
-      const tintsAndShades = document.getElementById("tints-and-shades");
-      tintsAndShades.setAttribute("tabindex", "0");
-      tintsAndShades.focus();
+      tableContainer.setAttribute("tabindex", "0");
+      tableContainer.focus();
     });
 
     // When color display table loses focus, make it not focusable again
-    document.getElementById("tints-and-shades").addEventListener("blur", () => {
-      document.getElementById("tints-and-shades").setAttribute("tabindex", "-1");
+    tableContainer.addEventListener("blur", () => {
+      tableContainer.setAttribute("tabindex", "-1");
     });
   } else if (!firstTime) { // Doesn't run on page load (the first time it runs)
     // Scroll back to top of page
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     // Remove any existing content from tints-and-shades div
-    document.getElementById("tints-and-shades").innerHTML = "";
+    tableContainer.innerHTML = "";
 
     // Reset the URL hash
     window.location.hash = "";
 
     // Show warning
-    document.getElementById("warning").classList.add("visible");
+    warning.classList.add("visible");
 
     // Hide warning after 3 seconds
     setTimeout(() => {
-      document.getElementById("warning").classList.remove("visible");
+      warning.classList.remove("visible");
     }, 3000);
 
     // Set focus back to the text area
-    document.getElementById("color-values").focus();
+    colorInput.focus();
   }
   return false;
 };
