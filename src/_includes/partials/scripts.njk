@@ -24,7 +24,6 @@
     const root = document.documentElement;
     const toggle = document.getElementById('darkmode-toggle');
     const toggleText = document.getElementById('darkmode-text-toggle');
-    const switches = document.querySelectorAll('.switch');
 
     const getStoredTheme = () => {
       try {
@@ -44,8 +43,12 @@
     const applyTheme = (theme, persist = false) => {
       const isDark = theme === 'dark';
       root.classList.toggle('darkmode-active', isDark);
-      if (toggle) toggle.checked = isDark;
-      if (toggleText) toggleText.innerText = isDark ? "Go bright" : "Go dark";
+      if (toggle) {
+        toggle.setAttribute('aria-pressed', String(isDark));
+        toggle.dataset.themeState = isDark ? 'dark' : 'light';
+        toggle.setAttribute('aria-label', isDark ? 'Light mode' : 'Dark mode');
+      }
+      if (toggleText) toggleText.innerText = isDark ? "Light mode" : "Dark mode";
       if (persist) setStoredTheme(theme);
     };
 
@@ -59,10 +62,12 @@
         const nextTheme = root.classList.contains('darkmode-active') ? 'light' : 'dark';
         applyTheme(nextTheme, true);
       });
+      toggle.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle.click();
+        }
+      });
     }
-
-    window.requestAnimationFrame(() => {
-      switches.forEach(s => s.classList.add('switch-ready'));
-    });
   })();
 </script>
