@@ -16,9 +16,14 @@ const aboutContent = fs.readFileSync(aboutPath, 'utf8');
 // Assuming the content to be extracted is between specific markers
 const startMarker = '<!-- START README CONTENT -->';
 const endMarker = '<!-- END README CONTENT -->';
-const startIndex = aboutContent.indexOf(startMarker) + startMarker.length;
+const startIndex = aboutContent.indexOf(startMarker);
 const endIndex = aboutContent.indexOf(endMarker);
-const extractedContent = aboutContent.substring(startIndex, endIndex).trim();
+
+if (startIndex === -1 || endIndex === -1 || endIndex <= startIndex) {
+  throw new Error('README markers not found or misordered in src/about.njk');
+}
+
+const extractedContent = aboutContent.substring(startIndex + startMarker.length, endIndex).trim();
 
 // Convert HTML to Markdown
 const markdownContent = turndownService.turndown(extractedContent);
