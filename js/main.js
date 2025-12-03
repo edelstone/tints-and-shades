@@ -3,6 +3,8 @@ const settings = {
   copyWithHashtag: false
 };
 
+let warningTimeout = null;
+
 // Smooth scroll helper
 const smoothScrollTo = (element, duration) => {
   const targetPosition = element.getBoundingClientRect().top + window.scrollY;
@@ -227,8 +229,12 @@ const createTintsAndShades = (firstTime) => {
     warning.classList.add("visible");
 
     // Hide warning after 3 seconds
-    setTimeout(() => {
+    if (warningTimeout) {
+      clearTimeout(warningTimeout);
+    }
+    warningTimeout = setTimeout(() => {
       warning.classList.remove("visible");
+      warningTimeout = null;
     }, 3000);
 
     // Set focus back to the text area
