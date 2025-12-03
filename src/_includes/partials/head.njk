@@ -27,7 +27,7 @@
 <script>
   (function () {
     try {
-      const stored = localStorage.getItem('darken-mode');
+      const stored = localStorage.getItem('theme');
       const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
       const useDark = stored ? stored === 'dark' : prefersDark;
       if (useDark) {
