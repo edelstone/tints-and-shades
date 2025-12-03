@@ -28,8 +28,24 @@
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/manifest.webmanifest">
+<script>
+  // Apply saved or preferred theme before CSS loads to avoid a flash.
+  (function () {
+    try {
+      const stored = localStorage.getItem('darken-mode');
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const useDark = stored ? stored === 'dark' : prefersDark;
+      if (useDark) {
+        document.documentElement.classList.add('darkmode-active');
+      }
+    } catch (e) {
+      // If storage is blocked, fall back to default (light).
+    }
+  })();
+</script>
 <link rel="stylesheet" href="/css/styles.css">
 <title>Tint and Shade Generator</title>
+
 </head>
 
 <body>
@@ -109,34 +125,51 @@
 
 
 
-<script src="/js/darken.js"></script>
 <script>
-  // Get the checkbox and text toggle elements from the DOM.
-  const darkmodeToggle = document.getElementById('darkmode-toggle');
-  const darkModeTextToggle = document.getElementById("darkmode-text-toggle");
+  (function () {
+    const storageKey = 'darken-mode';
+    const root = document.documentElement;
+    const toggle = document.getElementById('darkmode-toggle');
+    const toggleText = document.getElementById('darkmode-text-toggle');
 
-  // Set options.
-  const darkmodeOptions = {
-    class: "darkmode-active"
-  };
+    const getStoredTheme = () => {
+      try {
+        return localStorage.getItem(storageKey);
+      } catch (e) {
+        return null;
+      }
+    };
 
-  // Instantiate darken with options and callback.
-  const darkmode = new darken(darkmodeOptions, active => {
-    darkmodeToggle.checked = active;
-    darkModeTextToggle.innerText = active ? "Go bright" : "Go dark";
-  });
+    const setStoredTheme = (theme) => {
+      try {
+        localStorage.setItem(storageKey, theme);
+      } catch (e) {
+        // ignore storage errors
+      }
+    };
 
-  // Add event listener on checkbox click.
-  darkmodeToggle.addEventListener('click', () => {
-    if (darkmodeToggle.checked) {
-      darkmode.on();
-      darkModeTextToggle.innerText = "Go bright";
-    } else {
-      darkmode.off();
-      darkModeTextToggle.innerText = "Go dark";
+    const applyTheme = (theme) => {
+      const isDark = theme === 'dark';
+      root.classList.toggle('darkmode-active', isDark);
+      if (toggle) toggle.checked = isDark;
+      if (toggleText) toggleText.innerText = isDark ? "Go bright" : "Go dark";
+    };
+
+    const preferred = getStoredTheme();
+    const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initialTheme = preferred || (systemPrefersDark ? 'dark' : 'light');
+    applyTheme(initialTheme);
+
+    if (toggle) {
+      toggle.addEventListener('click', () => {
+        const nextTheme = root.classList.contains('darkmode-active') ? 'light' : 'dark';
+        applyTheme(nextTheme);
+        setStoredTheme(nextTheme);
+      });
     }
-  });
+  })();
 </script>
+
 </body>
 
 </html>
