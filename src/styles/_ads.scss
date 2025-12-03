@@ -1,5 +1,10 @@
 @use 'variables' as *;
 
+.ads,
+.ads-secondary {
+  min-height: 14rem;
+}
+
 #carbonads {
   display: flex;
   justify-content: center;
