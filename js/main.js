@@ -48,7 +48,15 @@ const initializeSettings = () => {
   loadSettings();
   const checkbox = document.getElementById('copy-with-hashtag');
   if (checkbox) {
+    // Disable animation until after initial state is applied
+    const switchLabel = checkbox.closest('.switch');
+    if (switchLabel) switchLabel.classList.remove('switch-ready');
+
     checkbox.checked = settings.copyWithHashtag;
+
+    if (switchLabel) {
+      window.requestAnimationFrame(() => switchLabel.classList.add('switch-ready'));
+    }
     checkbox.addEventListener('change', () => {
       settings.copyWithHashtag = checkbox.checked;
       saveSettings();

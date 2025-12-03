@@ -50,11 +50,10 @@
 		<a href="#main" class="offscreen">Jump to main content</a>
 		
 		<div class="dark-mode-selector">
-			<label for="darkmode-toggle" class="switch" tabindex="0">
-				<input id="darkmode-toggle" class="darkmode-toggle" type="checkbox" tabindex="-1">
-				<span class="control"></span>
-				<span class="label" id="darkmode-text-toggle">Go dark</span>
-			</label>
+			<button id="darkmode-toggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Dark mode" data-theme-state="light">
+				<span class="theme-toggle__icon" aria-hidden="true"></span>
+				<span class="theme-toggle__state sr-only" id="darkmode-text-toggle">Dark mode</span>
+			</button>
 		</div>
 		<a href="https://github.com/edelstone/tints-and-shades" class="github-corner" aria-label="View source on GitHub">
 			<svg width="80" height="80" viewBox="0 0 250 250" style="fill:#000; color:#fff;" aria-hidden="true">
@@ -73,6 +72,7 @@
 		
 	</div>
 </header>
+
   <main id="main" class="main ">
     
 <div class="not-found">
@@ -96,7 +96,6 @@
     const root = document.documentElement;
     const toggle = document.getElementById('darkmode-toggle');
     const toggleText = document.getElementById('darkmode-text-toggle');
-    const switches = document.querySelectorAll('.switch');
 
     const getStoredTheme = () => {
       try {
@@ -116,8 +115,12 @@
     const applyTheme = (theme, persist = false) => {
       const isDark = theme === 'dark';
       root.classList.toggle('darkmode-active', isDark);
-      if (toggle) toggle.checked = isDark;
-      if (toggleText) toggleText.innerText = isDark ? "Go bright" : "Go dark";
+      if (toggle) {
+        toggle.setAttribute('aria-pressed', String(isDark));
+        toggle.dataset.themeState = isDark ? 'dark' : 'light';
+        toggle.setAttribute('aria-label', isDark ? 'Light mode' : 'Dark mode');
+      }
+      if (toggleText) toggleText.innerText = isDark ? "Light mode" : "Dark mode";
       if (persist) setStoredTheme(theme);
     };
 
@@ -131,11 +134,13 @@
         const nextTheme = root.classList.contains('darkmode-active') ? 'light' : 'dark';
         applyTheme(nextTheme, true);
       });
+      toggle.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle.click();
+        }
+      });
     }
-
-    window.requestAnimationFrame(() => {
-      switches.forEach(s => s.classList.add('switch-ready'));
-    });
   })();
 </script>
 
