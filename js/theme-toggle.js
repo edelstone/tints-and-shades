@@ -1,0 +1,52 @@
+(() => {
+  const storageKey = "theme";
+  const root = document.documentElement;
+  const toggle = document.getElementById("darkmode-toggle");
+  const toggleText = document.getElementById("darkmode-text-toggle");
+
+  const getStoredTheme = () => {
+    try {
+      return localStorage.getItem(storageKey);
+    } catch (e) {
+      return null;
+    }
+  };
+
+  const setStoredTheme = (theme) => {
+    try {
+      localStorage.setItem(storageKey, theme);
+    } catch (e) {
+      // ignore
+    }
+  };
+
+  const applyTheme = (theme, persist = false) => {
+    const isDark = theme === "dark";
+    root.classList.toggle("darkmode-active", isDark);
+    if (toggle) {
+      toggle.setAttribute("aria-pressed", String(isDark));
+      toggle.dataset.themeState = isDark ? "dark" : "light";
+      toggle.setAttribute("aria-label", isDark ? "Light mode" : "Dark mode");
+    }
+    if (toggleText) toggleText.innerText = isDark ? "Light mode" : "Dark mode";
+    if (persist) setStoredTheme(theme);
+  };
+
+  const preferred = getStoredTheme();
+  const systemPrefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const initialTheme = preferred || (systemPrefersDark ? "dark" : "light");
+  applyTheme(initialTheme);
+
+  if (toggle) {
+    toggle.addEventListener("click", () => {
+      const nextTheme = root.classList.contains("darkmode-active") ? "light" : "dark";
+      applyTheme(nextTheme, true);
+    });
+    toggle.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        toggle.click();
+      }
+    });
+  }
+})();

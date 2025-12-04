@@ -77,7 +77,7 @@
 <div class="form">
 	<form class="pure-form" id="color-entry-form" action="#" method="post" name="color-entry-form">
 		<div class="labels">
-			<div class="form-warning" id="warning">Please enter at least one valid hex color.</div>
+			<div class="form-warning" id="warning" role="alert" aria-live="polite">Please enter at least one valid hex color.</div>
 			<h2><label class="textarea-label" for="color-values">Enter hex colors (separated by spaces)</label></h2>
 		</div>
 		<div class="input">
@@ -87,8 +87,8 @@
 	</form>
 </div>
 <div class="hashtag-selector" id="scroll-top">
-	<label class="switch" tabindex="0">
-		<input type="checkbox" id="copy-with-hashtag" tabindex="-1">
+	<label class="switch">
+		<input type="checkbox" id="copy-with-hashtag">
 		<span class="control"></span>
 		<span class="label">Include hashtag when copying</span>
 	</label>
@@ -103,6 +103,7 @@
 			<span>Export all colors</span>
 		</button>
 	</div>
+	<div id="copy-status" class="sr-only" aria-live="polite"></div>
 </div>
 
 <dialog id="export-modal" class="export-modal" aria-labelledby="export-title">
@@ -154,73 +155,12 @@
 <script src="/js/palettes.js"></script>
 <script src="/js/app.js"></script>
 <script src="/js/clipboard.js"></script>
-<script>
-  const clipboard = new ClipboardJS('.hex-color');
-
-  clipboard.on('success', e => {
-    e.trigger.classList.add("copied");
-    setTimeout(() => e.trigger.blur(), 250);
-    setTimeout(() => e.trigger.classList.remove("copied"), 1500);
-    e.clearSelection();
-  });
-</script>
+<script src="/js/clipboard-setup.js"></script>
 
 
 
 
-<script>
-  (function () {
-    const storageKey = 'theme';
-    const root = document.documentElement;
-    const toggle = document.getElementById('darkmode-toggle');
-    const toggleText = document.getElementById('darkmode-text-toggle');
-
-    const getStoredTheme = () => {
-      try {
-        return localStorage.getItem(storageKey);
-      } catch (e) {
-        return null;
-      }
-    };
-
-    const setStoredTheme = (theme) => {
-      try {
-        localStorage.setItem(storageKey, theme);
-      } catch (e) {
-      }
-    };
-
-    const applyTheme = (theme, persist = false) => {
-      const isDark = theme === 'dark';
-      root.classList.toggle('darkmode-active', isDark);
-      if (toggle) {
-        toggle.setAttribute('aria-pressed', String(isDark));
-        toggle.dataset.themeState = isDark ? 'dark' : 'light';
-        toggle.setAttribute('aria-label', isDark ? 'Light mode' : 'Dark mode');
-      }
-      if (toggleText) toggleText.innerText = isDark ? "Light mode" : "Dark mode";
-      if (persist) setStoredTheme(theme);
-    };
-
-    const preferred = getStoredTheme();
-    const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const initialTheme = preferred || (systemPrefersDark ? 'dark' : 'light');
-    applyTheme(initialTheme);
-
-    if (toggle) {
-      toggle.addEventListener('click', () => {
-        const nextTheme = root.classList.contains('darkmode-active') ? 'light' : 'dark';
-        applyTheme(nextTheme, true);
-      });
-      toggle.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter' || event.key === ' ') {
-          event.preventDefault();
-          toggle.click();
-        }
-      });
-    }
-  })();
-</script>
+<script src="/js/theme-toggle.js"></script>
 
 </body>
 

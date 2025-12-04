@@ -69,12 +69,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-document.addEventListener("keypress", (event) => {
-  if (event.key === "Enter") {
-    document.activeElement.click();
-  }
-});
-
 document.addEventListener("click", (event) => {
   if (event.target.id === "make") {
     if (!document.getElementById("carbonads")) return;
