@@ -449,15 +449,14 @@ code {
 	text-align: left;
 	border: 1px solid $gray-200;
 	border-radius: $radius;
-
-	&.is-first-tab-active {
-		border-radius: 0 $radius $radius $radius;
-	}
-
 	background: $gray-50;
 	overflow: auto;
 	white-space: pre-wrap;
 	word-break: break-word;
+
+	&.is-first-tab-active {
+		border-radius: 0 $radius $radius $radius;
+	}
 }
 
 .export-copy {
@@ -585,7 +584,7 @@ td.hex-color {
 	&.copied:after {
 		opacity: 1;
 	}
-	
+
 	@media (pointer: coarse) {
 		&:before {
 			display: none;
