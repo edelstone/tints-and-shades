@@ -32,6 +32,12 @@ body {
 	font-weight: normal;
 	text-align: center;
 	color: $black;
+
+	&.modal-open {
+		overflow: hidden;
+		position: fixed;
+		width: 100%;
+	}
 }
 
 a {
@@ -170,7 +176,7 @@ code {
 }
 
 .main {
-	margin: 0 auto 10rem;
+	margin: 0 auto 12rem;
 	padding: 0 2rem;
 	max-width: 80rem;
 
@@ -196,7 +202,7 @@ code {
 
 	h2 {
 		font-weight: normal;
-		font-size: 2.5rem;
+		font-size: 2.4rem;
 		line-height: 1.3;
 		margin: 0;
 
@@ -296,9 +302,9 @@ code {
 	min-width: 6.5rem;
 
 	span {
-		background: $gray-100;
+		background: $gray-50;
 		padding: 0.5rem 1rem;
-		border-radius: 5px;
+		border-radius: 3px;
 	}
 }
 
@@ -315,6 +321,203 @@ code {
 
 .palettes {
 	margin-top: 6rem;
+}
+
+.export-wrapper {
+	margin-top: 2rem;
+
+	&[hidden] {
+		display: none !important;
+	}
+}
+
+.export-button {
+	border: none;
+	border-radius: 3px;
+	padding: 1.6rem 2.4rem;
+	font-size: 1.8rem;
+	cursor: pointer;
+	background: $gray-50;
+	color: $black;
+
+	&:hover,
+	&:active {
+		background: $gray-100;
+	}
+}
+
+.export-modal {
+	position: relative;
+	width: min(50rem, 100vw);
+	max-height: 70rem;
+	border: 1px solid $gray-200;
+	border-radius: 3px;
+	padding: 1.6rem;
+	box-shadow: 0 20px 70px rgba(0, 0, 0, 0.25);
+	background: $white;
+	color: $black;
+	overflow: hidden;
+
+	&:not([open]) {
+		display: none;
+	}
+
+	&[open] {
+		display: flex;
+		flex-direction: column;
+		height: 90vh;
+	}
+}
+
+.export-modal::backdrop {
+	background: rgba(0, 0, 0, 0.5);
+}
+
+.export-modal-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 2rem;
+
+	h3 {
+		margin: 0;
+		font-size: 2rem;
+		font-weight: 500;
+	}
+}
+
+.export-close {
+	border: none;
+	background: transparent;
+	font-size: 3.2rem;
+	cursor: pointer;
+	color: $gray-500;
+	width: 4rem;
+	height: 4rem;
+	padding: 0;
+	position: relative;
+	right: -1rem;
+	font-weight: 500;
+}
+
+.export-tabs {
+	display: flex;
+	position: relative;
+	top: 1px;
+	z-index: 1;
+}
+
+.export-tab {
+	background: transparent;
+	color: $gray-400;
+	padding: .8rem 1.6rem;
+	cursor: pointer;
+	font-weight: 500;
+	border: 1px solid transparent;
+	border-radius: 3px 3px 0 0;
+	border-bottom: none;
+	font-size: 1.6rem;
+
+	&.is-active {
+		border-color: $gray-200;
+		color: $black;
+		background-color: $gray-50;
+	}
+}
+
+.export-body {
+	display: flex;
+	flex: 1 1 auto;
+	min-height: 0;
+}
+
+.export-output-wrap {
+	position: relative;
+	flex: 1 1 auto;
+	display: flex;
+	min-height: 0;
+}
+
+.export-output {
+	margin: 0;
+	padding: 1.6rem;
+	flex: 1 1 auto;
+	font-size: 1.4rem;
+	line-height: 1.5;
+	text-align: left;
+	border: 1px solid $gray-200;
+	border-radius: 0 3px 3px;
+	background: $gray-50;
+	overflow: auto;
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.export-copy {
+	position: absolute;
+	right: 3rem;
+	bottom: 3rem;
+}
+
+.export-copy-button {
+	width: 5rem;
+	height: 5rem;
+	padding: 0;
+	border-radius: 999px;
+	border: none;
+	background: $white;
+	color: $black;
+	cursor: pointer;
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .5);
+	transition: background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+	pointer-events: auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	&:before,
+	&:after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		margin: auto;
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: 2rem;
+		transition: opacity 0.15s ease-in-out, transform 0.15s ease-in-out;
+	}
+
+	&:before {
+		opacity: 1;
+		transform: scale(1);
+		background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPjwhLS1HZW5lcmF0ZWQgYnkgSUpTVkcgKGh0dHBzOi8vZ2l0aHViLmNvbS9pY29uamFyL0lKU1ZHKS0tPjxwYXRoIGQ9Ik0wLDBoMjR2MjRoLTI0WiIgZmlsbD0ibm9uZSI+PC9wYXRoPjxwYXRoIGZpbGw9IiMwMDAiIGQ9Ik0xNiwxaC0xMmMtMS4xLDAgLTIsMC45IC0yLDJ2MTRoMnYtMTRoMTJ2LTJabTMsNGgtMTFjLTEuMSwwIC0yLDAuOSAtMiwydjE0YzAsMS4xIDAuOSwyIDIsMmgxMWMxLjEsMCAyLC0wLjkgMiwtMnYtMTRjMCwtMS4xIC0wLjksLTIgLTIsLTJabTAsMTZoLTExdi0xNGgxMXYxNFoiPjwvcGF0aD48L3N2Zz4=);
+	}
+
+	&:after {
+		opacity: 0;
+		transform: scale(1.2);
+		background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPjwhLS1HZW5lcmF0ZWQgYnkgSUpTVkcgKGh0dHBzOi8vZ2l0aHViLmNvbS9pY29uamFyL0lKU1ZHKS0tPjxwYXRoIGQ9Ik0yMy4zNzQsMC4yODdsMy41OTg3NmUtMDgsMi41ODAwNGUtMDhjLTAuNjczMjQyLC0wLjQ4MjY2NSAtMS42MTAyOSwtMC4zMjgyMDggLTIuMDkzLDAuMzQ1bC0xNC4wMzUsMTkuNTY4bC00LjY4NSwtNC42ODlsMi40MjM2OGUtMDgsMi40MjQ4MmUtMDhjLTAuNTg1Njk4LC0wLjU4NTk3NCAtMS41MzU1MywtMC41ODYxOTggLTIuMTIxNSwtMC4wMDA1MDAwNjhjLTAuNTg1OTc0LDAuNTg1Njk4IC0wLjU4NjE5OCwxLjUzNTUzIC0wLjAwMDUwMDA2OCwyLjEyMTVjMS40ODk4OWUtMDgsMS40OTA1OWUtMDggNy40NDk0NWUtMDksNy40NTI5N2UtMDkgMi4yMzQ4NGUtMDgsMi4yMzU4OWUtMDhsNS45MzUsNS45MzRsNC41MjA4M2UtMDgsNC4zNTAyNGUtMDhjMC42MDY4OSwwLjU4Mzk4OSAxLjU3MjI5LDAuNTY1NDI1IDIuMTU2MjgsLTAuMDQxNDY0OWMwLjA0Mzg2NiwtMC4wNDU1ODYyIDAuMDg0ODUyOSwtMC4wOTM4NTc5IDAuMTIyNzIzLC0wLjE0NDUzNWwxNS4wNjYsLTIxbDUuMjgwOThlLTA4LC03LjM2NjE0ZS0wOGMwLjQ4MjY2NSwtMC42NzMyNDMgMC4zMjgyMDcsLTEuNjEwMjkgLTAuMzQ1LC0yLjA5M1oiIGZpbGw9IiMwOTAiPjwvcGF0aD48L3N2Zz4=);
+	}
+
+	&:active {
+		opacity: 0.5;
+		transform: scale(0.9);
+	}
+
+	&.copied {
+		background: $white;
+		color: $black;
+
+		&:before {
+			opacity: 0;
+			transform: scale(0.8);
+		}
+
+		&:after {
+			opacity: 1;
+			transform: scale(1);
+		}
+	}
 }
 
 td.hex-color {
@@ -361,7 +564,7 @@ td.hex-color {
 	}
 
 	&:active:before {
-		opacity: 0.2;
+		opacity: 0.5;
 		height: 3.6rem;
 		width: 3.6rem;
 	}
@@ -480,6 +683,7 @@ td.hex-value {
 
 	&.switch-ready {
 		visibility: visible;
+
 		.control {
 			transition: background-color 0.15s ease-in;
 
@@ -487,7 +691,7 @@ td.hex-value {
 				transition: left 0.15s ease-in;
 			}
 		}
-	}	
+	}
 }
 
 .label {
@@ -551,11 +755,12 @@ td.hex-value {
 }
 
 .not-found {
-	background: $black;
-	color: $white;
+	background: $gray-50;
+	color: $black;
 	display: inline-block;
 	padding: 4rem 4rem 3rem;
 	min-width: 48rem;
+	border-radius: 3px;
 
 	h2 {
 		font-weight: 900;

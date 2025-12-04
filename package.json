@@ -32,5 +32,8 @@
     "nodemon": "^3.1.4",
     "sass": "^1.78.0",
     "turndown": "^7.2.0"
+  },
+  "dependencies": {
+    "color-name-list": "^13.36.0"
   }
 }

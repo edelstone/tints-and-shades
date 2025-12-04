@@ -26,8 +26,20 @@
     }
   }
 
+  .header a {
+    color: $gray-50;
+  }
+
   code {
     background: $gray-500;
+  }
+
+  td.hex-color {
+
+    &:before,
+    &:after {
+      background-color: $gray-50;
+    }
   }
 
   .theme-toggle {
@@ -36,5 +48,44 @@
     .theme-toggle__icon {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0%200%2024%2024' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='5'/%3E%3Cline x1='12' y1='1' x2='12' y2='3'/%3E%3Cline x1='12' y1='21' x2='12' y2='23'/%3E%3Cline x1='4.22' y1='4.22' x2='5.64' y2='5.64'/%3E%3Cline x1='18.36' y1='18.36' x2='19.78' y2='19.78'/%3E%3Cline x1='1' y1='12' x2='3' y2='12'/%3E%3Cline x1='21' y1='12' x2='23' y2='12'/%3E%3Cline x1='4.22' y1='19.78' x2='5.64' y2='18.36'/%3E%3Cline x1='18.36' y1='5.64' x2='19.78' y2='4.22'/%3E%3C/svg%3E");
     }
+  }
+
+  .export-button {
+    background: $black;
+    color: $gray-100;
+  }
+
+  .export-modal {
+    background: $gray-600;
+    color: $gray-100;
+    border-color: $gray-600;
+  }
+
+  .export-close {
+    color: $gray-100;
+  }
+
+  .export-tab {
+    color: $gray-300;
+
+    &.is-active {
+      border-color: $black;
+      color: $gray-50;
+      background-color: $black;
+    }
+  }
+
+  .export-output {
+    border-color: $black;
+    background: $black;
+  }
+
+  .export-copy-button {
+    background: $gray-50;
+  }
+
+  .not-found {
+    background: $black;
+    color: $gray-100;
   }
 }
