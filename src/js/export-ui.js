@@ -1,8 +1,32 @@
 // export-ui.js - export modal UI: focus trap, scroll lock, formatting, copy
 (() => {
+  const VALID_EXPORT_FORMATS = ["hex", "hex-hash", "css", "json"];
+  const EXPORT_FORMAT_STORAGE_KEY = "export-preferred-format";
+
+  const getStoredExportFormat = () => {
+    try {
+      const storedFormat = localStorage.getItem(EXPORT_FORMAT_STORAGE_KEY);
+      if (storedFormat && VALID_EXPORT_FORMATS.includes(storedFormat)) {
+        return storedFormat;
+      }
+    } catch (err) {
+      // Ignore storage errors and fall back to default
+    }
+    return "hex";
+  };
+
+  const persistExportFormat = (format) => {
+    if (!VALID_EXPORT_FORMATS.includes(format)) return;
+    try {
+      localStorage.setItem(EXPORT_FORMAT_STORAGE_KEY, format);
+    } catch (err) {
+      // Ignore storage errors
+    }
+  };
+
   const exportState = {
     palettes: [],
-    format: "hex"
+    format: getStoredExportFormat()
   };
 
   const exportElements = {
@@ -136,8 +160,8 @@
   };
 
   const setExportFormat = (format, state, elements) => {
-    const validFormats = ["hex", "hex-hash", "css", "json"];
-    state.format = validFormats.includes(format) ? format : "hex";
+    state.format = VALID_EXPORT_FORMATS.includes(format) ? format : "hex";
+    persistExportFormat(state.format);
     if (elements.tabs.length) {
       elements.tabs.forEach((tab) => {
         const isActive = tab.dataset.format === state.format;
@@ -198,8 +222,7 @@
   const openExportModal = (state, elements) => {
     if (!elements.modal) return;
     if (!state.palettes.length) return;
-    state.format = "hex";
-    setExportFormat("hex", state, elements);
+    setExportFormat(state.format, state, elements);
     lockBodyScroll();
     if (typeof elements.modal.showModal === "function") {
       elements.modal.showModal();
@@ -351,7 +374,7 @@
     }
 
     toggleExportWrapperVisibility(false, exportElements);
-    setExportFormat("hex", exportState, exportElements);
+    setExportFormat(exportState.format, exportState, exportElements);
   };
 
   const updateClipboardData = (copyWithHashtag) => {
