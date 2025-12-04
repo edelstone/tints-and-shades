@@ -102,7 +102,7 @@
 
       state.palettes = buildPaletteData(parsedColorsArray);
       toggleExportWrapperVisibility(true, elements);
-      setExportFormat("hex", state, elements);
+      setExportFormat(state.format, state, elements);
       updateExportOutput(state, elements);
 
       window.location.hash = parsedColorsArray.join(",");
