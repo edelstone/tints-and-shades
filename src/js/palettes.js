@@ -1,6 +1,7 @@
 // palettes.js - parse input, render tints/shades (table markup helpers), sync hash, and feed export data
 (() => {
   let warningTimeout = null;
+  let hexCellKeyHandlerAdded = false;
 
   const TABLE_HEADER = `<thead><tr class="table-header"><td><span>0%</span></td><td><span>10%</span></td><td><span>20%</span></td><td><span>30%</span></td><td><span>40%</span></td><td><span>50%</span></td><td><span>60%</span></td><td><span>70%</span></td><td><span>80%</span></td><td><span>90%</span></td><td><span>100%</span></td></tr></thead>`;
 
@@ -86,6 +87,18 @@
 
       const colorDisplayTable = `<table>${TABLE_HEADER}${colorDisplayRows.join("")}</table>`;
       tableContainer.innerHTML = colorDisplayTable;
+
+      if (!hexCellKeyHandlerAdded) {
+        tableContainer.addEventListener("keydown", (event) => {
+          const target = event.target;
+          if (!target || !target.classList || !target.classList.contains("hex-color")) return;
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            target.click();
+          }
+        });
+        hexCellKeyHandlerAdded = true;
+      }
 
       state.palettes = buildPaletteData(parsedColorsArray);
       toggleExportWrapperVisibility(true, elements);

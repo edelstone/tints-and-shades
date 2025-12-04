@@ -16,6 +16,7 @@
   };
 
   let pageScrollY = 0;
+  let handleOutsidePointerDown = null;
 
   const lockBodyScroll = () => {
     if (document.body.classList.contains("modal-open")) return;
@@ -176,6 +177,16 @@
     }
   };
 
+  const selectExportOutput = () => {
+    if (!exportElements.output) return;
+    const selection = window.getSelection && window.getSelection();
+    if (!selection) return;
+    const range = document.createRange();
+    range.selectNodeContents(exportElements.output);
+    selection.removeAllRanges();
+    selection.addRange(range);
+  };
+
   const openExportModal = (state, elements) => {
     if (!elements.modal) return;
     if (!state.palettes.length) return;
@@ -186,6 +197,17 @@
       elements.modal.showModal();
     } else {
       elements.modal.setAttribute("open", "true");
+    }
+    if (!handleOutsidePointerDown) {
+      handleOutsidePointerDown = (event) => {
+        if (!elements.modal || !elements.modal.open) return;
+        const rect = elements.modal.getBoundingClientRect();
+        const isOutside = event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom;
+        if (isOutside) {
+          closeExportModal(elements);
+        }
+      };
+      document.addEventListener("pointerdown", handleOutsidePointerDown);
     }
     if (elements.openButton) {
       elements.openButton.setAttribute("aria-expanded", "true");
@@ -205,6 +227,10 @@
     }
     resetExportScroll(elements);
     unlockBodyScroll();
+    if (handleOutsidePointerDown) {
+      document.removeEventListener("pointerdown", handleOutsidePointerDown);
+      handleOutsidePointerDown = null;
+    }
     if (elements.openButton) {
       elements.openButton.setAttribute("aria-expanded", "false");
     }
@@ -233,9 +259,9 @@
         closeExportModal(exportElements);
       });
       exportElements.modal.addEventListener("click", (event) => {
-        if (event.target === exportElements.modal) {
-          closeExportModal(exportElements);
-        }
+        // Prevent accidental close when dragging inside the dialog;
+        // outside clicks are handled via document-level pointer listener.
+        event.stopPropagation();
       });
       exportElements.modal.addEventListener("keydown", (event) => {
         if (event.key === "Escape") {
@@ -269,6 +295,22 @@
             event.preventDefault();
             tab.click();
           }
+          if (event.key === "Home") {
+            event.preventDefault();
+            const firstTab = exportElements.tabs[0];
+            if (firstTab) {
+              firstTab.click();
+              firstTab.focus();
+            }
+          }
+          if (event.key === "End") {
+            event.preventDefault();
+            const lastTab = exportElements.tabs[exportElements.tabs.length - 1];
+            if (lastTab) {
+              lastTab.click();
+              lastTab.focus();
+            }
+          }
           if (event.key === "ArrowRight" || event.key === "ArrowDown") {
             event.preventDefault();
             const currentIndex = exportElements.tabs.indexOf(tab);
@@ -289,6 +331,15 @@
 
     if (exportElements.copyFab) {
       exportElements.copyFab.addEventListener("click", () => copyExportOutput(exportState, exportElements));
+    }
+
+    if (exportElements.output) {
+      exportElements.output.addEventListener("click", (event) => {
+        if (event.detail === 3) {
+          event.preventDefault();
+          selectExportOutput();
+        }
+      });
     }
 
     toggleExportWrapperVisibility(false, exportElements);

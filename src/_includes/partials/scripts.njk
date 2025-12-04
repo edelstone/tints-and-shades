@@ -6,16 +6,7 @@
 <script src="/js/palettes.js"></script>
 <script src="/js/app.js"></script>
 <script src="/js/clipboard.js"></script>
-<script>
-  const clipboard = new ClipboardJS('.hex-color');
-
-  clipboard.on('success', e => {
-    e.trigger.classList.add("copied");
-    setTimeout(() => e.trigger.blur(), 250);
-    setTimeout(() => e.trigger.classList.remove("copied"), 1500);
-    e.clearSelection();
-  });
-</script>
+<script src="/js/clipboard-setup.js"></script>
 {% endif %}
 
 {% if docs %}
@@ -23,56 +14,4 @@
 <script>anchors.add('h2');</script>
 {% endif %}
 
-<script>
-  (function () {
-    const storageKey = 'theme';
-    const root = document.documentElement;
-    const toggle = document.getElementById('darkmode-toggle');
-    const toggleText = document.getElementById('darkmode-text-toggle');
-
-    const getStoredTheme = () => {
-      try {
-        return localStorage.getItem(storageKey);
-      } catch (e) {
-        return null;
-      }
-    };
-
-    const setStoredTheme = (theme) => {
-      try {
-        localStorage.setItem(storageKey, theme);
-      } catch (e) {
-      }
-    };
-
-    const applyTheme = (theme, persist = false) => {
-      const isDark = theme === 'dark';
-      root.classList.toggle('darkmode-active', isDark);
-      if (toggle) {
-        toggle.setAttribute('aria-pressed', String(isDark));
-        toggle.dataset.themeState = isDark ? 'dark' : 'light';
-        toggle.setAttribute('aria-label', isDark ? 'Light mode' : 'Dark mode');
-      }
-      if (toggleText) toggleText.innerText = isDark ? "Light mode" : "Dark mode";
-      if (persist) setStoredTheme(theme);
-    };
-
-    const preferred = getStoredTheme();
-    const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const initialTheme = preferred || (systemPrefersDark ? 'dark' : 'light');
-    applyTheme(initialTheme);
-
-    if (toggle) {
-      toggle.addEventListener('click', () => {
-        const nextTheme = root.classList.contains('darkmode-active') ? 'light' : 'dark';
-        applyTheme(nextTheme, true);
-      });
-      toggle.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter' || event.key === ' ') {
-          event.preventDefault();
-          toggle.click();
-        }
-      });
-    }
-  })();
-</script>
+<script src="/js/theme-toggle.js"></script>

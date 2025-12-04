@@ -398,6 +398,7 @@ code {
 	position: relative;
 	right: -1rem;
 	font-weight: 500;
+	user-select: none;
 }
 
 .export-tabs {
@@ -417,6 +418,7 @@ code {
 	border-radius: 3px 3px 0 0;
 	border-bottom: none;
 	font-size: 1.6rem;
+	user-select: none;
 
 	&.is-active {
 		border-color: $gray-200;
@@ -648,8 +650,14 @@ td.hex-value {
 		position: absolute;
 		opacity: 0;
 		cursor: pointer;
-		height: 0;
-		width: 0;
+		inset: 0;
+		height: 100%;
+		width: 100%;
+
+		&:focus-visible + .control {
+			outline: auto;
+			outline-offset: 3px;
+		}
 
 		&:checked~.control {
 			background-color: $magenta;
