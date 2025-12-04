@@ -21,7 +21,7 @@
 
       &-reveal,
       &-large-image {
-        border-radius: 3px;
+        border-radius: $radius;
       }
 
       &-tagline {
@@ -58,7 +58,7 @@
     .carbon-responsive-wrap {
       background-color: $gray-50;
       border-color: $gray-50;
-      border-radius: 3px;
+      border-radius: $radius;
     }
   }
 }

@@ -128,6 +128,13 @@
     elements.output.setAttribute("aria-labelledby", `export-tab-${state.format}`);
   };
 
+  const updateExportCornerRadius = (state, elements) => {
+    if (!elements.output) return;
+    const firstTabFormat = elements.tabs[0] ? elements.tabs[0].dataset.format : null;
+    const isFirstTabActive = state.format === firstTabFormat;
+    elements.output.classList.toggle("is-first-tab-active", isFirstTabActive);
+  };
+
   const setExportFormat = (format, state, elements) => {
     const validFormats = ["hex", "hex-hash", "css", "json"];
     state.format = validFormats.includes(format) ? format : "hex";
@@ -139,6 +146,7 @@
         tab.setAttribute("tabindex", isActive ? "0" : "-1");
       });
     }
+    updateExportCornerRadius(state, elements);
     updateExportOutput(state, elements);
     resetExportScroll(elements);
   };

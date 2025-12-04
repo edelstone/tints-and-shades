@@ -68,7 +68,7 @@ a {
 			background-color: $black;
 			padding: 1rem 2rem;
 			z-index: 1;
-			border-radius: 3px;
+			border-radius: $radius;
 			border: none;
 			top: 1rem;
 			left: 1rem;
@@ -81,7 +81,7 @@ code {
 	background: $gray-100;
 	font-size: 85%;
 	padding: 0.2rem 0.6rem;
-	border-radius: 3px;
+	border-radius: $radius;
 }
 
 .preface {
@@ -152,7 +152,7 @@ code {
 
 		a {
 			background: linear-gradient(to right, $orange, $magenta);
-			border-radius: 3px;
+			border-radius: $radius;
 			margin-bottom: 0;
 			font-size: 5.6rem;
 			font-weight: 900;
@@ -217,7 +217,7 @@ code {
 		background: $gray-50;
 		border: 1px solid $gray-200;
 		word-spacing: 0.25rem;
-		border-radius: 3px;
+		border-radius: $radius;
 		resize: none;
 		width: 100%;
 	}
@@ -251,7 +251,7 @@ code {
 	display: block;
 	pointer-events: none;
 	padding: 0.75rem 1.5rem;
-	border-radius: 3px;
+	border-radius: $radius;
 	transition: opacity .2s linear, bottom .25s ease-out;
 	z-index: 5;
 
@@ -282,7 +282,7 @@ code {
 	border: none;
 	background: $black;
 	color: $white;
-	border-radius: 3px;
+	border-radius: $radius;
 	line-height: inherit;
 	white-space: normal;
 	cursor: pointer;
@@ -304,7 +304,7 @@ code {
 	span {
 		background: $gray-50;
 		padding: 0.5rem 1rem;
-		border-radius: 3px;
+		border-radius: $radius;
 	}
 }
 
@@ -333,7 +333,7 @@ code {
 
 .export-button {
 	border: none;
-	border-radius: 3px;
+	border-radius: $radius;
 	padding: 1.6rem 2.4rem;
 	font-size: 1.8rem;
 	cursor: pointer;
@@ -351,7 +351,7 @@ code {
 	width: min(50rem, 100vw);
 	max-height: 70rem;
 	border: 1px solid $gray-200;
-	border-radius: 3px;
+	border-radius: $radius;
 	padding: 1.6rem;
 	box-shadow: 0 20px 70px rgba(0, 0, 0, 0.25);
 	background: $white;
@@ -415,7 +415,7 @@ code {
 	cursor: pointer;
 	font-weight: 500;
 	border: 1px solid transparent;
-	border-radius: 3px 3px 0 0;
+	border-radius: $radius $radius 0 0;
 	border-bottom: none;
 	font-size: 1.6rem;
 	user-select: none;
@@ -448,7 +448,12 @@ code {
 	line-height: 1.5;
 	text-align: left;
 	border: 1px solid $gray-200;
-	border-radius: 0 3px 3px;
+	border-radius: $radius;
+
+	&.is-first-tab-active {
+		border-radius: 0 $radius $radius $radius;
+	}
+
 	background: $gray-50;
 	overflow: auto;
 	white-space: pre-wrap;
@@ -465,7 +470,7 @@ code {
 	width: 5rem;
 	height: 5rem;
 	padding: 0;
-	border-radius: 999px;
+	border-radius: 50%;
 	border: none;
 	background: $white;
 	color: $black;
@@ -536,7 +541,7 @@ td.hex-color {
 		opacity: 0;
 		height: 4rem;
 		width: 4rem;
-		border-radius: 3px;
+		border-radius: $radius;
 		box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .5);
 		background-position: center;
 		background-repeat: no-repeat;
@@ -610,7 +615,7 @@ td.hex-value {
 	justify-content: center;
 	gap: 1rem;
 	padding: 1.5rem;
-	border-radius: 999px;
+	border-radius: 50%;
 
 	.theme-toggle__icon {
 		width: 2.2rem;
@@ -654,7 +659,7 @@ td.hex-value {
 		height: 100%;
 		width: 100%;
 
-		&:focus-visible + .control {
+		&:focus-visible+.control {
 			outline: auto;
 			outline-offset: 3px;
 		}
@@ -672,7 +677,7 @@ td.hex-value {
 		position: relative;
 		height: 20px;
 		width: 40px;
-		border-radius: 2.5rem;
+		border-radius: 999px;
 		background-color: $gray-300;
 		transition: none;
 
@@ -768,7 +773,7 @@ td.hex-value {
 	display: inline-block;
 	padding: 4rem 4rem 3rem;
 	min-width: 48rem;
-	border-radius: 3px;
+	border-radius: $radius;
 
 	h2 {
 		font-weight: 900;
