@@ -562,7 +562,7 @@ td.hex-color {
 		box-shadow: none;
 	}
 
-	&:focus:before,
+	&:focus-visible:before,
 	&:hover:before {
 		opacity: 1;
 		top: 50%;
@@ -585,7 +585,7 @@ td.hex-color {
 	&.copied:after {
 		opacity: 1;
 	}
-
+	
 	@media (pointer: coarse) {
 		&:before {
 			display: none;
