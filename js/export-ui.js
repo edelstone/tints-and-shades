@@ -42,6 +42,10 @@
   let pageScrollY = 0;
   let handleOutsidePointerDown = null;
 
+  const prefersReducedMotion = () => {
+    return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  };
+
   const lockBodyScroll = () => {
     if (document.body.classList.contains("modal-open")) return;
     pageScrollY = window.scrollY || document.documentElement.scrollTop || 0;
@@ -229,6 +233,18 @@
     } else {
       elements.modal.setAttribute("open", "true");
     }
+    elements.modal.classList.remove("is-closing");
+    elements.modal.removeAttribute("data-closing");
+    if (!prefersReducedMotion()) {
+      elements.modal.classList.add("is-opening");
+      elements.modal.addEventListener("animationend", (event) => {
+        if (event.target === elements.modal && event.animationName === "export-modal-fade") {
+          elements.modal.classList.remove("is-opening");
+        }
+      }, { once: true });
+    } else {
+      elements.modal.classList.remove("is-opening");
+    }
     if (!handleOutsidePointerDown) {
       handleOutsidePointerDown = (event) => {
         if (!elements.modal || !elements.modal.open) return;
@@ -250,21 +266,58 @@
   };
 
   const closeExportModal = (elements) => {
-    if (!elements.modal) return;
-    if (elements.modal.open) {
-      elements.modal.close();
-    } else {
-      elements.modal.removeAttribute("open");
+    const modal = elements.modal;
+    if (!modal) return;
+    if (modal.getAttribute("data-closing") === "true") return;
+
+    const completeClose = () => {
+      modal.removeAttribute("data-closing");
+      modal.classList.remove("is-closing");
+      modal.classList.remove("is-opening");
+      if (modal.open && typeof modal.close === "function") {
+        modal.close();
+      } else {
+        modal.removeAttribute("open");
+      }
+      resetExportScroll(elements);
+      unlockBodyScroll();
+      if (handleOutsidePointerDown) {
+        document.removeEventListener("pointerdown", handleOutsidePointerDown);
+        handleOutsidePointerDown = null;
+      }
+      if (elements.openButton) {
+        elements.openButton.setAttribute("aria-expanded", "false");
+      }
+    };
+
+    if (!modal.open && !modal.hasAttribute("open")) {
+      completeClose();
+      return;
     }
-    resetExportScroll(elements);
-    unlockBodyScroll();
-    if (handleOutsidePointerDown) {
-      document.removeEventListener("pointerdown", handleOutsidePointerDown);
-      handleOutsidePointerDown = null;
+
+    if (prefersReducedMotion()) {
+      completeClose();
+      return;
     }
-    if (elements.openButton) {
-      elements.openButton.setAttribute("aria-expanded", "false");
-    }
+
+    modal.setAttribute("data-closing", "true");
+    modal.classList.remove("is-opening");
+    modal.classList.add("is-closing");
+
+    let closeFallbackTimer = null;
+    const handleAnimationEnd = (event) => {
+      if (event.target !== modal || event.animationName !== "export-modal-fade") return;
+      clearTimeout(closeFallbackTimer);
+      modal.removeEventListener("animationend", handleAnimationEnd);
+      completeClose();
+    };
+
+    closeFallbackTimer = setTimeout(() => {
+      modal.removeEventListener("animationend", handleAnimationEnd);
+      completeClose();
+    }, 250);
+
+    modal.addEventListener("animationend", handleAnimationEnd);
   };
 
   const wireExportControls = () => {
