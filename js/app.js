@@ -32,6 +32,14 @@ const initializeSettings = () => {
     settings.copyWithHashtag = checkbox.checked;
     saveSettings();
   });
+
+  // Also toggle on Enter to align with the button-like switch UI
+  checkbox.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === "NumpadEnter") {
+      event.preventDefault();
+      checkbox.click();
+    }
+  });
 };
 
 document.addEventListener("DOMContentLoaded", () => {
