@@ -357,6 +357,7 @@ code {
 	background: $white;
 	color: $black;
 	overflow: hidden;
+	transform-origin: center;
 
 	&:not([open]) {
 		display: none;
@@ -367,10 +368,58 @@ code {
 		flex-direction: column;
 		height: 90vh;
 	}
+
+	&.is-opening {
+		animation: export-modal-fade 180ms ease-out forwards;
+	}
+
+	&.is-closing {
+		animation: export-modal-fade 150ms ease-in reverse forwards;
+	}
 }
 
 .export-modal::backdrop {
 	background: rgba(0, 0, 0, 0.5);
+	opacity: 1;
+}
+
+.export-modal.is-opening::backdrop {
+	animation: export-backdrop-fade 180ms ease-out forwards;
+}
+
+.export-modal.is-closing::backdrop {
+	animation: export-backdrop-fade 150ms ease-in reverse forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.export-modal.is-opening,
+	.export-modal.is-closing,
+	.export-modal.is-opening::backdrop,
+	.export-modal.is-closing::backdrop {
+		animation: none;
+	}
+}
+
+@keyframes export-modal-fade {
+	from {
+		opacity: 0;
+		transform: translateY(12px) scale(0.98);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+}
+
+@keyframes export-backdrop-fade {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
 }
 
 .export-modal-header {
