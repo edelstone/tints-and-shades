@@ -144,8 +144,8 @@
     }
     ctx.fillStyle = tableBackground;
   ctx.fillRect(0, 0, totalWidth + padding * 2, totalHeight + padding * 2);
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "top";
   let yOffset = padding;
   rows.forEach((row, rowIndex) => {
     let xOffset = padding;
@@ -160,13 +160,19 @@
           ctx.fillStyle = tableBackground;
         }
         ctx.fillRect(xOffset, yOffset, cellWidth, rowHeight);
-        const text = (cell.textContent || "").trim();
+        const rawText = (cell.textContent || "").trim();
+        const hexPattern = /^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/;
+        let text = rawText;
+        if (hexPattern.test(rawText)) {
+          text = rawText.toLowerCase();
+        }
         if (text) {
           ctx.fillStyle = computed.color || "#000";
           const fontSize = parseFloat(computed.fontSize) || 14;
           const fontFamily = computed.fontFamily || "Work Sans, system-ui, sans-serif";
           ctx.font = `${fontSize}px ${fontFamily}`;
-          ctx.fillText(text, xOffset + cellWidth / 2, yOffset + rowHeight / 2);
+          const titleOffset = row.classList && row.classList.contains("table-header") ? 20 : 10;
+          ctx.fillText(text, xOffset + cellWidth / 2, yOffset + titleOffset);
         }
         xOffset += cellWidth;
       });
