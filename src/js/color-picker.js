@@ -68,9 +68,11 @@
 
   const getThemeMode = () => (document.documentElement.classList.contains("darkmode-active") ? "dark" : "light");
 
-  const positionPickerInput = (target) => {
-    if (!pickerInput || !target) return;
-    const rect = target.getBoundingClientRect();
+  let activePickerAnchor = null;
+
+  const updatePickerInputPosition = () => {
+    if (!pickerInput || !activePickerAnchor) return;
+    const rect = activePickerAnchor.getBoundingClientRect();
     pickerInput.style.position = "fixed";
     pickerInput.style.left = `${rect.left}px`;
     pickerInput.style.top = `${rect.top}px`;
@@ -79,6 +81,20 @@
     pickerInput.style.pointerEvents = "none";
     pickerInput.style.opacity = "0";
   };
+
+  const positionPickerInput = (target) => {
+    if (!pickerInput || !target) return;
+    activePickerAnchor = target;
+    updatePickerInputPosition();
+  };
+
+  const refreshPickerPosition = () => {
+    if (!activePickerAnchor) return;
+    updatePickerInputPosition();
+  };
+
+  window.addEventListener("resize", refreshPickerPosition);
+  window.addEventListener("scroll", refreshPickerPosition, { passive: true });
 
   pickerInput.setAttribute("tabindex", "-1");
   pickerInput.setAttribute("aria-hidden", "true");
@@ -197,6 +213,7 @@
     }
     pendingHex = "";
     shouldCommit = false;
+    activePickerAnchor = null;
     clearActivePickerCell();
     focusEl(lastTrigger || pickerButton);
   });
