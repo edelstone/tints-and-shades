@@ -37,6 +37,7 @@
     tabs: [],
     output: null,
     copyFab: null,
+    imageButton: null,
   };
 
   let pageScrollY = 0;
@@ -70,6 +71,136 @@
 
   const prefersReducedMotion = () => {
     return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  };
+
+  const canvasToBlob = (canvas) => new Promise((resolve) => {
+    const serialize = () => {
+      const dataUrl = canvas.toDataURL("image/png");
+      const base64 = dataUrl.split(",")[1] || "";
+      const binary = atob(base64);
+      const buffer = new Uint8Array(binary.length);
+      for (let i = 0; i < binary.length; i += 1) {
+        buffer[i] = binary.charCodeAt(i);
+      }
+      resolve(new Blob([buffer], { type: "image/png" }));
+    };
+
+    if (canvas.toBlob) {
+      canvas.toBlob((blob) => {
+        if (blob) {
+          resolve(blob);
+          return;
+        }
+        serialize();
+      });
+      return;
+    }
+    serialize();
+  });
+
+  const downloadBlob = (blob, filename) => {
+    if (!blob) return;
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  };
+
+  function createTableCanvas(table) {
+    if (!table) return null;
+    const rows = Array.from(table.rows || []);
+    if (!rows.length) return null;
+    const rowHeights = rows.map((row) => Math.max(1, Math.round(row.getBoundingClientRect().height)));
+    const tableStyle = window.getComputedStyle(table);
+    let totalWidth = 0;
+    rows.forEach((row) => {
+    let rowWidth = 0;
+    Array.from(row.cells).forEach((cell) => {
+      rowWidth += Math.max(1, Math.round(cell.getBoundingClientRect().width));
+    });
+    totalWidth = Math.max(totalWidth, rowWidth);
+  });
+  const totalHeight = rowHeights.reduce((sum, height) => sum + height, 0);
+  if (!totalWidth || !totalHeight) return null;
+  const padding = 24;
+    const ratio = Math.max(1, window.devicePixelRatio || 1);
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.max(1, Math.round((totalWidth + padding * 2) * ratio));
+    canvas.height = Math.max(1, Math.round((totalHeight + padding * 2) * ratio));
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return null;
+    ctx.scale(ratio, ratio);
+    const rootBackground = window.getComputedStyle(document.documentElement).backgroundColor;
+    const isTransparent = (value) => !value || value === "transparent" || value === "rgba(0, 0, 0, 0)";
+    let tableBackground = tableStyle.backgroundColor;
+    if (isTransparent(tableBackground)) {
+      tableBackground = !isTransparent(rootBackground)
+        ? rootBackground
+        : "#fff";
+    }
+    ctx.fillStyle = tableBackground;
+  ctx.fillRect(0, 0, totalWidth + padding * 2, totalHeight + padding * 2);
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  let yOffset = padding;
+  rows.forEach((row, rowIndex) => {
+    let xOffset = padding;
+      const rowHeight = rowHeights[rowIndex];
+      Array.from(row.cells).forEach((cell) => {
+        const cellWidth = Math.max(1, Math.round(cell.getBoundingClientRect().width));
+        const computed = window.getComputedStyle(cell);
+        const cellBg = computed.backgroundColor;
+        if (cellBg && cellBg !== "rgba(0, 0, 0, 0)" && cellBg !== "transparent") {
+          ctx.fillStyle = cellBg;
+        } else {
+          ctx.fillStyle = tableBackground;
+        }
+        ctx.fillRect(xOffset, yOffset, cellWidth, rowHeight);
+        const text = (cell.textContent || "").trim();
+        if (text) {
+          ctx.fillStyle = computed.color || "#000";
+          const fontSize = parseFloat(computed.fontSize) || 14;
+          const fontFamily = computed.fontFamily || "Work Sans, system-ui, sans-serif";
+          ctx.font = `${fontSize}px ${fontFamily}`;
+          ctx.fillText(text, xOffset + cellWidth / 2, yOffset + rowHeight / 2);
+        }
+        xOffset += cellWidth;
+      });
+      yOffset += rowHeight;
+    });
+    return { canvas, width: totalWidth, height: totalHeight };
+  }
+
+  const downloadPaletteTableAsPng = async () => {
+    if (!exportState.palettes || !exportState.palettes.length) return;
+    const tableWrapper = document.getElementById("tints-and-shades");
+    const tableElement = tableWrapper ? tableWrapper.querySelector("table") : null;
+    if (!tableElement) return;
+    const canvasResult = createTableCanvas(tableElement);
+    if (!canvasResult || !canvasResult.canvas) return;
+    const { canvas } = canvasResult;
+    const imageButton = exportElements.imageButton;
+    if (imageButton) {
+      imageButton.disabled = true;
+      imageButton.setAttribute("aria-busy", "true");
+    }
+    try {
+      const blob = await canvasToBlob(canvas);
+      if (!blob) throw new Error("Failed to create PNG");
+      const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+      downloadBlob(blob, `palettes-${timestamp}.png`);
+    } catch (error) {
+      console.error("Failed to export palette table as PNG", error);
+    } finally {
+      if (imageButton) {
+        imageButton.disabled = false;
+        imageButton.removeAttribute("aria-busy");
+      }
+    }
   };
 
   const lockBodyScroll = () => {
@@ -256,6 +387,10 @@
     elements.wrapper.hidden = !visible;
     elements.openButton.disabled = !visible;
     elements.openButton.setAttribute("aria-expanded", "false");
+    if (elements.imageButton) {
+      elements.imageButton.disabled = !visible;
+      elements.imageButton.setAttribute("aria-disabled", visible ? "false" : "true");
+    }
   };
 
   const copyExportOutput = async (state, elements) => {
@@ -406,6 +541,7 @@
     exportElements.tabs = Array.from(document.querySelectorAll(".export-tab"));
     exportElements.output = document.getElementById("export-output");
     exportElements.copyFab = document.getElementById("export-copy-fab");
+    exportElements.imageButton = document.getElementById("export-image");
 
     if (exportElements.openButton) {
       exportElements.openButton.addEventListener("click", () => openExportModal(exportState, exportElements));
@@ -443,8 +579,9 @@
           }
           focusables[nextIndex].focus();
           event.preventDefault();
-        }
-      });
+    }
+  });
+
     }
 
     if (exportElements.tabs.length) {
@@ -502,6 +639,10 @@
           selectExportOutput();
         }
       });
+    }
+
+    if (exportElements.imageButton) {
+      exportElements.imageButton.addEventListener("click", () => downloadPaletteTableAsPng());
     }
 
     toggleExportWrapperVisibility(false, exportElements);
