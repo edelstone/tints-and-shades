@@ -13,6 +13,15 @@ main: true
 		</div>
 		<div class="input">
 			<textarea id="color-values" name="color-values" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"></textarea>
+			<div class="color-picker-wrapper">
+				<button id="color-picker-button" class="color-picker-button" type="button" aria-label="Pick a color">
+					<span aria-hidden="true">
+						{% include "partials/icons/color-picker.njk" %}
+					</span>
+					<span class="sr-only">Pick a color</span>
+				</button>
+				<input id="color-picker-input" class="color-picker-input" type="text" data-coloris autocomplete="off" aria-label="Pick a color" tabindex="-1" aria-hidden="true" inert>
+			</div>
 		</div>
 		<input id="make" class="button" type="submit" value="Make tints and shades &nbsp;🎉">
 	</form>
@@ -36,8 +45,8 @@ main: true
 		</div>
 	</div>
 	<div id="tints-and-shades"></div>
-{# Screen reader-only live region for copy confirmations #}
-<div id="copy-status" class="sr-only" aria-live="polite"></div>
+	{# Screen reader-only live region for copy confirmations #}
+	<div id="copy-status" class="sr-only" aria-live="polite"></div>
 </div>
 
 {% include "partials/export-dialog.njk" %}

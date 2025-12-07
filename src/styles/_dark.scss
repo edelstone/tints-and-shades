@@ -58,6 +58,20 @@ html.darkmode-active {
     }
   }
 
+  .color-picker-button {
+    background: $black-transparent;
+    color: $gray-100;
+  }
+
+  #clr-picker {
+    background-color: $black;
+
+    input.clr-color {
+      background-color: $gray-600;
+      border-color: $gray-500;
+    }
+  }
+
   td.hex-color {
 
     &:before,

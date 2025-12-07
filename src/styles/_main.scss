@@ -236,9 +236,66 @@ pre {
 	max-width: 54rem;
 	margin: 1rem auto 2rem;
 	width: 100%;
+	position: relative;
+}
 
-	@include breakpoint('medium') {
-		flex-direction: column;
+.color-picker-wrapper {
+	position: absolute;
+	right: 1.2rem;
+	bottom: 1.2rem;
+	z-index: 2;
+	width: 4.8rem;
+	height: 4.8rem;
+
+	.color-picker-button {
+		width: 100%;
+		height: 100%;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0;
+		border: none;
+		border-radius: 50%;
+		background: $white;
+		color: $black;
+		box-shadow: $shadow-main;
+		cursor: pointer;
+		transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
+
+		svg {
+			width: 2.2rem;
+			height: 2.2rem;
+			display: flex;
+		}
+
+		&:active {
+			transform: scale(.9);
+			opacity: .75;
+		}
+	}
+
+	.color-picker-input {
+		position: absolute;
+		inset: 0;
+		opacity: 0;
+		pointer-events: none;
+		border: none;
+		padding: 0;
+	}
+
+	#clr-picker {
+		box-shadow: $shadow-main;
+		transform: translate(27px, -8px);
+
+		&:before {
+			color: $black;
+		}
+	}
+
+	input.clr-color {
+		border-color: $gray-200;
+		background-color: $gray-50;
+		font-family: $monospace;
 	}
 }
 
@@ -612,7 +669,7 @@ pre {
 	background: $white;
 	color: $black;
 	cursor: pointer;
-	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .5);
+	box-shadow: $shadow-main;
 	transition: background-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
 	display: flex;
 	justify-content: center;
@@ -681,7 +738,7 @@ td.hex-color {
 		height: 4rem;
 		width: 4rem;
 		border-radius: $radius;
-		box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .5);
+		box-shadow: $shadow-main;
 		background-color: $white;
 		color: $black;
 		position: absolute;
