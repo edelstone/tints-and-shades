@@ -302,15 +302,10 @@ pre {
 		border: none;
 		padding: 0;
 	}
+}
 
-	#clr-picker {
-		box-shadow: $shadow-main;
-		transform: translate(27px, -8px);
-
-		&:before {
-			color: $black;
-		}
-	}
+#clr-picker {
+	box-shadow: $shadow-main;
 
 	input.clr-color {
 		border-color: $gray-200;
