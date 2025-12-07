@@ -5,6 +5,25 @@
 
   const VALID_TINT_SHADE_COUNTS = [5, 10, 20];
   const DEFAULT_TINT_SHADE_COUNT = 10;
+  const ACTIVATION_KEYS = new Set(["enter", "return", "numpadenter", " ", "space", "spacebar"]);
+  const ACTIVATION_KEY_CODES = new Set([13, 32]);
+  const isActivationKey = (value) => {
+    if (typeof value === "string") {
+      return ACTIVATION_KEYS.has(value.toLowerCase());
+    }
+    if (typeof value === "number") {
+      return ACTIVATION_KEY_CODES.has(value);
+    }
+    if (value && typeof value === "object") {
+      if (isActivationKey(value.key)) return true;
+      if (isActivationKey(value.code)) return true;
+      const keyCode = typeof value.keyCode === "number" ? value.keyCode : value.which;
+      if (typeof keyCode === "number") {
+        return isActivationKey(keyCode);
+      }
+    }
+    return false;
+  };
   const HASH_PARAM_KEYS = {
     colors: "colors",
     hashtag: "hashtag",
@@ -113,10 +132,18 @@
     });
   };
 
-  const makeTableRowColors = (colors, displayType, colorPrefix) => colors.map(colorItem => {
+  const makeTableRowColors = (colors, displayType, colorPrefix, options = {}) => colors.map((colorItem, index) => {
+    const enableBasePicker = options.enableBasePicker && index === 0 && typeof options.colorIndex === "number";
+    const colorPickerIcon = enableBasePicker ? getIconMarkup("icon-color-picker-template") : "";
     const hexValue = typeof colorItem === "string" ? colorItem : colorItem.hex;
     const prefix = colorPrefix || "";
     if (displayType === "colors") {
+      if (enableBasePicker) {
+        const ariaLabel = `Adjust #${hexValue.toUpperCase()} with the color picker`;
+        return `<td tabindex="0" role="button" aria-label="${ariaLabel}" class="hex-color hex-color--picker" style="background-color:#${hexValue}" data-color-index="${options.colorIndex}" data-color-hex="${hexValue}">
+          <span class="copy-indicator copy-indicator--picker" aria-hidden="true">${colorPickerIcon}</span>
+        </td>`;
+      }
       const copyIcon = getIconMarkup("icon-copy-template");
       const checkIcon = getIconMarkup("icon-check-template");
       const ariaLabel = `Copy ${prefix}${hexValue.toUpperCase()}`;
@@ -202,27 +229,27 @@
 
       const tintShadeCount = normalizeTintShadeCount(settings.tintShadeCount);
 
-      parsedColorsArray.forEach(color => {
+      parsedColorsArray.forEach((color, colorIndex) => {
         const calculatedShades = colorUtils.calculateShades(color, tintShadeCount);
-        colorDisplayRows[tableRowCounter++] = `<tr>${makeTableRowColors(calculatedShades, "colors", colorPrefix)}</tr>`;
+        colorDisplayRows[tableRowCounter++] = `<tr>${makeTableRowColors(calculatedShades, "colors", colorPrefix, { enableBasePicker: true, colorIndex })}</tr>`;
         colorDisplayRows[tableRowCounter++] = `<tr>${makeTableRowColors(calculatedShades, "RGBValues", colorPrefix)}</tr>`;
 
         const calculatedTints = colorUtils.calculateTints(color, tintShadeCount);
-        colorDisplayRows[tableRowCounter++] = `<tr>${makeTableRowColors(calculatedTints, "colors", colorPrefix)}</tr>`;
+        colorDisplayRows[tableRowCounter++] = `<tr>${makeTableRowColors(calculatedTints, "colors", colorPrefix, { enableBasePicker: true, colorIndex })}</tr>`;
         colorDisplayRows[tableRowCounter++] = `<tr>${makeTableRowColors(calculatedTints, "RGBValues", colorPrefix)}</tr>`;
       });
 
       const colorDisplayTable = `<table>${buildTableHeader(tintShadeCount)}${colorDisplayRows.join("")}</table>`;
-      tableContainer.innerHTML = colorDisplayTable;
+        tableContainer.innerHTML = colorDisplayTable;
 
       if (!hexCellKeyHandlerAdded) {
         tableContainer.addEventListener("keydown", (event) => {
           const target = event.target;
           if (!target || !target.classList || !target.classList.contains("hex-color")) return;
-          if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
-            target.click();
-          }
+          if (target.closest && target.closest(".hex-color--picker")) return;
+          if (!isActivationKey(event)) return;
+          event.preventDefault();
+          target.click();
         });
         hexCellKeyHandlerAdded = true;
       }

@@ -1,15 +1,53 @@
-// color-picker.js - use Coloris preview as the commit action for adding hex values
+// color-picker.js - integrate Coloris for adding colors and tweaking base palette colors
 (() => {
   const colorInput = document.getElementById("color-values");
   const pickerInput = document.getElementById("color-picker-input");
   const pickerButton = document.getElementById("color-picker-button");
-  const pickerContainer = pickerInput ? pickerInput.parentElement : null;
   const submitButton = document.getElementById("make");
 
-  if (!colorInput || !pickerInput || !pickerButton || typeof Coloris === "undefined") return;
+  if (!colorInput || !pickerInput || !pickerButton || typeof Coloris === "undefined" || !window.palettes) return;
 
-  const defaultColor = "#0cf";
+  const defaultColor = "#3b82f6";
   let pendingHex = "";
+  let activeContext = { mode: "add", index: null };
+  let hasCommittedThisSession = false;
+  let shouldCommit = false;
+  let lastTrigger = pickerButton;
+  let activePickerCell = null;
+  const ACTIVATION_KEYS = new Set(["enter", "return", "numpadenter", " ", "space", "spacebar"]);
+  const ACTIVATION_KEY_CODES = new Set([13, 32]);
+  const isActivationKey = (value) => {
+    if (typeof value === "string") {
+      return ACTIVATION_KEYS.has(value.toLowerCase());
+    }
+    if (typeof value === "number") {
+      return ACTIVATION_KEY_CODES.has(value);
+    }
+    if (value && typeof value === "object") {
+      if (isActivationKey(value.key)) return true;
+      if (isActivationKey(value.code)) return true;
+      const keyCode = typeof value.keyCode === "number" ? value.keyCode : value.which;
+      if (typeof keyCode === "number") {
+        return isActivationKey(keyCode);
+      }
+    }
+    return false;
+  };
+
+  const clearActivePickerCell = () => {
+    if (activePickerCell && activePickerCell.classList) {
+      activePickerCell.classList.remove("is-picker-open");
+    }
+    activePickerCell = null;
+  };
+
+  const activatePickerCell = (target) => {
+    clearActivePickerCell();
+    if (target && target.classList && target.classList.contains("hex-color--picker")) {
+      activePickerCell = target;
+      activePickerCell.classList.add("is-picker-open");
+    }
+  };
 
   const focusEl = (el) => {
     if (el && typeof el.focus === "function") {
@@ -28,26 +66,30 @@
     return clean;
   };
 
-  const appendHexToInput = (hexValue) => {
-    if (!hexValue) return;
-    const currentValue = colorInput.value.trim();
-    const newValue = currentValue ? `${currentValue} ${hexValue}` : hexValue;
-    colorInput.value = newValue;
-    colorInput.dispatchEvent(new Event("input", { bubbles: true }));
-  };
-
   const getThemeMode = () => (document.documentElement.classList.contains("darkmode-active") ? "dark" : "light");
 
-  // Keep the hidden input out of the tab order to avoid stray focus stops
+  const positionPickerInput = (target) => {
+    if (!pickerInput || !target) return;
+    const rect = target.getBoundingClientRect();
+    pickerInput.style.position = "fixed";
+    pickerInput.style.left = `${rect.left}px`;
+    pickerInput.style.top = `${rect.top}px`;
+    pickerInput.style.width = `${rect.width}px`;
+    pickerInput.style.height = `${rect.height}px`;
+    pickerInput.style.pointerEvents = "none";
+    pickerInput.style.opacity = "0";
+  };
+
   pickerInput.setAttribute("tabindex", "-1");
   pickerInput.setAttribute("aria-hidden", "true");
+  pickerInput.inert = true;
 
-  const setPickerBaseColor = () => {
+  const setPickerBaseColor = (overrideHex) => {
     const parsedValues = window.palettes && window.palettes.parseColorValues
       ? window.palettes.parseColorValues(colorInput.value)
       : [];
     const lastHex = parsedValues && parsedValues.length ? parsedValues[parsedValues.length - 1] : null;
-    const hexToUse = normalizeHex(lastHex ? `#${lastHex}` : defaultColor);
+    const hexToUse = normalizeHex(overrideHex || (lastHex ? `#${lastHex}` : defaultColor));
     const formatted = `#${hexToUse || normalizeHex(defaultColor)}`;
     pickerInput.value = formatted;
   };
@@ -57,6 +99,38 @@
     const fromColorValue = colorValueInput ? normalizeHex(colorValueInput.value) : "";
     const fromPickerInput = normalizeHex(pickerInput.value);
     return pendingHex || fromColorValue || fromPickerInput;
+  };
+
+  const triggerPaletteRebuild = (options = {}) => {
+    const form = document.getElementById("color-entry-form");
+    if (form) {
+      form.dispatchEvent(new CustomEvent("submit", { bubbles: true, cancelable: true, detail: options }));
+    }
+  };
+
+  const applyCommittedHex = (hexValue) => {
+    if (!hexValue || hasCommittedThisSession) return;
+    const parsed = window.palettes && window.palettes.parseColorValues
+      ? window.palettes.parseColorValues(colorInput.value) || []
+      : [];
+
+    if (activeContext.mode === "edit" && Number.isInteger(activeContext.index)) {
+      if (!parsed.length) return;
+      parsed[activeContext.index] = hexValue;
+      colorInput.value = parsed.join(" ");
+    } else {
+      const currentValue = colorInput.value.trim();
+      colorInput.value = currentValue ? `${currentValue} ${hexValue}` : hexValue;
+    }
+
+    pendingHex = "";
+    colorInput.dispatchEvent(new Event("input", { bubbles: true }));
+    if (activeContext.mode === "edit") {
+      triggerPaletteRebuild({ skipScroll: true, skipFocus: true });
+    }
+    hasCommittedThisSession = true;
+    Coloris.close();
+    focusEl(lastTrigger || pickerButton);
   };
 
   const focusPickerStartControl = () => {
@@ -73,73 +147,101 @@
     focusEl(closeButton || pickerButton);
   };
 
-  const commitColorFromPreview = () => {
-    const hexValue = getActiveHex();
-    if (!hexValue) return;
-    appendHexToInput(hexValue);
-    pendingHex = "";
-    Coloris.close();
-    focusEl(pickerButton);
+  const wireCloseButton = () => {
+    const closeButton = document.getElementById("clr-close");
+    if (!closeButton || closeButton.dataset.hexCloseAttached) return;
+    closeButton.dataset.hexCloseAttached = "true";
+    closeButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      shouldCommit = true;
+      applyCommittedHex(getActiveHex());
+    });
   };
 
-  const wirePreviewClick = () => {
-    const preview = document.getElementById("clr-color-preview");
-    if (!preview || preview.dataset.hexCommitAttached) return;
-    preview.dataset.hexCommitAttached = "true";
-    preview.addEventListener("click", (event) => {
-      event.preventDefault();
-      commitColorFromPreview();
-    });
+  const openPicker = ({ target, baseHex, mode, index }) => {
+    activeContext = { mode, index: Number.isInteger(index) ? index : null };
+    hasCommittedThisSession = false;
+    shouldCommit = false;
+    lastTrigger = target || pickerButton;
+    activatePickerCell(target);
+    positionPickerInput(target || pickerButton);
+    Coloris.setInstance("#color-picker-input", { themeMode: getThemeMode(), parent: "body" });
+    setPickerBaseColor(baseHex);
+    pendingHex = "";
+    setTimeout(wireCloseButton, 0);
+    setTimeout(focusPickerStartControl, 0);
+    pickerInput.dispatchEvent(new Event("click", { bubbles: true }));
   };
 
   Coloris({
     el: "#color-picker-input",
     theme: "polaroid",
     themeMode: getThemeMode(),
-    parent: pickerContainer || "body",
+    parent: "body",
     alpha: false,
     format: "hex",
     focusInput: false,
     selectInput: false,
     closeButton: false,
     wrap: false,
+    margin: 12,
     defaultColor,
     onChange: (color) => {
       pendingHex = normalizeHex(color);
     }
   });
 
-  // Keep the hidden input out of the tab order to avoid stray focus stops
-  pickerInput.setAttribute("tabindex", "-1");
-  pickerInput.setAttribute("aria-hidden", "true");
-  pickerInput.inert = true;
-
   pickerInput.addEventListener("close", () => {
+    if (shouldCommit && !hasCommittedThisSession) {
+      applyCommittedHex(pendingHex || getActiveHex());
+    }
     pendingHex = "";
-    focusEl(pickerButton);
+    shouldCommit = false;
+    clearActivePickerCell();
+    focusEl(lastTrigger || pickerButton);
   });
 
   pickerButton.addEventListener("click", () => {
-    Coloris.setInstance("#color-picker-input", { themeMode: getThemeMode(), parent: pickerContainer || "body" });
-    setPickerBaseColor();
-    pendingHex = "";
-    setTimeout(wirePreviewClick, 0);
-    setTimeout(focusPickerStartControl, 0);
-    pickerInput.dispatchEvent(new Event("click", { bubbles: true }));
+    openPicker({ target: pickerButton, baseHex: null, mode: "add", index: null });
   });
 
-  const handlePickerTab = (event) => {
-    if (event.key !== "Tab") return;
-    if (!event.shiftKey && submitButton) {
+  pickerButton.addEventListener("keydown", (event) => {
+    if (isActivationKey(event)) {
+      event.preventDefault();
+      openPicker({ target: pickerButton, baseHex: null, mode: "add", index: null });
+      return;
+    }
+    if (event.key === "Tab" && !event.shiftKey && submitButton) {
       event.preventDefault();
       focusEl(submitButton);
-    } else if (event.shiftKey && colorInput) {
+    } else if (event.key === "Tab" && event.shiftKey && colorInput) {
       event.preventDefault();
       focusEl(colorInput);
     }
-  };
+  });
 
-  pickerButton.addEventListener("keydown", handlePickerTab);
+  document.addEventListener("click", (event) => {
+    const pickerCell = event.target.closest(".hex-color--picker");
+    if (!pickerCell) return;
+    event.preventDefault();
+    const colorIndex = parseInt(pickerCell.getAttribute("data-color-index"), 10);
+    const colorHex = normalizeHex(pickerCell.getAttribute("data-color-hex"));
+    openPicker({ target: pickerCell, baseHex: colorHex ? `#${colorHex}` : null, mode: "edit", index: colorIndex });
+  });
+
+  const paletteContainer = document.getElementById("tints-and-shades");
+  if (paletteContainer) {
+    paletteContainer.addEventListener("keydown", (event) => {
+      if (!isActivationKey(event)) return;
+      const pickerCell = event.target.closest(".hex-color--picker");
+      if (!pickerCell) return;
+      event.preventDefault();
+      event.stopPropagation();
+      const colorIndex = parseInt(pickerCell.getAttribute("data-color-index"), 10);
+      const colorHex = normalizeHex(pickerCell.getAttribute("data-color-hex"));
+      openPicker({ target: pickerCell, baseHex: colorHex ? `#${colorHex}` : null, mode: "edit", index: colorIndex });
+    }, true);
+  }
 
   if (submitButton) {
     submitButton.addEventListener("keydown", (event) => {
