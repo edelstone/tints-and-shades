@@ -41,6 +41,7 @@
     }
   })();
 </script>
+<link rel="stylesheet" href="/vendor/css/coloris.min.css">
 <link rel="stylesheet" href="/css/styles.css">
 <title>Tint and Shade Generator</title>
 
@@ -87,6 +88,15 @@
 		</div>
 		<div class="input">
 			<textarea id="color-values" name="color-values" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"></textarea>
+			<div class="color-picker-wrapper">
+				<button id="color-picker-button" class="color-picker-button" type="button" aria-label="Pick a color">
+					<span aria-hidden="true">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-color-picker"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11 7l6 6" /><path d="M4 16l11.7 -11.7a1 1 0 0 1 1.4 0l2.6 2.6a1 1 0 0 1 0 1.4l-11.7 11.7h-4v-4z" /></svg>
+					</span>
+					<span class="sr-only">Pick a color</span>
+				</button>
+				<input id="color-picker-input" class="color-picker-input" type="text" data-coloris autocomplete="off" aria-label="Pick a color" tabindex="-1" aria-hidden="true" inert>
+			</div>
 		</div>
 		<input id="make" class="button" type="submit" value="Make tints and shades &nbsp;🎉">
 	</form>
@@ -110,8 +120,8 @@
 		</div>
 	</div>
 	<div id="tints-and-shades"></div>
-
-<div id="copy-status" class="sr-only" aria-live="polite"></div>
+	
+	<div id="copy-status" class="sr-only" aria-live="polite"></div>
 </div>
 
 <dialog id="export-modal" class="export-modal" aria-labelledby="export-title" aria-modal="true">
@@ -181,13 +191,15 @@
 </div>
 
   
-<script src="/js/vendor/color-name-list.js"></script>
+<script src="/vendor/js/color-name-list.js"></script>
 <script src="/js/export-naming.js"></script>
 <script src="/js/color-utils.js"></script>
 <script src="/js/export-ui.js"></script>
 <script src="/js/palettes.js"></script>
+<script src="/vendor/js/coloris.min.js"></script>
+<script src="/js/color-picker.js"></script>
 <script src="/js/app.js"></script>
-<script src="/js/vendor/clipboard.js"></script>
+<script src="/vendor/js/clipboard.js"></script>
 <script src="/js/clipboard-init.js"></script>
 
 
