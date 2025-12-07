@@ -268,7 +268,7 @@
     const tintsHeader = stepLabel ? `${stepLabel} tints` : "tints";
     const blocks = palettes.map((palette) => {
       const label = formatPaletteLabel(palette.id);
-      const baseLine = `${label} (${prefix}${palette.base})`;
+      const baseLine = `${label} - ${prefix}${palette.base}`;
       const shadeLines = palette.shades.map((item) => `${prefix}${item.hex}`);
       const tintLines = palette.tints.map((item) => `${prefix}${item.hex}`);
       return [
@@ -365,7 +365,8 @@
     if (!palettes.length) return "";
     const blocks = palettes.map((palette) => {
       const label = formatPaletteLabel(palette.id);
-      const baseLine = `${label} (${formatRgbValue(palette.base) || palette.base})`;
+      const rgbValue = formatRgbValue(palette.base) || palette.base;
+      const baseLine = `${label} - ${rgbValue}`;
       const shadeLines = palette.shades.map((item) => formatRgbValue(item.hex) || item.hex);
       const tintLines = palette.tints.map((item) => formatRgbValue(item.hex) || item.hex);
       const shadesHeader = stepLabel ? `${stepLabel} shades` : "shades";
