@@ -18,30 +18,47 @@ const intToHex = (rgbint) => pad(Math.min(Math.max(Math.round(rgbint), 0), 255).
 
 const rgbToHex = (rgb) => intToHex(rgb.red) + intToHex(rgb.green) + intToHex(rgb.blue);
 
-const rgbShade = (rgb, i) => ({
-  red: rgb.red * (1 - 0.1 * i),
-  green: rgb.green * (1 - 0.1 * i),
-  blue: rgb.blue * (1 - 0.1 * i)
-});
-
-const rgbTint = (rgb, i) => ({
-  red: rgb.red + (255 - rgb.red) * i * 0.1,
-  green: rgb.green + (255 - rgb.green) * i * 0.1,
-  blue: rgb.blue + (255 - rgb.blue) * i * 0.1
-});
-
-const calculate = (colorValue, shadeOrTint) => {
-  const color = hexToRGB(colorValue);
-  const shadeValues = [];
-
-  for (let i = 0; i < 10; i++) {
-    shadeValues[i] = rgbToHex(shadeOrTint(color, i));
-  }
-  return shadeValues;
+const DEFAULT_STEPS = 10;
+const clampSteps = (steps = DEFAULT_STEPS) => {
+  const parsed = parseInt(steps, 10);
+  if (Number.isNaN(parsed)) return DEFAULT_STEPS;
+  return Math.min(Math.max(parsed, 1), 20);
 };
 
-const calculateShades = (colorValue) => calculate(colorValue, rgbShade).concat("000000");
-const calculateTints = (colorValue) => calculate(colorValue, rgbTint).concat("ffffff");
+const mixChannel = (from, to, ratio) => from + (to - from) * ratio;
+
+const calculateScale = (colorValue, steps, mixFn) => {
+  const totalSteps = clampSteps(steps);
+  const color = hexToRGB(colorValue);
+  const values = [];
+
+  for (let i = 0; i < totalSteps; i++) {
+    const ratio = i / totalSteps;
+    const rgb = mixFn(color, ratio);
+    values.push({
+      hex: rgbToHex(rgb),
+      ratio,
+      percent: Number((ratio * 100).toFixed(1))
+    });
+  }
+
+  return values;
+};
+
+const rgbShade = (rgb, ratio) => ({
+  red: mixChannel(rgb.red, 0, ratio),
+  green: mixChannel(rgb.green, 0, ratio),
+  blue: mixChannel(rgb.blue, 0, ratio)
+});
+
+const rgbTint = (rgb, ratio) => ({
+  red: mixChannel(rgb.red, 255, ratio),
+  green: mixChannel(rgb.green, 255, ratio),
+  blue: mixChannel(rgb.blue, 255, ratio)
+});
+
+const calculateShades = (colorValue, steps = DEFAULT_STEPS) => calculateScale(colorValue, steps, rgbShade);
+const calculateTints = (colorValue, steps = DEFAULT_STEPS) => calculateScale(colorValue, steps, rgbTint);
 
 // Expose for reuse
 window.colorUtils = {
@@ -51,7 +68,7 @@ window.colorUtils = {
   rgbToHex,
   rgbShade,
   rgbTint,
-  calculate,
+  calculateScale,
   calculateShades,
   calculateTints
 };
