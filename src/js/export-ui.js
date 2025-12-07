@@ -1,6 +1,6 @@
 // export-ui.js - export modal UI: focus trap, scroll lock, formatting, copy
 (() => {
-  const VALID_EXPORT_FORMATS = ["hex", "hex-hash", "css", "json"];
+  const VALID_EXPORT_FORMATS = ["hex", "hex-hash", "rgb", "css", "json"];
   const EXPORT_FORMAT_STORAGE_KEY = "export-preferred-format";
 
   const getStoredExportFormat = () => {
@@ -340,6 +340,45 @@
     return JSON.stringify(payload, null, 2);
   };
 
+  const normalizeHex = (hex) => {
+    if (typeof hex !== "string") return "";
+    return hex.replace(/^#/, "").trim().slice(0, 6);
+  };
+
+  const formatRgbValue = (hex) => {
+    const normalized = normalizeHex(hex);
+    if (normalized.length !== 6) return "";
+    const r = parseInt(normalized.slice(0, 2), 16);
+    const g = parseInt(normalized.slice(2, 4), 16);
+    const b = parseInt(normalized.slice(4, 6), 16);
+    if ([r, g, b].some((value) => Number.isNaN(value))) return "";
+    return `rgb(${r}, ${g}, ${b})`;
+  };
+
+  const formatRgbOutput = (palettes, stepLabel) => {
+    if (!palettes.length) return "";
+    const blocks = palettes.map((palette) => {
+      const label = formatPaletteLabel(palette.id);
+      const baseLine = `${label} (${formatRgbValue(palette.base) || palette.base})`;
+      const shadeLines = palette.shades.map((item) => formatRgbValue(item.hex) || item.hex);
+      const tintLines = palette.tints.map((item) => formatRgbValue(item.hex) || item.hex);
+      const shadesHeader = stepLabel ? `${stepLabel} shades` : "shades";
+      const tintsHeader = stepLabel ? `${stepLabel} tints` : "tints";
+      return [
+        baseLine,
+        "",
+        shadesHeader,
+        "-----",
+        ...shadeLines,
+        "",
+        tintsHeader,
+        "-----",
+        ...tintLines
+      ].join("\n");
+    });
+    return blocks.join("\n\n");
+  };
+
   const getExportText = (state) => {
     let stepLabel = "";
     if (state && typeof state.tintShadeCount === "number" && state.tintShadeCount > 0) {
@@ -349,6 +388,7 @@
     if (state.format === "css") return formatCssOutput(state.palettes);
     if (state.format === "json") return formatJsonOutput(state.palettes);
     if (state.format === "hex-hash") return formatHexOutput(state.palettes, true, stepLabel);
+    if (state.format === "rgb") return formatRgbOutput(state.palettes, stepLabel);
     return formatHexOutput(state.palettes, false, stepLabel);
   };
 
