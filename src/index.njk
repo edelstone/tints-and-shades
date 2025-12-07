@@ -38,10 +38,14 @@ main: true
 				{% include "partials/icons/hash.njk" %}
 				<span class="sr-only">Show hashtags</span>
 			</button>
-			<button id="export-open" class="action-button icon-button" type="button" aria-expanded="false" aria-controls="export-modal">
-				{% include "partials/icons/download.njk" %}
-				<span class="sr-only">Export palettes</span>
-			</button>
+			<div class="palette-actions__export">
+				<button id="export-image" class="action-button icon-button" type="button" aria-label="Download palette image">
+					{% include "partials/icons/photo.njk" %}
+				</button>
+				<button id="export-open" class="action-button icon-button" type="button" aria-expanded="false" aria-controls="export-modal" aria-label="Export palettes">
+					{% include "partials/icons/download.njk" %}
+				</button>
+			</div>
 		</div>
 	</div>
 	<div id="tints-and-shades"></div>

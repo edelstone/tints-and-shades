@@ -184,7 +184,7 @@
     selectInput: false,
     closeButton: false,
     wrap: false,
-    margin: 12,
+    margin: 6,
     defaultColor,
     onChange: (color) => {
       pendingHex = normalizeHex(color);
