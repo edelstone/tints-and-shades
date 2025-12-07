@@ -1,21 +1,33 @@
 @use 'variables' as *;
 
-.ads,
+.ads-primary,
 .ads-secondary {
-  min-height: 14rem;
+  display: none;
+}
+
+.ads-primary {
+  margin-bottom: 10rem;
+  padding: 0 2rem;
+}
+
+.ads-primary:has(#carbonads),
+.ads-primary:has(#carbon-responsive),
+.ads-secondary:has(#carbonads),
+.ads-secondary:has(#carbon-responsive) {
+  display: block;
 }
 
 #carbonads {
+  width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 6rem;
 
   a {
     border: none;
   }
 
   #carbon-cover {
-    font-family: $font-family;
+    font-family: $brand-font;
 
     .carbon {
 
@@ -50,7 +62,7 @@
   }
 
   #carbon-responsive {
-    font-family: $font-family;
+    font-family: $brand-font;
 
     a {
       color: $black;
@@ -82,8 +94,8 @@
 
     #carbon-responsive {
       .carbon-responsive-wrap {
-        background-color: $black;
-        border-color: $black;
+        background-color: $black-transparent;
+        border-color: $black-transparent;
       }
 
       a {
@@ -94,8 +106,5 @@
 }
 
 .ads-secondary {
-
-  #carbonads {
-    margin-top: 2rem;
-  }
+  margin-top: 2rem;
 }

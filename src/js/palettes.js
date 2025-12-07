@@ -3,17 +3,140 @@
   let warningTimeout = null;
   let hexCellKeyHandlerAdded = false;
 
-  const TABLE_HEADER = `<thead><tr class="table-header"><td><span>0%</span></td><td><span>10%</span></td><td><span>20%</span></td><td><span>30%</span></td><td><span>40%</span></td><td><span>50%</span></td><td><span>60%</span></td><td><span>70%</span></td><td><span>80%</span></td><td><span>90%</span></td><td><span>100%</span></td></tr></thead>`;
+  const VALID_TINT_SHADE_COUNTS = [5, 10, 20];
+  const DEFAULT_TINT_SHADE_COUNT = 10;
+  const HASH_PARAM_KEYS = {
+    colors: "colors",
+    hashtag: "hashtag",
+    steps: "steps"
+  };
 
-  const makeTableRowColors = (colors, displayType, colorPrefix) => colors.map(colorHex => {
-    if (displayType === "colors") {
-      return `<td tabindex="0" role="button" aria-label="Color swatch" class="hex-color" style="background-color:#${colorHex}" data-clipboard-text="${colorPrefix}${colorHex}"></td>`;
+  const getIconMarkup = (templateId) => {
+    const template = document.getElementById(templateId);
+    if (!template) return "";
+    return (template.innerHTML || "").trim();
+  };
+
+  const normalizeTintShadeCount = (value) => {
+    const parsed = parseInt(value, 10);
+    if (VALID_TINT_SHADE_COUNTS.includes(parsed)) return parsed;
+    return DEFAULT_TINT_SHADE_COUNT;
+  };
+
+  const parseHashHashtagParam = (value) => {
+    if (typeof value !== "string") return null;
+    const normalized = value.trim().toLowerCase();
+    if (["1", "true", "yes", "on"].includes(normalized)) return true;
+    if (["0", "false", "no", "off"].includes(normalized)) return false;
+    return null;
+  };
+
+  const parseHashTintShadeParam = (value) => {
+    if (typeof value !== "string" || value.trim() === "") return null;
+    const parsed = parseInt(value, 10);
+    if (Number.isNaN(parsed)) return null;
+    return normalizeTintShadeCount(parsed);
+  };
+
+  const readHashState = () => {
+    const rawHash = window.location.hash.slice(1);
+    if (!rawHash) return {};
+
+    if (!rawHash.includes("=")) {
+      const colors = rawHash.replace(/[,+.]/g, " ").replace(/#/g, "").trim();
+      return colors ? { colors } : {};
     }
-    return `<td class="hex-value">${colorHex.toUpperCase()}</td>`;
+
+    const params = new URLSearchParams(rawHash);
+    const colorsParam = params.get(HASH_PARAM_KEYS.colors);
+    const hashtagParam = parseHashHashtagParam(params.get(HASH_PARAM_KEYS.hashtag));
+    const tintShadeParam = parseHashTintShadeParam(params.get(HASH_PARAM_KEYS.steps));
+    const state = {};
+
+    if (colorsParam) {
+      const cleanedColors = colorsParam.replace(/[,+.]/g, " ").replace(/#/g, "").trim();
+      if (cleanedColors) state.colors = cleanedColors;
+    }
+
+    if (typeof hashtagParam === "boolean") {
+      state.copyWithHashtag = hashtagParam;
+    }
+
+    if (typeof tintShadeParam === "number") {
+      state.tintShadeCount = tintShadeParam;
+    }
+
+    return state;
+  };
+
+  const buildHashString = (colorsArray, copyWithHashtag, tintShadeCount) => {
+    if (!colorsArray || !colorsArray.length) return "";
+    const parts = [];
+    parts.push(`${HASH_PARAM_KEYS.colors}=${colorsArray.join(",")}`);
+
+    if (typeof copyWithHashtag === "boolean") {
+      parts.push(`${HASH_PARAM_KEYS.hashtag}=${copyWithHashtag ? "1" : "0"}`);
+    }
+
+    if (typeof tintShadeCount === "number" && !Number.isNaN(tintShadeCount)) {
+      parts.push(`${HASH_PARAM_KEYS.steps}=${normalizeTintShadeCount(tintShadeCount)}`);
+    }
+
+    return parts.join("&");
+  };
+
+  const updateHashState = (colorsArray, settings = {}) => {
+    const hashString = buildHashString(colorsArray, settings.copyWithHashtag, settings.tintShadeCount);
+    window.location.hash = hashString;
+  };
+
+  const formatPercentLabel = (value) => {
+    const trimmed = value % 1 === 0 ? value.toString() : value.toFixed(1);
+    return `${trimmed.replace(/\.0+$/, "")}%`;
+  };
+
+  const buildTableHeader = (steps) => {
+    const safeSteps = Math.max(1, steps);
+    const headers = Array.from({ length: safeSteps }, (_, index) => {
+      if (index === 0) return "<td><span>Base</span></td>";
+      const percent = (index / safeSteps) * 100;
+      return `<td><span>${formatPercentLabel(percent)}</span></td>`;
+    });
+    return `<thead><tr class="table-header">${headers.join("")}</tr></thead>`;
+  };
+
+  const updateHexValueDisplay = (copyWithHashtag) => {
+    const hexCells = document.querySelectorAll(".hex-value");
+    hexCells.forEach((cell) => {
+      const raw = (cell.textContent || "").trim().replace(/^#/, "");
+      cell.textContent = copyWithHashtag ? `#${raw}` : raw;
+    });
+  };
+
+  const makeTableRowColors = (colors, displayType, colorPrefix) => colors.map(colorItem => {
+    const hexValue = typeof colorItem === "string" ? colorItem : colorItem.hex;
+    const prefix = colorPrefix || "";
+    if (displayType === "colors") {
+      const copyIcon = getIconMarkup("icon-copy-template");
+      const checkIcon = getIconMarkup("icon-check-template");
+      const ariaLabel = `Copy ${prefix}${hexValue.toUpperCase()}`;
+      return `<td tabindex="0" role="button" aria-label="${ariaLabel}" class="hex-color" style="background-color:#${hexValue}" data-clipboard-text="${prefix}${hexValue}">
+        <span class="copy-indicator copy-indicator--copy" aria-hidden="true">${copyIcon}</span>
+        <span class="copy-indicator copy-indicator--check" aria-hidden="true">${checkIcon}</span>
+      </td>`;
+    }
+    return `<td class="hex-value">${prefix}${hexValue.toUpperCase()}</td>`;
   }).join("");
 
-  const smoothScrollTo = (element, duration) => {
-    const targetPosition = element.getBoundingClientRect().top + window.scrollY;
+  const prefersReducedMotion = () => window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const smoothScrollTo = (element, duration, offset = 0) => {
+    if (prefersReducedMotion()) {
+      const targetPosition = element.getBoundingClientRect().top + window.scrollY + offset;
+      window.scrollTo(0, targetPosition);
+      return;
+    }
+    const targetPosition = element.getBoundingClientRect().top + window.scrollY + offset;
     const startPosition = window.scrollY;
     const distance = targetPosition - startPosition;
     let startTime = null;
@@ -45,25 +168,27 @@
     return colorValuesArray;
   };
 
-  const buildPaletteData = (colors) => {
+  const buildPaletteData = (colors, tintShadeCount) => {
+    const stepsPerSide = normalizeTintShadeCount(tintShadeCount);
     const usedNames = new Set();
     return colors.map((color, index) => {
       const baseHex = color.toLowerCase();
-      const shades = colorUtils.calculateShades(color)
-        .map((hex, idx) => ({ hex: hex.toLowerCase(), step: idx * 10 }))
+      const shades = colorUtils.calculateShades(color, stepsPerSide)
+        .map((entry) => ({ hex: entry.hex.toLowerCase(), percent: entry.percent }))
         .filter(item => item.hex !== baseHex && item.hex !== "000000");
-      const tints = colorUtils.calculateTints(color)
-        .map((hex, idx) => ({ hex: hex.toLowerCase(), step: idx * 10 }))
+      const tints = colorUtils.calculateTints(color, stepsPerSide)
+        .map((entry) => ({ hex: entry.hex.toLowerCase(), percent: entry.percent }))
         .filter(item => item.hex !== baseHex && item.hex !== "ffffff");
 
       const fallbackName = `color-${index + 1}`;
       const friendlyName = exportNaming.makeUniqueName(exportNaming.getFriendlyName(baseHex, fallbackName), usedNames);
 
-      return { id: friendlyName, shades, tints };
+      return { id: friendlyName, base: baseHex, shades, tints, stepsPerSide };
     });
   };
 
-  const createTintsAndShades = (settings, firstTime = false) => {
+  const createTintsAndShades = (settings, firstTime = false, options = {}) => {
+    const { skipScroll = false, skipFocus = false } = options;
     const colorInput = document.getElementById("color-values");
     const tableContainer = document.getElementById("tints-and-shades");
     const warning = document.getElementById("warning");
@@ -75,17 +200,19 @@
       let tableRowCounter = 0;
       const colorPrefix = settings.copyWithHashtag ? "#" : "";
 
-      parsedColorsArray.forEach(color => {
-        const calculatedShades = colorUtils.calculateShades(color);
-        colorDisplayRows[tableRowCounter++] = `<tr>${makeTableRowColors(calculatedShades, "colors", colorPrefix)}</tr>`;
-        colorDisplayRows[tableRowCounter++] = `<tr>${makeTableRowColors(calculatedShades, "RGBValues")}</tr>`;
+      const tintShadeCount = normalizeTintShadeCount(settings.tintShadeCount);
 
-        const calculatedTints = colorUtils.calculateTints(color);
+      parsedColorsArray.forEach(color => {
+        const calculatedShades = colorUtils.calculateShades(color, tintShadeCount);
+        colorDisplayRows[tableRowCounter++] = `<tr>${makeTableRowColors(calculatedShades, "colors", colorPrefix)}</tr>`;
+        colorDisplayRows[tableRowCounter++] = `<tr>${makeTableRowColors(calculatedShades, "RGBValues", colorPrefix)}</tr>`;
+
+        const calculatedTints = colorUtils.calculateTints(color, tintShadeCount);
         colorDisplayRows[tableRowCounter++] = `<tr>${makeTableRowColors(calculatedTints, "colors", colorPrefix)}</tr>`;
-        colorDisplayRows[tableRowCounter++] = `<tr>${makeTableRowColors(calculatedTints, "RGBValues")}</tr>`;
+        colorDisplayRows[tableRowCounter++] = `<tr>${makeTableRowColors(calculatedTints, "RGBValues", colorPrefix)}</tr>`;
       });
 
-      const colorDisplayTable = `<table>${TABLE_HEADER}${colorDisplayRows.join("")}</table>`;
+      const colorDisplayTable = `<table>${buildTableHeader(tintShadeCount)}${colorDisplayRows.join("")}</table>`;
       tableContainer.innerHTML = colorDisplayTable;
 
       if (!hexCellKeyHandlerAdded) {
@@ -100,32 +227,38 @@
         hexCellKeyHandlerAdded = true;
       }
 
-      state.palettes = buildPaletteData(parsedColorsArray);
+      state.palettes = buildPaletteData(parsedColorsArray, tintShadeCount);
+      state.tintShadeCount = tintShadeCount;
       toggleExportWrapperVisibility(true, elements);
       setExportFormat(state.format, state, elements);
       updateExportOutput(state, elements);
 
-      window.location.hash = parsedColorsArray.join(",");
+      updateHashState(parsedColorsArray, settings);
 
-      const scrollElement = document.getElementById("scroll-top");
-      if (scrollElement) {
-        smoothScrollTo(scrollElement, 500);
-      } else {
-        console.error("Element with id 'scroll-top' not found.");
+      if (!skipScroll) {
+        const scrollElement = document.getElementById("scroll-top") || document.getElementById("tints-and-shades");
+        if (scrollElement) {
+          smoothScrollTo(scrollElement, 500, -16);
+        } else {
+          console.error("Element with id 'tints-and-shades' not found.");
+        }
       }
 
       setTimeout(() => {
-        tableContainer.setAttribute("tabindex", "0");
-        tableContainer.focus();
+        tableContainer.removeAttribute("tabindex");
+        if (!skipFocus) {
+          const makeButton = document.getElementById("make");
+          if (makeButton) {
+            makeButton.focus();
+          }
+        }
       });
 
-      tableContainer.addEventListener("blur", () => {
-        tableContainer.setAttribute("tabindex", "-1");
-      });
+      updateHexValueDisplay(settings.copyWithHashtag);
     } else if (!firstTime) {
       smoothScrollTo(document.body, 500);
       tableContainer.innerHTML = "";
-      window.location.hash = "";
+      updateHashState([], settings);
       warning.classList.add("visible");
 
       if (warningTimeout) clearTimeout(warningTimeout);
@@ -145,7 +278,11 @@
     parseColorValues,
     buildPaletteData,
     createTintsAndShades,
-    TABLE_HEADER,
-    makeTableRowColors
+    makeTableRowColors,
+    buildTableHeader,
+    normalizeTintShadeCount,
+    updateHexValueDisplay,
+    readHashState,
+    updateHashState
   };
 })();

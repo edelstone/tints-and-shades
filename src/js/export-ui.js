@@ -42,6 +42,32 @@
   let pageScrollY = 0;
   let handleOutsidePointerDown = null;
 
+  const clampPercent = (percent) => {
+    if (typeof percent !== "number" || Number.isNaN(percent)) return 0;
+    return Math.min(Math.max(percent, 0), 100);
+  };
+
+  const formatPercentToken = (percent) => {
+    const safe = clampPercent(percent);
+    const rounded = Math.round(safe * 10) / 10; // one decimal
+    const stringValue = rounded % 1 === 0 ? rounded.toString() : rounded.toFixed(1);
+    return stringValue.replace(/\.0+$/, "").replace(".", "-");
+  };
+
+  const formatCssTier = (percent) => {
+    const safe = clampPercent(percent);
+    return Math.round(safe * 10).toString(); // use 100s scale (10% => 100)
+  };
+
+  const formatPaletteLabel = (id) => {
+    if (!id || typeof id !== "string") return "Base";
+    return id
+      .split(/[-_]+/)
+      .filter(Boolean)
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+      .join(" ");
+  };
+
   const prefersReducedMotion = () => {
     return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   };
@@ -98,12 +124,27 @@
     }
   };
 
-  const formatHexOutput = (palettes, includeHash) => {
+  const formatHexOutput = (palettes, includeHash, stepLabel) => {
     if (!palettes.length) return "";
     const prefix = includeHash ? "#" : "";
-    const blocks = palettes.map(palette => {
-      const values = [...palette.shades, ...palette.tints];
-      return values.map(item => `${prefix}${item.hex}`).join("\n");
+    const shadesHeader = stepLabel ? `${stepLabel} shades` : "shades";
+    const tintsHeader = stepLabel ? `${stepLabel} tints` : "tints";
+    const blocks = palettes.map((palette) => {
+      const label = formatPaletteLabel(palette.id);
+      const baseLine = `${label} (${prefix}${palette.base})`;
+      const shadeLines = palette.shades.map((item) => `${prefix}${item.hex}`);
+      const tintLines = palette.tints.map((item) => `${prefix}${item.hex}`);
+      return [
+        baseLine,
+        "",
+        shadesHeader,
+        "-----",
+        ...shadeLines,
+        "",
+        tintsHeader,
+        "-----",
+        ...tintLines
+      ].join("\n");
     });
     return blocks.join("\n\n");
   };
@@ -113,12 +154,14 @@
     const lines = [];
     palettes.forEach((palette) => {
       const baseName = palette.id;
+      lines.push(`  /* ${formatPaletteLabel(baseName)} */`);
+      lines.push(`  --${baseName}-base: #${palette.base};`);
       const shadeLines = palette.shades.map((item) => {
-        const tier = (item.step / 10) * 100;
+        const tier = formatCssTier(item.percent);
         return `  --${baseName}-shade-${tier}: #${item.hex};`;
       });
       const tintLines = palette.tints.map((item) => {
-        const tier = (item.step / 10) * 100;
+        const tier = formatCssTier(item.percent);
         return `  --${baseName}-tint-${tier}: #${item.hex};`;
       });
       lines.push(...shadeLines, ...tintLines);
@@ -128,25 +171,54 @@
 
   const formatJsonOutput = (palettes) => {
     if (!palettes.length) return "";
-    const tokens = [];
+    const makePalettePayload = (palette) => {
+      const shades = palette.shades.map((item) => {
+        const step = formatCssTier(item.percent);
+        return {
+          step: Number(step),
+          name: `${palette.id}-shade-${step}`,
+          hex: `#${item.hex}`
+        };
+      });
+      const tints = palette.tints.map((item) => {
+        const step = formatCssTier(item.percent);
+        return {
+          step: Number(step),
+          name: `${palette.id}-tint-${step}`,
+          hex: `#${item.hex}`
+        };
+      });
+      return {
+        base: {
+          name: palette.id,
+          hex: `#${palette.base}`
+        },
+        shades,
+        tints
+      };
+    };
+
+    if (palettes.length === 1) {
+      return JSON.stringify(makePalettePayload(palettes[0]), null, 2);
+    }
+
+    const payload = {};
     palettes.forEach((palette) => {
-      palette.shades.forEach((item) => {
-        const tier = (item.step / 10) * 100;
-        tokens.push({ name: `${palette.id}-shade-${tier}`, hex: `#${item.hex}` });
-      });
-      palette.tints.forEach((item) => {
-        const tier = (item.step / 10) * 100;
-        tokens.push({ name: `${palette.id}-tint-${tier}`, hex: `#${item.hex}` });
-      });
+      payload[palette.id] = makePalettePayload(palette);
     });
-    return JSON.stringify(tokens, null, 2);
+    return JSON.stringify(payload, null, 2);
   };
 
   const getExportText = (state) => {
+    let stepLabel = "";
+    if (state && typeof state.tintShadeCount === "number" && state.tintShadeCount > 0) {
+      const percentStep = Math.round(100 / state.tintShadeCount);
+      stepLabel = `${percentStep}%`;
+    }
     if (state.format === "css") return formatCssOutput(state.palettes);
     if (state.format === "json") return formatJsonOutput(state.palettes);
-    if (state.format === "hex-hash") return formatHexOutput(state.palettes, true);
-    return formatHexOutput(state.palettes, false);
+    if (state.format === "hex-hash") return formatHexOutput(state.palettes, true, stepLabel);
+    return formatHexOutput(state.palettes, false, stepLabel);
   };
 
   const updateExportOutput = (state, elements) => {
@@ -206,7 +278,13 @@
       [elements.copyFab].forEach((btn) => {
         if (!btn) return;
         btn.classList.add("copied");
-        setTimeout(() => btn.classList.remove("copied"), 1500);
+        btn.disabled = true;
+        btn.setAttribute("aria-disabled", "true");
+        setTimeout(() => {
+          btn.classList.remove("copied");
+          btn.disabled = false;
+          btn.setAttribute("aria-disabled", "false");
+        }, 1500);
       });
     } catch (err) {
       console.error(err);

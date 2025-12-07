@@ -17,24 +17,27 @@ main: true
 		<input id="make" class="button" type="submit" value="Make tints and shades &nbsp;🎉">
 	</form>
 </div>
-<div class="hashtag-selector" id="scroll-top">
-	<label class="switch">
-		<input type="checkbox" id="copy-with-hashtag">
-		<span class="control"></span>
-		<span class="label">Include hashtag when copying</span>
-	</label>
-</div>
-<div class="ads">
-	<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CW7ILKQU&placement=maketintsandshadescom&format=cover" id="_carbonads_js"></script>
-</div>
 <div class="palettes">
-	<div id="tints-and-shades"></div>
 	<div id="export-wrapper" class="export-wrapper" hidden>
-		<button id="export-open" class="export-button" type="button" aria-expanded="false" aria-controls="export-modal">
-			<span>Export all colors</span>
-		</button>
+		<div class="palette-actions" id="scroll-top">
+			<div class="count-selector" role="group" aria-label="Steps per side">
+				<button type="button" class="count-selector__option" data-count="5" aria-pressed="false" tabindex="-1">5</button>
+				<button type="button" class="count-selector__option is-active" data-count="10" aria-pressed="true" tabindex="0">10</button>
+				<button type="button" class="count-selector__option" data-count="20" aria-pressed="false" tabindex="-1">20</button>
+			</div>
+			<button id="copy-with-hashtag-toggle" class="action-button action-button--toggle icon-button" type="button" aria-pressed="false">
+				{% include "partials/icons/hash.njk" %}
+				<span class="sr-only">Show hashtags</span>
+			</button>
+			<button id="export-open" class="action-button icon-button" type="button" aria-expanded="false" aria-controls="export-modal">
+				{% include "partials/icons/download.njk" %}
+				<span class="sr-only">Export palettes</span>
+			</button>
+		</div>
 	</div>
-	<div id="copy-status" class="sr-only" aria-live="polite"></div>
+	<div id="tints-and-shades"></div>
+{# Screen reader-only live region for copy confirmations #}
+<div id="copy-status" class="sr-only" aria-live="polite"></div>
 </div>
 
 {% include "partials/export-dialog.njk" %}

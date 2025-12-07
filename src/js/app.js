@@ -1,6 +1,17 @@
 // app.js - bootstrap settings, wire export UI, and kick off palette rendering
 // Whether the user wants copying to include a hashtag
-const settings = { copyWithHashtag: false };
+const settings = { copyWithHashtag: false, tintShadeCount: 10 };
+const tintShadeOptions = [5, 10, 20];
+
+const setActiveCountButtons = (buttons, count) => {
+  buttons.forEach((btn) => {
+    const btnValue = parseInt(btn.getAttribute("data-count"), 10);
+    const isActive = btnValue === count;
+    btn.classList.toggle("is-active", isActive);
+    btn.setAttribute("aria-pressed", isActive ? "true" : "false");
+    btn.setAttribute("tabindex", isActive ? "0" : "-1");
+  });
+};
 
 // Load the state from localStorage
 const loadSettings = () => {
@@ -13,42 +24,107 @@ const saveSettings = () => {
   localStorage.setItem("settings", JSON.stringify(settings));
 };
 
-// Initialize the settings and checkbox state
-const initializeSettings = () => {
+const updateHashtagToggle = (button, isOn) => {
+  if (!button) return;
+  button.setAttribute("aria-pressed", isOn ? "true" : "false");
+  button.classList.toggle("is-active", isOn);
+  button.setAttribute("aria-label", isOn ? "Hide hashtag when copying" : "Show hashtag when copying");
+};
+
+// Initialize the settings and UI state
+const initializeSettings = (initialUrlState = {}) => {
   loadSettings();
-  const checkbox = document.getElementById("copy-with-hashtag");
-  if (!checkbox) return;
-
-  const switchLabel = checkbox.closest(".switch");
-  if (switchLabel) switchLabel.classList.remove("switch-ready");
-
-  checkbox.checked = settings.copyWithHashtag;
-
-  if (switchLabel) {
-    window.requestAnimationFrame(() => switchLabel.classList.add("switch-ready"));
+  if (typeof initialUrlState.copyWithHashtag === "boolean") {
+    settings.copyWithHashtag = initialUrlState.copyWithHashtag;
+  }
+  if (typeof initialUrlState.tintShadeCount === "number") {
+    settings.tintShadeCount = palettes.normalizeTintShadeCount(initialUrlState.tintShadeCount);
   }
 
-  checkbox.addEventListener("change", () => {
-    settings.copyWithHashtag = checkbox.checked;
-    saveSettings();
-  });
+  const colorValuesElement = document.getElementById("color-values");
+  const hashtagToggle = document.getElementById("copy-with-hashtag-toggle");
+  const tintShadeButtons = Array.from(document.querySelectorAll(".count-selector__option"));
 
-  // Also toggle on Enter to align with the button-like switch UI
-  checkbox.addEventListener("keydown", (event) => {
-    if (event.key === "Enter" || event.key === "NumpadEnter") {
-      event.preventDefault();
-      checkbox.click();
-    }
-  });
+  if (hashtagToggle) {
+    updateHashtagToggle(hashtagToggle, settings.copyWithHashtag);
+    hashtagToggle.addEventListener("click", () => {
+      settings.copyWithHashtag = !settings.copyWithHashtag;
+      updateHashtagToggle(hashtagToggle, settings.copyWithHashtag);
+      saveSettings();
+      exportUI.updateClipboardData(settings.copyWithHashtag);
+      exportUI.updateExportOutput(exportUI.state, exportUI.elements);
+      if (palettes.updateHexValueDisplay) {
+        palettes.updateHexValueDisplay(settings.copyWithHashtag);
+      }
+      if (palettes.updateHashState && palettes.parseColorValues && colorValuesElement) {
+        const parsedColors = palettes.parseColorValues(colorValuesElement.value);
+        if (parsedColors && parsedColors.length) {
+          palettes.updateHashState(parsedColors, settings);
+        }
+      }
+    });
+  }
+
+  if (tintShadeButtons.length) {
+    const savedValue = tintShadeOptions.includes(settings.tintShadeCount)
+      ? settings.tintShadeCount
+      : 10;
+    settings.tintShadeCount = savedValue;
+    setActiveCountButtons(tintShadeButtons, settings.tintShadeCount);
+
+    const activateIndex = (nextIndex) => {
+      const target = tintShadeButtons[nextIndex];
+      if (!target) return;
+      const nextValue = parseInt(target.getAttribute("data-count"), 10);
+      if (!tintShadeOptions.includes(nextValue)) return;
+      if (settings.tintShadeCount === nextValue) {
+        target.focus();
+        return;
+      }
+      settings.tintShadeCount = nextValue;
+      setActiveCountButtons(tintShadeButtons, settings.tintShadeCount);
+      saveSettings();
+      palettes.createTintsAndShades(settings, false, { skipScroll: true, skipFocus: true });
+      target.focus();
+    };
+
+    tintShadeButtons.forEach((button, index) => {
+      button.addEventListener("click", () => {
+        activateIndex(index);
+      });
+
+      button.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+          event.preventDefault();
+          const nextIndex = (index + 1) % tintShadeButtons.length;
+          activateIndex(nextIndex);
+        } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+          event.preventDefault();
+          const prevIndex = (index - 1 + tintShadeButtons.length) % tintShadeButtons.length;
+          activateIndex(prevIndex);
+        } else if (event.key === "Home") {
+          event.preventDefault();
+          activateIndex(0);
+        } else if (event.key === "End") {
+          event.preventDefault();
+          activateIndex(tintShadeButtons.length - 1);
+        } else if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          activateIndex(index);
+        }
+      });
+    });
+  }
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-  initializeSettings();
+  const urlState = palettes.readHashState ? palettes.readHashState() : {};
+  initializeSettings(urlState);
   exportUI.wireExportControls();
 
   const colorValuesElement = document.getElementById("color-values");
   if (colorValuesElement) {
-    colorValuesElement.value = window.location.hash.slice(1).replace(/,/g, " ");
+    colorValuesElement.value = urlState.colors || "";
   } else {
     console.error("Element with id 'color-values' not found.");
   }
@@ -65,15 +141,9 @@ document.addEventListener("DOMContentLoaded", () => {
     console.error("Element with id 'color-entry-form' not found.");
   }
 
-  const copyWithHashtagCheckbox = document.getElementById("copy-with-hashtag");
-  if (copyWithHashtagCheckbox) {
-    copyWithHashtagCheckbox.addEventListener("change", (e) => {
-      settings.copyWithHashtag = e.target.checked;
-      exportUI.updateClipboardData(settings.copyWithHashtag);
-      exportUI.updateExportOutput(exportUI.state, exportUI.elements);
-    });
-  } else {
-    console.error("Element with id 'copy-with-hashtag' not found.");
+  const copyWithHashtagToggle = document.getElementById("copy-with-hashtag-toggle");
+  if (!copyWithHashtagToggle) {
+    console.error("Element with id 'copy-with-hashtag-toggle' not found.");
   }
 });
 

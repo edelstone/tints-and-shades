@@ -30,7 +30,7 @@ _Prerequisites: Node.js 14+_
 
 ## What is the Tint & Shade Generator?
 
-The purpose of this tool is to accurately produce tints (pure white added) and shades (pure black added) of a given hex color in 10% increments.
+The purpose of this tool is to accurately produce tints (pure white added) and shades (pure black added) of a given hex color in 5%, 10% or 20% increments.
 
 ## Why is this tool unique?
 
@@ -94,7 +94,7 @@ The Tint & Shade Generator will always be free but your support is greatly appre
 
 ## Credits
 
-[Michael Edelstone](https://michaeledelstone.com) designed and organized the project with big-time assistance from [Nick Wing](https://github.com/wickning1) on the color calculations.
+[Michael Edelstone](https://michaeledelstone.com) designed and organized the project with major assistance from [Nick Wing](https://github.com/wickning1) on the color calculations.
 
 We use these amazing open-source libraries across the project:
 
@@ -108,5 +108,6 @@ Many thanks to [Joel Carr](https://github.com/joelcarr), [Sebastian Gutierrez](h
 ## Other details
 
 -   Typography: [Work Sans](https://weiweihuanghuang.github.io/Work-Sans/) by Wei Huang
+-   Iconography: [Tabler Icons](https://tabler.io/icons)
 -   Colors: [#000000](https://maketintsandshades.com/#000000), [#ffffff](https://maketintsandshades.com/#ffffff), [#e96443](https://maketintsandshades.com/#e96443), and [#ca228e](https://maketintsandshades.com/#ca228e)
 -   Like Google's Material Design? Try [this other thing I made](https://materialpalettes.com).
