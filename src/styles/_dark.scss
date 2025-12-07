@@ -30,15 +30,6 @@ html.darkmode-active {
     background: $gray-500;
   }
 
-  .header .preface a.github-corner {
-    fill: $black-transparent;
-    color: $white;
-  }
-
-  .header a {
-    color: $gray-50;
-  }
-
   .theme-toggle {
     background: $black-transparent;
 
@@ -58,13 +49,25 @@ html.darkmode-active {
     }
   }
 
+  .header .preface a.github-corner {
+    fill: $black-transparent;
+    color: $white;
+  }
+
+  .header a {
+    color: $gray-50;
+  }
+
   .color-picker-button {
     background: $black-transparent;
-    color: $gray-100;
   }
 
   #clr-picker {
     background-color: $black;
+
+    &:before {
+      color: $black;
+    }
 
     input.clr-color {
       background-color: $gray-600;
