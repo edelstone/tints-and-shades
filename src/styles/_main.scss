@@ -277,7 +277,7 @@ pre {
 		border: none;
 		border-radius: 50%;
 		background: $white;
-		color: $info;
+		color: $black;
 		box-shadow: $shadow-main;
 		cursor: pointer;
 		transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
@@ -773,7 +773,7 @@ td.hex-color {
 		}
 
 		.copy-indicator--picker {
-			color: $info;
+			color: $black;
 		}
 	}
 }
