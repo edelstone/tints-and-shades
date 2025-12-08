@@ -8,145 +8,148 @@ html.darkmode-active {
   body {
     color: $gray-100;
     background-color: $gray-600;
-  }
 
-  .form textarea {
-    background: $gray-500;
-    border-color: $gray-500;
-    color: $gray-100;
-  }
+    a {
+      color: $gray-100;
+      border-color: $gray-100;
 
-  a {
-    color: $gray-100;
-    border-color: $gray-100;
-
-    &:hover,
-    &:active {
-      border-color: $magenta;
-    }
-  }
-
-  code {
-    background: $gray-500;
-  }
-
-  .theme-toggle {
-    background: $black-transparent;
-
-    &__icon {
-
-      svg {
-        color: $white;
-      }
-
-      .icon-tabler-sun-high {
-        display: inline-block;
-      }
-
-      .icon-tabler-moon {
-        display: none;
+      &:hover,
+      &:active {
+        border-color: $magenta;
       }
     }
-  }
 
-  .header .preface a.github-corner {
-    fill: $black-transparent;
-    color: $white;
-  }
-
-  .header a {
-    color: $gray-50;
-  }
-
-  .color-picker-button {
-    background: $black-transparent;
-    color: $gray-100;
-  }
-
-  #clr-picker {
-    background-color: $black;
-
-    &:before {
-      color: $black;
+    code {
+      background: $gray-500;
     }
 
-    input.clr-color {
-      background-color: $gray-600;
-      border-color: $gray-500;
+    .header {
+      .preface {
+        .theme-toggle {
+          background: $black-transparent;
+
+          &-icon {
+
+            svg {
+              color: $white;
+            }
+
+            .icon-tabler-sun-high {
+              display: inline-block;
+            }
+
+            .icon-tabler-moon {
+              display: none;
+            }
+          }
+        }
+
+        a.github-corner {
+          fill: $black-transparent;
+        }
+      }
+
+      .title a {
+        color: $gray-50;
+      }
     }
-  }
 
-  td.hex-color {
+    .form {
+      textarea {
+        background: $gray-500;
+        border-color: $gray-500;
+        color: $gray-100;
+      }
 
-    &:before,
-    &:after {
-      background-color: $gray-50;
-    }
-  }
-
-  .count-selector__option {
-    background: $black-transparent;
-    color: $gray-100;
-
-    &.is-active {
-      box-shadow: inset 0 0 0 1px $gray-500;
-      opacity: 1;
-      background: $black;
+      .color-picker-button {
+        background: $black-transparent;
+        color: $gray-100;
+      }
     }
 
-    &:not(.is-active):hover,
-    &:not(.is-active):active {
-      background: $black;
+    #clr-picker {
+      background-color: $black;
+
+      &:before {
+        color: $black;
+      }
+
+      input.clr-color {
+        background-color: $gray-600;
+        border-color: $gray-500;
+      }
     }
-  }
 
-  .action-button {
-    background: $black-transparent;
-    color: $gray-100;
+    .palettes {
+      .palette-controls {
+        .step-selector-option {
+          background: $black-transparent;
+          color: $gray-100;
 
-    &:hover,
-    &:active {
-      background: $black;
+          &.is-active {
+            box-shadow: inset 0 0 0 1px $gray-500;
+            opacity: 1;
+            background: $black;
+          }
+
+          &:not(.is-active):hover,
+          &:not(.is-active):active {
+            background: $black;
+          }
+        }
+
+        .action-button {
+          background: $black-transparent;
+          color: $gray-100;
+
+          &:hover,
+          &:active {
+            background: $black;
+          }
+        }
+
+        .action-button-toggle.is-active {
+          border-color: $gray-400;
+          box-shadow: inset 0 0 0 1px $gray-500;
+          background: $black;
+        }
+      }
+
+      #tints-and-shades {
+        .palette-name-row td {
+          color: $gray-100;
+        }
+      }
     }
-  }
 
-  .action-button--toggle.is-active {
-    border-color: $gray-400;
-    box-shadow: inset 0 0 0 1px $gray-500;
-    background: $black;
-  }
+    .export-dialog {
+      background: $gray-600;
+      color: $gray-100;
+      border-color: $gray-600;
 
-  .export-modal {
-    background: $gray-600;
-    color: $gray-100;
-    border-color: $gray-600;
-  }
+      .export-close {
+        color: $gray-100;
+      }
 
-  .export-close {
-    color: $gray-100;
-  }
+      .export-tab {
+        color: $gray-300;
 
-  .export-tab {
-    color: $gray-300;
+        &.is-active {
+          border-color: transparent;
+          color: $gray-50;
+          background-color: $black-transparent;
+        }
+      }
 
-    &.is-active {
-      border-color: transparent;
-      color: $gray-50;
-      background-color: $black-transparent;
+      .export-body .export-output {
+        border-color: transparent;
+        background: $black-transparent;
+      }
     }
-  }
 
-  .export-output {
-    border-color: transparent;
-    background: $black-transparent;
-  }
-
-  .export-copy-button {
-    background: $gray-50;
-  }
-
-  .not-found {
-    background: $black-transparent;
-    color: $gray-100;
+    .not-found {
+      background: $black-transparent;
+      color: $gray-100;
+    }
   }
 }

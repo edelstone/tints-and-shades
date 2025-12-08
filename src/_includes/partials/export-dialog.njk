@@ -1,5 +1,5 @@
-<dialog id="export-modal" class="export-modal" aria-labelledby="export-title" aria-modal="true">
-	<div class="export-modal-header">
+<dialog id="export-dialog" class="export-dialog" aria-labelledby="export-title" aria-modal="true">
+	<div class="export-header">
 		<h3 id="export-title">Export palettes</h3>
 		<button id="export-close" class="export-close" type="button" aria-label="Close export dialog">
 			<span aria-hidden="true">&times;</span>
@@ -25,10 +25,10 @@
 	</div>
 	<div class="export-copy">
 		<button id="export-copy-fab" class="export-copy-button" type="button" aria-label="Copy export">
-			<span class="copy-indicator copy-indicator--copy" aria-hidden="true">
+			<span class="copy-indicator copy-indicator-copy" aria-hidden="true">
 				{% include "partials/icons/copy.njk" %}
 			</span>
-			<span class="copy-indicator copy-indicator--check" aria-hidden="true">
+			<span class="copy-indicator copy-indicator-check" aria-hidden="true">
 				{% include "partials/icons/check.njk" %}
 			</span>
 		</button>

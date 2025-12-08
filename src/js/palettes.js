@@ -114,6 +114,15 @@
     return `${trimmed.replace(/\.0+$/, "")}%`;
   };
 
+  const formatPaletteLabel = (id) => {
+    if (!id || typeof id !== "string") return "Base";
+    return id
+      .split(/[-_]+/)
+      .filter(Boolean)
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+      .join(" ");
+  };
+
   const buildTableHeader = (steps) => {
     const safeSteps = Math.max(1, steps);
     const headers = Array.from({ length: safeSteps }, (_, index) => {
@@ -134,22 +143,23 @@
 
   const makeTableRowColors = (colors, displayType, colorPrefix, options = {}) => colors.map((colorItem, index) => {
     const enableBasePicker = options.enableBasePicker && index === 0 && typeof options.colorIndex === "number";
+    const baseClassName = index === 0 ? " hex-color--base" : "";
     const colorPickerIcon = enableBasePicker ? getIconMarkup("icon-color-picker-template") : "";
     const hexValue = typeof colorItem === "string" ? colorItem : colorItem.hex;
     const prefix = colorPrefix || "";
     if (displayType === "colors") {
       if (enableBasePicker) {
         const ariaLabel = `Adjust #${hexValue.toUpperCase()} with the color picker`;
-        return `<td tabindex="0" role="button" aria-label="${ariaLabel}" class="hex-color hex-color--picker" style="background-color:#${hexValue}" data-color-index="${options.colorIndex}" data-color-hex="${hexValue}">
-          <span class="copy-indicator copy-indicator--picker" aria-hidden="true">${colorPickerIcon}</span>
+        return `<td tabindex="0" role="button" aria-label="${ariaLabel}" class="hex-color${baseClassName} hex-color-picker" style="background-color:#${hexValue}" data-color-index="${options.colorIndex}" data-color-hex="${hexValue}">
+          <span class="copy-indicator copy-indicator-picker" aria-hidden="true">${colorPickerIcon}</span>
         </td>`;
       }
       const copyIcon = getIconMarkup("icon-copy-template");
       const checkIcon = getIconMarkup("icon-check-template");
       const ariaLabel = `Copy ${prefix}${hexValue.toUpperCase()}`;
-      return `<td tabindex="0" role="button" aria-label="${ariaLabel}" class="hex-color" style="background-color:#${hexValue}" data-clipboard-text="${prefix}${hexValue}">
-        <span class="copy-indicator copy-indicator--copy" aria-hidden="true">${copyIcon}</span>
-        <span class="copy-indicator copy-indicator--check" aria-hidden="true">${checkIcon}</span>
+      return `<td tabindex="0" role="button" aria-label="${ariaLabel}" class="hex-color${baseClassName}" style="background-color:#${hexValue}" data-clipboard-text="${prefix}${hexValue}">
+        <span class="copy-indicator copy-indicator-copy" aria-hidden="true">${copyIcon}</span>
+        <span class="copy-indicator copy-indicator-check" aria-hidden="true">${checkIcon}</span>
       </td>`;
     }
     return `<td class="hex-value">${prefix}${hexValue.toUpperCase()}</td>`;
@@ -223,13 +233,15 @@
 
     if (parsedColorsArray !== null && parsedColorsArray.length) {
       const { state, elements, toggleExportWrapperVisibility, setExportFormat, updateExportOutput } = exportUI;
+      const tintShadeCount = normalizeTintShadeCount(settings.tintShadeCount);
+      const paletteMetadata = buildPaletteData(parsedColorsArray, tintShadeCount);
       const colorDisplayRows = [];
       let tableRowCounter = 0;
       const colorPrefix = settings.copyWithHashtag ? "#" : "";
 
-      const tintShadeCount = normalizeTintShadeCount(settings.tintShadeCount);
-
       parsedColorsArray.forEach((color, colorIndex) => {
+        const paletteLabel = formatPaletteLabel(paletteMetadata[colorIndex].id);
+        colorDisplayRows[tableRowCounter++] = `<tr class="palette-name-row"><td colspan="${tintShadeCount}">${paletteLabel}</td></tr>`;
         const calculatedShades = colorUtils.calculateShades(color, tintShadeCount);
         colorDisplayRows[tableRowCounter++] = `<tr>${makeTableRowColors(calculatedShades, "colors", colorPrefix, { enableBasePicker: true, colorIndex })}</tr>`;
         colorDisplayRows[tableRowCounter++] = `<tr>${makeTableRowColors(calculatedShades, "RGBValues", colorPrefix)}</tr>`;
@@ -246,7 +258,7 @@
         tableContainer.addEventListener("keydown", (event) => {
           const target = event.target;
           if (!target || !target.classList || !target.classList.contains("hex-color")) return;
-          if (target.closest && target.closest(".hex-color--picker")) return;
+          if (target.closest && target.closest(".hex-color-picker")) return;
           if (!isActivationKey(event)) return;
           event.preventDefault();
           target.click();
@@ -254,7 +266,7 @@
         hexCellKeyHandlerAdded = true;
       }
 
-      state.palettes = buildPaletteData(parsedColorsArray, tintShadeCount);
+      state.palettes = paletteMetadata;
       state.tintShadeCount = tintShadeCount;
       toggleExportWrapperVisibility(true, elements);
       setExportFormat(state.format, state, elements);

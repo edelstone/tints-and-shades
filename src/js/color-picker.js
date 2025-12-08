@@ -43,7 +43,7 @@
 
   const activatePickerCell = (target) => {
     clearActivePickerCell();
-    if (target && target.classList && target.classList.contains("hex-color--picker")) {
+    if (target && target.classList && target.classList.contains("hex-color-picker")) {
       activePickerCell = target;
       activePickerCell.classList.add("is-picker-open");
     }
@@ -238,7 +238,7 @@
   });
 
   document.addEventListener("click", (event) => {
-    const pickerCell = event.target.closest(".hex-color--picker");
+    const pickerCell = event.target.closest(".hex-color-picker");
     if (!pickerCell) return;
     event.preventDefault();
     const colorIndex = parseInt(pickerCell.getAttribute("data-color-index"), 10);
@@ -250,7 +250,7 @@
   if (paletteContainer) {
     paletteContainer.addEventListener("keydown", (event) => {
       if (!isActivationKey(event)) return;
-      const pickerCell = event.target.closest(".hex-color--picker");
+      const pickerCell = event.target.closest(".hex-color-picker");
       if (!pickerCell) return;
       event.preventDefault();
       event.stopPropagation();

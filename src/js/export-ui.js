@@ -118,19 +118,20 @@
     const tableStyle = window.getComputedStyle(table);
     let totalWidth = 0;
     rows.forEach((row) => {
-    let rowWidth = 0;
-    Array.from(row.cells).forEach((cell) => {
-      rowWidth += Math.max(1, Math.round(cell.getBoundingClientRect().width));
+      let rowWidth = 0;
+      Array.from(row.cells).forEach((cell) => {
+        rowWidth += Math.max(1, Math.round(cell.getBoundingClientRect().width));
+      });
+      totalWidth = Math.max(totalWidth, rowWidth);
     });
-    totalWidth = Math.max(totalWidth, rowWidth);
-  });
-  const totalHeight = rowHeights.reduce((sum, height) => sum + height, 0);
-  if (!totalWidth || !totalHeight) return null;
-  const padding = 24;
+    const totalHeight = rowHeights.reduce((sum, height) => sum + height, 0);
+    if (!totalWidth || !totalHeight) return null;
+    const paddingX = 24;
+    const paddingY = 16;
     const ratio = Math.max(1, window.devicePixelRatio || 1);
     const canvas = document.createElement("canvas");
-    canvas.width = Math.max(1, Math.round((totalWidth + padding * 2) * ratio));
-    canvas.height = Math.max(1, Math.round((totalHeight + padding * 2) * ratio));
+    canvas.width = Math.max(1, Math.round((totalWidth + paddingX * 2) * ratio));
+    canvas.height = Math.max(1, Math.round((totalHeight + paddingY * 2) * ratio));
     const ctx = canvas.getContext("2d");
     if (!ctx) return null;
     ctx.scale(ratio, ratio);
@@ -143,12 +144,12 @@
         : "#fff";
     }
     ctx.fillStyle = tableBackground;
-  ctx.fillRect(0, 0, totalWidth + padding * 2, totalHeight + padding * 2);
+    ctx.fillRect(0, 0, totalWidth + paddingX * 2, totalHeight + paddingY * 2);
     ctx.textAlign = "center";
     ctx.textBaseline = "top";
-  let yOffset = padding;
-  rows.forEach((row, rowIndex) => {
-    let xOffset = padding;
+    let yOffset = paddingY;
+    rows.forEach((row, rowIndex) => {
+      let xOffset = paddingX;
       const rowHeight = rowHeights[rowIndex];
       Array.from(row.cells).forEach((cell) => {
         const cellWidth = Math.max(1, Math.round(cell.getBoundingClientRect().width));
@@ -171,8 +172,26 @@
           const fontSize = parseFloat(computed.fontSize) || 14;
           const fontFamily = computed.fontFamily || "Work Sans, system-ui, sans-serif";
           ctx.font = `${fontSize}px ${fontFamily}`;
-          const titleOffset = row.classList && row.classList.contains("table-header") ? 20 : 10;
-          ctx.fillText(text, xOffset + cellWidth / 2, yOffset + titleOffset);
+          const titleOffset = row.classList && row.classList.contains("table-header") ? 10 : 10;
+          const textAlignValue = computed.textAlign || "center";
+          const direction = computed.direction || "ltr";
+          let normalizedAlign = textAlignValue;
+          if (textAlignValue === "start") {
+            normalizedAlign = direction === "rtl" ? "right" : "left";
+          } else if (textAlignValue === "end") {
+            normalizedAlign = direction === "rtl" ? "left" : "right";
+          }
+          ctx.textAlign = normalizedAlign;
+          let textX = xOffset + cellWidth / 2;
+          if (normalizedAlign === "left") {
+            const paddingLeft = parseFloat(computed.paddingLeft) || 0;
+            textX = xOffset + paddingLeft;
+          } else if (normalizedAlign === "right") {
+            const paddingRight = parseFloat(computed.paddingRight) || 0;
+            textX = xOffset + cellWidth - paddingRight;
+          }
+          const nameRowPadding = row.classList && row.classList.contains("palette-name-row") ? -5 : 0;
+          ctx.fillText(text, textX, yOffset + titleOffset + nameRowPadding);
         }
         xOffset += cellWidth;
       });
@@ -498,7 +517,7 @@
     if (!prefersReducedMotion()) {
       elements.modal.classList.add("is-opening");
       elements.modal.addEventListener("animationend", (event) => {
-        if (event.target === elements.modal && event.animationName === "export-modal-fade") {
+        if (event.target === elements.modal && event.animationName === "export-dialog-fade") {
           elements.modal.classList.remove("is-opening");
         }
       }, { once: true });
@@ -566,7 +585,7 @@
 
     let closeFallbackTimer = null;
     const handleAnimationEnd = (event) => {
-      if (event.target !== modal || event.animationName !== "export-modal-fade") return;
+      if (event.target !== modal || event.animationName !== "export-dialog-fade") return;
       clearTimeout(closeFallbackTimer);
       modal.removeEventListener("animationend", handleAnimationEnd);
       completeClose();
@@ -581,9 +600,9 @@
   };
 
   const wireExportControls = () => {
-    exportElements.wrapper = document.getElementById("export-wrapper");
+    exportElements.wrapper = document.getElementById("palette-controls-wrapper");
     exportElements.openButton = document.getElementById("export-open");
-    exportElements.modal = document.getElementById("export-modal");
+    exportElements.modal = document.getElementById("export-dialog");
     exportElements.closeButton = document.getElementById("export-close");
     exportElements.tabs = Array.from(document.querySelectorAll(".export-tab"));
     exportElements.output = document.getElementById("export-output");

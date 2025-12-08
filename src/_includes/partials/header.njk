@@ -1,17 +1,17 @@
 <header class="header">
 	<div class="preface">
 		{% if main %}
-		<a href="#color-values" class="offscreen">Jump to the form</a>
+		<a href="#color-values" class="jump-link sr-only">Jump to the form</a>
 		{% else %}
-		<a href="#main" class="offscreen">Jump to main content</a>
+		<a href="#main" class="jump-link sr-only">Jump to main content</a>
 		{% endif %}
 		<div class="dark-mode-selector">
 			<button id="darkmode-toggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Dark mode" data-theme-state="light">
-				<span class="theme-toggle__icon" aria-hidden="true">
+				<span class="theme-toggle-icon" aria-hidden="true">
 					{% include "partials/icons/moon.njk" %}
 					{% include "partials/icons/sun-high.njk" %}
 				</span>
-				<span class="theme-toggle__state sr-only" id="darkmode-text-toggle">Dark mode</span>
+				<span class="theme-toggle-state sr-only" id="darkmode-text-toggle">Dark mode</span>
 			</button>
 		</div>
 		<a href="https://github.com/edelstone/tints-and-shades" class="github-corner" aria-label="View source on GitHub">
