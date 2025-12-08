@@ -458,7 +458,6 @@ pre {
 				min-width: 6.5rem;
 				padding: 0 0 1.5rem;
 				font-weight: 500;
-				cursor: default;
 
 				@include breakpoint('large') {
 					font-size: 12px;
@@ -479,7 +478,6 @@ pre {
 				padding: .5rem 0 2rem;
 				font-family: $monospace;
 				text-transform: lowercase;
-				cursor: default;
 
 				@include breakpoint('large') {
 					font-size: 12px;
