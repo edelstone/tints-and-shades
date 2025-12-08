@@ -51,17 +51,17 @@
   <header class="header">
 	<div class="preface">
 		
-		<a href="#color-values" class="offscreen">Jump to the form</a>
+		<a href="#color-values" class="jump-link sr-only">Jump to the form</a>
 		
 		<div class="dark-mode-selector">
 			<button id="darkmode-toggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Dark mode" data-theme-state="light">
-				<span class="theme-toggle__icon" aria-hidden="true">
+				<span class="theme-toggle-icon" aria-hidden="true">
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-moon"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg>
 
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-sun-high"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14.828 14.828a4 4 0 1 0 -5.656 -5.656a4 4 0 0 0 5.656 5.656z" /><path d="M6.343 17.657l-1.414 1.414" /><path d="M6.343 6.343l-1.414 -1.414" /><path d="M17.657 6.343l1.414 -1.414" /><path d="M17.657 17.657l1.414 1.414" /><path d="M4 12h-2" /><path d="M12 4v-2" /><path d="M20 12h2" /><path d="M12 20v2" /></svg>
 
 				</span>
-				<span class="theme-toggle__state sr-only" id="darkmode-text-toggle">Dark mode</span>
+				<span class="theme-toggle-state sr-only" id="darkmode-text-toggle">Dark mode</span>
 			</button>
 		</div>
 		<a href="https://github.com/edelstone/tints-and-shades" class="github-corner" aria-label="View source on GitHub">
@@ -82,11 +82,11 @@
     
 <div class="form">
 	<form class="pure-form" id="color-entry-form" action="#" method="post" name="color-entry-form">
-		<div class="labels">
-			<div class="form-warning" id="warning" role="alert" aria-live="polite">Please enter at least one valid hex color.</div>
-			<h2><label class="textarea-label" for="color-values">Enter hex colors (separated by spaces)</label></h2>
+		<div class="form-labels">
+			<div class="form-warning" id="warning" role="alert">Please enter at least one valid hex color.</div>
+			<label class="textarea-label" for="color-values">Enter hex colors (separated by spaces)</label>
 		</div>
-		<div class="input">
+		<div class="form-input">
 			<textarea id="color-values" name="color-values" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"></textarea>
 			<div class="color-picker-wrapper">
 				<button id="color-picker-button" class="color-picker-button" type="button" aria-label="Pick a color">
@@ -98,26 +98,26 @@
 				<input id="color-picker-input" class="color-picker-input" type="text" data-coloris autocomplete="off" aria-label="Pick a color" tabindex="-1" aria-hidden="true" inert>
 			</div>
 		</div>
-		<input id="make" class="button" type="submit" value="Make tints and shades &nbsp;🎉">
+		<input id="make" class="make-button" type="submit" value="Make tints and shades &nbsp;🎉">
 	</form>
 </div>
 <div class="palettes">
-	<div id="export-wrapper" class="export-wrapper" hidden>
-		<div class="palette-actions" id="scroll-top">
-			<div class="count-selector" role="group" aria-label="Steps per side">
-				<button type="button" class="count-selector__option" data-count="5" aria-pressed="false" tabindex="-1">5</button>
-				<button type="button" class="count-selector__option is-active" data-count="10" aria-pressed="true" tabindex="0">10</button>
-				<button type="button" class="count-selector__option" data-count="20" aria-pressed="false" tabindex="-1">20</button>
+	<div id="palette-controls-wrapper" class="palette-controls-wrapper" hidden>
+		<div class="palette-controls" id="scroll-top">
+			<div class="step-selector" role="group" aria-label="Steps per side">
+				<button type="button" class="step-selector-option" data-count="5" aria-pressed="false" tabindex="-1">5</button>
+				<button type="button" class="step-selector-option is-active" data-count="10" aria-pressed="true" tabindex="0">10</button>
+				<button type="button" class="step-selector-option" data-count="20" aria-pressed="false" tabindex="-1">20</button>
 			</div>
-			<button id="copy-with-hashtag-toggle" class="action-button action-button--toggle icon-button" type="button" aria-pressed="false">
+			<button id="copy-with-hashtag-toggle" class="action-button action-button-toggle icon-button" type="button" aria-pressed="false">
 				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-hash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 9l14 0" /><path d="M5 15l14 0" /><path d="M11 4l-4 16" /><path d="M17 4l-4 16" /></svg>
 				<span class="sr-only">Show hashtags</span>
 			</button>
-			<div class="palette-actions__export">
+			<div class="exports">
 				<button id="export-image" class="action-button icon-button" type="button" aria-label="Download palette image">
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-photo"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 8h.01" /><path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" /><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" /><path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" /></svg>
 				</button>
-				<button id="export-open" class="action-button icon-button" type="button" aria-expanded="false" aria-controls="export-modal" aria-label="Export palettes">
+				<button id="export-open" class="action-button icon-button" type="button" aria-expanded="false" aria-controls="export-dialog" aria-label="Export palettes">
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
 				</button>
 			</div>
@@ -128,8 +128,8 @@
 	<div id="copy-status" class="sr-only" aria-live="polite"></div>
 </div>
 
-<dialog id="export-modal" class="export-modal" aria-labelledby="export-title" aria-modal="true">
-	<div class="export-modal-header">
+<dialog id="export-dialog" class="export-dialog" aria-labelledby="export-title" aria-modal="true">
+	<div class="export-header">
 		<h3 id="export-title">Export palettes</h3>
 		<button id="export-close" class="export-close" type="button" aria-label="Close export dialog">
 			<span aria-hidden="true">&times;</span>
@@ -161,11 +161,11 @@
 	</div>
 	<div class="export-copy">
 		<button id="export-copy-fab" class="export-copy-button" type="button" aria-label="Copy export">
-			<span class="copy-indicator copy-indicator--copy" aria-hidden="true">
+			<span class="copy-indicator copy-indicator-copy" aria-hidden="true">
 				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-copy"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg>
 
 			</span>
-			<span class="copy-indicator copy-indicator--check" aria-hidden="true">
+			<span class="copy-indicator copy-indicator-check" aria-hidden="true">
 				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg>
 
 			</span>

@@ -28,7 +28,7 @@ const updateHashtagToggle = (button, isOn) => {
   if (!button) return;
   button.setAttribute("aria-pressed", isOn ? "true" : "false");
   button.classList.toggle("is-active", isOn);
-  button.setAttribute("aria-label", isOn ? "Hide hashtag when copying" : "Show hashtag when copying");
+  button.setAttribute("aria-label", isOn ? "Include hashtag when copying" : "Hide hashtag when copying");
 };
 
 // Initialize the settings and UI state
@@ -43,7 +43,7 @@ const initializeSettings = (initialUrlState = {}) => {
 
   const colorValuesElement = document.getElementById("color-values");
   const hashtagToggle = document.getElementById("copy-with-hashtag-toggle");
-  const tintShadeButtons = Array.from(document.querySelectorAll(".count-selector__option"));
+  const tintShadeButtons = Array.from(document.querySelectorAll(".step-selector-option"));
 
   if (hashtagToggle) {
     updateHashtagToggle(hashtagToggle, settings.copyWithHashtag);
