@@ -147,10 +147,11 @@
     const colorPickerIcon = enableBasePicker ? getIconMarkup("icon-color-picker-template") : "";
     const hexValue = typeof colorItem === "string" ? colorItem : colorItem.hex;
     const prefix = colorPrefix || "";
+    const rowTypeAttribute = options.rowType ? ` data-row-type="${options.rowType}"` : "";
     if (displayType === "colors") {
       if (enableBasePicker) {
         const ariaLabel = `Adjust #${hexValue.toUpperCase()} with the color picker`;
-        return `<td tabindex="0" role="button" aria-label="${ariaLabel}" class="hex-color${baseClassName} hex-color-picker" style="background-color:#${hexValue}" data-color-index="${options.colorIndex}" data-color-hex="${hexValue}">
+        return `<td tabindex="0" role="button" aria-label="${ariaLabel}" class="hex-color${baseClassName} hex-color-picker" style="background-color:#${hexValue}" data-color-index="${options.colorIndex}" data-color-hex="${hexValue}"${rowTypeAttribute}>
           <span class="copy-indicator copy-indicator-picker" aria-hidden="true">${colorPickerIcon}</span>
         </td>`;
       }
@@ -225,9 +226,28 @@
   };
 
   const createTintsAndShades = (settings, firstTime = false, options = {}) => {
-    const { skipScroll = false, skipFocus = false } = options;
+    const {
+      skipScroll = false,
+      skipFocus = false,
+      focusPickerContext = null
+    } = options;
     const colorInput = document.getElementById("color-values");
     const tableContainer = document.getElementById("tints-and-shades");
+    const focusPickerCell = (context) => {
+      if (!tableContainer || !context) return false;
+      const { colorIndex, rowType } = context;
+      if (!Number.isInteger(colorIndex)) return false;
+      const selectorParts = [`.hex-color-picker[data-color-index="${colorIndex}"]`];
+      if (rowType) {
+        selectorParts.push(`[data-row-type="${rowType}"]`);
+      }
+      const focusTarget = tableContainer.querySelector(selectorParts.join(""));
+      if (focusTarget && typeof focusTarget.focus === "function") {
+        focusTarget.focus();
+        return true;
+      }
+      return false;
+    };
     const warning = document.getElementById("warning");
     const parsedColorsArray = parseColorValues(colorInput.value);
 
@@ -243,11 +263,11 @@
         const paletteLabel = formatPaletteLabel(paletteMetadata[colorIndex].id);
         colorDisplayRows[tableRowCounter++] = `<tr class="palette-name-row"><td colspan="${tintShadeCount}">${paletteLabel}</td></tr>`;
         const calculatedShades = colorUtils.calculateShades(color, tintShadeCount);
-        colorDisplayRows[tableRowCounter++] = `<tr>${makeTableRowColors(calculatedShades, "colors", colorPrefix, { enableBasePicker: true, colorIndex })}</tr>`;
+        colorDisplayRows[tableRowCounter++] = `<tr>${makeTableRowColors(calculatedShades, "colors", colorPrefix, { enableBasePicker: true, colorIndex, rowType: "shades" })}</tr>`;
         colorDisplayRows[tableRowCounter++] = `<tr>${makeTableRowColors(calculatedShades, "RGBValues", colorPrefix)}</tr>`;
 
         const calculatedTints = colorUtils.calculateTints(color, tintShadeCount);
-        colorDisplayRows[tableRowCounter++] = `<tr>${makeTableRowColors(calculatedTints, "colors", colorPrefix, { enableBasePicker: true, colorIndex })}</tr>`;
+        colorDisplayRows[tableRowCounter++] = `<tr>${makeTableRowColors(calculatedTints, "colors", colorPrefix, { enableBasePicker: true, colorIndex, rowType: "tints" })}</tr>`;
         colorDisplayRows[tableRowCounter++] = `<tr>${makeTableRowColors(calculatedTints, "RGBValues", colorPrefix)}</tr>`;
       });
 
@@ -285,7 +305,8 @@
 
       setTimeout(() => {
         tableContainer.removeAttribute("tabindex");
-        if (!skipFocus) {
+        const pickerFocused = focusPickerContext && focusPickerCell(focusPickerContext);
+        if (!pickerFocused && !skipFocus) {
           const makeButton = document.getElementById("make");
           if (makeButton) {
             makeButton.focus();

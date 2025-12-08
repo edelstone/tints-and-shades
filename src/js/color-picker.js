@@ -34,6 +34,25 @@
     return false;
   };
 
+  const isEnterKey = (value) => {
+    if (!value) return false;
+    if (typeof value === "string") {
+      return ["enter", "return", "numpadenter"].includes(value.toLowerCase());
+    }
+    if (typeof value === "number") {
+      return value === 13;
+    }
+    if (typeof value === "object") {
+      if (isEnterKey(value.key)) return true;
+      if (isEnterKey(value.code)) return true;
+      const keyCode = typeof value.keyCode === "number" ? value.keyCode : value.which;
+      if (typeof keyCode === "number") {
+        return isEnterKey(keyCode);
+      }
+    }
+    return false;
+  };
+
   const clearActivePickerCell = () => {
     if (activePickerCell && activePickerCell.classList) {
       activePickerCell.classList.remove("is-picker-open");
@@ -124,6 +143,19 @@
     }
   };
 
+  const normalizePickerInputValue = () => {
+    const colorValueInput = document.getElementById("clr-color-value");
+    if (!colorValueInput) return "";
+    const normalized = normalizeHex(colorValueInput.value);
+    if (!normalized) return "";
+    const formatted = `#${normalized}`;
+    if (colorValueInput.value !== formatted) {
+      colorValueInput.value = formatted;
+      colorValueInput.dispatchEvent(new Event("input", { bubbles: true }));
+    }
+    return formatted;
+  };
+
   const applyCommittedHex = (hexValue) => {
     if (!hexValue || hasCommittedThisSession) return;
     const parsed = window.palettes && window.palettes.parseColorValues
@@ -142,7 +174,13 @@
     pendingHex = "";
     colorInput.dispatchEvent(new Event("input", { bubbles: true }));
     if (activeContext.mode === "edit") {
-      triggerPaletteRebuild({ skipScroll: true, skipFocus: true });
+      const focusPickerContext = Number.isInteger(activeContext.index)
+        ? {
+          colorIndex: activeContext.index,
+          rowType: activeContext.rowType || null
+        }
+        : null;
+      triggerPaletteRebuild({ skipScroll: true, skipFocus: true, focusPickerContext });
     }
     hasCommittedThisSession = true;
     Coloris.close();
@@ -172,10 +210,29 @@
       shouldCommit = true;
       applyCommittedHex(getActiveHex());
     });
+    wireHexInputEnterHandler();
   };
 
-  const openPicker = ({ target, baseHex, mode, index }) => {
-    activeContext = { mode, index: Number.isInteger(index) ? index : null };
+  const wireHexInputEnterHandler = () => {
+    const colorValueInput = document.getElementById("clr-color-value");
+    if (!colorValueInput || colorValueInput.dataset.hexEnterAttached) return;
+    colorValueInput.dataset.hexEnterAttached = "true";
+    colorValueInput.addEventListener("keydown", (event) => {
+      if (!isEnterKey(event)) return;
+      event.preventDefault();
+      event.stopPropagation();
+      normalizePickerInputValue();
+      const closeButton = document.getElementById("clr-close");
+      focusEl(closeButton || pickerButton);
+    });
+  };
+
+  const openPicker = ({ target, baseHex, mode, index, rowType = null }) => {
+    activeContext = {
+      mode,
+      index: Number.isInteger(index) ? index : null,
+      rowType: rowType || null
+    };
     hasCommittedThisSession = false;
     shouldCommit = false;
     lastTrigger = target || pickerButton;
@@ -243,7 +300,14 @@
     event.preventDefault();
     const colorIndex = parseInt(pickerCell.getAttribute("data-color-index"), 10);
     const colorHex = normalizeHex(pickerCell.getAttribute("data-color-hex"));
-    openPicker({ target: pickerCell, baseHex: colorHex ? `#${colorHex}` : null, mode: "edit", index: colorIndex });
+    const rowType = pickerCell.getAttribute("data-row-type") || null;
+    openPicker({
+      target: pickerCell,
+      baseHex: colorHex ? `#${colorHex}` : null,
+      mode: "edit",
+      index: colorIndex,
+      rowType
+    });
   });
 
   const paletteContainer = document.getElementById("tints-and-shades");
@@ -256,7 +320,14 @@
       event.stopPropagation();
       const colorIndex = parseInt(pickerCell.getAttribute("data-color-index"), 10);
       const colorHex = normalizeHex(pickerCell.getAttribute("data-color-hex"));
-      openPicker({ target: pickerCell, baseHex: colorHex ? `#${colorHex}` : null, mode: "edit", index: colorIndex });
+      const rowType = pickerCell.getAttribute("data-row-type") || null;
+      openPicker({
+        target: pickerCell,
+        baseHex: colorHex ? `#${colorHex}` : null,
+        mode: "edit",
+        index: colorIndex,
+        rowType
+      });
     }, true);
   }
 

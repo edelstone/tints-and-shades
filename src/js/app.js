@@ -135,8 +135,12 @@ document.addEventListener("DOMContentLoaded", () => {
   if (colorEntryForm) {
     colorEntryForm.addEventListener("submit", (e) => {
       e.preventDefault();
-      const { skipScroll = false, skipFocus = false } = e.detail || {};
-      palettes.createTintsAndShades(settings, false, { skipScroll, skipFocus });
+      const {
+        skipScroll = false,
+        skipFocus = false,
+        focusPickerContext = null
+      } = e.detail || {};
+      palettes.createTintsAndShades(settings, false, { skipScroll, skipFocus, focusPickerContext });
     });
   } else {
     console.error("Element with id 'color-entry-form' not found.");
