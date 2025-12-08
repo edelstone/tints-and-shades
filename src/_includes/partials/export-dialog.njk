@@ -1,8 +1,10 @@
 <dialog id="export-dialog" class="export-dialog" aria-labelledby="export-title" aria-modal="true">
 	<div class="export-header">
-		<h3 id="export-title">Export palettes</h3>
+		<h2 id="export-title" class="export-title">Export palettes</h2>
 		<button id="export-close" class="export-close" type="button" aria-label="Close export dialog">
-			<span aria-hidden="true">&times;</span>
+			<span aria-hidden="true">
+				{% include "partials/icons/x.njk" %}
+			</span>
 		</button>
 	</div>
 	<div class="export-tabs" role="tablist" aria-label="Export format">

@@ -575,27 +575,30 @@ pre {
 		align-items: center;
 		justify-content: space-between;
 		margin-bottom: 2rem;
+		padding: .5rem 0;
 
-		h3 {
+		.export-title {
 			margin: 0;
 			font-size: 2rem;
 			font-weight: 500;
 		}
-	}
 
-	.export-close {
-		border: none;
-		background: transparent;
-		font-size: 3.2rem;
-		cursor: pointer;
-		color: $gray-500;
-		width: 4rem;
-		height: 4rem;
-		padding: 0;
-		position: relative;
-		right: -1rem;
-		font-weight: 500;
-		user-select: none;
+		.export-close {
+			border: none;
+			background: transparent;
+			cursor: pointer;
+			color: $black;
+			padding: 0;
+
+			span {
+				display: flex;
+			}
+
+			svg {
+				width: 2.8rem;
+				height: 2.8rem;
+			}
+		}
 	}
 
 	.export-tabs {
