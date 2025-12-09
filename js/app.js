@@ -1,5 +1,4 @@
-// app.js - bootstrap settings, wire export UI, and kick off palette rendering
-// Whether the user wants copying to include a hashtag
+const SETTINGS_STORAGE_KEY = "settings";
 const settings = { copyWithHashtag: false, tintShadeCount: 10 };
 const tintShadeOptions = [5, 10, 20];
 
@@ -13,15 +12,25 @@ const setActiveCountButtons = (buttons, count) => {
   });
 };
 
-// Load the state from localStorage
 const loadSettings = () => {
-  const savedSettings = localStorage.getItem("settings");
-  if (savedSettings) Object.assign(settings, JSON.parse(savedSettings));
+  try {
+    const savedSettings = localStorage.getItem(SETTINGS_STORAGE_KEY);
+    if (!savedSettings) return;
+    const parsed = JSON.parse(savedSettings);
+    if (parsed && typeof parsed === "object") {
+      Object.assign(settings, parsed);
+    }
+  } catch (e) {
+    // ignore bad or unavailable storage
+  }
 };
 
-// Save the state to localStorage
 const saveSettings = () => {
-  localStorage.setItem("settings", JSON.stringify(settings));
+  try {
+    localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(settings));
+  } catch (e) {
+    // ignore
+  }
 };
 
 const updateHashtagToggle = (button, isOn) => {
@@ -57,19 +66,17 @@ const initializeSettings = (initialUrlState = {}) => {
         palettes.updateHexValueDisplay(settings.copyWithHashtag);
       }
       if (palettes.updateHashState && palettes.parseColorValues && colorValuesElement) {
-        const parsedColors = palettes.parseColorValues(colorValuesElement.value);
-        if (parsedColors && parsedColors.length) {
-          palettes.updateHashState(parsedColors, settings);
-        }
+        const parsedColors = palettes.parseColorValues(colorValuesElement.value) || [];
+        if (!parsedColors.length) return;
+        palettes.updateHashState(parsedColors, settings);
       }
     });
   }
 
   if (tintShadeButtons.length) {
-    const savedValue = tintShadeOptions.includes(settings.tintShadeCount)
-      ? settings.tintShadeCount
-      : 10;
-    settings.tintShadeCount = savedValue;
+    if (!tintShadeOptions.includes(settings.tintShadeCount)) {
+      settings.tintShadeCount = 10;
+    }
     setActiveCountButtons(tintShadeButtons, settings.tintShadeCount);
 
     const activateIndex = (nextIndex) => {

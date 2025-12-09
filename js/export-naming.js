@@ -1,5 +1,3 @@
-// export-naming.js - nearest color names (LAB) and unique slugs for palettes
-// Naming helpers using color-name-list
 const slugify = (value) => value.toLowerCase()
   .replace(/[^a-z0-9]+/g, "-")
   .replace(/^-+|-+$/g, "")
@@ -45,8 +43,10 @@ const xyzToLab = ({ x, y, z }) => {
 };
 
 const hexToLab = (hex) => {
-  if (!hex || hex.length !== 6) return null;
-  const rgb = colorUtils.hexToRGB(hex);
+  if (!hex) return null;
+  const normalized = hex.replace("#", "").toLowerCase();
+  if (normalized.length !== 6) return null;
+  const rgb = colorUtils.hexToRGB(normalized);
   return xyzToLab(rgbToXyz(rgb));
 };
 
@@ -54,16 +54,24 @@ let cachedColorNames = null;
 
 const prepareColorNames = () => {
   if (cachedColorNames) return cachedColorNames;
-  if (!Array.isArray(window.colorNameList)) return [];
-  cachedColorNames = window.colorNameList.map((item) => {
-    const hex = (item.hex || "").replace("#", "").toLowerCase();
-    const lab = hexToLab(hex);
-    return {
-      name: slugify(item.name || ""),
-      hex,
-      lab
-    };
-  }).filter(item => item.name && item.hex && item.lab);
+
+  if (!Array.isArray(window.colorNameList)) {
+    cachedColorNames = [];
+    return cachedColorNames;
+  }
+
+  cachedColorNames = window.colorNameList
+    .map((item) => {
+      const hex = (item.hex || "").replace("#", "").toLowerCase();
+      const lab = hexToLab(hex);
+      return {
+        name: slugify(item.name || ""),
+        hex,
+        lab
+      };
+    })
+    .filter(item => item.name && item.hex && item.lab);
+
   return cachedColorNames;
 };
 
@@ -78,16 +86,18 @@ const getFriendlyName = (hex, fallback) => {
   const names = prepareColorNames();
   const targetLab = hexToLab(hex);
   if (!names.length || !targetLab) return fallback;
+
   let closest = null;
   let minDistance = Infinity;
-  for (let i = 0; i < names.length; i++) {
-    const candidate = names[i];
+
+  for (const candidate of names) {
     const distance = labDistance(targetLab, candidate.lab);
     if (distance < minDistance) {
       minDistance = distance;
       closest = candidate;
     }
   }
+
   return closest ? closest.name : fallback;
 };
 

@@ -1,4 +1,3 @@
-// color-picker.js - integrate Coloris for adding colors and tweaking base palette colors
 (() => {
   const colorInput = document.getElementById("color-values");
   const pickerInput = document.getElementById("color-picker-input");
@@ -34,25 +33,6 @@
     return false;
   };
 
-  const isEnterKey = (value) => {
-    if (!value) return false;
-    if (typeof value === "string") {
-      return ["enter", "return", "numpadenter"].includes(value.toLowerCase());
-    }
-    if (typeof value === "number") {
-      return value === 13;
-    }
-    if (typeof value === "object") {
-      if (isEnterKey(value.key)) return true;
-      if (isEnterKey(value.code)) return true;
-      const keyCode = typeof value.keyCode === "number" ? value.keyCode : value.which;
-      if (typeof keyCode === "number") {
-        return isEnterKey(keyCode);
-      }
-    }
-    return false;
-  };
-
   const clearActivePickerCell = () => {
     if (activePickerCell && activePickerCell.classList) {
       activePickerCell.classList.remove("is-picker-open");
@@ -82,6 +62,7 @@
     if (clean.length === 3) {
       return clean.split("").map((char) => char + char).join("");
     }
+    if (clean.length !== 6) return "";
     return clean;
   };
 
@@ -133,7 +114,7 @@
     const colorValueInput = document.getElementById("clr-color-value");
     const fromColorValue = colorValueInput ? normalizeHex(colorValueInput.value) : "";
     const fromPickerInput = normalizeHex(pickerInput.value);
-    return pendingHex || fromColorValue || fromPickerInput;
+    return pendingHex || fromColorValue || fromPickerInput || "";
   };
 
   const triggerPaletteRebuild = (options = {}) => {
@@ -218,7 +199,7 @@
     if (!colorValueInput || colorValueInput.dataset.hexEnterAttached) return;
     colorValueInput.dataset.hexEnterAttached = "true";
     colorValueInput.addEventListener("keydown", (event) => {
-      if (!isEnterKey(event)) return;
+      if (event.key !== "Enter" && event.key !== "NumpadEnter") return;
       event.preventDefault();
       event.stopPropagation();
       normalizePickerInputValue();

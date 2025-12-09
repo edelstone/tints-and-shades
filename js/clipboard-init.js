@@ -6,7 +6,6 @@
     const status = document.getElementById("copy-status");
     const target = e.trigger;
 
-    // Temporarily lock the target to prevent rapid re-activation while feedback plays.
     target.classList.add("copy-locked");
     target.setAttribute("aria-disabled", "true");
     target.setAttribute("tabindex", "-1");
