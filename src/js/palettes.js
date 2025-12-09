@@ -1,7 +1,7 @@
-// palettes.js - parse input, render tints/shades (table markup helpers), sync hash, and feed export data
 (() => {
   let warningTimeout = null;
   let hexCellKeyHandlerAdded = false;
+  let paletteCloseHandlerAdded = false;
 
   const VALID_TINT_SHADE_COUNTS = [5, 10, 20];
   const DEFAULT_TINT_SHADE_COUNT = 10;
@@ -11,18 +11,19 @@
     if (typeof value === "string") {
       return ACTIVATION_KEYS.has(value.toLowerCase());
     }
+
     if (typeof value === "number") {
       return ACTIVATION_KEY_CODES.has(value);
     }
-    if (value && typeof value === "object") {
-      if (isActivationKey(value.key)) return true;
-      if (isActivationKey(value.code)) return true;
-      const keyCode = typeof value.keyCode === "number" ? value.keyCode : value.which;
-      if (typeof keyCode === "number") {
-        return isActivationKey(keyCode);
-      }
-    }
-    return false;
+
+    if (!value || typeof value !== "object") return false;
+
+    return (
+      isActivationKey(value.key) ||
+      isActivationKey(value.code) ||
+      isActivationKey(value.keyCode) ||
+      isActivationKey(value.which)
+    );
   };
   const HASH_PARAM_KEYS = {
     colors: "colors",
@@ -90,15 +91,16 @@
 
   const buildHashString = (colorsArray, copyWithHashtag, tintShadeCount) => {
     if (!colorsArray || !colorsArray.length) return "";
-    const parts = [];
-    parts.push(`${HASH_PARAM_KEYS.colors}=${colorsArray.join(",")}`);
+
+    const parts = [`${HASH_PARAM_KEYS.colors}=${colorsArray.join(",")}`];
 
     if (typeof copyWithHashtag === "boolean") {
       parts.push(`${HASH_PARAM_KEYS.hashtag}=${copyWithHashtag ? "1" : "0"}`);
     }
 
-    if (typeof tintShadeCount === "number" && !Number.isNaN(tintShadeCount)) {
-      parts.push(`${HASH_PARAM_KEYS.steps}=${normalizeTintShadeCount(tintShadeCount)}`);
+    const normalizedSteps = normalizeTintShadeCount(tintShadeCount);
+    if (Number.isFinite(normalizedSteps)) {
+      parts.push(`${HASH_PARAM_KEYS.steps}=${normalizedSteps}`);
     }
 
     return parts.join("&");
@@ -114,14 +116,14 @@
     return `${trimmed.replace(/\.0+$/, "")}%`;
   };
 
-  const formatPaletteLabel = (id) => {
-    if (!id || typeof id !== "string") return "Base";
-    return id
-      .split(/[-_]+/)
-      .filter(Boolean)
-      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-      .join(" ");
-  };
+  const formatPaletteLabel = (id) =>
+    (typeof id === "string" && id.trim())
+      ? id
+        .split(/[-_]+/)
+        .filter(Boolean)
+        .map(part => part[0].toUpperCase() + part.slice(1))
+        .join(" ")
+      : "Base";
 
   const buildTableHeader = (steps) => {
     const safeSteps = Math.max(1, steps);
@@ -130,7 +132,7 @@
       const percent = (index / safeSteps) * 100;
       return `<td><span>${formatPercentLabel(percent)}</span></td>`;
     });
-    return `<thead><tr class="table-header">${headers.join("")}</tr></thead>`;
+    return `<tr class="table-header">${headers.join("")}</tr>`;
   };
 
   const updateHexValueDisplay = (copyWithHashtag) => {
@@ -197,13 +199,17 @@
     requestAnimationFrame(animation);
   };
 
-  // Parse an input string for hexadecimal color values (supports shorthand)
+  const HEX_RE = /\b[0-9A-Fa-f]{3}\b|[0-9A-Fa-f]{6}\b/g;
+
   const parseColorValues = (colorValues) => {
-    let colorValuesArray = colorValues.match(/\b[0-9A-Fa-f]{3}\b|[0-9A-Fa-f]{6}\b/g);
-    if (colorValuesArray) {
-      colorValuesArray = colorValuesArray.map(item => (item.length === 3 ? item.split("").reduce((acc, it) => acc + it + it, "") : item));
-    }
-    return colorValuesArray;
+    const matches = colorValues.match(HEX_RE);
+    if (!matches) return null;
+
+    return matches.map((item) =>
+      item.length === 3
+        ? item.split("").map(ch => ch + ch).join("")
+        : item
+    );
   };
 
   const buildPaletteData = (colors, tintShadeCount) => {
@@ -231,16 +237,17 @@
       skipFocus = false,
       focusPickerContext = null
     } = options;
+
     const colorInput = document.getElementById("color-values");
     const tableContainer = document.getElementById("tints-and-shades");
+    const warning = document.getElementById("warning");
+
     const focusPickerCell = (context) => {
       if (!tableContainer || !context) return false;
       const { colorIndex, rowType } = context;
       if (!Number.isInteger(colorIndex)) return false;
       const selectorParts = [`.hex-color-picker[data-color-index="${colorIndex}"]`];
-      if (rowType) {
-        selectorParts.push(`[data-row-type="${rowType}"]`);
-      }
+      if (rowType) selectorParts.push(`[data-row-type="${rowType}"]`);
       const focusTarget = tableContainer.querySelector(selectorParts.join(""));
       if (focusTarget && typeof focusTarget.focus === "function") {
         focusTarget.focus();
@@ -248,31 +255,92 @@
       }
       return false;
     };
-    const warning = document.getElementById("warning");
+
+    const applyNoPalettesState = () => {
+      if (tableContainer) {
+        tableContainer.innerHTML = "";
+        tableContainer.removeAttribute("tabindex");
+      }
+
+      updateHashState([], settings);
+      exportUI.state.palettes = [];
+      exportUI.toggleExportWrapperVisibility(false, exportUI.elements);
+
+      if (warning) {
+        warning.classList.remove("visible");
+      }
+      if (warningTimeout) {
+        clearTimeout(warningTimeout);
+        warningTimeout = null;
+      }
+
+      const colorValuesInput = document.getElementById("color-values");
+      if (colorValuesInput) {
+        const len = colorValuesInput.value.length;
+        colorValuesInput.focus();
+        colorValuesInput.setSelectionRange(len, len);
+      } else {
+        const makeButton = document.getElementById("make");
+        if (makeButton) makeButton.focus();
+      }
+    };
+
+    const removePaletteAtIndex = (paletteIndex) => {
+      const colorInputElement = document.getElementById("color-values");
+      if (!colorInputElement) return;
+
+      const currentColors = parseColorValues(colorInputElement.value) || [];
+      if (!currentColors.length) return;
+      if (paletteIndex < 0 || paletteIndex >= currentColors.length) return;
+
+      currentColors.splice(paletteIndex, 1);
+      colorInputElement.value = currentColors.join(" ");
+
+      if (!currentColors.length) {
+        applyNoPalettesState();
+        return;
+      }
+
+      updateHashState(currentColors, settings);
+
+      if (window.palettes && typeof window.palettes.createTintsAndShades === "function") {
+        window.palettes.createTintsAndShades(settings, false, {
+          skipScroll: true,
+          skipFocus: true
+        });
+      }
+    };
+
     const parsedColorsArray = parseColorValues(colorInput.value);
 
-    if (parsedColorsArray !== null && parsedColorsArray.length) {
+    if (parsedColorsArray && parsedColorsArray.length) {
       const { state, elements, toggleExportWrapperVisibility, setExportFormat, updateExportOutput } = exportUI;
       const tintShadeCount = normalizeTintShadeCount(settings.tintShadeCount);
       const paletteMetadata = buildPaletteData(parsedColorsArray, tintShadeCount);
-      const colorDisplayRows = [];
-      let tableRowCounter = 0;
+      const paletteTables = [];
       const colorPrefix = settings.copyWithHashtag ? "#" : "";
 
       parsedColorsArray.forEach((color, colorIndex) => {
         const paletteLabel = formatPaletteLabel(paletteMetadata[colorIndex].id);
-        colorDisplayRows[tableRowCounter++] = `<tr class="palette-name-row"><td colspan="${tintShadeCount}">${paletteLabel}</td></tr>`;
+        const paletteRows = [];
+
         const calculatedShades = colorUtils.calculateShades(color, tintShadeCount);
-        colorDisplayRows[tableRowCounter++] = `<tr>${makeTableRowColors(calculatedShades, "colors", colorPrefix, { enableBasePicker: true, colorIndex, rowType: "shades" })}</tr>`;
-        colorDisplayRows[tableRowCounter++] = `<tr>${makeTableRowColors(calculatedShades, "RGBValues", colorPrefix)}</tr>`;
+        paletteRows.push(`<tr>${makeTableRowColors(calculatedShades, "colors", colorPrefix, { enableBasePicker: true, colorIndex, rowType: "shades" })}</tr>`);
+        paletteRows.push(`<tr>${makeTableRowColors(calculatedShades, "RGBValues", colorPrefix)}</tr>`);
 
         const calculatedTints = colorUtils.calculateTints(color, tintShadeCount);
-        colorDisplayRows[tableRowCounter++] = `<tr>${makeTableRowColors(calculatedTints, "colors", colorPrefix, { enableBasePicker: true, colorIndex, rowType: "tints" })}</tr>`;
-        colorDisplayRows[tableRowCounter++] = `<tr>${makeTableRowColors(calculatedTints, "RGBValues", colorPrefix)}</tr>`;
+        paletteRows.push(`<tr>${makeTableRowColors(calculatedTints, "colors", colorPrefix, { enableBasePicker: true, colorIndex, rowType: "tints" })}</tr>`);
+        paletteRows.push(`<tr>${makeTableRowColors(calculatedTints, "RGBValues", colorPrefix)}</tr>`);
+
+        const headerRow = buildTableHeader(tintShadeCount);
+        const closeIcon = getIconMarkup("icon-x-template");
+        const removeButton = `<button type="button" class="palette-close-button" data-palette-index="${colorIndex}" aria-label="Remove ${paletteLabel} palette">${closeIcon}</button>`;
+        const paletteNameMarkup = `<div class="palette-name-header" role="heading" aria-level="2"><span class="palette-name-label">${paletteLabel}</span>${removeButton}</div>`;
+        const tableMarkup = `<div class="palette-wrapper" role="region" aria-label="${paletteLabel}">${paletteNameMarkup}<div class="palette-table"><table><thead>${headerRow}</thead><tbody>${paletteRows.join("")}</tbody></table></div></div>`;
+        paletteTables.push(tableMarkup);
       });
 
-      const colorDisplayTable = `<table>${buildTableHeader(tintShadeCount)}${colorDisplayRows.join("")}</table>`;
-        tableContainer.innerHTML = colorDisplayTable;
+      tableContainer.innerHTML = paletteTables.join("");
 
       if (!hexCellKeyHandlerAdded) {
         tableContainer.addEventListener("keydown", (event) => {
@@ -284,6 +352,20 @@
           target.click();
         });
         hexCellKeyHandlerAdded = true;
+      }
+
+      if (!paletteCloseHandlerAdded) {
+        tableContainer.addEventListener("click", (event) => {
+          const button = event.target && event.target.closest && event.target.closest(".palette-close-button");
+          if (!button) return;
+
+          const paletteIndex = parseInt(button.getAttribute("data-palette-index"), 10);
+          if (Number.isNaN(paletteIndex)) return;
+
+          removePaletteAtIndex(paletteIndex);
+        });
+
+        paletteCloseHandlerAdded = true;
       }
 
       state.palettes = paletteMetadata;
@@ -298,8 +380,6 @@
         const scrollElement = document.getElementById("scroll-top") || document.getElementById("tints-and-shades");
         if (scrollElement) {
           smoothScrollTo(scrollElement, 500, -16);
-        } else {
-          console.error("Element with id 'tints-and-shades' not found.");
         }
       }
 
@@ -307,9 +387,12 @@
         tableContainer.removeAttribute("tabindex");
         const pickerFocused = focusPickerContext && focusPickerCell(focusPickerContext);
         if (!pickerFocused && !skipFocus) {
-          const makeButton = document.getElementById("make");
-          if (makeButton) {
-            makeButton.focus();
+          const activeStepButton = document.querySelector(".step-selector-option.is-active");
+          if (activeStepButton) {
+            activeStepButton.focus();
+          } else {
+            const makeButton = document.getElementById("make");
+            if (makeButton) makeButton.focus();
           }
         }
       });
@@ -331,6 +414,7 @@
       exportUI.state.palettes = [];
       exportUI.toggleExportWrapperVisibility(false, exportUI.elements);
     }
+
     return false;
   };
 

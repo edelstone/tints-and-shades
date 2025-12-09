@@ -25,7 +25,6 @@ html.darkmode-active {
 
     .header {
       .preface {
-
         .theme-toggle {
           background: $black-transparent;
 
@@ -83,7 +82,6 @@ html.darkmode-active {
 
     .palettes {
       .palette-controls {
-
         .step-selector-option {
           background: $black-transparent;
           color: $gray-100;
@@ -118,8 +116,12 @@ html.darkmode-active {
       }
 
       #tints-and-shades {
-        .palette-name-row td {
-          color: $gray-100;
+        .palette-wrapper {
+
+          .palette-name-label,
+          .palette-close-button {
+            color: $gray-100;
+          }
         }
       }
     }

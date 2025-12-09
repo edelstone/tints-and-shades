@@ -1,4 +1,3 @@
-// export-ui.js - export modal UI: focus trap, scroll lock, formatting, copy
 (() => {
   const VALID_EXPORT_FORMATS = ["hex", "hex-hash", "rgb", "css", "json"];
   const EXPORT_FORMAT_STORAGE_KEY = "export-preferred-format";
@@ -46,13 +45,6 @@
   const clampPercent = (percent) => {
     if (typeof percent !== "number" || Number.isNaN(percent)) return 0;
     return Math.min(Math.max(percent, 0), 100);
-  };
-
-  const formatPercentToken = (percent) => {
-    const safe = clampPercent(percent);
-    const rounded = Math.round(safe * 10) / 10; // one decimal
-    const stringValue = rounded % 1 === 0 ? rounded.toString() : rounded.toFixed(1);
-    return stringValue.replace(/\.0+$/, "").replace(".", "-");
   };
 
   const formatCssTier = (percent) => {
@@ -112,100 +104,271 @@
 
   function createTableCanvas(table) {
     if (!table) return null;
+
     const rows = Array.from(table.rows || []);
     if (!rows.length) return null;
-    const rowHeights = rows.map((row) => Math.max(1, Math.round(row.getBoundingClientRect().height)));
+
+    const tableRect = table.getBoundingClientRect();
     const tableStyle = window.getComputedStyle(table);
-    let totalWidth = 0;
-    rows.forEach((row) => {
-      let rowWidth = 0;
-      Array.from(row.cells).forEach((cell) => {
-        rowWidth += Math.max(1, Math.round(cell.getBoundingClientRect().width));
-      });
-      totalWidth = Math.max(totalWidth, rowWidth);
-    });
-    const totalHeight = rowHeights.reduce((sum, height) => sum + height, 0);
+
+    const totalWidth = Math.max(1, Math.round(tableRect.width));
+    const totalHeight = Math.max(1, Math.round(tableRect.height));
     if (!totalWidth || !totalHeight) return null;
+
     const paddingX = 24;
     const paddingY = 16;
+    const bottomTrim = 12;
+
     const ratio = Math.max(1, window.devicePixelRatio || 1);
+    const canvasWidthCss = totalWidth + paddingX * 2;
+    const canvasHeightCss = totalHeight + paddingY * 2 - bottomTrim;
+
     const canvas = document.createElement("canvas");
-    canvas.width = Math.max(1, Math.round((totalWidth + paddingX * 2) * ratio));
-    canvas.height = Math.max(1, Math.round((totalHeight + paddingY * 2) * ratio));
+    canvas.width = Math.max(1, Math.round(canvasWidthCss * ratio));
+    canvas.height = Math.max(1, Math.round(canvasHeightCss * ratio));
+
     const ctx = canvas.getContext("2d");
     if (!ctx) return null;
+
     ctx.scale(ratio, ratio);
+
     const rootBackground = window.getComputedStyle(document.documentElement).backgroundColor;
-    const isTransparent = (value) => !value || value === "transparent" || value === "rgba(0, 0, 0, 0)";
+    const isTransparent = (value) =>
+      !value || value === "transparent" || value === "rgba(0, 0, 0, 0)";
+
     let tableBackground = tableStyle.backgroundColor;
     if (isTransparent(tableBackground)) {
-      tableBackground = !isTransparent(rootBackground)
-        ? rootBackground
-        : "#fff";
+      tableBackground = !isTransparent(rootBackground) ? rootBackground : "#fff";
     }
+
     ctx.fillStyle = tableBackground;
-    ctx.fillRect(0, 0, totalWidth + paddingX * 2, totalHeight + paddingY * 2);
-    ctx.textAlign = "center";
+    ctx.fillRect(0, 0, canvasWidthCss, canvasHeightCss);
+
     ctx.textBaseline = "top";
-    let yOffset = paddingY;
-    rows.forEach((row, rowIndex) => {
-      let xOffset = paddingX;
-      const rowHeight = rowHeights[rowIndex];
-      Array.from(row.cells).forEach((cell) => {
-        const cellWidth = Math.max(1, Math.round(cell.getBoundingClientRect().width));
+
+    rows.forEach((row) => {
+      const rowRect = row.getBoundingClientRect();
+      const rowTop = Math.round(rowRect.top - tableRect.top);
+      const rowHeight = Math.max(1, Math.round(rowRect.height));
+
+      const cells = Array.from(row.cells);
+      if (!cells.length) return;
+
+      const cellRects = cells.map((cell) => cell.getBoundingClientRect());
+      const edges = cellRects.map((r) => ({
+        left: r.left - tableRect.left,
+        right: r.right - tableRect.left
+      }));
+
+      const intEdges = edges.map((edge, index) => {
+        const left = Math.round(edge.left);
+        let right = Math.round(edge.right);
+        if (index === edges.length - 1) right = totalWidth;
+        return { left, right, width: Math.max(1, right - left) };
+      });
+
+      cells.forEach((cell, index) => {
+        const { left, width } = intEdges[index];
+        const x = paddingX + left;
+        const y = paddingY + rowTop;
+
         const computed = window.getComputedStyle(cell);
         const cellBg = computed.backgroundColor;
-        if (cellBg && cellBg !== "rgba(0, 0, 0, 0)" && cellBg !== "transparent") {
+
+        if (!isTransparent(cellBg)) {
           ctx.fillStyle = cellBg;
         } else {
           ctx.fillStyle = tableBackground;
         }
-        ctx.fillRect(xOffset, yOffset, cellWidth, rowHeight);
+        const isLastCell = index === cells.length - 1;
+        ctx.fillRect(
+          x,
+          y,
+          isLastCell ? width : width + 2,
+          rowHeight
+        );
+
         const rawText = (cell.textContent || "").trim();
         const hexPattern = /^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/;
         let text = rawText;
         if (hexPattern.test(rawText)) {
           text = rawText.toLowerCase();
         }
-        if (text) {
-          ctx.fillStyle = computed.color || "#000";
-          const fontSize = parseFloat(computed.fontSize) || 14;
-          const fontFamily = computed.fontFamily || "Work Sans, system-ui, sans-serif";
-          ctx.font = `${fontSize}px ${fontFamily}`;
-          const titleOffset = row.classList && row.classList.contains("table-header") ? 10 : 10;
-          const textAlignValue = computed.textAlign || "center";
-          const direction = computed.direction || "ltr";
-          let normalizedAlign = textAlignValue;
-          if (textAlignValue === "start") {
-            normalizedAlign = direction === "rtl" ? "right" : "left";
-          } else if (textAlignValue === "end") {
-            normalizedAlign = direction === "rtl" ? "left" : "right";
-          }
-          ctx.textAlign = normalizedAlign;
-          let textX = xOffset + cellWidth / 2;
-          if (normalizedAlign === "left") {
-            const paddingLeft = parseFloat(computed.paddingLeft) || 0;
-            textX = xOffset + paddingLeft;
-          } else if (normalizedAlign === "right") {
-            const paddingRight = parseFloat(computed.paddingRight) || 0;
-            textX = xOffset + cellWidth - paddingRight;
-          }
-          const nameRowPadding = row.classList && row.classList.contains("palette-name-row") ? -5 : 0;
-          ctx.fillText(text, textX, yOffset + titleOffset + nameRowPadding);
+        if (!text) return;
+
+        ctx.fillStyle = computed.color || "#000";
+        const fontSize = 14;
+        const fontFamily = computed.fontFamily || "Work Sans, system-ui, sans-serif";
+        ctx.font = `${fontSize}px ${fontFamily}`;
+
+        const isHeaderRow = row.classList && row.classList.contains("table-header");
+        const isNameRow = row.classList && row.classList.contains("palette-name-header");
+        const titleOffset = isHeaderRow ? 8 : 8;
+
+        const textAlignValue = computed.textAlign || "left";
+        const direction = computed.direction || "ltr";
+        let normalizedAlign = textAlignValue;
+
+        if (textAlignValue === "start") {
+          normalizedAlign = direction === "rtl" ? "right" : "left";
+        } else if (textAlignValue === "end") {
+          normalizedAlign = direction === "rtl" ? "left" : "right";
         }
-        xOffset += cellWidth;
+
+        if (isNameRow) {
+          normalizedAlign = "left";
+        }
+
+        ctx.textAlign = normalizedAlign;
+
+        let textX = x + width / 2;
+        if (normalizedAlign === "left") {
+          const paddingLeft = parseFloat(computed.paddingLeft) || 0;
+          textX = x + paddingLeft;
+        } else if (normalizedAlign === "right") {
+          const paddingRight = parseFloat(computed.paddingRight) || 0;
+          textX = x + width - paddingRight;
+        }
+
+        ctx.fillText(text, textX, y + titleOffset);
       });
-      yOffset += rowHeight;
     });
+
     return { canvas, width: totalWidth, height: totalHeight };
   }
 
   const downloadPaletteTableAsPng = async () => {
     if (!exportState.palettes || !exportState.palettes.length) return;
     const tableWrapper = document.getElementById("tints-and-shades");
-    const tableElement = tableWrapper ? tableWrapper.querySelector("table") : null;
-    if (!tableElement) return;
-    const canvasResult = createTableCanvas(tableElement);
+    if (!tableWrapper) return;
+    const paletteWrappers = Array.from(tableWrapper.querySelectorAll(".palette-wrapper"));
+    if (!paletteWrappers.length) return;
+    const aggregatedTable = document.createElement("table");
+    const firstTable = paletteWrappers[0].querySelector("table");
+    if (firstTable) aggregatedTable.className = firstTable.className;
+
+    const copyComputedProperties = (sourceElement, targetElement, properties) => {
+      if (!sourceElement || !targetElement) return;
+      const computed = window.getComputedStyle(sourceElement);
+      properties.forEach((property) => {
+        const value = computed.getPropertyValue(property);
+        if (value !== "") {
+          targetElement.style.setProperty(property, value);
+        }
+      });
+    };
+
+    const copyRowStyles = (sourceRow, targetRow) => {
+      Array.from(sourceRow.cells).forEach((cell, index) => {
+        const targetCell = targetRow.cells[index];
+        if (!targetCell) return;
+        copyComputedProperties(cell, targetCell, [
+          "background-color",
+          "color",
+          "font-family",
+          "font-size",
+          "font-weight",
+          "line-height",
+          "letter-spacing",
+          "text-align",
+          "direction",
+          "text-transform",
+          "padding-left",
+          "padding-right",
+          "padding-top",
+          "padding-bottom",
+          "box-sizing"
+        ]);
+        const cellRect = cell.getBoundingClientRect();
+        targetCell.style.setProperty("width", `${Math.max(1, Math.round(cellRect.width))}px`);
+        targetCell.style.setProperty("height", `${Math.max(1, Math.round(cellRect.height))}px`);
+      });
+    };
+
+    paletteWrappers.forEach((wrapper, index) => {
+      const paletteNameLabel = wrapper.querySelector(".palette-name-label");
+      const paletteNameText = (paletteNameLabel && paletteNameLabel.textContent)
+        ? paletteNameLabel.textContent.trim()
+        : "";
+      const innerTable = wrapper.querySelector("table");
+      if (!innerTable) return;
+      const headerRow = innerTable.querySelector(".table-header");
+      const columnCount = headerRow
+        ? headerRow.cells.length
+        : (innerTable.rows[0] ? innerTable.rows[0].cells.length : 1);
+
+      if (paletteNameText) {
+        const nameRow = document.createElement("tr");
+        nameRow.className = "palette-name-header";
+        const nameCell = document.createElement("td");
+        nameCell.setAttribute("colspan", `${columnCount}`);
+        nameCell.textContent = paletteNameText;
+        nameCell.style.paddingBottom = "8px";
+        if (paletteNameLabel) {
+          copyComputedProperties(paletteNameLabel, nameCell, [
+            "color",
+            "font-family",
+            "font-size",
+            "font-weight",
+            "letter-spacing",
+            "text-transform"
+          ]);
+        }
+        nameRow.appendChild(nameCell);
+        aggregatedTable.appendChild(nameRow);
+      }
+
+      if (headerRow) {
+        const clonedHeader = headerRow.cloneNode(true);
+        copyRowStyles(headerRow, clonedHeader);
+        aggregatedTable.appendChild(clonedHeader);
+      }
+
+      innerTable.querySelectorAll("tbody tr").forEach((row) => {
+        const clonedRow = row.cloneNode(true);
+        copyRowStyles(row, clonedRow);
+        aggregatedTable.appendChild(clonedRow);
+      });
+
+      const isLastPalette = index === paletteWrappers.length - 1;
+      if (!isLastPalette) {
+        const spacerRow = document.createElement("tr");
+        const spacerCell = document.createElement("td");
+        spacerCell.setAttribute("colspan", `${columnCount}`);
+        spacerCell.innerHTML = "&nbsp;";
+        spacerCell.style.height = "8px";
+        spacerCell.style.lineHeight = "8px";
+        spacerCell.style.border = "none";
+        spacerRow.appendChild(spacerCell);
+        aggregatedTable.appendChild(spacerRow);
+      }
+    });
+
+    const rowCount = aggregatedTable.rows.length;
+    if (!rowCount) return;
+
+    const hiddenWrapper = document.createElement("div");
+    Object.assign(hiddenWrapper.style, {
+      position: "absolute",
+      top: "-9999px",
+      left: "-9999px",
+      opacity: "0",
+      pointerEvents: "none",
+    });
+    const paletteTableShim = document.createElement("div");
+    paletteTableShim.className = "palette-table";
+    paletteTableShim.appendChild(aggregatedTable);
+    hiddenWrapper.appendChild(paletteTableShim);
+    tableWrapper.appendChild(hiddenWrapper);
+
+    let canvasResult = null;
+    try {
+      canvasResult = createTableCanvas(aggregatedTable);
+    } finally {
+      if (hiddenWrapper.parentNode) {
+        hiddenWrapper.parentNode.removeChild(hiddenWrapper);
+      }
+    }
     if (!canvasResult || !canvasResult.canvas) return;
     const { canvas } = canvasResult;
     const imageButton = exportElements.imageButton;
@@ -476,8 +639,8 @@
         document.execCommand("copy");
         document.body.removeChild(helper);
       }
-      [elements.copyFab].forEach((btn) => {
-        if (!btn) return;
+      const btn = elements.copyFab;
+      if (btn) {
         btn.classList.add("copied");
         btn.disabled = true;
         btn.setAttribute("aria-disabled", "true");
@@ -486,7 +649,7 @@
           btn.disabled = false;
           btn.setAttribute("aria-disabled", "false");
         }, 1500);
-      });
+      }
     } catch (err) {
       console.error(err);
     }
@@ -645,8 +808,8 @@
           }
           focusables[nextIndex].focus();
           event.preventDefault();
-    }
-  });
+        }
+      });
 
     }
 
@@ -726,13 +889,6 @@
       }
     });
   };
-
-  const makeTableRowColors = (colors, displayType, colorPrefix) => colors.map(colorHex => {
-    if (displayType === "colors") {
-      return `<td tabindex="0" role="button" aria-label="Color swatch" class="hex-color" style="background-color:#${colorHex}" data-clipboard-text="${colorPrefix}${colorHex}"></td>`;
-    }
-    return `<td class="hex-value">${colorHex.toUpperCase()}</td>`;
-  }).join("");
 
   window.exportUI = {
     state: exportState,

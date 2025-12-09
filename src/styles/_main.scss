@@ -412,6 +412,12 @@ pre {
 				}
 			}
 
+			.exports {
+				margin-left: auto;
+				display: inline-flex;
+				gap: 1.2rem;
+			}
+
 			.action-button {
 				border: none;
 				border-radius: $radius;
@@ -435,121 +441,146 @@ pre {
 					background: $gray-200;
 				}
 			}
-
-			.exports {
-				margin-left: auto;
-				display: inline-flex;
-				gap: 1.2rem;
-			}
 		}
 	}
 
 	#tints-and-shades {
-		overflow-x: auto;
+		overflow-x: visible;
 		width: 100%;
 		outline: 0;
 
-		table {
-			width: 100%;
-			border-collapse: collapse;
+		.palette-wrapper {
+			margin-bottom: 1.5rem;
 
-			.table-header td {
-				font-size: 1.3rem;
-				min-width: 6.5rem;
-				padding: 0 0 1.5rem;
-				font-weight: 500;
-
-				@include breakpoint('large') {
-					font-size: 12px;
-				}
-			}
-
-			.palette-name-row td {
+			.palette-name-header {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				margin-bottom: 1rem;
 				text-align: left;
-				padding: 0 0 .25rem 0;
-				font-size: 1.3rem;
-				font-weight: 500;
-				color: $black;
-			}
 
-			td.hex-value {
-				font-size: 1.3rem;
-				text-align: center;
-				padding: .5rem 0 2rem;
-				font-family: $monospace;
-				text-transform: lowercase;
-
-				@include breakpoint('large') {
-					font-size: 12px;
-				}
-			}
-
-			td.hex-color {
-				height: 6.5rem;
-				min-width: 7.5rem;
-				cursor: pointer;
-				position: relative;
-				outline: 0;
-				overflow: hidden;
-
-				&.copy-locked {
-					pointer-events: none;
+				.palette-name-label {
+					text-align: left;
+					font-size: 1.3rem;
+					font-weight: 500;
+					color: $black;
+					text-align: left;
 				}
 
-				.copy-indicator {
-					height: 4rem;
-					width: 4rem;
-					opacity: 0;
-					border-radius: $radius;
-					box-shadow: $shadow-main;
-					background-color: $white;
-					top: 50%;
-					left: 50%;
-					transform: translate(-50%, -45%);
+				.palette-close-button {
+					border: none;
+					background: transparent;
+					cursor: pointer;
+					display: inline-flex;
+					color: $black;
+					padding: 0;
 
-					&-check {
-						transform: translate(-50%, -50%);
-						opacity: 0;
-						transition: opacity 150ms ease;
-					}
-				}
-
-				&:hover .copy-indicator-copy,
-				&:focus-visible .copy-indicator-copy,
-				&:hover .copy-indicator-picker,
-				&:focus-visible .copy-indicator-picker,
-				&.is-picker-open .copy-indicator-picker {
-					opacity: 1;
-					transform: translate(-50%, -50%);
-				}
-
-				&:not(.copied):active .copy-indicator-copy,
-				&:not(.copied):active .copy-indicator-picker {
-					opacity: .75;
-					transform: translate(-50%, -50%) scale(.9);
-				}
-
-				&.copied {
-					.copy-indicator-check {
-						opacity: 1;
-						color: $success;
-					}
-
-					.copy-indicator-copy {
-						opacity: 0;
-					}
-				}
-
-				@media (pointer: coarse) {
-					.copy-indicator-copy {
-						display: none;
-					}
-				}
-
-				&.hex-color-picker {
 					svg {
-						width: 2.2rem;
-						height: 2.2rem;
+						width: 1.8rem;
+						height: 1.8rem;
+					}
+				}
+			}
+
+			.palette-table {
+				overflow-x: auto;
+
+				table {
+					width: max-content;
+					min-width: 100%;
+					border-collapse: collapse;
+
+					.table-header td {
+						font-size: 1.3rem;
+						min-width: 6.5rem;
+						padding: 0 0 .5rem;
+						font-weight: 500;
+
+						@include breakpoint('large') {
+							font-size: 12px;
+						}
+					}
+
+					td.hex-value {
+						font-size: 1.3rem;
+						text-align: center;
+						padding: .5rem 0 2rem;
+						font-family: $monospace;
+						text-transform: lowercase;
+
+						@include breakpoint('large') {
+							font-size: 12px;
+						}
+					}
+
+					td.hex-color {
+						height: 6.5rem;
+						min-width: 7.5rem;
+						cursor: pointer;
+						position: relative;
+						outline: 0;
+						overflow: hidden;
+
+						&.copy-locked {
+							pointer-events: none;
+						}
+
+						.copy-indicator {
+							height: 4rem;
+							width: 4rem;
+							opacity: 0;
+							border-radius: $radius;
+							box-shadow: $shadow-main;
+							background-color: $white;
+							top: 50%;
+							left: 50%;
+							transform: translate(-50%, -45%);
+
+							&-check {
+								transform: translate(-50%, -50%);
+								opacity: 0;
+								transition: opacity 150ms ease;
+							}
+						}
+
+						&:hover .copy-indicator-copy,
+						&:focus-visible .copy-indicator-copy,
+						&:hover .copy-indicator-picker,
+						&:focus-visible .copy-indicator-picker,
+						&.is-picker-open .copy-indicator-picker {
+							opacity: 1;
+							transform: translate(-50%, -50%);
+						}
+
+						&:not(.copied):active .copy-indicator-copy,
+						&:not(.copied):active .copy-indicator-picker {
+							opacity: .75;
+							transform: translate(-50%, -50%) scale(.9);
+						}
+
+						&.copied {
+							.copy-indicator-check {
+								opacity: 1;
+								color: $success;
+							}
+
+							.copy-indicator-copy {
+								opacity: 0;
+							}
+						}
+
+						@media (pointer: coarse) {
+							.copy-indicator-copy {
+								display: none;
+							}
+						}
+
+						&.hex-color-picker {
+							svg {
+								width: 2.2rem;
+								height: 2.2rem;
+							}
+						}
 					}
 				}
 			}

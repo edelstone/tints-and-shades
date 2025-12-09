@@ -1,5 +1,3 @@
-// color-utils.js - hex/RGB helpers and tint/shade generation
-// Color math helpers
 const pad = (number, length) => {
   let str = number.toString();
   while (str.length < length) {

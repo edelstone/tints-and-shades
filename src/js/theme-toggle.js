@@ -42,11 +42,5 @@
       const nextTheme = root.classList.contains("darkmode-active") ? "light" : "dark";
       applyTheme(nextTheme, true);
     });
-    toggle.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        toggle.click();
-      }
-    });
   }
 })();
