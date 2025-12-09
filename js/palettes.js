@@ -235,7 +235,8 @@
     const {
       skipScroll = false,
       skipFocus = false,
-      focusPickerContext = null
+      focusPickerContext = null,
+      focusCloseIndex = null
     } = options;
 
     const colorInput = document.getElementById("color-values");
@@ -303,10 +304,14 @@
 
       updateHashState(currentColors, settings);
 
+      // decide which palette's close button should get focus
+      const nextFocusIndex = Math.min(paletteIndex, currentColors.length - 1);
+
       if (window.palettes && typeof window.palettes.createTintsAndShades === "function") {
         window.palettes.createTintsAndShades(settings, false, {
           skipScroll: true,
-          skipFocus: true
+          skipFocus: true,        // still skip the generic focus logic
+          focusCloseIndex: nextFocusIndex
         });
       }
     };
@@ -386,6 +391,18 @@
       setTimeout(() => {
         tableContainer.removeAttribute("tabindex");
         const pickerFocused = focusPickerContext && focusPickerCell(focusPickerContext);
+
+        // if we have a target close button index, focus it after rebuild
+        if (!pickerFocused && typeof focusCloseIndex === "number") {
+          const nextCloseButton = tableContainer.querySelector(
+            `.palette-close-button[data-palette-index="${focusCloseIndex}"]`
+          );
+          if (nextCloseButton && typeof nextCloseButton.focus === "function") {
+            nextCloseButton.focus();
+            return;
+          }
+        }
+
         if (!pickerFocused && !skipFocus) {
           const activeStepButton = document.querySelector(".step-selector-option.is-active");
           if (activeStepButton) {
