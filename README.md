@@ -46,6 +46,10 @@ This is useful for designers who may be communicating color intent to developers
 
 I've also heard it's useful for teachers, data professionals, and people who make presentations.
 
+## Figma plugin
+
+Now you can generate the same meticulously-crafted tints and shades without leaving your canvas (and automatically create local color styles, too). Grab the plugin [from the Figma Community](https://www.figma.com/community/plugin/1580658889126377365/tint-shade-generator).
+
 ## Calculation method
 
 The given hex color is first converted to RGB. Then each component of the RGB color has the following calculation performed on it, respectively.
@@ -105,9 +109,10 @@ We use these amazing open-source libraries across the project:
 
 Many thanks to [Joel Carr](https://github.com/joelcarr), [Sebastian Gutierrez](https://github.com/pepas24), [Tim Scalzo](https://github.com/TJScalzo), [Aman Agarwal](https://github.com/AmanAgarwal041), [Aleksandr Hovhannisyan](https://github.com/AleksandrHovhannisyan), [Shubhendu Sen](https://github.com/Sen-442b), and [Luis Escarrilla](https://github.com/latesc) for their valuable contributions.
 
-## Other details
+## Design specs
 
 -   Typography: [Work Sans](https://weiweihuanghuang.github.io/Work-Sans/) by Wei Huang
 -   Iconography: [Tabler Icons](https://tabler.io/icons)
--   Colors: [#000000](https://maketintsandshades.com/#000000), [#ffffff](https://maketintsandshades.com/#ffffff), [#e96443](https://maketintsandshades.com/#e96443), and [#ca228e](https://maketintsandshades.com/#ca228e)
--   Like Google's Material Design? Try [this other thing I made](https://materialpalettes.com).
+-   Colors: [#000000](/#colors=000000), [#ffffff](/#colors=ffffff), [#e96443](/#colors=e96443), and [#ca228e](/#colors=ca228e)
+
+Prefer Google's color logic? Try the [Material Design Palette Generator](https://materialpalettes.com).

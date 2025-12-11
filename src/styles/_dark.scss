@@ -28,6 +28,11 @@ html.darkmode-active {
         .theme-toggle {
           background: $black-transparent;
 
+          &:hover,
+          &:active {
+            background-color: $black;
+          }
+
           &-icon {
 
             svg {
@@ -41,6 +46,17 @@ html.darkmode-active {
             .icon-tabler-moon {
               display: none;
             }
+          }
+        }
+
+        .announcement {
+          background: $black-transparent;
+          color: $gray-100;
+          border-color: $black-transparent;
+
+          &:hover,
+          &:active {
+            background-color: $black;
           }
         }
 
@@ -85,9 +101,10 @@ html.darkmode-active {
         .step-selector-option {
           background: $black-transparent;
           color: $gray-100;
+          border: none;
 
           &.is-active {
-            box-shadow: inset 0 0 0 1px $gray-500;
+            box-shadow: inset 0 0 0 1px $gray-400;
             opacity: 1;
             background: $black;
           }
@@ -110,7 +127,7 @@ html.darkmode-active {
 
         .action-button-toggle.is-active {
           border-color: $gray-400;
-          box-shadow: inset 0 0 0 1px $gray-500;
+          box-shadow: inset 0 0 0 1px $gray-400;
           background: $black;
         }
       }

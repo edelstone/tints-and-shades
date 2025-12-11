@@ -1,36 +1,26 @@
-const fs = require('fs');
-const path = require('path');
+const { readFileSync, writeFileSync } = require('fs');
+const { join } = require('path');
 const TurndownService = require('turndown');
 
-// Initialize Turndown service
-const turndownService = new TurndownService({ headingStyle: 'atx', bulletListMarker: '-'})
+const turndownService = new TurndownService({ headingStyle: 'atx', bulletListMarker: '-' });
 
-// Paths to the source and destination files
-const aboutPath = path.join(__dirname, 'src', 'about.njk');
-const readmePath = path.join(__dirname, 'README.md');
+const aboutPath = join(__dirname, 'src', 'about.njk');
+const readmePath = join(__dirname, 'README.md');
 
-// Read the content of the about.njk file
-const aboutContent = fs.readFileSync(aboutPath, 'utf8');
+const aboutContent = readFileSync(aboutPath, 'utf8');
 
-// Extract the relevant content from about.njk
-// Assuming the content to be extracted is between specific markers
-const startMarker = '<!-- START README CONTENT -->';
-const endMarker = '<!-- END README CONTENT -->';
-const startIndex = aboutContent.indexOf(startMarker);
-const endIndex = aboutContent.indexOf(endMarker);
-
-if (startIndex === -1 || endIndex === -1 || endIndex <= startIndex) {
+const match = aboutContent.match(/<!-- START README CONTENT -->([\s\S]*?)<!-- END README CONTENT -->/);
+if (!match) {
   throw new Error('README markers not found or misordered in src/about.njk');
 }
 
-const extractedContent = aboutContent.substring(startIndex + startMarker.length, endIndex).trim();
+const sanitizedContent = match[1]
+  .replace(/<!-- README-EXCLUDE-START -->[\s\S]*?<!-- README-EXCLUDE-END -->/g, '')
+  .trim();
 
-// Convert HTML to Markdown
-const markdownContent = turndownService.turndown(extractedContent);
+const markdownContent = turndownService.turndown(sanitizedContent);
 
-// Create the README content
-const readmeContent = 
-`# [<img src="src/icon.svg" width="28px" />](https://maketintsandshades.com) &nbsp;[Tint & Shade Generator](https://maketintsandshades.com)
+const readmeTemplate = `# [<img src="src/icon.svg" width="28px" />](https://maketintsandshades.com) &nbsp;[Tint & Shade Generator](https://maketintsandshades.com)
 
 <a href="https://maketintsandshades.com">
  <picture>
@@ -62,6 +52,5 @@ _Prerequisites: Node.js 14+_
 
 ${markdownContent}`;
 
-// Write the content to README.md
-fs.writeFileSync(readmePath, readmeContent, 'utf8');
+writeFileSync(readmePath, readmeTemplate, 'utf8');
 console.log('README.md has been generated.');

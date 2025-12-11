@@ -196,7 +196,12 @@
 
   const wireHexInputEnterHandler = () => {
     const colorValueInput = document.getElementById("clr-color-value");
-    if (!colorValueInput || colorValueInput.dataset.hexEnterAttached) return;
+    if (!colorValueInput) return;
+    colorValueInput.setAttribute("spellcheck", "false");
+    colorValueInput.setAttribute("autocomplete", "off");
+    colorValueInput.setAttribute("autocapitalize", "off");
+    colorValueInput.setAttribute("autocorrect", "off");
+    if (colorValueInput.dataset.hexEnterAttached) return;
     colorValueInput.dataset.hexEnterAttached = "true";
     colorValueInput.addEventListener("keydown", (event) => {
       if (event.key !== "Enter" && event.key !== "NumpadEnter") return;
