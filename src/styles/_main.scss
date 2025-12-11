@@ -68,6 +68,10 @@ pre {
 	padding: 7.5rem 2rem 8rem;
 	margin: auto;
 
+	@at-root body:has(.docs) & {
+		padding-bottom: 6rem;
+	}
+
 	@include breakpoint('large') {
 		padding: 9rem 2rem 6rem;
 	}
