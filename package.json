@@ -25,7 +25,7 @@
   "author": "Michael Edelstone <michael.edelstone@gmail.com> (https://michaeledelstone.com)",
   "license": "MIT",
   "devDependencies": {
-    "@11ty/eleventy": "^2.0.1",
+    "@11ty/eleventy": "^3.1.2",
     "@11ty/eleventy-dev-server": "^2.0.4",
     "concurrently": "^9.0.1",
     "gh-pages": "^6.1.1",
@@ -35,6 +35,6 @@
   },
   "dependencies": {
     "@melloware/coloris": "^0.25.0",
-    "color-name-list": "^13.36.0"
+    "color-name-list": "^14.11.0"
   }
 }
