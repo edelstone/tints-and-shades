@@ -512,6 +512,18 @@ pre {
 
 		.palette-wrapper {
 			margin-bottom: 1.5rem;
+			transition: opacity 150ms ease, margin-bottom 200ms ease, height 200ms ease,
+				padding-top 180ms ease, padding-bottom 180ms ease;
+			will-change: opacity, height, margin-bottom, padding-top, padding-bottom;
+
+			&-fading {
+				opacity: 0;
+				pointer-events: none;
+			}
+
+			&-collapsing {
+				pointer-events: none;
+			}
 
 			.palette-name-header {
 				display: flex;

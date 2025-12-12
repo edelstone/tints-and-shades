@@ -2,6 +2,7 @@
   let warningTimeout = null;
   let hexCellKeyHandlerAdded = false;
   let paletteCloseHandlerAdded = false;
+  const closingPaletteStates = new WeakMap();
 
   const VALID_TINT_SHADE_COUNTS = [5, 10, 20];
   const DEFAULT_TINT_SHADE_COUNT = 10;
@@ -316,6 +317,62 @@
       }
     };
 
+    const requestPaletteRemoval = (paletteIndex, paletteWrapper) => {
+      if (!paletteWrapper || prefersReducedMotion()) {
+        removePaletteAtIndex(paletteIndex);
+        return;
+      }
+
+      if (closingPaletteStates.has(paletteWrapper)) return;
+
+      const wrapperState = { stage: "fading" };
+      closingPaletteStates.set(paletteWrapper, wrapperState);
+
+      const cleanupStyles = () => {
+        paletteWrapper.style.height = "";
+        paletteWrapper.style.marginBottom = "";
+        paletteWrapper.style.paddingTop = "";
+        paletteWrapper.style.paddingBottom = "";
+        paletteWrapper.style.overflow = "";
+        paletteWrapper.classList.remove("palette-wrapper-fading", "palette-wrapper-collapsing");
+      };
+
+      const handleTransitionEnd = (event) => {
+        if (event.target !== paletteWrapper) return;
+
+        if (wrapperState.stage === "fading" && event.propertyName === "opacity") {
+          wrapperState.stage = "collapsing";
+          paletteWrapper.classList.add("palette-wrapper-collapsing");
+          paletteWrapper.getBoundingClientRect(); // ensure styles apply before collapsing
+          requestAnimationFrame(() => {
+            paletteWrapper.style.height = "0px";
+            paletteWrapper.style.marginBottom = "0px";
+            paletteWrapper.style.paddingTop = "0px";
+            paletteWrapper.style.paddingBottom = "0px";
+          });
+          return;
+        }
+
+        if (wrapperState.stage === "collapsing" && event.propertyName === "height") {
+          paletteWrapper.removeEventListener("transitionend", handleTransitionEnd);
+          closingPaletteStates.delete(paletteWrapper);
+          cleanupStyles();
+          removePaletteAtIndex(paletteIndex);
+        }
+      };
+
+      paletteWrapper.addEventListener("transitionend", handleTransitionEnd);
+
+      const wrapperHeight = paletteWrapper.getBoundingClientRect().height;
+      paletteWrapper.style.height = `${wrapperHeight}px`;
+      paletteWrapper.style.overflow = "hidden";
+      paletteWrapper.getBoundingClientRect(); // force layout before animating
+
+      requestAnimationFrame(() => {
+        paletteWrapper.classList.add("palette-wrapper-fading");
+      });
+    };
+
     const parsedColorsArray = parseColorValues(colorInput.value);
 
     if (parsedColorsArray && parsedColorsArray.length) {
@@ -367,7 +424,8 @@
           const paletteIndex = parseInt(button.getAttribute("data-palette-index"), 10);
           if (Number.isNaN(paletteIndex)) return;
 
-          removePaletteAtIndex(paletteIndex);
+          const paletteWrapper = button.closest(".palette-wrapper");
+          requestPaletteRemoval(paletteIndex, paletteWrapper);
         });
 
         paletteCloseHandlerAdded = true;
