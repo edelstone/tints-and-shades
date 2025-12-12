@@ -318,7 +318,8 @@
     };
 
     const requestPaletteRemoval = (paletteIndex, paletteWrapper) => {
-      if (!paletteWrapper || prefersReducedMotion()) {
+      const currentColors = parseColorValues(colorInput.value) || [];
+      if (currentColors.length <= 1 || !paletteWrapper || prefersReducedMotion()) {
         removePaletteAtIndex(paletteIndex);
         return;
       }
