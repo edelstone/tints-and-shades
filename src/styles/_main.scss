@@ -181,7 +181,7 @@ pre {
 			fill: $black;
 			color: $white;
 			clip-path: polygon(0 0, 100% 0, 100% 100%);
-			outline-offset: -2px;
+			outline-offset: -1px;
 
 			&:focus-visible {
 				clip-path: none;
