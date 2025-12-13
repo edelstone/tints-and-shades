@@ -3,6 +3,20 @@ const slugify = (value) => value.toLowerCase()
   .replace(/^-+|-+$/g, "")
   .replace(/-+/g, "-");
 
+const formatLabelForDisplay = (value) => {
+  if (!value || typeof value !== "string") return "";
+  const normalized = value.trim();
+  if (!normalized) return "";
+  if (!/^color-/i.test(normalized)) {
+    return normalized;
+  }
+  return normalized
+    .split(/[-_]+/)
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+};
+
 const rgbToLinear = (value) => {
   const v = value / 255;
   return v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
@@ -60,17 +74,27 @@ const prepareColorNames = () => {
     return cachedColorNames;
   }
 
+  const normalizeDisplayName = (value) => {
+    const trimmed = (value || "").trim();
+    if (!trimmed) return "";
+    return trimmed;
+  };
+
   cachedColorNames = window.colorNameList
     .map((item) => {
+      const name = normalizeDisplayName(item.name);
+      const slug = slugify(name);
       const hex = (item.hex || "").replace("#", "").toLowerCase();
       const lab = hexToLab(hex);
+      if (!slug || !hex || !lab) return null;
       return {
-        name: slugify(item.name || ""),
+        slug,
+        label: name || slug.replace(/-/g, " "),
         hex,
         lab
       };
     })
-    .filter(item => item.name && item.hex && item.lab);
+    .filter(item => item && item.slug && item.hex && item.lab);
 
   return cachedColorNames;
 };
@@ -82,10 +106,19 @@ const labDistance = (a, b) => {
   return dl * dl + da * da + db * db;
 };
 
+const createFallbackName = (fallback) => {
+  const raw = (typeof fallback === "string" ? fallback.trim() : "") || "color";
+  const slug = slugify(raw) || slugify("color");
+  return {
+    slug,
+    label: raw || slug
+  };
+};
+
 const getFriendlyName = (hex, fallback) => {
   const names = prepareColorNames();
   const targetLab = hexToLab(hex);
-  if (!names.length || !targetLab) return fallback;
+  if (!names.length || !targetLab) return createFallbackName(fallback);
 
   let closest = null;
   let minDistance = Infinity;
@@ -98,7 +131,12 @@ const getFriendlyName = (hex, fallback) => {
     }
   }
 
-  return closest ? closest.name : fallback;
+  if (!closest) return createFallbackName(fallback);
+
+  return {
+    slug: closest.slug,
+    label: closest.label || closest.slug
+  };
 };
 
 const makeUniqueName = (name, usedNames) => {
@@ -115,5 +153,6 @@ const makeUniqueName = (name, usedNames) => {
 window.exportNaming = {
   slugify,
   getFriendlyName,
-  makeUniqueName
+  makeUniqueName,
+  formatLabelForDisplay
 };
