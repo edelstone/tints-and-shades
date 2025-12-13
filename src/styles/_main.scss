@@ -180,19 +180,11 @@ pre {
 			display: flex;
 			fill: $black;
 			color: $white;
+			clip-path: polygon(0 0, 100% 0, 100% 100%);
+			outline-offset: -2px;
 
-			&:hover .octo-arm {
-				animation: octocat-wave 560ms ease-in-out;
-
-				@include breakpoint('medium') {
-					animation: none;
-				}
-			}
-
-			.octo-arm {
-				@include breakpoint('medium') {
-					animation: octocat-wave 560ms ease-in-out;
-				}
+			&:focus-visible {
+				clip-path: none;
 			}
 		}
 	}
@@ -890,24 +882,6 @@ pre {
 		background-color: $black;
 		z-index: 1;
 		transition: none;
-	}
-}
-
-@keyframes octocat-wave {
-
-	0%,
-	100% {
-		transform: rotate(0deg);
-	}
-
-	20%,
-	60% {
-		transform: rotate(-25deg);
-	}
-
-	40%,
-	80% {
-		transform: rotate(10deg);
 	}
 }
 
