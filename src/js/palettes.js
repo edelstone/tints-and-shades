@@ -117,15 +117,6 @@
     return `${trimmed.replace(/\.0+$/, "")}%`;
   };
 
-  const formatPaletteLabel = (id) =>
-    (typeof id === "string" && id.trim())
-      ? id
-        .split(/[-_]+/)
-        .filter(Boolean)
-        .map(part => part[0].toUpperCase() + part.slice(1))
-        .join(" ")
-      : "Base";
-
   const buildTableHeader = (steps) => {
     const safeSteps = Math.max(1, steps);
     const headers = Array.from({ length: safeSteps }, (_, index) => {
@@ -226,9 +217,11 @@
         .filter(item => item.hex !== baseHex && item.hex !== "ffffff");
 
       const fallbackName = `color-${index + 1}`;
-      const friendlyName = exportNaming.makeUniqueName(exportNaming.getFriendlyName(baseHex, fallbackName), usedNames);
+      const friendlyName = exportNaming.getFriendlyName(baseHex, fallbackName);
+      const uniqueId = exportNaming.makeUniqueName(friendlyName.slug, usedNames);
+      const label = friendlyName.label || fallbackName;
 
-      return { id: friendlyName, base: baseHex, shades, tints, stepsPerSide };
+      return { id: uniqueId, label, base: baseHex, shades, tints, stepsPerSide };
     });
   };
 
@@ -384,7 +377,9 @@
       const colorPrefix = settings.copyWithHashtag ? "#" : "";
 
       parsedColorsArray.forEach((color, colorIndex) => {
-        const paletteLabel = formatPaletteLabel(paletteMetadata[colorIndex].id);
+        const paletteData = paletteMetadata[colorIndex] || {};
+        const rawLabel = paletteData.label || paletteData.id || "Base";
+        const paletteLabel = exportNaming.formatLabelForDisplay(rawLabel) || rawLabel;
         const paletteRows = [];
 
         const calculatedShades = colorUtils.calculateShades(color, tintShadeCount);

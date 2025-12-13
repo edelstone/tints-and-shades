@@ -52,15 +52,6 @@
     return Math.round(safe * 10).toString(); // use 100s scale (10% => 100)
   };
 
-  const formatPaletteLabel = (id) => {
-    if (!id || typeof id !== "string") return "Base";
-    return id
-      .split(/[-_]+/)
-      .filter(Boolean)
-      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-      .join(" ");
-  };
-
   const prefersReducedMotion = () => {
     return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   };
@@ -449,7 +440,8 @@
     const shadesHeader = stepLabel ? `${stepLabel} shades` : "shades";
     const tintsHeader = stepLabel ? `${stepLabel} tints` : "tints";
     const blocks = palettes.map((palette) => {
-      const label = formatPaletteLabel(palette.id);
+      const rawLabel = palette.label || palette.id;
+      const label = exportNaming.formatLabelForDisplay(rawLabel) || rawLabel;
       const baseLine = `${label} - ${prefix}${palette.base}`;
       const shadeLines = palette.shades.map((item) => `${prefix}${item.hex}`);
       const tintLines = palette.tints.map((item) => `${prefix}${item.hex}`);
@@ -473,7 +465,9 @@
     const lines = [];
     palettes.forEach((palette) => {
       const baseName = palette.id;
-      lines.push(`  /* ${formatPaletteLabel(baseName)} */`);
+      const rawLabel = palette.label || baseName;
+      const label = exportNaming.formatLabelForDisplay(rawLabel) || rawLabel;
+      lines.push(`  /* ${label} */`);
       lines.push(`  --${baseName}-base: #${palette.base};`);
       const shadeLines = palette.shades.map((item) => {
         const tier = formatCssTier(item.percent);
@@ -546,7 +540,8 @@
   const formatRgbOutput = (palettes, stepLabel) => {
     if (!palettes.length) return "";
     const blocks = palettes.map((palette) => {
-      const label = formatPaletteLabel(palette.id);
+      const rawLabel = palette.label || palette.id;
+      const label = exportNaming.formatLabelForDisplay(rawLabel) || rawLabel;
       const rgbValue = formatRgbValue(palette.base) || palette.base;
       const baseLine = `${label} - ${rgbValue}`;
       const shadeLines = palette.shades.map((item) => formatRgbValue(item.hex) || item.hex);
