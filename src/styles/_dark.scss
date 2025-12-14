@@ -19,10 +19,6 @@ html.darkmode-active {
       }
     }
 
-    code {
-      background: $gray-500;
-    }
-
     .header {
       .preface {
         .theme-toggle {
@@ -165,6 +161,12 @@ html.darkmode-active {
       .export-body .export-output {
         border-color: transparent;
         background: $black-transparent;
+      }
+    }
+
+    .docs {
+      code {
+        background: $gray-500;
       }
     }
 

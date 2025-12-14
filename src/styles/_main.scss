@@ -51,13 +51,6 @@ a {
 	}
 }
 
-code {
-	background: $gray-100;
-	font-size: 85%;
-	padding: .2rem .6rem;
-	border-radius: $radius;
-}
-
 pre {
 	font-family: $monospace;
 }
@@ -504,7 +497,7 @@ pre {
 		outline: 0;
 
 		.palette-wrapper {
-			margin-bottom: 1.5rem;
+			margin-bottom: 2rem;
 			transition: opacity 220ms ease, margin-bottom 220ms ease, height 220ms ease, padding-top 220ms ease, padding-bottom 220ms ease;
 			will-change: opacity, margin-bottom, height, padding-top, padding-bottom;
 
@@ -531,12 +524,13 @@ pre {
 
 				&-controls {
 					display: flex;
-					gap: 1rem;
+					gap: 1.2rem;
 				}
 
 				&-name {
 					text-align: left;
-					font-size: 1.3rem;
+					font-size: 1.4rem;
+					line-height: normal;
 					font-weight: 500;
 					color: $black;
 					text-align: left;
@@ -551,8 +545,8 @@ pre {
 					padding: 0;
 
 					svg {
-						width: 1.8rem;
-						height: 1.8rem;
+						width: 2rem;
+						height: 2rem;
 					}
 				}
 			}
@@ -566,7 +560,7 @@ pre {
 					border-collapse: collapse;
 
 					.table-header td {
-						font-size: 1.3rem;
+						font-size: 1.4rem;
 						min-width: 6.5rem;
 						padding: 0 0 .5rem;
 						font-weight: 500;
@@ -577,14 +571,17 @@ pre {
 					}
 
 					td.hex-value {
-						font-size: 1.3rem;
 						text-align: center;
 						padding: .5rem 0 2rem;
-						font-family: $monospace;
 						text-transform: lowercase;
+						line-height: normal;
 
 						@include breakpoint('large') {
 							font-size: 12px;
+						}
+
+						code {
+							font-size: 1.3rem;
 						}
 					}
 
@@ -954,6 +951,13 @@ pre {
 
 	li {
 		margin-bottom: .5rem;
+	}
+
+	code {
+		background: $gray-100;
+		font-size: 90%;
+		padding: .2rem .6rem;
+		border-radius: $radius;
 	}
 
 	.anchorjs-link {

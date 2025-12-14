@@ -140,8 +140,15 @@
   const updateHexValueDisplay = (copyWithHashtag) => {
     const hexCells = document.querySelectorAll(".hex-value");
     hexCells.forEach((cell) => {
-      const raw = (cell.textContent || "").trim().replace(/^#/, "");
-      cell.textContent = copyWithHashtag ? `#${raw}` : raw;
+      const codeElement = cell.querySelector("code");
+      const targetElement = codeElement || cell;
+      const raw = (targetElement.textContent || "").trim().replace(/^#/, "");
+      const value = copyWithHashtag ? `#${raw}` : raw;
+      if (codeElement) {
+        codeElement.textContent = value;
+      } else {
+        cell.textContent = value;
+      }
     });
   };
 
@@ -167,7 +174,7 @@
         <span class="copy-indicator copy-indicator-check" aria-hidden="true">${checkIcon}</span>
       </td>`;
     }
-    return `<td class="hex-value">${prefix}${hexValue.toUpperCase()}</td>`;
+    return `<td class="hex-value"><code>${prefix}${hexValue.toUpperCase()}</code></td>`;
   }).join("");
 
   const prefersReducedMotion = () => window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
