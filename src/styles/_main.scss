@@ -423,6 +423,7 @@ pre {
 
 	.palette-controls-wrapper {
 		margin-bottom: 2.5rem;
+		opacity: 1;
 
 		&[hidden] {
 			display: none !important;
@@ -504,8 +505,13 @@ pre {
 
 		.palette-wrapper {
 			margin-bottom: 1.5rem;
-			transition: opacity 220ms ease, margin-bottom 220ms ease, height 220ms ease;
-			will-change: opacity, margin-bottom, height;
+			transition: opacity 220ms ease, margin-bottom 220ms ease, height 220ms ease, padding-top 220ms ease, padding-bottom 220ms ease;
+			will-change: opacity, margin-bottom, height, padding-top, padding-bottom;
+
+			&[data-entering="true"] {
+				opacity: 0;
+				visibility: hidden;
+			}
 
 			&-fading {
 				opacity: 0;
@@ -516,14 +522,19 @@ pre {
 				pointer-events: none;
 			}
 
-			.palette-name-header {
+			.palette-titlebar {
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
 				margin-bottom: 1.5rem;
 				text-align: left;
 
-				.palette-name-label {
+				&-controls {
+					display: flex;
+					gap: 1rem;
+				}
+
+				&-name {
 					text-align: left;
 					font-size: 1.3rem;
 					font-weight: 500;
@@ -531,7 +542,7 @@ pre {
 					text-align: left;
 				}
 
-				.palette-close-button {
+				&-action {
 					border: none;
 					background: transparent;
 					cursor: pointer;

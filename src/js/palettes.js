@@ -3,6 +3,7 @@
   let hexCellKeyHandlerAdded = false;
   let paletteCloseHandlerAdded = false;
   const closingPaletteStates = new WeakMap();
+  const EMPTY_STATE_SCROLL_DURATION = 500;
 
   const VALID_TINT_SHADE_COUNTS = [5, 10, 20];
   const DEFAULT_TINT_SHADE_COUNT = 10;
@@ -109,6 +110,15 @@
 
   const updateHashState = (colorsArray, settings = {}) => {
     const hashString = buildHashString(colorsArray, settings.copyWithHashtag, settings.tintShadeCount);
+    if (!hashString) {
+      if (window.history && typeof window.history.replaceState === "function") {
+        const baseUrl = `${window.location.pathname}${window.location.search}`;
+        window.history.replaceState(null, "", baseUrl);
+      } else if (window.location.hash) {
+        window.location.hash = "";
+      }
+      return;
+    }
     window.location.hash = hashString;
   };
 
@@ -191,6 +201,38 @@
     requestAnimationFrame(animation);
   };
 
+  const smoothScrollToPosition = (targetPosition, duration = 500) => {
+    const safeTarget = Math.max(0, Math.floor(targetPosition));
+    const startPosition = window.scrollY;
+    const distance = safeTarget - startPosition;
+    if (!distance) {
+      window.scrollTo(0, safeTarget);
+      return;
+    }
+    if (prefersReducedMotion()) {
+      window.scrollTo(0, safeTarget);
+      return;
+    }
+
+    let startTime = null;
+    const ease = (t, b, c, d) => {
+      t /= d / 2;
+      if (t < 1) return c / 2 * t * t + b;
+      t--;
+      return -c / 2 * (t * (t - 2) - 1) + b;
+    };
+
+    const animation = (currentTime) => {
+      if (startTime === null) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const run = ease(timeElapsed, startPosition, distance, duration);
+      window.scrollTo(0, run);
+      if (timeElapsed < duration) requestAnimationFrame(animation);
+    };
+
+    requestAnimationFrame(animation);
+  };
+
   const HEX_RE = /\b[0-9A-Fa-f]{3}\b|[0-9A-Fa-f]{6}\b/g;
 
   const parseColorValues = (colorValues) => {
@@ -230,7 +272,10 @@
       skipScroll = false,
       skipFocus = false,
       focusPickerContext = null,
-      focusCloseIndex = null
+      enteringPaletteIndex = null,
+      enteringFocusContext = null,
+      ensurePaletteInView = null,
+      ensurePaletteSkipDownwardScroll = false
     } = options;
 
     const colorInput = document.getElementById("color-values");
@@ -245,10 +290,145 @@
       if (rowType) selectorParts.push(`[data-row-type="${rowType}"]`);
       const focusTarget = tableContainer.querySelector(selectorParts.join(""));
       if (focusTarget && typeof focusTarget.focus === "function") {
-        focusTarget.focus();
+        try {
+          focusTarget.focus({ preventScroll: true });
+        } catch (error) {
+          focusTarget.focus();
+        }
         return true;
       }
       return false;
+    };
+
+    const animatePaletteEntry = (paletteIndex, focusContext = null) => {
+      if (!tableContainer || !Number.isInteger(paletteIndex) || prefersReducedMotion()) return;
+
+      const wrappers = Array.from(tableContainer.querySelectorAll(".palette-wrapper"));
+      const target = wrappers[paletteIndex];
+      if (!target) return;
+
+      const computedStyle = window.getComputedStyle(target);
+      const initialRect = target.getBoundingClientRect();
+      const finalHeight = initialRect.height;
+      if (!finalHeight) {
+        target.style.opacity = "1";
+        target.style.height = "";
+        target.style.marginBottom = "";
+        target.style.paddingTop = "";
+        target.style.paddingBottom = "";
+        target.style.overflow = "";
+        return;
+      }
+
+      const finalMarginBottom = computedStyle.marginBottom;
+      const finalPaddingTop = computedStyle.paddingTop;
+      const finalPaddingBottom = computedStyle.paddingBottom;
+
+      target.style.height = "0px";
+      target.style.marginBottom = "0px";
+      target.style.paddingTop = "0px";
+      target.style.paddingBottom = "0px";
+      target.style.opacity = "0";
+      target.style.visibility = "hidden";
+      target.style.overflow = "hidden";
+
+      const viewportHeight = window.innerHeight;
+      const viewportBottom = window.scrollY + viewportHeight;
+      const finalBottomAbsolute = initialRect.top + window.scrollY + finalHeight;
+      if (finalBottomAbsolute > viewportBottom) {
+        const scrollMargin = 16;
+        const desiredScrollTop = Math.max(0, finalBottomAbsolute - viewportHeight + scrollMargin);
+        if (desiredScrollTop > window.scrollY) {
+          smoothScrollToPosition(desiredScrollTop, 500);
+        }
+      }
+
+      target.getBoundingClientRect(); // flush layout before expanding
+
+      requestAnimationFrame(() => {
+        target.style.height = `${finalHeight}px`;
+        target.style.marginBottom = finalMarginBottom;
+        target.style.paddingTop = finalPaddingTop;
+        target.style.paddingBottom = finalPaddingBottom;
+      });
+
+      let layoutTransitionDone = false;
+      let handleTransitionEnd;
+      let fallbackTimeout;
+      const cleanup = () => {
+        target.style.height = "";
+        target.style.marginBottom = "";
+        target.style.paddingTop = "";
+        target.style.paddingBottom = "";
+        target.style.overflow = "";
+    target.style.opacity = "";
+    target.style.visibility = "";
+    target.removeAttribute("data-entering");
+    target.removeEventListener("transitionend", handleTransitionEnd);
+    clearTimeout(fallbackTimeout);
+  };
+
+      handleTransitionEnd = (event) => {
+        if (event.target !== target) return;
+
+        if (!layoutTransitionDone && event.propertyName === "height") {
+          layoutTransitionDone = true;
+          requestAnimationFrame(() => {
+            target.style.visibility = "visible";
+            target.style.opacity = "1";
+            if (focusContext) {
+              focusPickerCell(focusContext);
+            }
+          });
+          return;
+        }
+
+        if (layoutTransitionDone && event.propertyName === "opacity") {
+          cleanup();
+        }
+      };
+
+      fallbackTimeout = setTimeout(() => {
+          if (!layoutTransitionDone) {
+            layoutTransitionDone = true;
+            target.style.visibility = "visible";
+            target.style.opacity = "1";
+            if (focusContext) {
+              focusPickerCell(focusContext);
+            }
+            return;
+          }
+          cleanup();
+      }, 480);
+
+      target.addEventListener("transitionend", handleTransitionEnd);
+    };
+
+    const ensurePaletteVisible = (paletteIndex, skipDownwardScroll = false) => {
+      if (!tableContainer || !Number.isInteger(paletteIndex)) return;
+      const wrappers = Array.from(tableContainer.querySelectorAll(".palette-wrapper"));
+      const target = wrappers[paletteIndex];
+      if (!target) return;
+      const rect = target.getBoundingClientRect();
+      const absoluteTop = rect.top + window.scrollY;
+      const absoluteBottom = absoluteTop + rect.height;
+      const scrollMargin = 16;
+      const viewportTop = window.scrollY;
+      const viewportBottom = viewportTop + window.innerHeight;
+      let targetScroll = null;
+
+      if (absoluteTop < viewportTop + scrollMargin) {
+        targetScroll = absoluteTop - scrollMargin;
+      } else if (absoluteBottom > viewportBottom - scrollMargin) {
+        targetScroll = absoluteBottom - window.innerHeight + scrollMargin;
+      }
+
+      if (targetScroll !== null) {
+        if (skipDownwardScroll && targetScroll > window.scrollY) {
+          return;
+        }
+        smoothScrollToPosition(targetScroll, 400);
+      }
     };
 
     const applyNoPalettesState = () => {
@@ -269,14 +449,26 @@
         warningTimeout = null;
       }
 
+      smoothScrollToPosition(0, EMPTY_STATE_SCROLL_DURATION);
       const colorValuesInput = document.getElementById("color-values");
       if (colorValuesInput) {
         const len = colorValuesInput.value.length;
-        colorValuesInput.focus();
+        try {
+          colorValuesInput.focus({ preventScroll: true });
+        } catch (error) {
+          colorValuesInput.focus();
+        }
         colorValuesInput.setSelectionRange(len, len);
-      } else {
-        const makeButton = document.getElementById("make");
-        if (makeButton) makeButton.focus();
+        return;
+      }
+
+      const makeButton = document.getElementById("make");
+      if (makeButton) {
+        try {
+          makeButton.focus({ preventScroll: true });
+        } catch (error) {
+          makeButton.focus();
+        }
       }
     };
 
@@ -300,21 +492,59 @@
 
       // decide which palette's close button should get focus
       const nextFocusIndex = Math.min(paletteIndex, currentColors.length - 1);
+      const hasLowerPalette = paletteIndex < currentColors.length;
 
       if (window.palettes && typeof window.palettes.createTintsAndShades === "function") {
         window.palettes.createTintsAndShades(settings, false, {
           skipScroll: true,
-          skipFocus: true,        // still skip the generic focus logic
-          focusCloseIndex: nextFocusIndex
+          focusPickerContext: { colorIndex: nextFocusIndex, rowType: "shades" },
+          ensurePaletteInView: nextFocusIndex,
+          ensurePaletteSkipDownwardScroll: hasLowerPalette
+        });
+      }
+    };
+
+    const duplicatePaletteAtIndex = (paletteIndex) => {
+      const colorInputElement = document.getElementById("color-values");
+      if (!colorInputElement) return;
+
+      const currentColors = parseColorValues(colorInputElement.value) || [];
+      if (!currentColors.length) return;
+      if (paletteIndex < 0 || paletteIndex >= currentColors.length) return;
+
+      const updatedColors = currentColors.slice();
+      updatedColors.splice(paletteIndex + 1, 0, currentColors[paletteIndex]);
+      colorInputElement.value = updatedColors.join(" ");
+
+      if (window.palettes && typeof window.palettes.createTintsAndShades === "function") {
+        window.palettes.createTintsAndShades(settings, false, {
+          skipScroll: true,
+          skipFocus: true,
+          enteringPaletteIndex: paletteIndex + 1,
+          enteringFocusContext: { colorIndex: paletteIndex + 1, rowType: "shades" }
         });
       }
     };
 
     const requestPaletteRemoval = (paletteIndex, paletteWrapper) => {
       const currentColors = parseColorValues(colorInput.value) || [];
-      if (currentColors.length <= 1 || !paletteWrapper || prefersReducedMotion()) {
+      const reducedMotion = prefersReducedMotion();
+      const isLastPalette = currentColors.length === 1;
+
+      if (isLastPalette) {
         removePaletteAtIndex(paletteIndex);
         return;
+      }
+
+      if (!paletteWrapper || reducedMotion) {
+        removePaletteAtIndex(paletteIndex);
+        return;
+      }
+
+      const hasLowerPalette = paletteIndex + 1 < currentColors.length;
+      const adjacentPaletteIndex = hasLowerPalette ? paletteIndex + 1 : paletteIndex - 1;
+      if (!hasLowerPalette && Number.isInteger(adjacentPaletteIndex) && adjacentPaletteIndex >= 0) {
+        ensurePaletteVisible(adjacentPaletteIndex);
       }
 
       if (closingPaletteStates.has(paletteWrapper)) return;
@@ -391,14 +621,26 @@
         paletteRows.push(`<tr>${makeTableRowColors(calculatedTints, "RGBValues", colorPrefix)}</tr>`);
 
         const headerRow = buildTableHeader(tintShadeCount);
+        const plusIcon = getIconMarkup("icon-plus-template");
         const closeIcon = getIconMarkup("icon-x-template");
-        const removeButton = `<button type="button" class="palette-close-button" data-palette-index="${colorIndex}" aria-label="Remove ${paletteLabel} palette">${closeIcon}</button>`;
-        const paletteNameMarkup = `<div class="palette-name-header" role="heading" aria-level="2"><span class="palette-name-label">${paletteLabel}</span>${removeButton}</div>`;
-        const tableMarkup = `<div class="palette-wrapper" role="region" aria-label="${paletteLabel}">${paletteNameMarkup}<div class="palette-table"><table><thead>${headerRow}</thead><tbody>${paletteRows.join("")}</tbody></table></div></div>`;
+        const duplicateButton = `<button type="button" class="palette-duplicate-button palette-titlebar-action" data-palette-index="${colorIndex}" aria-label="Duplicate ${paletteLabel} palette">${plusIcon}</button>`;
+        const removeButton = `<button type="button" class="palette-close-button palette-titlebar-action" data-palette-index="${colorIndex}" aria-label="Remove ${paletteLabel} palette">${closeIcon}</button>`;
+        const paletteNameMarkup = `<div class="palette-titlebar" role="heading" aria-level="2"><span class="palette-titlebar-name">${paletteLabel}</span><div class="palette-titlebar-controls">${duplicateButton}${removeButton}</div></div>`;
+        const isEntering = Number.isInteger(enteringPaletteIndex) && enteringPaletteIndex === colorIndex;
+        const enteringAttr = isEntering ? ' data-entering="true"' : "";
+        const tableMarkup = `<div class="palette-wrapper" role="region" aria-label="${paletteLabel}"${enteringAttr}>${paletteNameMarkup}<div class="palette-table"><table><thead>${headerRow}</thead><tbody>${paletteRows.join("")}</tbody></table></div></div>`;
         paletteTables.push(tableMarkup);
       });
 
       tableContainer.innerHTML = paletteTables.join("");
+
+      if (Number.isInteger(enteringPaletteIndex)) {
+        animatePaletteEntry(enteringPaletteIndex, enteringFocusContext);
+      }
+
+      if (Number.isInteger(ensurePaletteInView)) {
+        ensurePaletteVisible(ensurePaletteInView, ensurePaletteSkipDownwardScroll);
+      }
 
       if (!hexCellKeyHandlerAdded) {
         tableContainer.addEventListener("keydown", (event) => {
@@ -414,6 +656,15 @@
 
       if (!paletteCloseHandlerAdded) {
         tableContainer.addEventListener("click", (event) => {
+          const duplicateTrigger = event.target && event.target.closest && event.target.closest(".palette-duplicate-button");
+          if (duplicateTrigger) {
+            const paletteIndex = parseInt(duplicateTrigger.getAttribute("data-palette-index"), 10);
+            if (!Number.isNaN(paletteIndex)) {
+              duplicatePaletteAtIndex(paletteIndex);
+            }
+            return;
+          }
+
           const button = event.target && event.target.closest && event.target.closest(".palette-close-button");
           if (!button) return;
 
@@ -447,16 +698,6 @@
         const pickerFocused = focusPickerContext && focusPickerCell(focusPickerContext);
 
         // if we have a target close button index, focus it after rebuild
-        if (!pickerFocused && typeof focusCloseIndex === "number") {
-          const nextCloseButton = tableContainer.querySelector(
-            `.palette-close-button[data-palette-index="${focusCloseIndex}"]`
-          );
-          if (nextCloseButton && typeof nextCloseButton.focus === "function") {
-            nextCloseButton.focus();
-            return;
-          }
-        }
-
         if (!pickerFocused && !skipFocus) {
           const activeStepButton = document.querySelector(".step-selector-option.is-active");
           if (activeStepButton) {
@@ -470,7 +711,7 @@
 
       updateHexValueDisplay(settings.copyWithHashtag);
     } else if (!firstTime) {
-      smoothScrollTo(document.body, 500);
+      smoothScrollToPosition(0, EMPTY_STATE_SCROLL_DURATION);
       tableContainer.innerHTML = "";
       updateHashState([], settings);
       warning.classList.add("visible");

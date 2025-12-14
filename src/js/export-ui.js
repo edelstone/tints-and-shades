@@ -193,7 +193,7 @@
         ctx.font = `${fontSize}px ${fontFamily}`;
 
         const isHeaderRow = row.classList && row.classList.contains("table-header");
-        const isNameRow = row.classList && row.classList.contains("palette-name-header");
+        const isNameRow = row.classList && row.classList.contains("palette-titlebar");
         const titleOffset = isHeaderRow ? 8 : 8;
 
         const textAlignValue = computed.textAlign || "left";
@@ -277,7 +277,7 @@
     };
 
     paletteWrappers.forEach((wrapper, index) => {
-      const paletteNameLabel = wrapper.querySelector(".palette-name-label");
+      const paletteNameLabel = wrapper.querySelector(".palette-titlebar-name");
       const paletteNameText = (paletteNameLabel && paletteNameLabel.textContent)
         ? paletteNameLabel.textContent.trim()
         : "";
@@ -290,7 +290,7 @@
 
       if (paletteNameText) {
         const nameRow = document.createElement("tr");
-        nameRow.className = "palette-name-header";
+        nameRow.className = "palette-titlebar";
         const nameCell = document.createElement("td");
         nameCell.setAttribute("colspan", `${columnCount}`);
         nameCell.textContent = paletteNameText;

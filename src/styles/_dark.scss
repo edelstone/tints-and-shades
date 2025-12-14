@@ -133,10 +133,10 @@ html.darkmode-active {
       }
 
       #tints-and-shades {
-        .palette-wrapper {
+        .palette-titlebar {
 
-          .palette-name-label,
-          .palette-close-button {
+          &-name,
+          &-action {
             color: $gray-100;
           }
         }
