@@ -312,6 +312,12 @@
       if (headerRow) {
         const clonedHeader = headerRow.cloneNode(true);
         copyRowStyles(headerRow, clonedHeader);
+        Array.from(clonedHeader.cells).forEach((cell) => {
+          cell.style.paddingBottom = "4px";
+          cell.style.paddingTop = "6px";
+          cell.style.verticalAlign = "bottom";
+          cell.style.lineHeight = "1.2";
+        });
         aggregatedTable.appendChild(clonedHeader);
       }
 
