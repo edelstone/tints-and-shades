@@ -35,9 +35,55 @@
     closeButton: null,
     tabs: [],
     output: null,
+    code: null,
     copyFab: null,
     copyStatus: null,
     imageButton: null,
+  };
+
+  const LANGUAGE_CLASSES = [
+    "language-none",
+    "language-css",
+    "language-json",
+    "language-javascript",
+    "language-markup"
+  ];
+
+  const getLanguageClassForFormat = (format) => {
+    switch (format) {
+      case "css":
+        return "language-css";
+      case "json":
+        return "language-json";
+      case "js":
+        return "language-javascript";
+      case "html":
+        return "language-markup";
+      default:
+        return "language-none";
+    }
+  };
+
+  const updateExportLanguage = (format, elements) => {
+    if (!elements.output) return;
+    const languageClass = getLanguageClassForFormat(format);
+    LANGUAGE_CLASSES.forEach((className) => {
+      elements.output.classList.remove(className);
+      if (elements.code) {
+        elements.code.classList.remove(className);
+      }
+    });
+    elements.output.classList.add(languageClass);
+    if (elements.code) {
+      elements.code.classList.add(languageClass);
+    }
+  };
+
+  const highlightExportCode = (codeElement) => {
+    if (!codeElement || typeof window === "undefined") return;
+    const prism = window.Prism;
+    if (!prism || typeof prism.highlightElement !== "function") return;
+    prism.highlightElement(codeElement);
   };
 
   let pageScrollY = 0;
@@ -586,7 +632,12 @@
   const updateExportOutput = (state, elements) => {
     if (!elements.output) return;
     const text = getExportText(state);
-    elements.output.textContent = text;
+    if (elements.code) {
+      elements.code.textContent = text;
+      highlightExportCode(elements.code);
+    } else {
+      elements.output.textContent = text;
+    }
     elements.output.setAttribute("aria-labelledby", `export-tab-${state.format}`);
   };
 
@@ -608,6 +659,7 @@
         tab.setAttribute("tabindex", isActive ? "0" : "-1");
       });
     }
+    updateExportLanguage(state.format, elements);
     updateExportCornerRadius(state, elements);
     updateExportOutput(state, elements);
     resetExportScroll(elements);
@@ -778,6 +830,9 @@
     exportElements.closeButton = document.getElementById("export-close");
     exportElements.tabs = Array.from(document.querySelectorAll(".export-tab"));
     exportElements.output = document.getElementById("export-output");
+    exportElements.code = exportElements.output
+      ? exportElements.output.querySelector(".export-output-code")
+      : null;
     exportElements.copyFab = document.getElementById("export-copy");
     exportElements.copyStatus = document.getElementById("export-copy-status");
     exportElements.imageButton = document.getElementById("export-image");

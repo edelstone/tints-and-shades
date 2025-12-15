@@ -3,6 +3,18 @@
   const root = document.documentElement;
   const toggle = document.getElementById("darkmode-toggle");
   const toggleText = document.getElementById("darkmode-text-toggle");
+  const prismLightThemeLink = document.getElementById("prism-light-theme");
+  const prismDarkThemeLink = document.getElementById("prism-dark-theme");
+
+  const updatePrismThemeLinks = (isDark) => {
+    if (typeof isDark !== "boolean") return;
+    if (prismLightThemeLink) {
+      prismLightThemeLink.disabled = isDark;
+    }
+    if (prismDarkThemeLink) {
+      prismDarkThemeLink.disabled = !isDark;
+    }
+  };
 
   const getStoredTheme = () => {
     try {
@@ -23,6 +35,7 @@
   const applyTheme = (theme, persist = false) => {
     const isDark = theme === "dark";
     root.classList.toggle("darkmode-active", isDark);
+    updatePrismThemeLinks(isDark);
     if (toggle) {
       toggle.setAttribute("aria-pressed", String(isDark));
       toggle.dataset.themeState = isDark ? "dark" : "light";

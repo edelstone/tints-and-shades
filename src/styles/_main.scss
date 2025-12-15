@@ -51,11 +51,6 @@ a {
 	}
 }
 
-pre,
-code {
-	font-family: $monospace;
-}
-
 .header {
 	display: flex;
 	justify-content: center;
@@ -795,7 +790,6 @@ code {
 	&.export-dialog {
 		.export-tabs {
 			display: flex;
-			z-index: 1;
 
 			.export-tab {
 				background: transparent;
@@ -821,26 +815,40 @@ code {
 			flex: 1 1 auto;
 			min-height: 0;
 
-			.export-output-wrap {
-				position: relative;
+			.export-output {
+				margin: 0;
+				padding: 1.8rem;
 				flex: 1 1 auto;
-				display: flex;
-				min-height: 0;
+				border-radius: $radius;
+				background-color: $gray-50;
 
-				.export-output {
-					margin: 0;
-					padding: 1.6rem;
-					flex: 1 1 auto;
+				&.is-first-tab-active {
+					border-radius: 0 $radius $radius $radius;
+				}
+
+				&-code {
+					display: block;
+					width: 100%;
+					text-shadow: none;
 					font-size: 1.4rem;
-					line-height: 1.5;
-					text-align: left;
-					border-radius: $radius;
-					background: $gray-50;
-					overflow: auto;
-					white-space: pre-wrap;
+					font-family: $monospace;
+					color: $black;
+					margin: -2.7rem 0 -5.4rem;
 
-					&.is-first-tab-active {
-						border-radius: 0 $radius $radius $radius;
+					html:not(.darkmode-active) & {
+
+						.token.selector,
+						.token.string {
+							color: #4f7300;
+						}
+
+						.token.comment {
+							color: #5e6f80;
+						}
+
+						.token.operator {
+							background: none;
+						}
 					}
 				}
 			}
@@ -868,11 +876,12 @@ code {
 				line-height: 1.5;
 				padding: 1.2rem 1.4rem;
 				border-radius: $radius;
-				border: 1px solid $gray-200;
+				border: none;
 				background: $gray-50;
 				font-family: $monospace;
 				resize: none;
 				min-height: 4.5rem;
+				color: $black;
 			}
 		}
 
@@ -991,6 +1000,7 @@ code {
 		font-size: 90%;
 		padding: .2rem .6rem;
 		border-radius: $radius;
+		font-family: $monospace;
 	}
 
 	.anchorjs-link {

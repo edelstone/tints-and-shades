@@ -154,7 +154,7 @@ html.darkmode-active {
 
           &.is-active {
             border-color: transparent;
-            color: $gray-50;
+            color: $gray-100;
             background-color: $black-transparent;
           }
         }
@@ -163,14 +163,18 @@ html.darkmode-active {
           .export-output {
             border-color: transparent;
             background: $black-transparent;
+
+            &-code {
+              color: $gray-100;
+            }
           }
         }
       }
 
       &.share-dialog {
         .share-input {
-          border-color: $black-transparent;
           background: $black-transparent;
+          color: $gray-100;
         }
       }
     }
