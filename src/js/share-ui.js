@@ -55,9 +55,16 @@
     });
   };
 
+  const resizeShareInputHeight = () => {
+    if (!shareElements.input) return;
+    shareElements.input.style.height = "auto";
+    shareElements.input.style.height = `${shareElements.input.scrollHeight}px`;
+  };
+
   const updateShareLinkValue = () => {
     if (!shareElements.input) return;
     shareElements.input.value = window.location.href;
+    resizeShareInputHeight();
   };
 
   const copyShareLink = async () => {
@@ -139,7 +146,10 @@
     if (shareElements.openButton) {
       shareElements.openButton.setAttribute("aria-expanded", "true");
     }
-    requestAnimationFrame(() => focusInput());
+    requestAnimationFrame(() => {
+      resizeShareInputHeight();
+      focusInput();
+    });
   };
 
   const closeShareModal = () => {

@@ -859,15 +859,19 @@ code {
 			flex-direction: column;
 			align-items: flex-end;
 			gap: 2rem;
+			margin-bottom: .5rem;
 
 			.share-input {
 				width: 100%;
 				font-size: 1.4rem;
+				line-height: 1.5;
 				padding: 1.2rem 1.4rem;
 				border-radius: $radius;
 				border: 1px solid $gray-200;
 				background: $gray-50;
 				font-family: $monospace;
+				resize: none;
+				min-height: 4.5rem;
 			}
 		}
 
