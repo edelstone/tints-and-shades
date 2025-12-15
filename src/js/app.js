@@ -52,7 +52,8 @@ const initializeSettings = (initialUrlState = {}) => {
 
   const colorValuesElement = document.getElementById("color-values");
   const hashtagToggle = document.getElementById("copy-with-hashtag-toggle");
-  const tintShadeButtons = Array.from(document.querySelectorAll(".step-selector-option"));
+  const stepSelector = document.querySelector(".inline-actions .step-selector");
+  const tintShadeButtons = stepSelector ? Array.from(stepSelector.querySelectorAll(".step-selector-option")) : [];
 
   if (hashtagToggle) {
     updateHashtagToggle(hashtagToggle, settings.copyWithHashtag);
@@ -73,7 +74,7 @@ const initializeSettings = (initialUrlState = {}) => {
     });
   }
 
-  if (tintShadeButtons.length) {
+    if (tintShadeButtons.length) {
     if (!tintShadeOptions.includes(settings.tintShadeCount)) {
       settings.tintShadeCount = 10;
     }

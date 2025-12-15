@@ -764,7 +764,7 @@
     exportElements.closeButton = document.getElementById("export-close");
     exportElements.tabs = Array.from(document.querySelectorAll(".export-tab"));
     exportElements.output = document.getElementById("export-output");
-    exportElements.copyFab = document.getElementById("export-copy-fab");
+    exportElements.copyFab = document.getElementById("export-copy");
     exportElements.imageButton = document.getElementById("export-image");
 
     if (exportElements.openButton) {

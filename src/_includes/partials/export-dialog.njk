@@ -1,7 +1,7 @@
-<dialog id="export-dialog" class="export-dialog" aria-labelledby="export-title" aria-modal="true">
-	<div class="export-header">
-		<h2 id="export-title" class="export-title">Export palettes</h2>
-		<button id="export-close" class="export-close" type="button" aria-label="Close export dialog">
+<dialog id="export-dialog" class="utility-dialog export-dialog" aria-labelledby="export-title" aria-modal="true">
+	<div class="utility-dialog-header">
+		<h2 id="export-title" class="utility-dialog-title">Export palettes</h2>
+		<button id="export-close" class="utility-dialog-close" type="button" aria-label="Close export dialog">
 			<span aria-hidden="true">
 				{% include "partials/icons/x.njk" %}
 			</span>
@@ -26,7 +26,7 @@
 	</div>
 	</div>
 	<div class="export-copy">
-		<button id="export-copy-fab" class="export-copy-button" type="button" aria-label="Copy export">
+		<button id="export-copy" class="utility-copy-button export-copy-button" type="button" aria-label="Copy export">
 			<span class="copy-indicator copy-indicator-copy" aria-hidden="true">
 				{% include "partials/icons/copy.njk" %}
 			</span>

@@ -381,11 +381,12 @@ code {
 	display: grid;
 	place-items: center;
 	position: absolute;
+	top: 50%;
+	left: 50%;
 	pointer-events: none;
 	transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
 	will-change: opacity, transform;
 	color: $black;
-	inset: 0;
 
 	svg {
 		width: 2rem;
@@ -425,7 +426,8 @@ code {
 
 		.palette-controls {
 			display: flex;
-			justify-content: flex-start;
+			flex-wrap: wrap;
+			justify-content: space-between;
 			gap: 1.2rem;
 
 			.step-selector {
@@ -440,6 +442,10 @@ code {
 					font-size: 1.6rem;
 					font-weight: 500;
 					cursor: pointer;
+
+					@include breakpoint('small') {
+						width: 4rem;
+					}
 
 					&.is-active {
 						background: $gray-200;
@@ -460,10 +466,22 @@ code {
 				}
 			}
 
-			.exports {
-				margin-left: auto;
+			.inline-actions {
+				display: flex;
+				gap: 1.2rem;
+
+				@include breakpoint('small') {
+					gap: .8rem;
+				}
+			}
+
+			.external-actions {
 				display: inline-flex;
 				gap: 1.2rem;
+
+				@include breakpoint('small') {
+					gap: .8rem;
+				}
 			}
 
 			.action-button {
@@ -474,6 +492,10 @@ code {
 				background: $gray-50;
 				color: $black;
 				display: inline-flex;
+
+				@include breakpoint('small') {
+					padding: .75rem;
+				}
 
 				.icon {
 					width: 2rem;
@@ -570,7 +592,7 @@ code {
 
 					td.hex-value {
 						text-align: center;
-						padding: .25rem 0 2rem;
+						padding: .5rem 0 2rem;
 						text-transform: lowercase;
 						line-height: normal;
 
@@ -598,8 +620,6 @@ code {
 							border-radius: $radius;
 							box-shadow: $shadow-main;
 							background-color: $white;
-							top: 50%;
-							left: 50%;
 							transform: translate(-50%, -45%);
 
 							&-check {
@@ -627,7 +647,6 @@ code {
 						&.copied {
 							.copy-indicator-check {
 								opacity: 1;
-								color: $success;
 							}
 
 							.copy-indicator-copy {
@@ -654,7 +673,7 @@ code {
 	}
 }
 
-.export-dialog {
+.utility-dialog {
 	position: relative;
 	width: min(50rem, 100vw);
 	max-height: 60rem;
@@ -667,144 +686,78 @@ code {
 	overflow: hidden;
 	transform-origin: center;
 
-	.export-header {
+	&-header {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 		margin-bottom: 2rem;
 		padding: .5rem 0;
-
-		.export-title {
-			margin: 0;
-			font-size: 2rem;
-			font-weight: 500;
-		}
-
-		.export-close {
-			border: none;
-			background: transparent;
-			cursor: pointer;
-			color: $black;
-			padding: 0;
-
-			span {
-				display: flex;
-			}
-
-			svg {
-				width: 2.8rem;
-				height: 2.8rem;
-			}
-		}
 	}
 
-	.export-tabs {
-		display: flex;
-		z-index: 1;
-
-		.export-tab {
-			background: transparent;
-			color: $gray-400;
-			padding: .8rem 1.6rem;
-			cursor: pointer;
-			font-weight: 500;
-			border: 1px solid transparent;
-			border-radius: $radius $radius 0 0;
-			border-bottom: none;
-			font-size: 1.6rem;
-			user-select: none;
-
-			&.is-active {
-				color: $black;
-				background-color: $gray-50;
-			}
-		}
+	&-title {
+		margin: 0;
+		font-size: 2rem;
+		font-weight: 500;
 	}
 
-	.export-body {
-		display: flex;
-		flex: 1 1 auto;
-		min-height: 0;
+	&-close {
+		border: none;
+		background: transparent;
+		cursor: pointer;
+		color: $black;
+		padding: 0;
 
-		.export-output-wrap {
-			position: relative;
-			flex: 1 1 auto;
+		span {
 			display: flex;
-			min-height: 0;
+		}
 
-			.export-output {
-				margin: 0;
-				padding: 1.6rem;
-				flex: 1 1 auto;
-				font-size: 1.4rem;
-				line-height: 1.5;
-				text-align: left;
-				border-radius: $radius;
-				background: $gray-50;
-				overflow: auto;
-				white-space: pre-wrap;
-				word-break: break-word;
-
-				&.is-first-tab-active {
-					border-radius: 0 $radius $radius $radius;
-				}
-			}
+		svg {
+			width: 2.8rem;
+			height: 2.8rem;
 		}
 	}
 
-	.export-copy {
-		position: absolute;
-		right: 3rem;
-		bottom: 3rem;
+	.utility-copy-button {
+		width: 5rem;
+		height: 5rem;
+		padding: 0;
+		border-radius: 50%;
+		border: none;
+		background: $white;
+		color: $black;
+		cursor: pointer;
+		box-shadow: $shadow-main;
+		position: relative;
+		transition: background-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
 
-		.export-copy-button {
-			width: 5rem;
-			height: 5rem;
-			padding: 0;
-			border-radius: 50%;
-			border: none;
-			background: $white;
-			color: $black;
-			cursor: pointer;
-			box-shadow: $shadow-main;
-			transition: background-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			position: relative;
+		.copy-indicator-copy {
+			opacity: 1;
+			transform: translate(-50%, -50%) scale(1);
+		}
 
+		.copy-indicator-check {
+			opacity: 0;
+			transform: translate(-50%, -50%) scale(1.2);
+		}
+
+		&:active {
+			opacity: .75;
+			transform: scale(.9);
+		}
+
+		&[disabled] {
+			pointer-events: none;
+		}
+
+		&.copied {
 			.copy-indicator-copy {
-				opacity: 1;
-				transform: scale(1);
+				opacity: 0;
+				transform: translate(-50%, -50%) scale(.8);
 			}
 
 			.copy-indicator-check {
-				opacity: 0;
-				transform: scale(1.2);
-			}
-
-			&:active {
-				opacity: .75;
-				transform: scale(.9);
-			}
-
-			&[disabled] {
-				pointer-events: none;
-			}
-
-			&.copied {
-				background: $white;
-				color: $black;
-
-				.copy-indicator-copy {
-					opacity: 0;
-					transform: scale(.8);
-				}
-
-				.copy-indicator-check {
-					opacity: 1;
-					transform: scale(1);
-				}
+				opacity: 1;
+				transform: translate(-50%, -50%) scale(1);
 			}
 		}
 	}
@@ -837,6 +790,93 @@ code {
 
 		&::backdrop {
 			animation: export-backdrop-fade 150ms ease-in reverse forwards;
+		}
+	}
+
+	&.export-dialog {
+		.export-tabs {
+			display: flex;
+			z-index: 1;
+
+			.export-tab {
+				background: transparent;
+				color: $gray-400;
+				padding: .8rem 1.6rem;
+				cursor: pointer;
+				font-weight: 500;
+				border: 1px solid transparent;
+				border-radius: $radius $radius 0 0;
+				border-bottom: none;
+				font-size: 1.6rem;
+				user-select: none;
+
+				&.is-active {
+					color: $black;
+					background-color: $gray-50;
+				}
+			}
+		}
+
+		.export-body {
+			display: flex;
+			flex: 1 1 auto;
+			min-height: 0;
+
+			.export-output-wrap {
+				position: relative;
+				flex: 1 1 auto;
+				display: flex;
+				min-height: 0;
+
+				.export-output {
+					margin: 0;
+					padding: 1.6rem;
+					flex: 1 1 auto;
+					font-size: 1.4rem;
+					line-height: 1.5;
+					text-align: left;
+					border-radius: $radius;
+					background: $gray-50;
+					overflow: auto;
+					white-space: pre-wrap;
+					word-break: break-word;
+
+					&.is-first-tab-active {
+						border-radius: 0 $radius $radius $radius;
+					}
+				}
+			}
+		}
+
+		.export-copy {
+			position: absolute;
+			right: 3rem;
+			bottom: 3rem;
+			display: flex;
+		}
+	}
+
+	&.share-dialog {
+		.share-body {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-end;
+			gap: 2rem;
+
+			.share-input {
+				width: 100%;
+				font-size: 1.4rem;
+				padding: 1.2rem 1.4rem;
+				border-radius: $radius;
+				border: 1px solid $gray-200;
+				background: $gray-50;
+				font-family: $monospace;
+			}
+		}
+
+		&[open] {
+			height: fit-content;
+			width: min(60rem, 100vw)
 		}
 	}
 }
@@ -911,10 +951,10 @@ code {
 
 @media (prefers-reduced-motion: reduce) {
 
-	.export-dialog.is-opening,
-	.export-dialog.is-closing,
-	.export-dialog.is-opening::backdrop,
-	.export-dialog.is-closing::backdrop {
+	.utility-dialog.is-opening,
+	.utility-dialog.is-closing,
+	.utility-dialog.is-opening::backdrop,
+	.utility-dialog.is-closing::backdrop {
 		animation: none;
 	}
 }

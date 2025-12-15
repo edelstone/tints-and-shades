@@ -139,28 +139,39 @@ html.darkmode-active {
       }
     }
 
-    .export-dialog {
+    .utility-dialog {
       background: $gray-600;
       color: $gray-100;
       border-color: $gray-600;
 
-      .export-close {
+      &-close {
         color: $gray-100;
       }
 
-      .export-tab {
-        color: $gray-300;
+      &.export-dialog {
+        .export-tab {
+          color: $gray-300;
 
-        &.is-active {
-          border-color: transparent;
-          color: $gray-50;
-          background-color: $black-transparent;
+          &.is-active {
+            border-color: transparent;
+            color: $gray-50;
+            background-color: $black-transparent;
+          }
+        }
+
+        .export-body {
+          .export-output {
+            border-color: transparent;
+            background: $black-transparent;
+          }
         }
       }
 
-      .export-body .export-output {
-        border-color: transparent;
-        background: $black-transparent;
+      &.share-dialog {
+        .share-input {
+          border-color: $black-transparent;
+          background: $black-transparent;
+        }
       }
     }
 

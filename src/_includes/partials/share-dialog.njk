@@ -1,0 +1,22 @@
+<dialog id="share-dialog" class="utility-dialog share-dialog" aria-labelledby="share-title" aria-modal="true">
+	<div class="utility-dialog-header">
+		<h2 id="share-title" class="utility-dialog-title">Share link</h2>
+		<button id="share-close" class="utility-dialog-close" type="button" aria-label="Close share dialog">
+			<span aria-hidden="true">
+				{% include "partials/icons/x.njk" %}
+			</span>
+		</button>
+	</div>
+	<div class="share-body">
+		<label class="sr-only" for="share-link-input">Shareable link</label>
+		<input id="share-link-input" class="share-input" type="text" readonly value="">
+		<button id="share-copy" class="utility-copy-button share-copy-button" type="button" aria-label="Copy share link">
+			<span class="copy-indicator copy-indicator-copy" aria-hidden="true">
+				{% include "partials/icons/copy.njk" %}
+			</span>
+			<span class="copy-indicator copy-indicator-check" aria-hidden="true">
+				{% include "partials/icons/check.njk" %}
+			</span>
+		</button>
+	</div>
+</dialog>

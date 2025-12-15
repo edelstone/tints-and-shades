@@ -29,16 +29,21 @@ main: true
 <div class="palettes">
 	<div id="palette-controls-wrapper" class="palette-controls-wrapper" hidden>
 		<div class="palette-controls" id="scroll-top">
-			<div class="step-selector" role="group" aria-label="Steps per side">
-				<button type="button" class="step-selector-option" data-count="5" aria-pressed="false" tabindex="-1">5</button>
-				<button type="button" class="step-selector-option is-active" data-count="10" aria-pressed="true" tabindex="0">10</button>
-				<button type="button" class="step-selector-option" data-count="20" aria-pressed="false" tabindex="-1">20</button>
+			<div class="inline-actions">
+				<div class="step-selector" role="group" aria-label="Steps per side">
+					<button type="button" class="step-selector-option" data-count="5" aria-pressed="false" tabindex="-1">5</button>
+					<button type="button" class="step-selector-option is-active" data-count="10" aria-pressed="true" tabindex="0">10</button>
+					<button type="button" class="step-selector-option" data-count="20" aria-pressed="false" tabindex="-1">20</button>
+				</div>
+				<button id="copy-with-hashtag-toggle" class="action-button action-button-toggle" type="button" aria-pressed="false">
+					{% include "partials/icons/hash.njk" %}
+					<span class="sr-only">Show hashtags</span>
+				</button>
 			</div>
-			<button id="copy-with-hashtag-toggle" class="action-button action-button-toggle" type="button" aria-pressed="false">
-				{% include "partials/icons/hash.njk" %}
-				<span class="sr-only">Show hashtags</span>
-			</button>
-			<div class="exports">
+			<div class="external-actions">
+				<button id="share-open" class="action-button" type="button" aria-expanded="false" aria-controls="share-dialog" aria-label="Share palette link">
+					{% include "partials/icons/share.njk" %}
+				</button>
 				<button id="export-image" class="action-button" type="button" aria-label="Download palette image">
 					{% include "partials/icons/photo.njk" %}
 				</button>
@@ -54,3 +59,4 @@ main: true
 </div>
 
 {% include "partials/export-dialog.njk" %}
+{% include "partials/share-dialog.njk" %}
