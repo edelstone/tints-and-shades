@@ -259,7 +259,6 @@ code {
 			font-size: 2rem;
 			line-height: 2.4rem;
 			display: block;
-			pointer-events: none;
 			padding: .75rem 1.5rem;
 			border-radius: $radius;
 			transition: opacity 200ms linear, bottom 250ms ease-out, visibility 0s linear 250ms;
@@ -281,7 +280,6 @@ code {
 				opacity: 1;
 				visibility: visible;
 				bottom: .2rem;
-				pointer-events: auto;
 				transition: opacity 200ms linear, bottom 250ms ease-out, visibility 0s;
 			}
 		}
@@ -839,7 +837,6 @@ code {
 					background: $gray-50;
 					overflow: auto;
 					white-space: pre-wrap;
-					word-break: break-word;
 
 					&.is-first-tab-active {
 						border-radius: 0 $radius $radius $radius;
@@ -898,7 +895,6 @@ code {
 	padding: 0;
 	margin: -1px;
 	overflow: hidden;
-	clip: rect(0, 0, 0, 0);
 	clip-path: inset(50%);
 	white-space: nowrap;
 	border: 0;
@@ -914,7 +910,6 @@ code {
 		height: auto;
 		margin: 0;
 		overflow: visible;
-		clip: auto;
 		clip-path: none;
 		white-space: normal;
 		display: inline-block;
