@@ -4,7 +4,8 @@
     modal: document.getElementById("share-dialog"),
     closeButton: document.getElementById("share-close"),
     input: document.getElementById("share-link-input"),
-    copyButton: document.getElementById("share-copy")
+    copyButton: document.getElementById("share-copy"),
+    copyStatus: document.getElementById("share-copy-status")
   };
 
   let pageScrollY = 0;
@@ -95,6 +96,13 @@
           btn.disabled = false;
           btn.setAttribute("aria-disabled", "false");
         }, 1500);
+      }
+      const status = shareElements.copyStatus;
+      if (status) {
+        status.textContent = "Copied share link to clipboard.";
+        setTimeout(() => {
+          status.textContent = "";
+        }, 4500);
       }
     } catch (err) {
       console.error(err);

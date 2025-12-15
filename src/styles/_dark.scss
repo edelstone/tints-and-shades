@@ -119,12 +119,12 @@ html.darkmode-active {
           &:active {
             background: $black;
           }
-        }
 
-        .action-button-toggle.is-active {
-          border-color: $gray-400;
-          box-shadow: inset 0 0 0 1px $gray-400;
-          background: $black;
+          &.is-active {
+            border-color: $gray-400;
+            box-shadow: inset 0 0 0 1px $gray-400;
+            background: $black;
+          }
         }
       }
 

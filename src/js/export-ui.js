@@ -36,6 +36,7 @@
     tabs: [],
     output: null,
     copyFab: null,
+    copyStatus: null,
     imageButton: null,
   };
 
@@ -651,6 +652,13 @@
           btn.setAttribute("aria-disabled", "false");
         }, 1500);
       }
+      const status = elements.copyStatus;
+      if (status) {
+        status.textContent = "Copied export output to clipboard.";
+        setTimeout(() => {
+          status.textContent = "";
+        }, 4500);
+      }
     } catch (err) {
       console.error(err);
     }
@@ -771,6 +779,7 @@
     exportElements.tabs = Array.from(document.querySelectorAll(".export-tab"));
     exportElements.output = document.getElementById("export-output");
     exportElements.copyFab = document.getElementById("export-copy");
+    exportElements.copyStatus = document.getElementById("export-copy-status");
     exportElements.imageButton = document.getElementById("export-image");
 
     if (exportElements.openButton) {

@@ -51,7 +51,7 @@ const initializeSettings = (initialUrlState = {}) => {
   }
 
   const colorValuesElement = document.getElementById("color-values");
-  const hashtagToggle = document.getElementById("copy-with-hashtag-toggle");
+  const hashtagToggle = document.getElementById("show-hide-hashtags");
   const stepSelector = document.querySelector(".inline-actions .step-selector");
   const tintShadeButtons = stepSelector ? Array.from(stepSelector.querySelectorAll(".step-selector-option")) : [];
 
@@ -154,9 +154,9 @@ document.addEventListener("DOMContentLoaded", () => {
     console.error("Element with id 'color-entry-form' not found.");
   }
 
-  const copyWithHashtagToggle = document.getElementById("copy-with-hashtag-toggle");
+  const copyWithHashtagToggle = document.getElementById("show-hide-hashtags");
   if (!copyWithHashtagToggle) {
-    console.error("Element with id 'copy-with-hashtag-toggle' not found.");
+    console.error("Element with id 'show-hide-hashtags' not found.");
   }
 });
 
