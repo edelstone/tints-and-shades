@@ -106,6 +106,7 @@ We use these amazing open-source libraries across the project:
 -   [clipboard.js](https://github.com/zenorocha/clipboard.js)
 -   [Color Names](https://github.com/meodai/color-names)
 -   [Eleventy](https://github.com/11ty/eleventy)
+-   [Prism](https://github.com/PrismJS/prism)
 
 Many thanks to [Joel Carr](https://github.com/joelcarr), [Sebastian Gutierrez](https://github.com/pepas24), [Tim Scalzo](https://github.com/TJScalzo), [Aman Agarwal](https://github.com/AmanAgarwal041), [Aleksandr Hovhannisyan](https://github.com/AleksandrHovhannisyan), [Shubhendu Sen](https://github.com/Sen-442b), and [Luis Escarrilla](https://github.com/latesc) for their valuable contributions.
 
