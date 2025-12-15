@@ -36,6 +36,6 @@
   "dependencies": {
     "@melloware/coloris": "^0.25.0",
     "color-name-list": "^14.11.0",
-    "prismjs": "^1.29.0"
+    "prismjs": "^1.30.0"
   }
 }
