@@ -79,6 +79,11 @@ html.darkmode-active {
       }
     }
 
+    [data-tooltip]::after {
+      background: $black;
+      color: $gray-100;
+    }
+
     #clr-picker {
       background-color: $black;
 

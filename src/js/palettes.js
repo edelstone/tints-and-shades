@@ -662,9 +662,9 @@
         const filterIcon = getIconMarkup("icon-circle-half-2-template");
         const plusIcon = getIconMarkup("icon-plus-template");
         const closeIcon = getIconMarkup("icon-x-template");
-        const complementButton = `<button type="button" class="palette-complement-button palette-titlebar-action" data-palette-index="${colorIndex}" aria-label="Add a complementary palette for ${paletteLabel}">${filterIcon}</button>`;
-        const duplicateButton = `<button type="button" class="palette-duplicate-button palette-titlebar-action" data-palette-index="${colorIndex}" aria-label="Duplicate ${paletteLabel} palette">${plusIcon}</button>`;
-        const removeButton = `<button type="button" class="palette-close-button palette-titlebar-action" data-palette-index="${colorIndex}" aria-label="Remove ${paletteLabel} palette">${closeIcon}</button>`;
+        const complementButton = `<button type="button" class="palette-complement-button palette-titlebar-action" data-tooltip="Add complementary" data-palette-index="${colorIndex}" aria-label="Add a complementary palette for ${paletteLabel}">${filterIcon}</button>`;
+        const duplicateButton = `<button type="button" class="palette-duplicate-button palette-titlebar-action" data-tooltip="Duplicate" data-palette-index="${colorIndex}" aria-label="Duplicate ${paletteLabel} palette">${plusIcon}</button>`;
+        const removeButton = `<button type="button" class="palette-close-button palette-titlebar-action" data-tooltip="Remove" data-palette-index="${colorIndex}" aria-label="Remove ${paletteLabel} palette">${closeIcon}</button>`;
         const paletteNameMarkup = `<div class="palette-titlebar" role="heading" aria-level="2"><span class="palette-titlebar-name">${paletteLabel}</span><div class="palette-titlebar-controls">${complementButton}${duplicateButton}${removeButton}</div></div>`;
         const isEntering = Number.isInteger(enteringPaletteIndex) && enteringPaletteIndex === colorIndex;
         const enteringAttr = isEntering ? ' data-entering="true"' : "";

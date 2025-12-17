@@ -396,6 +396,62 @@ a {
 	}
 }
 
+[data-tooltip] {
+	position: relative;
+	overflow: visible;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	[data-tooltip]::after {
+		content: attr(data-tooltip);
+		position: absolute;
+		bottom: calc(100% + .6rem);
+		left: 50%;
+		background: $gray-600;
+		color: $white;
+		padding: .8rem 1.2rem;
+		border-radius: $radius;
+		font-size: 1.4rem;
+		font-weight: 400;
+		line-height: 1.4;
+		z-index: 30;
+		pointer-events: none;
+		will-change: opacity, transform;
+		max-width: 20rem;
+		width: max-content;
+		white-space: normal;
+		overflow-wrap: anywhere;
+		opacity: 0;
+		transform: translate(-50%, .5rem);
+		transition: opacity 150ms ease, transform 150ms ease;
+		transition-delay: 0ms;
+	}
+
+	[data-tooltip]:hover::after {
+		opacity: 1;
+		transform: translate(-50%, 0);
+		transition-delay: 500ms;
+	}
+
+	[data-tooltip]:focus-visible::after {
+		opacity: 1;
+		transform: translate(-50%, 0);
+		transition: none;
+		transition-delay: 0ms;
+	}
+
+	[data-tooltip][data-tooltip-immediate]::after {
+		transition: none;
+		transition-delay: 0ms;
+	}
+}
+
+@include breakpoint('large') {
+	[data-tooltip]::after {
+		display: none;
+	}
+}
+
 #clr-picker {
 	box-shadow: $shadow-main;
 
@@ -544,12 +600,16 @@ a {
 				}
 
 				&-name {
-					text-align: left;
 					font-size: 1.4rem;
 					line-height: normal;
 					font-weight: 500;
 					color: $black;
-					text-align: left;
+					flex: 1 1 0;
+					min-width: 0;
+					margin-right: 1.2rem;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
 				}
 
 				&-action {
