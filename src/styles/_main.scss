@@ -850,6 +850,7 @@ a {
 	&.export-dialog {
 		.export-tabs {
 			display: flex;
+			z-index: 1;
 
 			.export-tab {
 				background: transparent;
