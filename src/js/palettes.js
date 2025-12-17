@@ -307,12 +307,8 @@
       return false;
     };
 
-    const animatePaletteEntry = (paletteIndex, focusContext = null) => {
-      if (!tableContainer || !Number.isInteger(paletteIndex) || prefersReducedMotion()) return;
-
-      const wrappers = Array.from(tableContainer.querySelectorAll(".palette-wrapper"));
-      const target = wrappers[paletteIndex];
-      if (!target) return;
+    const animatePaletteElement = (target, focusContext = null) => {
+      if (!target || prefersReducedMotion()) return;
 
       const computedStyle = window.getComputedStyle(target);
       const initialRect = target.getBoundingClientRect();
@@ -368,12 +364,12 @@
         target.style.paddingTop = "";
         target.style.paddingBottom = "";
         target.style.overflow = "";
-    target.style.opacity = "";
-    target.style.visibility = "";
-    target.removeAttribute("data-entering");
-    target.removeEventListener("transitionend", handleTransitionEnd);
-    clearTimeout(fallbackTimeout);
-  };
+        target.style.opacity = "";
+        target.style.visibility = "";
+        target.removeAttribute("data-entering");
+        target.removeEventListener("transitionend", handleTransitionEnd);
+        clearTimeout(fallbackTimeout);
+      };
 
       handleTransitionEnd = (event) => {
         if (event.target !== target) return;
@@ -396,19 +392,54 @@
       };
 
       fallbackTimeout = setTimeout(() => {
-          if (!layoutTransitionDone) {
-            layoutTransitionDone = true;
-            target.style.visibility = "visible";
-            target.style.opacity = "1";
-            if (focusContext) {
-              focusPickerCell(focusContext);
-            }
-            return;
+        if (!layoutTransitionDone) {
+          layoutTransitionDone = true;
+          target.style.visibility = "visible";
+          target.style.opacity = "1";
+          if (focusContext) {
+            focusPickerCell(focusContext);
           }
-          cleanup();
+          return;
+        }
+        cleanup();
       }, 480);
 
       target.addEventListener("transitionend", handleTransitionEnd);
+    };
+
+    const animatePaletteEntry = (paletteIndex, focusContext = null) => {
+      if (!tableContainer || !Number.isInteger(paletteIndex)) return;
+      const wrappers = Array.from(tableContainer.querySelectorAll(".palette-wrapper"));
+      const target = wrappers[paletteIndex];
+      if (!target) return;
+      animatePaletteElement(target, focusContext);
+    };
+
+    const toggleComplementPalette = (paletteIndex) => {
+      if (!colorInput) return;
+      const currentColors = parseColorValues(colorInput.value) || [];
+      if (!Number.isInteger(paletteIndex) || paletteIndex < 0 || paletteIndex >= currentColors.length) return;
+      const baseColor = currentColors[paletteIndex];
+      if (!baseColor) return;
+      const complementHex = colorUtils.calculateComplementaryHex(baseColor);
+      if (!complementHex) return;
+
+      const updatedColors = currentColors.slice();
+      const insertionIndex = paletteIndex + 1;
+      const complementNormalized = complementHex.toLowerCase();
+      updatedColors.splice(insertionIndex, 0, complementNormalized);
+
+      colorInput.value = updatedColors.join(" ");
+
+      const options = {
+        skipScroll: true,
+        skipFocus: true
+      };
+
+      options.enteringPaletteIndex = insertionIndex;
+      options.enteringFocusContext = { colorIndex: insertionIndex, rowType: "shades" };
+
+      createTintsAndShades(settings, false, options);
     };
 
     const ensurePaletteVisible = (paletteIndex, skipDownwardScroll = false) => {
@@ -628,14 +659,16 @@
         paletteRows.push(`<tr>${makeTableRowColors(calculatedTints, "RGBValues", colorPrefix)}</tr>`);
 
         const headerRow = buildTableHeader(tintShadeCount);
+        const filterIcon = getIconMarkup("icon-circle-half-2-template");
         const plusIcon = getIconMarkup("icon-plus-template");
         const closeIcon = getIconMarkup("icon-x-template");
+        const complementButton = `<button type="button" class="palette-complement-button palette-titlebar-action" data-palette-index="${colorIndex}" aria-label="Add a complementary palette for ${paletteLabel}">${filterIcon}</button>`;
         const duplicateButton = `<button type="button" class="palette-duplicate-button palette-titlebar-action" data-palette-index="${colorIndex}" aria-label="Duplicate ${paletteLabel} palette">${plusIcon}</button>`;
         const removeButton = `<button type="button" class="palette-close-button palette-titlebar-action" data-palette-index="${colorIndex}" aria-label="Remove ${paletteLabel} palette">${closeIcon}</button>`;
-        const paletteNameMarkup = `<div class="palette-titlebar" role="heading" aria-level="2"><span class="palette-titlebar-name">${paletteLabel}</span><div class="palette-titlebar-controls">${duplicateButton}${removeButton}</div></div>`;
+        const paletteNameMarkup = `<div class="palette-titlebar" role="heading" aria-level="2"><span class="palette-titlebar-name">${paletteLabel}</span><div class="palette-titlebar-controls">${complementButton}${duplicateButton}${removeButton}</div></div>`;
         const isEntering = Number.isInteger(enteringPaletteIndex) && enteringPaletteIndex === colorIndex;
         const enteringAttr = isEntering ? ' data-entering="true"' : "";
-        const tableMarkup = `<div class="palette-wrapper" role="region" aria-label="${paletteLabel}"${enteringAttr}>${paletteNameMarkup}<div class="palette-table"><table><thead>${headerRow}</thead><tbody>${paletteRows.join("")}</tbody></table></div></div>`;
+        const tableMarkup = `<div class="palette-wrapper" role="region" aria-label="${paletteLabel}" data-palette-index="${colorIndex}"${enteringAttr}>${paletteNameMarkup}<div class="palette-table"><table><thead>${headerRow}</thead><tbody>${paletteRows.join("")}</tbody></table></div></div>`;
         paletteTables.push(tableMarkup);
       });
 
@@ -663,6 +696,15 @@
 
       if (!paletteCloseHandlerAdded) {
         tableContainer.addEventListener("click", (event) => {
+          const complementTrigger = event.target && event.target.closest && event.target.closest(".palette-complement-button");
+          if (complementTrigger) {
+            const paletteIndex = parseInt(complementTrigger.getAttribute("data-palette-index"), 10);
+            if (!Number.isNaN(paletteIndex)) {
+              toggleComplementPalette(paletteIndex);
+            }
+            return;
+          }
+
           const duplicateTrigger = event.target && event.target.closest && event.target.closest(".palette-duplicate-button");
           if (duplicateTrigger) {
             const paletteIndex = parseInt(duplicateTrigger.getAttribute("data-palette-index"), 10);
