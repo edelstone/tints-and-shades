@@ -1,4 +1,4 @@
-# [<img src="src/icon.svg" width="28px" />](https://maketintsandshades.com) &nbsp;[Tint & Shade Generator](https://maketintsandshades.com)
+# [<img src="src/icon.svg" width="28px" alt="" />](https://maketintsandshades.com) &nbsp;[Tint & Shade Generator](https://maketintsandshades.com)
 
 <a href="https://maketintsandshades.com">
  <picture>
@@ -20,13 +20,13 @@
 
 This project uses the [Eleventy static site generator](https://www.11ty.dev) and deploys to GitHub Pages using a [GitHub Action from Shohei Ueda](https://github.com/marketplace/actions/github-pages-action).
 
-_Prerequisites: Node.js 14+_
+*Prerequisites: Node.js 18+*
 
-1.  Clone this project.
-2.  Navigate to the project in your terminal.
-3.  Install dependencies: `npm install`.
-4.  Start the server: `npm run start`.
-5.  Navigate to `localhost:8080` in your browser.
+1. Clone this project.
+2. Navigate to the project in your terminal.
+3. Install dependencies: `npm install`.
+4. Start the server: `npm run start`.
+5. Navigate to `localhost:8080` in your browser.
 
 ## What is the Tint & Shade Generator?
 
@@ -54,8 +54,8 @@ Now you can generate the same meticulously-crafted tints and shades without leav
 
 The given hex color is first converted to RGB. Then each component of the RGB color has the following calculation performed on it, respectively.
 
--   **Tints:** `New value = current value + ((255 - current value) x tint factor)`
--   **Shades:** `New value = current value x shade factor`
+- **Tints:** `New value = current value + ((255 - current value) x tint factor)`
+- **Shades:** `New value = current value x shade factor`
 
 The new value is rounded if necessary, and then converted back to hex for display.
 
@@ -65,19 +65,19 @@ Let’s say we want tints and shades of [Rebecca Purple](https://meyerweb.com/er
 
 ### 10% tint
 
-1.  #663399 is converted to the RGB equivalent of 102, 51, 153
-2.  **R:** `102 + ((255 - 102) x .1) = 117.3`, rounded to 117
-3.  **G:** `51 + ((255 - 51) x .1) = 71.4`, rounded to 71
-4.  **B:** `153 + ((255 - 153) x .1) = 163.2`, rounded to 163
-5.  RGB 117, 71, 163 is converted to the hex equivalent of #7547a3
+1. #663399 is converted to the RGB equivalent of 102, 51, 153
+2. **R:** `102 + ((255 - 102) x .1) = 117.3`, rounded to 117
+3. **G:** `51 + ((255 - 51) x .1) = 71.4`, rounded to 71
+4. **B:** `153 + ((255 - 153) x .1) = 163.2`, rounded to 163
+5. RGB 117, 71, 163 is converted to the hex equivalent of #7547a3
 
 ### 10% shade
 
-1.  #663399 is converted to the RGB equivalent of 102, 51, 153
-2.  **R:** `102 x .9 = 91.8`, rounded to 92
-3.  **G:** `51 x .9 = 45.9`, rounded to 46
-4.  **B:** `153 x .9 = 137.7`, rounded to 138
-5.  RGB 92, 46, 138 is converted to the hex equivalent of #5c2e8a
+1. #663399 is converted to the RGB equivalent of 102, 51, 153
+2. **R:** `102 x .9 = 91.8`, rounded to 92
+3. **G:** `51 x .9 = 45.9`, rounded to 46
+4. **B:** `153 x .9 = 137.7`, rounded to 138
+5. RGB 92, 46, 138 is converted to the hex equivalent of #5c2e8a
 
 ## Feedback and contributing
 
@@ -91,10 +91,10 @@ If you're a developer and want to help with the project, please comment on [open
 
 The Tint & Shade Generator will always be free but your support is greatly appreciated.
 
--   [Buy Me a Coffee](https://www.buymeacoffee.com/edelstone)
--   [Cash App](https://cash.app/$edelstone)
--   [Paypal](https://www.paypal.me/edelstone)
--   [Venmo](https://venmo.com/michaeledelstone)
+- [Buy Me a Coffee](https://www.buymeacoffee.com/edelstone)
+- [Cash App](https://cash.app/$edelstone)
+- [Paypal](https://www.paypal.me/edelstone)
+- [Venmo](https://venmo.com/michaeledelstone)
 
 ## Credits
 
@@ -102,18 +102,18 @@ The Tint & Shade Generator will always be free but your support is greatly appre
 
 We use these amazing open-source libraries across the project:
 
--   [AnchorJS](https://github.com/bryanbraun/anchorjs)
--   [clipboard.js](https://github.com/zenorocha/clipboard.js)
--   [Color Names](https://github.com/meodai/color-names)
--   [Eleventy](https://github.com/11ty/eleventy)
--   [Prism](https://github.com/PrismJS/prism)
+- [AnchorJS](https://github.com/bryanbraun/anchorjs)
+- [clipboard.js](https://github.com/zenorocha/clipboard.js)
+- [Color Names](https://github.com/meodai/color-names)
+- [Eleventy](https://github.com/11ty/eleventy)
+- [Prism](https://github.com/PrismJS/prism)
 
 Many thanks to [Joel Carr](https://github.com/joelcarr), [Sebastian Gutierrez](https://github.com/pepas24), [Tim Scalzo](https://github.com/TJScalzo), [Aman Agarwal](https://github.com/AmanAgarwal041), [Aleksandr Hovhannisyan](https://github.com/AleksandrHovhannisyan), [Shubhendu Sen](https://github.com/Sen-442b), and [Luis Escarrilla](https://github.com/latesc) for their valuable contributions.
 
 ## Design specs
 
--   Typography: [Work Sans](https://weiweihuanghuang.github.io/Work-Sans/) by Wei Huang
--   Iconography: [Tabler Icons](https://tabler.io/icons)
--   Colors: [#000000](/#colors=000000), [#ffffff](/#colors=ffffff), [#e96443](/#colors=e96443), and [#ca228e](/#colors=ca228e)
+- Typography: [Work Sans](https://weiweihuanghuang.github.io/Work-Sans/) by Wei Huang
+- Iconography: [Tabler Icons](https://tabler.io/icons)
+- Colors: [#000000](/#colors=000000), [#ffffff](/#colors=ffffff), [#e96443](/#colors=e96443), and [#ca228e](/#colors=ca228e)
 
 Prefer Google's color logic? Try the [Material Design Palette Generator](https://materialpalettes.com).

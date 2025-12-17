@@ -20,7 +20,14 @@ const sanitizedContent = match[1]
 
 const markdownContent = turndownService.turndown(sanitizedContent);
 
-const readmeTemplate = `# [<img src="src/icon.svg" width="28px" />](https://maketintsandshades.com) &nbsp;[Tint & Shade Generator](https://maketintsandshades.com)
+const normalizeListSpacing = (content) =>
+  content
+    .replace(/^(\s*[-+*])\s{2,}/gm, '$1 ')
+    .replace(/^(\s*\d+\.)\s{2,}/gm, '$1 ');
+
+const normalizedMarkdown = normalizeListSpacing(markdownContent);
+
+const readmeTemplate = `# [<img src="src/icon.svg" width="28px" alt="" />](https://maketintsandshades.com) &nbsp;[Tint & Shade Generator](https://maketintsandshades.com)
 
 <a href="https://maketintsandshades.com">
  <picture>
@@ -42,15 +49,16 @@ const readmeTemplate = `# [<img src="src/icon.svg" width="28px" />](https://make
 
 This project uses the [Eleventy static site generator](https://www.11ty.dev) and deploys to GitHub Pages using a [GitHub Action from Shohei Ueda](https://github.com/marketplace/actions/github-pages-action).
 
-_Prerequisites: Node.js 14+_
+*Prerequisites: Node.js 18+*
 
-1.  Clone this project.
-2.  Navigate to the project in your terminal.
-3.  Install dependencies: \`npm install\`.
-4.  Start the server: \`npm run start\`.
-5.  Navigate to \`localhost:8080\` in your browser.
+1. Clone this project.
+2. Navigate to the project in your terminal.
+3. Install dependencies: \`npm install\`.
+4. Start the server: \`npm run start\`.
+5. Navigate to \`localhost:8080\` in your browser.
 
-${markdownContent}`;
+${normalizedMarkdown}`;
 
-writeFileSync(readmePath, readmeTemplate, 'utf8');
+const readmeOutput = `${readmeTemplate}\n`;
+writeFileSync(readmePath, readmeOutput, 'utf8');
 console.log('README.md has been generated.');
