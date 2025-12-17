@@ -11,6 +11,31 @@ const setActiveCountButtons = (buttons, count) => {
     btn.setAttribute("tabindex", isActive ? "0" : "-1");
   });
 };
+const TOOLTIP_IMMEDIATE_ATTR = "data-tooltip-immediate";
+
+const wireTooltipHandlers = () => {
+  document.addEventListener(
+    "focusout",
+    (event) => {
+      const target = event.target?.closest?.("[data-tooltip]");
+      if (target) {
+        target.setAttribute(TOOLTIP_IMMEDIATE_ATTR, "true");
+      }
+    },
+    true
+  );
+
+  document.addEventListener(
+    "focusin",
+    (event) => {
+      const target = event.target?.closest?.("[data-tooltip]");
+      if (target) {
+        target.removeAttribute(TOOLTIP_IMMEDIATE_ATTR);
+      }
+    },
+    true
+  );
+};
 
 const loadSettings = () => {
   try {
@@ -38,6 +63,7 @@ const updateHashtagToggle = (button, isOn) => {
   button.setAttribute("aria-pressed", isOn ? "true" : "false");
   button.classList.toggle("is-active", isOn);
   button.setAttribute("aria-label", isOn ? "Include hashtag when copying" : "Hide hashtag when copying");
+  button.setAttribute("data-tooltip", isOn ? "Hide #" : "Show #");
 };
 
 // Initialize the settings and UI state
@@ -74,7 +100,7 @@ const initializeSettings = (initialUrlState = {}) => {
     });
   }
 
-    if (tintShadeButtons.length) {
+  if (tintShadeButtons.length) {
     if (!tintShadeOptions.includes(settings.tintShadeCount)) {
       settings.tintShadeCount = 10;
     }
@@ -126,6 +152,7 @@ const initializeSettings = (initialUrlState = {}) => {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
+  wireTooltipHandlers();
   const urlState = palettes.readHashState ? palettes.readHashState() : {};
   initializeSettings(urlState);
   exportUI.wireExportControls();
