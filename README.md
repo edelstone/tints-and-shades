@@ -18,9 +18,7 @@
 
 ## What is the Tint & Shade Generator?
 
-The Tint & Shade Generator is a precision color tool for producing accurate tints (pure white added) and shades (pure black added) from a given base color, with palette editing, related color generation, and export/share workflows built in.
-
-Start from a known hex value or explore with the color picker, adjust the base color inline, choose 5%, 10%, or 20% increments, and instantly see the results across multiple palettes.
+The Tint & Shade Generator is a precision color tool for producing accurate tints (pure white added) and shades (pure black added) from a given hex color in 5%, 10%, or 20% increments. Palette editing, related color generation, and export/share workflows are built in.
 
 ## Why is this tool unique?
 
@@ -40,7 +38,7 @@ Typical use cases:
 - Sharing palettes via link or image
 - Exporting colors for design tokens, CSS, or JSON
 
-Originally created for designers and developers working together, I’ve heard it’s equally useful for teachers, data pros, and people who make presentations.
+Originally created for designers and developers, I’ve heard it’s equally useful for teachers, data pros, and people who make presentations.
 
 ## Related colors
 
