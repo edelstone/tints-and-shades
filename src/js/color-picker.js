@@ -76,6 +76,8 @@
     Coloris.close();
   };
 
+  const getPickerCloseButton = () => document.getElementById("clr-close");
+
   const getPickerFocusableElements = () => {
     const picker = document.getElementById("clr-picker");
     if (!picker) return [];
@@ -151,9 +153,25 @@
     Coloris.close();
   };
 
+  const handlePickerEnterCommit = (event) => {
+    if (!isPickerOpen || event.key !== "Enter") return;
+    const picker = document.getElementById("clr-picker");
+    if (!picker || !picker.contains(event.target)) return;
+    if (event.target.tagName === "BUTTON") return;
+    if (event.target.id === "clr-color-value") return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    event.stopPropagation();
+    const closeButton = getPickerCloseButton();
+    if (closeButton) {
+      focusEl(closeButton);
+    }
+  };
+
   document.addEventListener("focusin", handlePickerFocusIn);
   document.addEventListener("keydown", handlePickerEscape);
   document.addEventListener("keydown", handlePickerTabNavigation, true);
+  document.addEventListener("keydown", handlePickerEnterCommit, true);
 
   const normalizeHex = (value) => {
     if (!value) return "";
