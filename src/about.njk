@@ -22,9 +22,25 @@ docs: true
 <p>This is useful for designers who may be communicating color intent to developers who use Sass or PostCSS in their builds. It's also a solid way to quickly preview what tints and shades look like for a base color you may be considering for your design.</p>
 <p>I've also heard it's useful for teachers, data professionals, and people who make presentations.</p>
 
-<h2><!-- README-EXCLUDE-START --><span class="subheader-icon">{% include "partials/icons/figma.njk" %}</span><!-- README-EXCLUDE-END --> Figma plugin</h2>
+<h2>Related colors</h2>
 
-<p>Now you can generate the same meticulously-crafted tints and shades without leaving your canvas (and automatically create local color styles, too). Grab the plugin <a href="https://www.figma.com/community/plugin/1580658889126377365/tint-shade-generator">from the Figma Community</a>.</p>
+<p>In addition to generating tints and shades from a single base color, you can also add related palettes based on common color-wheel relationships. These palettes shift the hue while preserving the original saturation and lightness.</p>
+
+<h3>Complementary</h3>
+
+<p>Adds one new palette using the hue directly opposite the base color (180&deg; away). This produces the strongest contrast and is best when clear visual separation is needed.</p>
+
+<h3>Split complementary</h3>
+
+<p>Adds two palettes using hues 30&deg; on either side of the complementary color. This keeps contrast high while feeling more flexible and less extreme than a direct complementary pairing.</p>
+
+<h3>Analogous</h3>
+
+<p>Adds two palettes using hues 30&deg; on either side of the base color. These combinations are low-contrast and cohesive, making them well suited for subtle variation.</p>
+
+<h3>Triadic</h3>
+
+<p>Adds two palettes evenly spaced at 120&deg; intervals around the color wheel. This produces clearly distinct and energetic color relationships.</p>
 
 <h2>Calculation method</h2>
 
@@ -60,6 +76,10 @@ docs: true
   <li><b>B:</b> <code>153 x .9 = 137.7</code>, rounded to 138</li>
   <li>RGB 92, 46, 138 is converted to the hex equivalent of #5c2e8a</li>
 </ol>
+
+<h2><!-- README-EXCLUDE-START --><span class="subheader-icon">{% include "partials/icons/figma.njk" %}</span><!-- README-EXCLUDE-END --> Figma plugin</h2>
+
+<p>Now you can generate the same meticulously-crafted tints and shades without leaving your canvas (and automatically create local color styles, too). Grab the plugin <a href="https://www.figma.com/community/plugin/1580658889126377365/tint-shade-generator">from the Figma Community</a>.</p>
 
 <h2>Feedback and contributing</h2>
 
@@ -103,4 +123,4 @@ docs: true
 </ul>
 
 <p>Prefer Google's color logic? Try the <a href="https://materialpalettes.com">Material Design Palette Generator</a>.
-<!-- END README CONTENT -->
+  <!-- END README CONTENT -->

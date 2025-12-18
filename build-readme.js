@@ -27,6 +27,36 @@ const normalizeListSpacing = (content) =>
 
 const normalizedMarkdown = normalizeListSpacing(markdownContent);
 
+const localDevSection = `## Local development
+
+This project uses the [Eleventy static site generator](https://www.11ty.dev) and deploys to GitHub Pages using a [GitHub Action from Shohei Ueda](https://github.com/marketplace/actions/github-pages-action).
+
+*Prerequisites: Node.js 18+*
+
+1. Clone this project.
+2. Navigate to the project in your terminal.
+3. Install dependencies: \`npm install\`.
+4. Start the server: \`npm run start\`.
+5. Navigate to \`localhost:8080\` in your browser.`;
+
+const insertLocalDevSection = (content) => {
+  // Guard: don’t insert if it already exists
+  if (/^## Local development\b/m.test(content)) {
+    return content;
+  }
+
+  const marker = '## Support this project';
+  const markerIndex = content.indexOf(marker);
+  if (markerIndex === -1) {
+    return `${content.trimEnd()}\n\n${localDevSection}`;
+  }
+  const before = content.slice(0, markerIndex).trimEnd();
+  const after = content.slice(markerIndex);
+  return `${before}\n\n${localDevSection}\n\n${after}`;
+};
+
+const normalizedMarkdownWithLocalDev = insertLocalDevSection(normalizedMarkdown);
+
 const readmeTemplate = `# [<img src="src/icon.svg" width="28px" alt="" />](https://maketintsandshades.com) &nbsp;[Tint & Shade Generator](https://maketintsandshades.com)
 
 <a href="https://maketintsandshades.com">
@@ -45,19 +75,7 @@ const readmeTemplate = `# [<img src="src/icon.svg" width="28px" alt="" />](https
  </picture>
 </a>
 
-## Local development
-
-This project uses the [Eleventy static site generator](https://www.11ty.dev) and deploys to GitHub Pages using a [GitHub Action from Shohei Ueda](https://github.com/marketplace/actions/github-pages-action).
-
-*Prerequisites: Node.js 18+*
-
-1. Clone this project.
-2. Navigate to the project in your terminal.
-3. Install dependencies: \`npm install\`.
-4. Start the server: \`npm run start\`.
-5. Navigate to \`localhost:8080\` in your browser.
-
-${normalizedMarkdown}`;
+${normalizedMarkdownWithLocalDev}`;
 
 const readmeOutput = `${readmeTemplate}\n`;
 writeFileSync(readmePath, readmeOutput, 'utf8');

@@ -2,6 +2,7 @@
   let warningTimeout = null;
   let hexCellKeyHandlerAdded = false;
   let paletteCloseHandlerAdded = false;
+  let complementDropdownEventsAdded = false;
   const closingPaletteStates = new WeakMap();
   const EMPTY_STATE_SCROLL_DURATION = 500;
 
@@ -122,6 +123,206 @@
     window.location.hash = hashString;
   };
 
+  const enableComplementTooltip = (toggleButton) => {
+    if (!toggleButton) return;
+    const stored = toggleButton.dataset.complementTooltip;
+    if (stored) {
+      toggleButton.setAttribute("data-tooltip", stored);
+      delete toggleButton.dataset.complementTooltip;
+    }
+  };
+
+  const disableComplementTooltip = (toggleButton) => {
+    if (!toggleButton) return;
+    const tooltipValue = toggleButton.getAttribute("data-tooltip");
+    if (tooltipValue) {
+      toggleButton.dataset.complementTooltip = tooltipValue;
+      toggleButton.removeAttribute("data-tooltip");
+    }
+  };
+
+  const restoreComplementTooltip = (toggleButton) => {
+    if (!toggleButton) return;
+    if (!toggleButton.dataset.complementTooltip) return;
+
+    const shouldDelay = typeof toggleButton.matches === "function" && toggleButton.matches(":hover");
+    if (shouldDelay) {
+      const handlePointerLeave = () => {
+        enableComplementTooltip(toggleButton);
+      };
+      toggleButton.addEventListener("pointerleave", handlePointerLeave, { once: true });
+      return;
+    }
+
+    enableComplementTooltip(toggleButton);
+  };
+
+  const closeComplementDropdowns = (exceptionDropdown = null) => {
+    const openDropdowns = document.querySelectorAll(".palette-complement-dropdown.is-open");
+    openDropdowns.forEach((dropdown) => {
+      if (exceptionDropdown && dropdown === exceptionDropdown) return;
+      dropdown.classList.remove("is-open");
+      const toggleButton = dropdown.querySelector(".palette-complement-dropdown-toggle");
+      if (toggleButton) {
+        toggleButton.setAttribute("aria-expanded", "false");
+        restoreComplementTooltip(toggleButton);
+      }
+      const menu = dropdown.querySelector(".palette-complement-dropdown-menu");
+      if (menu) {
+        menu.setAttribute("aria-hidden", "true");
+      }
+    });
+  };
+
+  const focusDropdownMenuItem = (items, index) => {
+    const target = items[index];
+    if (target && typeof target.focus === "function") {
+      target.focus();
+    }
+  };
+
+  const handleDropdownMenuKeydown = (event) => {
+    const menu = event.currentTarget;
+    if (!menu) return;
+    const dropdown = menu.closest && menu.closest(".palette-complement-dropdown");
+    if (!dropdown || !dropdown.classList.contains("is-open")) return;
+
+    const menuItems = Array.from(menu.querySelectorAll(".palette-complement-dropdown-item"));
+    if (!menuItems.length) return;
+
+    const currentIndex = menuItems.indexOf(event.target);
+    const moveFocus = (direction) => {
+      if (currentIndex === -1) {
+        focusDropdownMenuItem(menuItems, direction > 0 ? 0 : menuItems.length - 1);
+        return;
+      }
+      const nextIndex = (currentIndex + direction + menuItems.length) % menuItems.length;
+      focusDropdownMenuItem(menuItems, nextIndex);
+    };
+
+    if (event.key === "ArrowDown" || event.key === "ArrowRight") {
+      event.preventDefault();
+      moveFocus(1);
+      return;
+    }
+
+    if (event.key === "ArrowUp" || event.key === "ArrowLeft") {
+      event.preventDefault();
+      moveFocus(-1);
+      return;
+    }
+
+    if (event.key === "Home") {
+      event.preventDefault();
+      focusDropdownMenuItem(menuItems, 0);
+      return;
+    }
+
+    if (event.key === "End") {
+      event.preventDefault();
+      focusDropdownMenuItem(menuItems, menuItems.length - 1);
+      return;
+    }
+
+    if (event.key === "Escape" || event.key === "Esc") {
+      event.preventDefault();
+      closeComplementDropdowns();
+      const toggleButton = dropdown.querySelector(".palette-complement-dropdown-toggle");
+      if (toggleButton && typeof toggleButton.focus === "function") {
+        toggleButton.focus();
+      }
+    }
+  };
+
+  const handleDropdownToggleKeydown = (event) => {
+    if (!event || !event.target) return;
+    const toggleButton =
+      typeof event.target.closest === "function"
+        ? event.target.closest(".palette-complement-dropdown-toggle")
+        : null;
+    if (!toggleButton) return;
+    const dropdown = toggleButton.closest && toggleButton.closest(".palette-complement-dropdown");
+    if (!dropdown || !dropdown.classList.contains("is-open")) return;
+    const menu = dropdown.querySelector && dropdown.querySelector(".palette-complement-dropdown-menu");
+    if (!menu) return;
+    const menuItems = Array.from(menu.querySelectorAll(".palette-complement-dropdown-item"));
+    if (!menuItems.length) return;
+
+    const focusFirstItem = () => focusDropdownMenuItem(menuItems, 0);
+    const focusLastItem = () => focusDropdownMenuItem(menuItems, menuItems.length - 1);
+
+    if (event.key === "ArrowDown" || event.key === "ArrowRight" || event.key === "Home") {
+      event.preventDefault();
+      focusFirstItem();
+      return;
+    }
+
+    if (event.key === "ArrowUp" || event.key === "ArrowLeft" || event.key === "End") {
+      event.preventDefault();
+      focusLastItem();
+      return;
+    }
+  };
+
+  const wireDropdownMenuKeyboard = (menu) => {
+    if (!menu) return;
+    if (menu.dataset.keyboardWired === "true") return;
+    menu.addEventListener("keydown", handleDropdownMenuKeydown);
+    menu.dataset.keyboardWired = "true";
+  };
+
+  const toggleComplementDropdownMenu = (toggleButton) => {
+    if (!toggleButton) return;
+    const dropdown = toggleButton.closest(".palette-complement-dropdown");
+    if (!dropdown) return;
+    const menu = dropdown.querySelector(".palette-complement-dropdown-menu");
+    const isOpen = dropdown.classList.contains("is-open");
+    if (isOpen) {
+      dropdown.classList.remove("is-open");
+      toggleButton.setAttribute("aria-expanded", "false");
+      if (menu) menu.setAttribute("aria-hidden", "true");
+      restoreComplementTooltip(toggleButton);
+      return;
+    }
+    closeComplementDropdowns(dropdown);
+    dropdown.classList.add("is-open");
+    toggleButton.setAttribute("aria-expanded", "true");
+    if (menu) menu.setAttribute("aria-hidden", "false");
+    disableComplementTooltip(toggleButton);
+    if (menu) {
+      wireDropdownMenuKeyboard(menu);
+    }
+  };
+
+  const handleDocumentClickForComplementDropdowns = (event) => {
+    if (!event || !event.target) return;
+    if (event.target.closest && event.target.closest(".palette-complement-dropdown")) return;
+    closeComplementDropdowns();
+  };
+
+  const handleDocumentKeydownForComplementDropdowns = (event) => {
+    if (!event) return;
+    if (event.key === "Escape" || event.key === "Esc") {
+      closeComplementDropdowns();
+    }
+  };
+
+  const handleDocumentFocusInForComplementDropdowns = (event) => {
+    if (!event || !event.target) return;
+    const openDropdown = document.querySelector(".palette-complement-dropdown.is-open");
+    if (!openDropdown) return;
+    if (openDropdown.contains(event.target)) return;
+    closeComplementDropdowns();
+  };
+
+  const ensureComplementDropdownListeners = () => {
+    if (complementDropdownEventsAdded) return;
+    document.addEventListener("click", handleDocumentClickForComplementDropdowns);
+    document.addEventListener("keydown", handleDocumentKeydownForComplementDropdowns);
+    document.addEventListener("focusin", handleDocumentFocusInForComplementDropdowns);
+    complementDropdownEventsAdded = true;
+  };
+
   const formatPercentLabel = (value) => {
     const trimmed = value % 1 === 0 ? value.toString() : value.toFixed(1);
     return `${trimmed.replace(/\.0+$/, "")}%`;
@@ -240,7 +441,7 @@
     requestAnimationFrame(animation);
   };
 
-  const HEX_RE = /\b[0-9A-Fa-f]{3}\b|[0-9A-Fa-f]{6}\b/g;
+  const HEX_RE = /\b(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})\b/g;
 
   const parseColorValues = (colorValues) => {
     const matches = colorValues.match(HEX_RE);
@@ -280,14 +481,33 @@
       skipFocus = false,
       focusPickerContext = null,
       enteringPaletteIndex = null,
+      enteringPaletteIndexes = [],
       enteringFocusContext = null,
       ensurePaletteInView = null,
-      ensurePaletteSkipDownwardScroll = false
+      ensurePaletteSkipDownwardScroll = false,
+      ensurePaletteRangeStart = null,
+      ensurePaletteRangeEnd = null
     } = options;
 
+    const enteringIndexes = (() => {
+      const candidates = [];
+      if (Array.isArray(enteringPaletteIndexes)) {
+        enteringPaletteIndexes.forEach((value) => {
+          if (Number.isInteger(value)) candidates.push(value);
+        });
+      }
+      if (Number.isInteger(enteringPaletteIndex)) {
+        candidates.push(enteringPaletteIndex);
+      }
+      const uniqueIndexes = Array.from(new Set(candidates));
+      return uniqueIndexes.sort((a, b) => a - b);
+    })();
+
     const colorInput = document.getElementById("color-values");
+    const enteringIndexesSet = new Set(enteringIndexes);
     const tableContainer = document.getElementById("tints-and-shades");
     const warning = document.getElementById("warning");
+    ensureComplementDropdownListeners();
 
     const focusPickerCell = (context) => {
       if (!tableContainer || !context) return false;
@@ -307,7 +527,7 @@
       return false;
     };
 
-    const animatePaletteElement = (target, focusContext = null) => {
+    const animatePaletteElement = (target, focusContext = null, { skipScroll = false } = {}) => {
       if (!target || prefersReducedMotion()) return;
 
       const computedStyle = window.getComputedStyle(target);
@@ -338,7 +558,7 @@
       const viewportHeight = window.innerHeight;
       const viewportBottom = window.scrollY + viewportHeight;
       const finalBottomAbsolute = initialRect.top + window.scrollY + finalHeight;
-      if (finalBottomAbsolute > viewportBottom) {
+      if (!skipScroll && finalBottomAbsolute > viewportBottom) {
         const scrollMargin = 16;
         const desiredScrollTop = Math.max(0, finalBottomAbsolute - viewportHeight + scrollMargin);
         if (desiredScrollTop > window.scrollY) {
@@ -407,12 +627,123 @@
       target.addEventListener("transitionend", handleTransitionEnd);
     };
 
-    const animatePaletteEntry = (paletteIndex, focusContext = null) => {
+    const animatePaletteEntry = (paletteIndex, focusContext = null, { skipScroll = false } = {}) => {
       if (!tableContainer || !Number.isInteger(paletteIndex)) return;
       const wrappers = Array.from(tableContainer.querySelectorAll(".palette-wrapper"));
       const target = wrappers[paletteIndex];
       if (!target) return;
-      animatePaletteElement(target, focusContext);
+      animatePaletteElement(target, focusContext, { skipScroll });
+    };
+
+    const waitForPaletteEntryAnimations = (callback) => {
+      if (!tableContainer || typeof callback !== "function") return;
+      const hasEnteringPalette = () => tableContainer.querySelector(".palette-wrapper[data-entering=\"true\"]");
+      const checkAnimation = () => {
+        if (!hasEnteringPalette()) {
+          callback();
+          return;
+        }
+        requestAnimationFrame(checkAnimation);
+      };
+      if (!hasEnteringPalette()) {
+        callback();
+        return;
+      }
+      requestAnimationFrame(checkAnimation);
+    };
+
+    const normalizeHexValue = (colorValue) => {
+      if (typeof colorValue !== "string") return null;
+      const normalized = colorValue.replace(/^#/, "").trim().toLowerCase();
+      if (/^[0-9a-f]{6}$/.test(normalized)) return normalized;
+      return null;
+    };
+
+    const moduloHue = (value) => ((value % 360) + 360) % 360;
+
+    const insertRelatedPalettes = (paletteIndex, paletteHexes = [], { ensureRangeVisible = false } = {}) => {
+      if (!colorInput) return false;
+      const currentColors = parseColorValues(colorInput.value) || [];
+      if (!Number.isInteger(paletteIndex) || paletteIndex < 0 || paletteIndex >= currentColors.length) return false;
+
+      const normalizedHexes = paletteHexes
+        .map((value) => normalizeHexValue(value))
+        .filter(Boolean);
+
+      if (!normalizedHexes.length) return false;
+
+      const updatedColors = currentColors.slice();
+      const insertionIndex = paletteIndex + 1;
+      updatedColors.splice(insertionIndex, 0, ...normalizedHexes);
+      colorInput.value = updatedColors.join(" ");
+
+      const options = {
+        skipScroll: true,
+        skipFocus: true,
+        enteringPaletteIndex: insertionIndex,
+        enteringPaletteIndexes: normalizedHexes.map((_, idx) => insertionIndex + idx),
+        enteringFocusContext: { colorIndex: insertionIndex, rowType: "shades" }
+      };
+
+      if (ensureRangeVisible && normalizedHexes.length) {
+        const lastInsertionIndex = insertionIndex + normalizedHexes.length - 1;
+        options.ensurePaletteRangeStart = insertionIndex;
+        options.ensurePaletteRangeEnd = lastInsertionIndex;
+      }
+
+      createTintsAndShades(settings, false, options);
+      return true;
+    };
+
+    const calculateSplitComplementaryHexes = (colorValue) => {
+      const normalized = normalizeHexValue(colorValue);
+      if (!normalized) return [];
+      const rgb = colorUtils.hexToRGB(normalized);
+      const hsl = colorUtils.rgbToHsl(rgb);
+      const offsets = [180 - 30, 180 + 30];
+      return offsets.map((offset) => {
+        const hue = moduloHue(hsl.hue + offset);
+        const complementaryRgb = colorUtils.hslToRgb({
+          hue,
+          saturation: hsl.saturation,
+          lightness: hsl.lightness
+        });
+        return colorUtils.rgbToHex(complementaryRgb);
+      });
+    };
+
+    const calculateAnalogousHexes = (colorValue) => {
+      const normalized = normalizeHexValue(colorValue);
+      if (!normalized) return [];
+      const rgb = colorUtils.hexToRGB(normalized);
+      const hsl = colorUtils.rgbToHsl(rgb);
+      const offsets = [-30, 30];
+      return offsets.map((offset) => {
+        const hue = moduloHue(hsl.hue + offset);
+        const analogousRgb = colorUtils.hslToRgb({
+          hue,
+          saturation: hsl.saturation,
+          lightness: hsl.lightness
+        });
+        return colorUtils.rgbToHex(analogousRgb);
+      });
+    };
+
+    const calculateTriadicHexes = (colorValue) => {
+      const normalized = normalizeHexValue(colorValue);
+      if (!normalized) return [];
+      const rgb = colorUtils.hexToRGB(normalized);
+      const hsl = colorUtils.rgbToHsl(rgb);
+      const offsets = [120, 240];
+      return offsets.map((offset) => {
+        const hue = moduloHue(hsl.hue + offset);
+        const triadicRgb = colorUtils.hslToRgb({
+          hue,
+          saturation: hsl.saturation,
+          lightness: hsl.lightness
+        });
+        return colorUtils.rgbToHex(triadicRgb);
+      });
     };
 
     const toggleComplementPalette = (paletteIndex) => {
@@ -423,23 +754,49 @@
       if (!baseColor) return;
       const complementHex = colorUtils.calculateComplementaryHex(baseColor);
       if (!complementHex) return;
+      insertRelatedPalettes(paletteIndex, [complementHex]);
+    };
 
-      const updatedColors = currentColors.slice();
-      const insertionIndex = paletteIndex + 1;
-      const complementNormalized = complementHex.toLowerCase();
-      updatedColors.splice(insertionIndex, 0, complementNormalized);
+    const toggleSplitComplementaryPalette = (paletteIndex) => {
+      if (!colorInput) return;
+      const currentColors = parseColorValues(colorInput.value) || [];
+      if (!Number.isInteger(paletteIndex) || paletteIndex < 0 || paletteIndex >= currentColors.length) return;
 
-      colorInput.value = updatedColors.join(" ");
+      const baseColor = currentColors[paletteIndex];
+      if (!baseColor) return;
 
-      const options = {
-        skipScroll: true,
-        skipFocus: true
-      };
+      const splitHexes = calculateSplitComplementaryHexes(baseColor);
+      if (!splitHexes.length) return;
 
-      options.enteringPaletteIndex = insertionIndex;
-      options.enteringFocusContext = { colorIndex: insertionIndex, rowType: "shades" };
+      insertRelatedPalettes(paletteIndex, splitHexes, { ensureRangeVisible: true });
+    };
 
-      createTintsAndShades(settings, false, options);
+    const toggleAnalogousPalette = (paletteIndex) => {
+      if (!colorInput) return;
+      const currentColors = parseColorValues(colorInput.value) || [];
+      if (!Number.isInteger(paletteIndex) || paletteIndex < 0 || paletteIndex >= currentColors.length) return;
+
+      const baseColor = currentColors[paletteIndex];
+      if (!baseColor) return;
+
+      const analogousHexes = calculateAnalogousHexes(baseColor);
+      if (!analogousHexes.length) return;
+
+      insertRelatedPalettes(paletteIndex, analogousHexes, { ensureRangeVisible: true });
+    };
+
+    const toggleTriadicPalette = (paletteIndex) => {
+      if (!colorInput) return;
+      const currentColors = parseColorValues(colorInput.value) || [];
+      if (!Number.isInteger(paletteIndex) || paletteIndex < 0 || paletteIndex >= currentColors.length) return;
+
+      const baseColor = currentColors[paletteIndex];
+      if (!baseColor) return;
+
+      const triadicHexes = calculateTriadicHexes(baseColor);
+      if (!triadicHexes.length) return;
+
+      insertRelatedPalettes(paletteIndex, triadicHexes, { ensureRangeVisible: true });
     };
 
     const ensurePaletteVisible = (paletteIndex, skipDownwardScroll = false) => {
@@ -465,6 +822,36 @@
         if (skipDownwardScroll && targetScroll > window.scrollY) {
           return;
         }
+        smoothScrollToPosition(targetScroll, 400);
+      }
+    };
+
+    const ensurePaletteRangeVisible = (startIndex, endIndex) => {
+      if (!tableContainer || !Number.isInteger(startIndex) || !Number.isInteger(endIndex)) return;
+      const wrappers = Array.from(tableContainer.querySelectorAll(".palette-wrapper"));
+      if (!wrappers.length) return;
+      const rangeStart = Math.min(startIndex, endIndex);
+      const rangeEnd = Math.max(startIndex, endIndex);
+      const first = wrappers[rangeStart];
+      const last = wrappers[rangeEnd];
+      if (!first || !last) return;
+      const scrollMargin = 16;
+      const viewportTop = window.scrollY + scrollMargin;
+      const viewportBottom = window.scrollY + window.innerHeight - scrollMargin;
+      const rangeTop = first.getBoundingClientRect().top + window.scrollY;
+      const rangeBottom = last.getBoundingClientRect().bottom + window.scrollY;
+      const availableHeight = window.innerHeight - scrollMargin * 2;
+      let targetScroll = null;
+
+      if (rangeBottom - rangeTop <= availableHeight) {
+        targetScroll = rangeTop - scrollMargin;
+      } else if (rangeBottom > viewportBottom) {
+        targetScroll = rangeBottom - window.innerHeight + scrollMargin;
+      } else if (rangeTop < viewportTop) {
+        targetScroll = rangeTop - scrollMargin;
+      }
+
+      if (targetScroll !== null && targetScroll !== window.scrollY) {
         smoothScrollToPosition(targetScroll, 400);
       }
     };
@@ -559,6 +946,7 @@
           skipScroll: true,
           skipFocus: true,
           enteringPaletteIndex: paletteIndex + 1,
+          enteringPaletteIndexes: [paletteIndex + 1],
           enteringFocusContext: { colorIndex: paletteIndex + 1, rowType: "shades" }
         });
       }
@@ -659,26 +1047,44 @@
         paletteRows.push(`<tr>${makeTableRowColors(calculatedTints, "RGBValues", colorPrefix)}</tr>`);
 
         const headerRow = buildTableHeader(tintShadeCount);
-        const filterIcon = getIconMarkup("icon-circle-half-2-template");
+        const filterIcon = getIconMarkup("icon-color-filter-template");
         const plusIcon = getIconMarkup("icon-plus-template");
         const closeIcon = getIconMarkup("icon-x-template");
-        const complementButton = `<button type="button" class="palette-complement-button palette-titlebar-action" data-tooltip="Add complementary" data-palette-index="${colorIndex}" aria-label="Add a complementary palette for ${paletteLabel}">${filterIcon}</button>`;
+        const complementDropdownMarkup = `<div class="palette-complement-dropdown">
+          <button type="button" class="palette-complement-dropdown-toggle palette-titlebar-action" data-tooltip="Add related colors" aria-haspopup="menu" aria-expanded="false" aria-label="Add related colors for ${paletteLabel}">${filterIcon}</button>
+          <div class="palette-complement-dropdown-menu" role="menu" aria-hidden="true">
+            <button type="button" class="palette-complement-dropdown-item" role="menuitem" tabindex="-1" data-palette-index="${colorIndex}" data-dropdown-action="complementary">Complementary</button>
+            <button type="button" class="palette-complement-dropdown-item" role="menuitem" tabindex="-1" data-palette-index="${colorIndex}" data-dropdown-action="split-complementary">Split complementary</button>
+            <button type="button" class="palette-complement-dropdown-item" role="menuitem" tabindex="-1" data-palette-index="${colorIndex}" data-dropdown-action="analogous">Analogous</button>
+            <button type="button" class="palette-complement-dropdown-item" role="menuitem" tabindex="-1" data-palette-index="${colorIndex}" data-dropdown-action="triadic">Triadic</button>
+          </div>
+        </div>`;
         const duplicateButton = `<button type="button" class="palette-duplicate-button palette-titlebar-action" data-tooltip="Duplicate" data-palette-index="${colorIndex}" aria-label="Duplicate ${paletteLabel} palette">${plusIcon}</button>`;
         const removeButton = `<button type="button" class="palette-close-button palette-titlebar-action" data-tooltip="Remove" data-palette-index="${colorIndex}" aria-label="Remove ${paletteLabel} palette">${closeIcon}</button>`;
-        const paletteNameMarkup = `<div class="palette-titlebar" role="heading" aria-level="2"><span class="palette-titlebar-name">${paletteLabel}</span><div class="palette-titlebar-controls">${complementButton}${duplicateButton}${removeButton}</div></div>`;
-        const isEntering = Number.isInteger(enteringPaletteIndex) && enteringPaletteIndex === colorIndex;
+        const paletteNameMarkup = `<div class="palette-titlebar" role="heading" aria-level="2"><span class="palette-titlebar-name">${paletteLabel}</span><div class="palette-titlebar-controls">${complementDropdownMarkup}${duplicateButton}${removeButton}</div></div>`;
+        const isEntering = enteringIndexesSet.has(colorIndex);
         const enteringAttr = isEntering ? ' data-entering="true"' : "";
         const tableMarkup = `<div class="palette-wrapper" role="region" aria-label="${paletteLabel}" data-palette-index="${colorIndex}"${enteringAttr}>${paletteNameMarkup}<div class="palette-table"><table><thead>${headerRow}</thead><tbody>${paletteRows.join("")}</tbody></table></div></div>`;
         paletteTables.push(tableMarkup);
       });
 
       tableContainer.innerHTML = paletteTables.join("");
+      closeComplementDropdowns();
 
-      if (Number.isInteger(enteringPaletteIndex)) {
-        animatePaletteEntry(enteringPaletteIndex, enteringFocusContext);
+      const hasRangeTarget = Number.isInteger(ensurePaletteRangeStart) && Number.isInteger(ensurePaletteRangeEnd);
+      const shouldSkipEntryScrolls = hasRangeTarget;
+      if (hasRangeTarget) {
+        ensurePaletteRangeVisible(ensurePaletteRangeStart, ensurePaletteRangeEnd);
       }
 
-      if (Number.isInteger(ensurePaletteInView)) {
+      if (enteringIndexes.length) {
+        enteringIndexes.forEach((entryIndex, index) => {
+          const focusContext = index === 0 ? enteringFocusContext : null;
+          animatePaletteEntry(entryIndex, focusContext, { skipScroll: shouldSkipEntryScrolls });
+        });
+      }
+
+      if (!hasRangeTarget && Number.isInteger(ensurePaletteInView)) {
         ensurePaletteVisible(ensurePaletteInView, ensurePaletteSkipDownwardScroll);
       }
 
@@ -696,16 +1102,34 @@
 
       if (!paletteCloseHandlerAdded) {
         tableContainer.addEventListener("click", (event) => {
-          const complementTrigger = event.target && event.target.closest && event.target.closest(".palette-complement-button");
-          if (complementTrigger) {
-            const paletteIndex = parseInt(complementTrigger.getAttribute("data-palette-index"), 10);
-            if (!Number.isNaN(paletteIndex)) {
-              toggleComplementPalette(paletteIndex);
-            }
+          const target = event.target;
+          if (!target) return;
+          const dropdownToggle = target.closest && target.closest(".palette-complement-dropdown-toggle");
+          if (dropdownToggle) {
+            toggleComplementDropdownMenu(dropdownToggle);
             return;
           }
 
-          const duplicateTrigger = event.target && event.target.closest && event.target.closest(".palette-duplicate-button");
+          const dropdownItem = target.closest && target.closest(".palette-complement-dropdown-item");
+          if (dropdownItem) {
+            const paletteIndex = parseInt(dropdownItem.getAttribute("data-palette-index"), 10);
+            if (!Number.isNaN(paletteIndex)) {
+              const action = dropdownItem.getAttribute("data-dropdown-action");
+              if (action === "split-complementary") {
+                toggleSplitComplementaryPalette(paletteIndex);
+              } else if (action === "analogous") {
+                toggleAnalogousPalette(paletteIndex);
+              } else if (action === "triadic") {
+                toggleTriadicPalette(paletteIndex);
+              } else {
+                toggleComplementPalette(paletteIndex);
+              }
+            }
+            closeComplementDropdowns();
+            return;
+          }
+
+          const duplicateTrigger = target.closest && target.closest(".palette-duplicate-button");
           if (duplicateTrigger) {
             const paletteIndex = parseInt(duplicateTrigger.getAttribute("data-palette-index"), 10);
             if (!Number.isNaN(paletteIndex)) {
@@ -723,7 +1147,7 @@
           const paletteWrapper = button.closest(".palette-wrapper");
           requestPaletteRemoval(paletteIndex, paletteWrapper);
         });
-
+        tableContainer.addEventListener("keydown", handleDropdownToggleKeydown);
         paletteCloseHandlerAdded = true;
       }
 
@@ -755,6 +1179,10 @@
             const makeButton = document.getElementById("make");
             if (makeButton) makeButton.focus();
           }
+        }
+
+        if (hasRangeTarget) {
+          waitForPaletteEntryAnimations(() => ensurePaletteRangeVisible(ensurePaletteRangeStart, ensurePaletteRangeEnd));
         }
       });
 

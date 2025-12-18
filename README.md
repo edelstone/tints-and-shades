@@ -16,18 +16,6 @@
  </picture>
 </a>
 
-## Local development
-
-This project uses the [Eleventy static site generator](https://www.11ty.dev) and deploys to GitHub Pages using a [GitHub Action from Shohei Ueda](https://github.com/marketplace/actions/github-pages-action).
-
-*Prerequisites: Node.js 18+*
-
-1. Clone this project.
-2. Navigate to the project in your terminal.
-3. Install dependencies: `npm install`.
-4. Start the server: `npm run start`.
-5. Navigate to `localhost:8080` in your browser.
-
 ## What is the Tint & Shade Generator?
 
 The purpose of this tool is to accurately produce tints (pure white added) and shades (pure black added) of a given hex color in 5%, 10% or 20% increments.
@@ -46,9 +34,25 @@ This is useful for designers who may be communicating color intent to developers
 
 I've also heard it's useful for teachers, data professionals, and people who make presentations.
 
-## Figma plugin
+## Related colors
 
-Now you can generate the same meticulously-crafted tints and shades without leaving your canvas (and automatically create local color styles, too). Grab the plugin [from the Figma Community](https://www.figma.com/community/plugin/1580658889126377365/tint-shade-generator).
+In addition to generating tints and shades from a single base color, you can also add related palettes based on common color-wheel relationships. These palettes shift the hue while preserving the original saturation and lightness.
+
+### Complementary
+
+Adds one new palette using the hue directly opposite the base color (180° away). This produces the strongest contrast and is best when clear visual separation is needed.
+
+### Split complementary
+
+Adds two palettes using hues 30° on either side of the complementary color. This keeps contrast high while feeling more flexible and less extreme than a direct complementary pairing.
+
+### Analogous
+
+Adds two palettes using hues 30° on either side of the base color. These combinations are low-contrast and cohesive, making them well suited for subtle variation.
+
+### Triadic
+
+Adds two palettes evenly spaced at 120° intervals around the color wheel. This produces clearly distinct and energetic color relationships.
 
 ## Calculation method
 
@@ -79,6 +83,10 @@ Let’s say we want tints and shades of [Rebecca Purple](https://meyerweb.com/er
 4. **B:** `153 x .9 = 137.7`, rounded to 138
 5. RGB 92, 46, 138 is converted to the hex equivalent of #5c2e8a
 
+## Figma plugin
+
+Now you can generate the same meticulously-crafted tints and shades without leaving your canvas (and automatically create local color styles, too). Grab the plugin [from the Figma Community](https://www.figma.com/community/plugin/1580658889126377365/tint-shade-generator).
+
 ## Feedback and contributing
 
 This project is open source and I'd love your help!
@@ -86,6 +94,18 @@ This project is open source and I'd love your help!
 If you notice a bug or want a feature added please [file an issue on GitHub](https://github.com/edelstone/tints-and-shades/issues/new). If you don't have an account there, just [email me](mailto:contact@maketintsandshades.com) the details.
 
 If you're a developer and want to help with the project, please comment on [open issues](https://github.com/edelstone/tints-and-shades/issues) or create a new one and communicate your intentions. Once we agree on a path forward you can just make a pull request and take it to the finish line.
+
+## Local development
+
+This project uses the [Eleventy static site generator](https://www.11ty.dev) and deploys to GitHub Pages using a [GitHub Action from Shohei Ueda](https://github.com/marketplace/actions/github-pages-action).
+
+*Prerequisites: Node.js 18+*
+
+1. Clone this project.
+2. Navigate to the project in your terminal.
+3. Install dependencies: `npm install`.
+4. Start the server: `npm run start`.
+5. Navigate to `localhost:8080` in your browser.
 
 ## Support this project
 
