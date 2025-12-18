@@ -8,23 +8,35 @@ docs: true
 <!-- START README CONTENT -->
 <h2>What is the Tint &amp; Shade Generator?</h2>
 
-<p>The purpose of this tool is to accurately produce tints (pure white added) and shades (pure black added) of a given hex color in 5%, 10% or 20% increments.</p>
+<p>The Tint &amp; Shade Generator is a precision color tool for producing accurate tints (pure white added) and shades (pure black added) from a given base color, with palette editing, related color generation, and export/share workflows built in.</p>
+
+<p>Start from a known hex value or explore with the color picker, adjust the base color inline, choose 5%, 10%, or 20% increments, and instantly see the results across multiple palettes.</p>
 
 <h2>Why is this tool unique?</h2>
 
-<p>It takes the math seriously. In my experience similar tools get the calculation incorrect due to rounding errors, creator preferences, or other inconsistencies.</p>
+<p>It takes the math seriously. In my experience similar tools get calculations incorrect due to rounding errors, creator preferences, or other inconsistencies.</p>
 
-<p>Testing shows that the output matches Chrome DevTools' calculation method as well as some <a href="https://css-tricks.com/snippets/sass/tint-shade-functions">established</a>, <a href="https://sindresorhus.com/sass-extras/#color-function-tint">popular</a> methods to derive tints and shades via Sass.
+<p>Testing shows that the output matches Chrome DevTools&rsquo; calculation method as well as some <a href="https://css-tricks.com/snippets/sass/tint-shade-functions">established</a>, <a href="https://sindresorhus.com/sass-extras/#color-function-tint">popular</a> methods to derive tints and shades via Sass.</p>
 
 <h2>When would I use this?</h2>
 
-<p>It's best used when you already have some base colors but would like complimentary colors for gradients, borders, backgrounds, shadows or other elements.</p>
-<p>This is useful for designers who may be communicating color intent to developers who use Sass or PostCSS in their builds. It's also a solid way to quickly preview what tints and shades look like for a base color you may be considering for your design.</p>
-<p>I've also heard it's useful for teachers, data professionals, and people who make presentations.</p>
+<p>When you want to move from a single color to a usable, communicable system.</p>
+
+<p>Typical use cases:</p>
+
+<ul>
+  <li>Exploring and refining base colors visually</li>
+  <li>Generating consistent tints and shades for UI states</li>
+  <li>Building complementary palettes for accents or secondary UI</li>
+  <li>Sharing palettes via link or image</li>
+  <li>Exporting colors for design tokens, CSS, or JSON</li>
+</ul>
+
+<p>Originally created for designers and developers working together, I&rsquo;ve heard it&rsquo;s equally useful for teachers, data pros, and people who make presentations.</p>
 
 <h2>Related colors</h2>
 
-<p>In addition to generating tints and shades from a single base color, you can also add related palettes based on common color-wheel relationships. These palettes shift the hue while preserving the original saturation and lightness, which is optimal for most color systems.</p>
+<p>In addition to generating tints and shades from a single base color, you can also add related palettes based on common color-wheel relationships. These palettes shift the hue while preserving the original saturation and lightness, which is well suited for most color systems.</p>
 
 <h3>Complementary</h3>
 
@@ -44,7 +56,7 @@ docs: true
 
 <h2>Calculation method</h2>
 
-<p>The given hex color is first converted to RGB. Then each component of the RGB color has the following calculation performed on it, respectively.</p>
+<p>The given hex color is first converted to RGB. Each RGB component is then calculated independently as follows:</p>
 
 <ul>
   <li><b>Tints:</b> <code>New value = current value + ((255 - current value) x tint factor)</code></li>
@@ -55,7 +67,7 @@ docs: true
 
 <h2>Example calculation</h2>
 
-<p>Let’s say we want tints and shades of <a href="https://meyerweb.com/eric/thoughts/2014/06/19/rebeccapurple/">Rebecca Purple</a>, #663399.</p>
+<p>Let&rsquo;s say we want tints and shades of <a href="https://meyerweb.com/eric/thoughts/2014/06/19/rebeccapurple/">Rebecca Purple</a>, #663399.</p>
 
 <h3>10% tint</h3>
 
@@ -83,9 +95,11 @@ docs: true
 
 <h2>Feedback and contributing</h2>
 
-<p>This project is open source and I'd love your help!</p>
-<p>If you notice a bug or want a feature added please <a href="https://github.com/edelstone/tints-and-shades/issues/new">file an issue on GitHub</a>. If you don't have an account there, just <a href="mailto:contact@maketintsandshades.com">email me</a> the details.</p>
-<p>If you're a developer and want to help with the project, please comment on <a href="https://github.com/edelstone/tints-and-shades/issues">open issues</a> or create a new one and communicate your intentions. Once we agree on a path forward you can just make a pull request and take it to the finish line.</p>
+<p>This project is open source and I&rsquo;d love your help!</p>
+
+<p>If you notice a bug or want a feature added please <a href="https://github.com/edelstone/tints-and-shades/issues/new">file an issue on GitHub</a>. If you don&rsquo;t have an account there, just <a href="mailto:contact@maketintsandshades.com">email me</a> the details.</p>
+
+<p>If you&rsquo;re a developer and want to help with the project, please comment on <a href="https://github.com/edelstone/tints-and-shades/issues">open issues</a> or create a new one and communicate your intentions. Once we agree on a path forward you can just make a pull request and take it to the finish line.</p>
 
 <h2>Support this project</h2>
 
@@ -122,5 +136,5 @@ docs: true
   <li>Colors: <a href="/#colors=000000">#000000</a>, <a href="/#colors=ffffff">#ffffff</a>, <a href="/#colors=e96443">#e96443</a>, and <a href="/#colors=ca228e">#ca228e</a></li>
 </ul>
 
-<p>Prefer Google's color logic? Try the <a href="https://materialpalettes.com">Material Design Palette Generator</a>.
-  <!-- END README CONTENT -->
+<p>Prefer Google&rsquo;s color logic? Try the <a href="https://materialpalettes.com">Material Design Palette Generator</a>.</p>
+<!-- END README CONTENT -->

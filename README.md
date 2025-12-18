@@ -18,25 +18,33 @@
 
 ## What is the Tint & Shade Generator?
 
-The purpose of this tool is to accurately produce tints (pure white added) and shades (pure black added) of a given hex color in 5%, 10% or 20% increments.
+The Tint & Shade Generator is a precision color tool for producing accurate tints (pure white added) and shades (pure black added) from a given base color, with palette editing, related color generation, and export/share workflows built in.
+
+Start from a known hex value or explore with the color picker, adjust the base color inline, choose 5%, 10%, or 20% increments, and instantly see the results across multiple palettes.
 
 ## Why is this tool unique?
 
-It takes the math seriously. In my experience similar tools get the calculation incorrect due to rounding errors, creator preferences, or other inconsistencies.
+It takes the math seriously. In my experience similar tools get calculations incorrect due to rounding errors, creator preferences, or other inconsistencies.
 
-Testing shows that the output matches Chrome DevTools' calculation method as well as some [established](https://css-tricks.com/snippets/sass/tint-shade-functions), [popular](https://sindresorhus.com/sass-extras/#color-function-tint) methods to derive tints and shades via Sass.
+Testing shows that the output matches Chrome DevTools’ calculation method as well as some [established](https://css-tricks.com/snippets/sass/tint-shade-functions), [popular](https://sindresorhus.com/sass-extras/#color-function-tint) methods to derive tints and shades via Sass.
 
 ## When would I use this?
 
-It's best used when you already have some base colors but would like complimentary colors for gradients, borders, backgrounds, shadows or other elements.
+When you want to move from a single color to a usable, communicable system.
 
-This is useful for designers who may be communicating color intent to developers who use Sass or PostCSS in their builds. It's also a solid way to quickly preview what tints and shades look like for a base color you may be considering for your design.
+Typical use cases:
 
-I've also heard it's useful for teachers, data professionals, and people who make presentations.
+- Exploring and refining base colors visually
+- Generating consistent tints and shades for UI states
+- Building complementary palettes for accents or secondary UI
+- Sharing palettes via link or image
+- Exporting colors for design tokens, CSS, or JSON
+
+Originally created for designers and developers working together, I’ve heard it’s equally useful for teachers, data pros, and people who make presentations.
 
 ## Related colors
 
-In addition to generating tints and shades from a single base color, you can also add related palettes based on common color-wheel relationships. These palettes shift the hue while preserving the original saturation and lightness, which is optimal for most color systems.
+In addition to generating tints and shades from a single base color, you can also add related palettes based on common color-wheel relationships. These palettes shift the hue while preserving the original saturation and lightness, which is well suited for most color systems.
 
 ### Complementary
 
@@ -56,7 +64,7 @@ Adds two palettes evenly spaced at 120° intervals around the color wheel. This 
 
 ## Calculation method
 
-The given hex color is first converted to RGB. Then each component of the RGB color has the following calculation performed on it, respectively.
+The given hex color is first converted to RGB. Each RGB component is then calculated independently as follows:
 
 - **Tints:** `New value = current value + ((255 - current value) x tint factor)`
 - **Shades:** `New value = current value x shade factor`
@@ -89,11 +97,11 @@ Now you can generate the same meticulously-crafted tints and shades without leav
 
 ## Feedback and contributing
 
-This project is open source and I'd love your help!
+This project is open source and I’d love your help!
 
-If you notice a bug or want a feature added please [file an issue on GitHub](https://github.com/edelstone/tints-and-shades/issues/new). If you don't have an account there, just [email me](mailto:contact@maketintsandshades.com) the details.
+If you notice a bug or want a feature added please [file an issue on GitHub](https://github.com/edelstone/tints-and-shades/issues/new). If you don’t have an account there, just [email me](mailto:contact@maketintsandshades.com) the details.
 
-If you're a developer and want to help with the project, please comment on [open issues](https://github.com/edelstone/tints-and-shades/issues) or create a new one and communicate your intentions. Once we agree on a path forward you can just make a pull request and take it to the finish line.
+If you’re a developer and want to help with the project, please comment on [open issues](https://github.com/edelstone/tints-and-shades/issues) or create a new one and communicate your intentions. Once we agree on a path forward you can just make a pull request and take it to the finish line.
 
 ## Local development
 
@@ -136,4 +144,4 @@ Many thanks to [Joel Carr](https://github.com/joelcarr), [Sebastian Gutierrez](h
 - Iconography: [Tabler Icons](https://tabler.io/icons)
 - Colors: [#000000](/#colors=000000), [#ffffff](/#colors=ffffff), [#e96443](/#colors=e96443), and [#ca228e](/#colors=ca228e)
 
-Prefer Google's color logic? Try the [Material Design Palette Generator](https://materialpalettes.com).
+Prefer Google’s color logic? Try the [Material Design Palette Generator](https://materialpalettes.com).
