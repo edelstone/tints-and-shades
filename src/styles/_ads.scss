@@ -33,7 +33,7 @@
 
       &-reveal,
       &-large-image {
-        border-radius: $radius;
+        border-radius: $radius-main;
       }
 
       &-tagline {
@@ -44,7 +44,7 @@
       &-cta {
         font-weight: 500;
         color: $black;
-        border-radius: $radius;
+        border-radius: $radius-main;
       }
 
       &-footer {
@@ -70,13 +70,13 @@
     }
 
     img {
-      border-radius: $radius;
+      border-radius: $radius-main;
     }
 
     .carbon-responsive-wrap {
       background-color: $gray-50;
       border-color: $gray-50;
-      border-radius: $radius;
+      border-radius: $radius-main;
     }
 
     .carbon-poweredby {

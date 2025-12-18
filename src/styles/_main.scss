@@ -185,7 +185,7 @@ a {
 
 		a {
 			background: linear-gradient(to right, $orange, $magenta);
-			border-radius: $radius;
+			border-radius: $radius-main;
 			margin-bottom: 0;
 			font-size: 5.6rem;
 			font-weight: 900;
@@ -255,7 +255,7 @@ a {
 			line-height: 2.4rem;
 			display: block;
 			padding: .75rem 1.5rem;
-			border-radius: $radius;
+			border-radius: $radius-main;
 			transition: opacity 200ms linear, bottom 250ms ease-out, visibility 0s linear 250ms;
 			z-index: 1;
 
@@ -293,7 +293,7 @@ a {
 			background: $gray-50;
 			border: 1px solid $gray-200;
 			word-spacing: .25rem;
-			border-radius: $radius;
+			border-radius: $radius-main;
 			resize: none;
 			width: 100%;
 			font-family: $monospace;
@@ -311,7 +311,7 @@ a {
 		border: none;
 		background: $black;
 		color: $white;
-		border-radius: $radius;
+		border-radius: $radius-main;
 		line-height: inherit;
 		cursor: pointer;
 		font-size: 2rem;
@@ -410,7 +410,7 @@ a {
 		background: $gray-600;
 		color: $white;
 		padding: .7rem 1.2rem;
-		border-radius: $radius;
+		border-radius: $radius-main;
 		font-size: 1.4rem;
 		font-weight: 400;
 		line-height: 1.4;
@@ -447,9 +447,13 @@ a {
 }
 
 @include breakpoint('large') {
-	[data-tooltip]::after {
+[data-tooltip]::after {
 		display: none;
 	}
+}
+
+.palette-color-picker-button.is-picker-open[data-tooltip]::after {
+	display: none;
 }
 
 #clr-picker {
@@ -459,6 +463,23 @@ a {
 		border-color: $gray-200;
 		background-color: $gray-50;
 		font-family: $monospace;
+		border-radius: $radius-main;
+		margin-bottom: 10px;
+	}
+
+	.clr-preview {
+		margin-bottom: 10px;
+	}
+
+	.clr-close {
+		width: 100%;
+		margin: 0 10px 10px;
+		font-size: 14px;
+		border-radius: 999px;
+		background-color: $black;
+		color: $white;
+		border-radius: $radius-main;
+		height: 32px;
 	}
 }
 
@@ -500,17 +521,16 @@ a {
 						background: $gray-200;
 					}
 
-					&:not(.is-active):hover,
-					&:not(.is-active):active {
+					&:not(.is-active):is(:hover, :active) {
 						background: $gray-100;
 					}
 
 					&:first-child {
-						border-radius: $radius 0 0 $radius;
+						border-radius: $radius-main 0 0 $radius-main;
 					}
 
 					&:last-child {
-						border-radius: 0 $radius $radius 0;
+						border-radius: 0 $radius-main $radius-main 0;
 					}
 				}
 			}
@@ -535,7 +555,7 @@ a {
 
 			.action-button {
 				border: none;
-				border-radius: $radius;
+				border-radius: $radius-main;
 				padding: 1rem;
 				cursor: pointer;
 				background: $gray-50;
@@ -644,7 +664,7 @@ a {
 					right: -1rem;
 					z-index: 20;
 					background: $white;
-					border-radius: $radius;
+					border-radius: $radius-main;
 					box-shadow: $shadow-main;
 					white-space: nowrap;
 				}
@@ -674,13 +694,13 @@ a {
 					}
 
 					&:first-child {
-						border-top-left-radius: $radius;
-						border-top-right-radius: $radius;
+						border-top-left-radius: $radius-main;
+						border-top-right-radius: $radius-main;
 					}
 
 					&:last-child {
-						border-bottom-left-radius: $radius;
-						border-bottom-right-radius: $radius;
+						border-bottom-left-radius: $radius-main;
+						border-bottom-right-radius: $radius-main;
 					}
 				}
 			}
@@ -729,7 +749,7 @@ a {
 							height: 4rem;
 							width: 4rem;
 							opacity: 0;
-							border-radius: $radius;
+							border-radius: $radius-main;
 							box-shadow: $shadow-main;
 							background-color: $white;
 							transform: translate(-50%, -45%);
@@ -742,16 +762,12 @@ a {
 						}
 
 						&:hover .copy-indicator-copy,
-						&:focus-visible .copy-indicator-copy,
-						&:hover .copy-indicator-picker,
-						&:focus-visible .copy-indicator-picker,
-						&.is-picker-open .copy-indicator-picker {
+						&:focus-visible .copy-indicator-copy {
 							opacity: 1;
 							transform: translate(-50%, -50%);
 						}
 
-						&:not(.copied):active .copy-indicator-copy,
-						&:not(.copied):active .copy-indicator-picker {
+						&:not(.copied):active .copy-indicator-copy {
 							opacity: .75;
 							transform: translate(-50%, -50%) scale(.9);
 						}
@@ -771,13 +787,6 @@ a {
 								display: none;
 							}
 						}
-
-						&.hex-color-picker {
-							svg {
-								width: 2.2rem;
-								height: 2.2rem;
-							}
-						}
 					}
 				}
 			}
@@ -790,7 +799,7 @@ a {
 	width: min(50rem, 100vw);
 	max-height: 60rem;
 	border: 1px solid $gray-200;
-	border-radius: $radius;
+	border-radius: $radius-main;
 	padding: 1.6rem;
 	box-shadow: 0 20px 70px rgba(0, 0, 0, .25);
 	background: $white;
@@ -917,7 +926,7 @@ a {
 				cursor: pointer;
 				font-weight: 500;
 				border: 1px solid transparent;
-				border-radius: $radius $radius 0 0;
+				border-radius: $radius-main $radius-main 0 0;
 				border-bottom: none;
 				font-size: 1.6rem;
 				user-select: none;
@@ -938,11 +947,11 @@ a {
 				margin: 0;
 				padding: 1.8rem;
 				flex: 1 1 auto;
-				border-radius: $radius;
+				border-radius: $radius-main;
 				background-color: $gray-50;
 
 				&.is-first-tab-active {
-					border-radius: 0 $radius $radius $radius;
+					border-radius: 0 $radius-main $radius-main $radius-main;
 				}
 
 				&-code {
@@ -994,7 +1003,7 @@ a {
 				font-size: 1.4rem;
 				line-height: 1.5;
 				padding: 1.2rem 1.4rem;
-				border-radius: $radius;
+				border-radius: $radius-main;
 				border: none;
 				background: $gray-50;
 				font-family: $monospace;
@@ -1044,7 +1053,7 @@ a {
 		white-space: normal;
 		display: inline-block;
 		padding: 1rem 2rem;
-		border-radius: $radius;
+		border-radius: $radius-main;
 		color: $white;
 		background-color: $black;
 		z-index: 1;
@@ -1116,7 +1125,7 @@ a {
 		background: $gray-100;
 		font-size: 90%;
 		padding: .2rem .6rem;
-		border-radius: $radius;
+		border-radius: $radius-main;
 		font-family: $monospace;
 	}
 
@@ -1143,7 +1152,7 @@ a {
 	color: $black;
 	display: inline-block;
 	padding: 4rem 8rem;
-	border-radius: $radius;
+	border-radius: $radius-main;
 
 	h2 {
 		font-weight: 900;

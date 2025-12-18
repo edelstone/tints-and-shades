@@ -355,27 +355,23 @@
     });
   };
 
+  const getColorCellMarkup = (hexValue, prefix, baseClassName, rowTypeAttribute) => {
+    const copyIcon = getIconMarkup("icon-copy-template");
+    const checkIcon = getIconMarkup("icon-check-template");
+    const ariaLabel = `Copy ${prefix}${hexValue.toUpperCase()}`;
+    return `<td tabindex="0" role="button" aria-label="${ariaLabel}" class="hex-color${baseClassName}" style="background-color:#${hexValue}" data-clipboard-text="${prefix}${hexValue}"${rowTypeAttribute}>
+      <span class="copy-indicator copy-indicator-copy" aria-hidden="true">${copyIcon}</span>
+      <span class="copy-indicator copy-indicator-check" aria-hidden="true">${checkIcon}</span>
+    </td>`;
+  };
+
   const makeTableRowColors = (colors, displayType, colorPrefix, options = {}) => colors.map((colorItem, index) => {
-    const enableBasePicker = options.enableBasePicker && index === 0 && typeof options.colorIndex === "number";
     const baseClassName = index === 0 ? " hex-color--base" : "";
-    const colorPickerIcon = enableBasePicker ? getIconMarkup("icon-color-picker-template") : "";
     const hexValue = typeof colorItem === "string" ? colorItem : colorItem.hex;
     const prefix = colorPrefix || "";
     const rowTypeAttribute = options.rowType ? ` data-row-type="${options.rowType}"` : "";
     if (displayType === "colors") {
-      if (enableBasePicker) {
-        const ariaLabel = `Adjust #${hexValue.toUpperCase()} with the color picker`;
-        return `<td tabindex="0" role="button" aria-label="${ariaLabel}" class="hex-color${baseClassName} hex-color-picker" style="background-color:#${hexValue}" data-color-index="${options.colorIndex}" data-color-hex="${hexValue}"${rowTypeAttribute}>
-          <span class="copy-indicator copy-indicator-picker" aria-hidden="true">${colorPickerIcon}</span>
-        </td>`;
-      }
-      const copyIcon = getIconMarkup("icon-copy-template");
-      const checkIcon = getIconMarkup("icon-check-template");
-      const ariaLabel = `Copy ${prefix}${hexValue.toUpperCase()}`;
-      return `<td tabindex="0" role="button" aria-label="${ariaLabel}" class="hex-color${baseClassName}" style="background-color:#${hexValue}" data-clipboard-text="${prefix}${hexValue}">
-        <span class="copy-indicator copy-indicator-copy" aria-hidden="true">${copyIcon}</span>
-        <span class="copy-indicator copy-indicator-check" aria-hidden="true">${checkIcon}</span>
-      </td>`;
+      return getColorCellMarkup(hexValue, prefix, baseClassName, rowTypeAttribute);
     }
     return `<td class="hex-value"><code>${prefix}${hexValue.toUpperCase()}</code></td>`;
   }).join("");
@@ -515,9 +511,12 @@
       if (!tableContainer || !context) return false;
       const { colorIndex, rowType } = context;
       if (!Number.isInteger(colorIndex)) return false;
-      const selectorParts = [`.hex-color-picker[data-color-index="${colorIndex}"]`];
-      if (rowType) selectorParts.push(`[data-row-type="${rowType}"]`);
-      const focusTarget = tableContainer.querySelector(selectorParts.join(""));
+      const rowAttribute = rowType ? `[data-row-type="${rowType}"]` : "";
+      const selectors = [
+        `.palette-color-picker-button[data-color-index="${colorIndex}"]${rowAttribute}`,
+        `.hex-color-picker[data-color-index="${colorIndex}"]${rowAttribute}`
+      ];
+      const focusTarget = tableContainer.querySelector(selectors.join(","));
       if (focusTarget && typeof focusTarget.focus === "function") {
         try {
           focusTarget.focus({ preventScroll: true });
@@ -1052,6 +1051,7 @@
 
         const headerRow = buildTableHeader(tintShadeCount);
         const filterIcon = getIconMarkup("icon-color-filter-template");
+        const colorPickerIcon = getIconMarkup("icon-color-picker-template");
         const plusIcon = getIconMarkup("icon-plus-template");
         const closeIcon = getIconMarkup("icon-x-template");
         const complementDropdownMarkup = `<div class="palette-complement-dropdown">
@@ -1063,9 +1063,11 @@
             <button type="button" class="palette-complement-dropdown-item" role="menuitem" tabindex="-1" data-palette-index="${colorIndex}" data-dropdown-action="triadic">Triadic</button>
           </div>
         </div>`;
+        const normalizedBaseHex = color ? color.replace(/^#/, "") : "";
+        const paletteColorPickerButton = `<button type="button" class="palette-color-picker-button palette-titlebar-action" data-tooltip="Edit base color" data-color-index="${colorIndex}" data-color-hex="${normalizedBaseHex}" data-row-type="base" aria-label="Adjust ${paletteLabel} base color">${colorPickerIcon}</button>`;
         const duplicateButton = `<button type="button" class="palette-duplicate-button palette-titlebar-action" data-tooltip="Duplicate" data-palette-index="${colorIndex}" aria-label="Duplicate ${paletteLabel} palette">${plusIcon}</button>`;
         const removeButton = `<button type="button" class="palette-close-button palette-titlebar-action" data-tooltip="Remove" data-palette-index="${colorIndex}" aria-label="Remove ${paletteLabel} palette">${closeIcon}</button>`;
-        const paletteNameMarkup = `<div class="palette-titlebar" role="heading" aria-level="2"><span class="palette-titlebar-name">${paletteLabel}</span><div class="palette-titlebar-controls">${complementDropdownMarkup}${duplicateButton}${removeButton}</div></div>`;
+        const paletteNameMarkup = `<div class="palette-titlebar" role="heading" aria-level="2"><span class="palette-titlebar-name">${paletteLabel}</span><div class="palette-titlebar-controls">${paletteColorPickerButton}${complementDropdownMarkup}${duplicateButton}${removeButton}</div></div>`;
         const isEntering = enteringIndexesSet.has(colorIndex);
         const enteringAttr = isEntering ? ' data-entering="true"' : "";
         const tableMarkup = `<div class="palette-wrapper" role="region" aria-label="${paletteLabel}" data-palette-index="${colorIndex}"${enteringAttr}>${paletteNameMarkup}<div class="palette-table"><table><thead>${headerRow}</thead><tbody>${paletteRows.join("")}</tbody></table></div></div>`;
@@ -1096,7 +1098,7 @@
         tableContainer.addEventListener("keydown", (event) => {
           const target = event.target;
           if (!target || !target.classList || !target.classList.contains("hex-color")) return;
-          if (target.closest && target.closest(".hex-color-picker")) return;
+          if (target.closest && target.closest(".palette-color-picker-button")) return;
           if (!isActivationKey(event)) return;
           event.preventDefault();
           target.click();
