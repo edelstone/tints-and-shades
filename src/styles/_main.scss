@@ -596,6 +596,7 @@ a {
 
 				&-controls {
 					display: flex;
+					align-items: center;
 					gap: 1.2rem;
 				}
 
@@ -623,6 +624,63 @@ a {
 					svg {
 						width: 2rem;
 						height: 2rem;
+					}
+				}
+			}
+
+			.palette-complement-dropdown {
+				position: relative;
+				display: inline-flex;
+
+				&-toggle {
+					position: relative;
+					z-index: 2;
+				}
+
+				&-menu {
+					display: none;
+					position: absolute;
+					top: calc(100% + .4rem);
+					right: -1rem;
+					z-index: 20;
+					background: $white;
+					border-radius: $radius;
+					box-shadow: $shadow-main;
+					white-space: nowrap;
+				}
+
+				&.is-open {
+					.palette-complement-dropdown-menu {
+						display: flex;
+						flex-direction: column;
+					}
+				}
+
+				&-item {
+					border: none;
+					background: transparent;
+					color: $black;
+					font-size: 1.4rem;
+					line-height: 1.4;
+					text-align: left;
+					width: 100%;
+					padding: .8rem 1.2rem;
+					cursor: pointer;
+					transition: background 150ms ease;
+					overflow: hidden;
+
+					&:is(:hover, :focus-visible) {
+						background: $gray-100;
+					}
+
+					&:first-child {
+						border-top-left-radius: $radius;
+						border-top-right-radius: $radius;
+					}
+
+					&:last-child {
+						border-bottom-left-radius: $radius;
+						border-bottom-right-radius: $radius;
 					}
 				}
 			}
@@ -1041,7 +1099,7 @@ a {
 	}
 
 	h3 {
-		margin: 2rem 0 0;
+		margin: 2rem 0 -.5rem;
 	}
 
 	p,

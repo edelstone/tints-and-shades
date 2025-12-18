@@ -80,8 +80,8 @@ html.darkmode-active {
     }
 
     [data-tooltip]::after {
-      background: $black;
-      color: $gray-100;
+      background: $gray-500;
+      color: $white;
     }
 
     #clr-picker {
@@ -139,6 +139,21 @@ html.darkmode-active {
           &-name,
           &-action {
             color: $gray-100;
+          }
+        }
+
+        .palette-complement-dropdown {
+          &-menu {
+            background: $black;
+          }
+
+          &-item {
+            color: $gray-100;
+
+            &:is(:hover, :focus-visible) {
+              background: $gray-500;
+              color: $white;
+            }
           }
         }
       }
