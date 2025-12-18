@@ -11,8 +11,11 @@
   let activeContext = { mode: "add", index: null };
   let hasCommittedThisSession = false;
   let shouldCommit = false;
-  let lastTrigger = pickerButton;
   let activePickerCell = null;
+  let isPickerOpen = false;
+  let focusButtonOnEsc = false;
+  let pendingFocusTarget = null;
+  let focusReturnTarget = null;
   const ACTIVATION_KEYS = new Set(["enter", "return", "numpadenter", " ", "space", "spacebar"]);
   const ACTIVATION_KEY_CODES = new Set([13, 32]);
   const isActivationKey = (value) => {
@@ -53,6 +56,104 @@
       el.focus({ preventScroll: true });
     }
   };
+
+  const handlePickerFocusIn = (event) => {
+    if (!isPickerOpen) return;
+    const picker = document.getElementById("clr-picker");
+    if (focusButtonOnEsc) return;
+    if (picker && picker.contains(event.target)) return;
+    pendingFocusTarget = event.target;
+    isPickerOpen = false;
+    Coloris.close();
+  };
+
+  const handlePickerEscape = (event) => {
+    if (!isPickerOpen || event.key !== "Escape") return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    event.stopPropagation();
+    focusButtonOnEsc = true;
+    Coloris.close();
+  };
+
+  const getPickerFocusableElements = () => {
+    const picker = document.getElementById("clr-picker");
+    if (!picker) return [];
+    return Array.from(picker.querySelectorAll("input, button, [tabindex]")).filter((element) => {
+      if (element.disabled) return false;
+      if (typeof element.tabIndex === "number" && element.tabIndex < 0) return false;
+      if (!(element instanceof HTMLElement)) return false;
+      return element.offsetParent !== null || element.getClientRects().length > 0;
+    });
+  };
+
+  const getDocumentFocusableElements = () => {
+    const focusableSelectors = [
+      'a[href]',
+      'area[href]',
+      'input:not([type="hidden"]):not([disabled])',
+      'select:not([disabled])',
+      'textarea:not([disabled])',
+      'button:not([disabled])',
+      'iframe',
+      '[tabindex]',
+      '[contenteditable="true"]'
+    ];
+    return Array.from(document.querySelectorAll(focusableSelectors.join(","))).filter((element) => {
+      if (!(element instanceof HTMLElement)) return false;
+      if (element.hasAttribute("disabled")) return false;
+      if (typeof element.tabIndex === "number" && element.tabIndex < 0) return false;
+      if (element.closest && element.closest("#clr-picker")) return false;
+      return element.offsetParent !== null || element.getClientRects().length > 0;
+    });
+  };
+
+  const getNextFocusableAfterTrigger = (direction) => {
+    const reference = focusReturnTarget || pickerButton;
+    const focusableElements = getDocumentFocusableElements();
+    if (!focusableElements.length || !reference) return null;
+
+    if (reference === pickerButton && direction > 0 && submitButton) {
+      return submitButton;
+    }
+
+    const currentIndex = focusableElements.indexOf(reference);
+    if (currentIndex === -1) {
+      return direction > 0 ? focusableElements[0] : focusableElements[focusableElements.length - 1];
+    }
+
+    const nextIndex = currentIndex + direction;
+    if (nextIndex < 0 || nextIndex >= focusableElements.length) return null;
+    return focusableElements[nextIndex];
+  };
+
+  const handlePickerTabNavigation = (event) => {
+    if (!isPickerOpen || event.key !== "Tab") return;
+    const picker = document.getElementById("clr-picker");
+    if (!picker || !picker.contains(event.target)) return;
+
+    const focusableElements = getPickerFocusableElements();
+    if (!focusableElements.length) return;
+
+    const firstFocusable = focusableElements[0];
+    const lastFocusable = focusableElements[focusableElements.length - 1];
+    const shouldExitForward = !event.shiftKey && event.target === lastFocusable;
+    const shouldExitBackward = event.shiftKey && event.target === firstFocusable;
+    if (!shouldExitForward && !shouldExitBackward) return;
+
+    const direction = shouldExitBackward ? -1 : 1;
+    const nextElement = getNextFocusableAfterTrigger(direction);
+    if (!nextElement) return;
+
+    event.preventDefault();
+    pendingFocusTarget = nextElement;
+    focusReturnTarget = null;
+    Coloris.close();
+  };
+
+  document.addEventListener("focusin", handlePickerFocusIn);
+  document.addEventListener("keydown", handlePickerEscape);
+  document.addEventListener("keydown", handlePickerTabNavigation, true);
 
   const normalizeHex = (value) => {
     if (!value) return "";
@@ -165,21 +266,6 @@
     }
     hasCommittedThisSession = true;
     Coloris.close();
-    focusEl(lastTrigger || pickerButton);
-  };
-
-  const focusPickerStartControl = () => {
-    const colorValueInput = document.getElementById("clr-color-value");
-    const closeButton = document.getElementById("clr-close");
-
-    if (colorValueInput) {
-      colorValueInput.blur();
-      if (typeof colorValueInput.setSelectionRange === "function") {
-        colorValueInput.setSelectionRange(0, 0);
-      }
-    }
-
-    focusEl(closeButton || pickerButton);
   };
 
   const wireCloseButton = () => {
@@ -213,6 +299,19 @@
     });
   };
 
+  const focusPickerTextInput = () => {
+    const colorValueInput = document.getElementById("clr-color-value");
+    if (!colorValueInput) return;
+    focusEl(colorValueInput);
+    if (typeof colorValueInput.select === "function") {
+      colorValueInput.select();
+      return;
+    }
+    if (typeof colorValueInput.setSelectionRange === "function") {
+      colorValueInput.setSelectionRange(0, colorValueInput.value.length);
+    }
+  };
+
   const openPicker = ({ target, baseHex, mode, index, rowType = null }) => {
     activeContext = {
       mode,
@@ -221,14 +320,17 @@
     };
     hasCommittedThisSession = false;
     shouldCommit = false;
-    lastTrigger = target || pickerButton;
+    focusButtonOnEsc = false;
+    focusReturnTarget = target || null;
     activatePickerCell(target);
     positionPickerInput(target || pickerButton);
     Coloris.setInstance("#color-picker-input", { themeMode: getThemeMode(), parent: "body" });
     setPickerBaseColor(baseHex);
     pendingHex = "";
+    isPickerOpen = true;
+    pendingFocusTarget = null;
     setTimeout(wireCloseButton, 0);
-    setTimeout(focusPickerStartControl, 0);
+    setTimeout(focusPickerTextInput, 0);
     pickerInput.dispatchEvent(new Event("click", { bubbles: true }));
   };
 
@@ -239,12 +341,16 @@
     parent: "body",
     alpha: false,
     format: "hex",
-    focusInput: false,
-    selectInput: false,
-    closeButton: false,
+    focusInput: true,
+    selectInput: true,
+    closeButton: true,
     wrap: false,
     margin: 6,
     defaultColor,
+    closeLabel: "Select",
+    a11y: {
+      close: "Select",
+    },
     onChange: (color) => {
       pendingHex = normalizeHex(color);
     }
@@ -258,7 +364,24 @@
     shouldCommit = false;
     activePickerAnchor = null;
     clearActivePickerCell();
-    focusEl(lastTrigger || pickerButton);
+    isPickerOpen = false;
+    if (focusButtonOnEsc) {
+      focusEl(focusReturnTarget || pickerButton);
+      focusButtonOnEsc = false;
+      focusReturnTarget = null;
+      return;
+    }
+    if (pendingFocusTarget) {
+      const target = pendingFocusTarget;
+      pendingFocusTarget = null;
+      setTimeout(() => focusEl(target), 0);
+      focusReturnTarget = null;
+      return;
+    }
+    if (focusReturnTarget) {
+      focusEl(focusReturnTarget);
+      focusReturnTarget = null;
+    }
   });
 
   pickerButton.addEventListener("click", () => {
