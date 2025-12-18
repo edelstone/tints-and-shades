@@ -36,7 +36,7 @@ I've also heard it's useful for teachers, data professionals, and people who mak
 
 ## Related colors
 
-In addition to generating tints and shades from a single base color, you can also add related palettes based on common color-wheel relationships. These palettes shift the hue while preserving the original saturation and lightness.
+In addition to generating tints and shades from a single base color, you can also add related palettes based on common color-wheel relationships. These palettes shift the hue while preserving the original saturation and lightness, which is optimal for most color systems.
 
 ### Complementary
 
