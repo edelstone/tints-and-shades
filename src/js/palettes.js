@@ -123,6 +123,8 @@
     window.location.hash = hashString;
   };
 
+  const TOOLTIP_CLEARANCE = 40;
+
   const enableComplementTooltip = (toggleButton) => {
     if (!toggleButton) return;
     const stored = toggleButton.dataset.complementTooltip;
@@ -808,12 +810,13 @@
       const absoluteTop = rect.top + window.scrollY;
       const absoluteBottom = absoluteTop + rect.height;
       const scrollMargin = 16;
+      const safeScrollMargin = Math.max(scrollMargin, TOOLTIP_CLEARANCE);
       const viewportTop = window.scrollY;
       const viewportBottom = viewportTop + window.innerHeight;
       let targetScroll = null;
 
       if (absoluteTop < viewportTop + scrollMargin) {
-        targetScroll = absoluteTop - scrollMargin;
+        targetScroll = absoluteTop - safeScrollMargin;
       } else if (absoluteBottom > viewportBottom - scrollMargin) {
         targetScroll = absoluteBottom - window.innerHeight + scrollMargin;
       }
@@ -836,6 +839,7 @@
       const last = wrappers[rangeEnd];
       if (!first || !last) return;
       const scrollMargin = 16;
+      const safeScrollMargin = Math.max(scrollMargin, TOOLTIP_CLEARANCE);
       const viewportTop = window.scrollY + scrollMargin;
       const viewportBottom = window.scrollY + window.innerHeight - scrollMargin;
       const rangeTop = first.getBoundingClientRect().top + window.scrollY;
@@ -844,11 +848,11 @@
       let targetScroll = null;
 
       if (rangeBottom - rangeTop <= availableHeight) {
-        targetScroll = rangeTop - scrollMargin;
+        targetScroll = rangeTop - safeScrollMargin;
       } else if (rangeBottom > viewportBottom) {
         targetScroll = rangeBottom - window.innerHeight + scrollMargin;
       } else if (rangeTop < viewportTop) {
-        targetScroll = rangeTop - scrollMargin;
+        targetScroll = rangeTop - safeScrollMargin;
       }
 
       if (targetScroll !== null && targetScroll !== window.scrollY) {
@@ -1162,7 +1166,7 @@
       if (!skipScroll) {
         const scrollElement = document.getElementById("scroll-top") || document.getElementById("tints-and-shades");
         if (scrollElement) {
-          smoothScrollTo(scrollElement, 500, -16);
+          smoothScrollTo(scrollElement, 500, -TOOLTIP_CLEARANCE);
         }
       }
 
