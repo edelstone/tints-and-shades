@@ -447,9 +447,13 @@ a {
 }
 
 @include breakpoint('large') {
-	[data-tooltip]::after {
+[data-tooltip]::after {
 		display: none;
 	}
+}
+
+.palette-color-picker-button.is-picker-open[data-tooltip]::after {
+	display: none;
 }
 
 #clr-picker {
@@ -470,13 +474,12 @@ a {
 	.clr-close {
 		width: 100%;
 		margin: 0 10px 10px;
-		height: auto;
-		padding: .75rem;
-		font-size: 1.4rem;
+		font-size: 14px;
 		border-radius: 999px;
 		background-color: $black;
 		color: $white;
 		border-radius: $radius-main;
+		height: 32px;
 	}
 }
 
@@ -759,16 +762,12 @@ a {
 						}
 
 						&:hover .copy-indicator-copy,
-						&:focus-visible .copy-indicator-copy,
-						&:hover .copy-indicator-picker,
-						&:focus-visible .copy-indicator-picker,
-						&.is-picker-open .copy-indicator-picker {
+						&:focus-visible .copy-indicator-copy {
 							opacity: 1;
 							transform: translate(-50%, -50%);
 						}
 
-						&:not(.copied):active .copy-indicator-copy,
-						&:not(.copied):active .copy-indicator-picker {
+						&:not(.copied):active .copy-indicator-copy {
 							opacity: .75;
 							transform: translate(-50%, -50%) scale(.9);
 						}
@@ -786,13 +785,6 @@ a {
 						@media (pointer: coarse) {
 							.copy-indicator-copy {
 								display: none;
-							}
-						}
-
-						&.hex-color-picker {
-							svg {
-								width: 2.2rem;
-								height: 2.2rem;
 							}
 						}
 					}

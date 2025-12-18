@@ -45,7 +45,7 @@
 
   const activatePickerCell = (target) => {
     clearActivePickerCell();
-    if (target && target.classList && target.classList.contains("hex-color-picker")) {
+    if (target && target.classList && target.classList.contains("palette-color-picker-button")) {
       activePickerCell = target;
       activePickerCell.classList.add("is-picker-open");
     }
@@ -345,7 +345,7 @@
     selectInput: true,
     closeButton: true,
     wrap: false,
-    margin: 6,
+    margin: 12,
     defaultColor,
     closeLabel: "Select",
     a11y: {
@@ -404,14 +404,14 @@
   });
 
   document.addEventListener("click", (event) => {
-    const pickerCell = event.target.closest(".hex-color-picker");
-    if (!pickerCell) return;
+    const palettePickerButton = event.target.closest(".palette-color-picker-button");
+    if (!palettePickerButton) return;
     event.preventDefault();
-    const colorIndex = parseInt(pickerCell.getAttribute("data-color-index"), 10);
-    const colorHex = normalizeHex(pickerCell.getAttribute("data-color-hex"));
-    const rowType = pickerCell.getAttribute("data-row-type") || null;
+    const colorIndex = parseInt(palettePickerButton.getAttribute("data-color-index"), 10);
+    const colorHex = normalizeHex(palettePickerButton.getAttribute("data-color-hex"));
+    const rowType = palettePickerButton.getAttribute("data-row-type") || null;
     openPicker({
-      target: pickerCell,
+      target: palettePickerButton,
       baseHex: colorHex ? `#${colorHex}` : null,
       mode: "edit",
       index: colorIndex,
@@ -423,7 +423,7 @@
   if (paletteContainer) {
     paletteContainer.addEventListener("keydown", (event) => {
       if (!isActivationKey(event)) return;
-      const pickerCell = event.target.closest(".hex-color-picker");
+      const pickerCell = event.target.closest(".palette-color-picker-button");
       if (!pickerCell) return;
       event.preventDefault();
       event.stopPropagation();
