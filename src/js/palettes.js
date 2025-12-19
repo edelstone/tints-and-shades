@@ -1139,7 +1139,7 @@
 
         const headerRow = buildTableHeader(tintShadeCount);
         const filterIcon = getIconMarkup("icon-color-filter-template");
-        const colorPickerIcon = getIconMarkup("icon-color-picker-template");
+        const pencilIcon = getIconMarkup("icon-pencil-template");
         const plusIcon = getIconMarkup("icon-plus-template");
         const closeIcon = getIconMarkup("icon-x-template");
         const complementDropdownMarkup = `<div class="palette-complement-dropdown">
@@ -1152,7 +1152,7 @@
           </div>
         </div>`;
         const normalizedBaseHex = color ? color.replace(/^#/, "") : "";
-        const paletteColorPickerButton = `<button type="button" class="palette-color-picker-button palette-titlebar-action" data-tooltip="Edit base color" data-color-index="${colorIndex}" data-color-hex="${normalizedBaseHex}" data-row-type="base" aria-label="Adjust ${paletteLabel} base color">${colorPickerIcon}</button>`;
+        const paletteColorPickerButton = `<button type="button" class="palette-color-picker-button palette-titlebar-action" data-tooltip="Edit base color" data-color-index="${colorIndex}" data-color-hex="${normalizedBaseHex}" data-row-type="base" aria-label="Adjust ${paletteLabel} base color">${pencilIcon}</button>`;
         const duplicateButton = `<button type="button" class="palette-duplicate-button palette-titlebar-action" data-tooltip="Duplicate" data-palette-index="${colorIndex}" aria-label="Duplicate ${paletteLabel} palette">${plusIcon}</button>`;
         const removeButton = `<button type="button" class="palette-close-button palette-titlebar-action" data-tooltip="Remove" data-palette-index="${colorIndex}" aria-label="Remove ${paletteLabel} palette">${closeIcon}</button>`;
         const paletteNameMarkup = `<div class="palette-titlebar" role="heading" aria-level="2"><span class="palette-titlebar-name">${paletteLabel}</span><div class="palette-titlebar-controls">${paletteColorPickerButton}${complementDropdownMarkup}${duplicateButton}${removeButton}</div></div>`;
