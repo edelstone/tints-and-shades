@@ -24,7 +24,7 @@ body {
 body {
 	font-size: 1.8rem;
 	line-height: 1.618;
-	font-family: $brand-font;
+	font-family: $font-primary;
 	font-weight: normal;
 	text-align: center;
 	color: $black;
@@ -289,7 +289,7 @@ a {
 			border-radius: $radius-main;
 			resize: none;
 			width: 100%;
-			font-family: $monospace;
+			font-family: $font-monospace;
 
 			@media (pointer: coarse) {
 				font-size: 16px;
@@ -458,7 +458,7 @@ a {
 	input.clr-color {
 		border-color: $gray-200;
 		background-color: $gray-50;
-		font-family: $monospace;
+		font-family: $font-monospace;
 	}
 }
 
@@ -708,7 +708,7 @@ a {
 						padding: .5rem 0 2rem;
 						text-transform: lowercase;
 						line-height: normal;
-						font-family: $monospace;
+						font-family: $font-monospace;
 
 						code {
 							font-size: 1.3rem;
@@ -940,7 +940,7 @@ a {
 					width: 100%;
 					text-shadow: none;
 					font-size: 1.4rem;
-					font-family: $monospace;
+					font-family: $font-monospace;
 					color: $black;
 					margin: -2.7rem 0 -5.4rem;
 
@@ -987,7 +987,7 @@ a {
 				border-radius: $radius-main;
 				border: none;
 				background-color: $gray-50;
-				font-family: $monospace;
+				font-family: $font-monospace;
 				resize: none;
 				min-height: 4.5rem;
 				color: $black;
@@ -1107,7 +1107,7 @@ a {
 		font-size: 90%;
 		padding: .2rem .6rem;
 		border-radius: $radius-main;
-		font-family: $monospace;
+		font-family: $font-monospace;
 	}
 
 	.anchorjs-link {
