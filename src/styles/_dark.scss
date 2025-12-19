@@ -2,7 +2,6 @@
 
 html.darkmode-active {
   background-color: $gray-600;
-  color: $gray-100;
   color-scheme: dark;
 
   body {
@@ -13,8 +12,7 @@ html.darkmode-active {
       color: $gray-100;
       border-color: $gray-100;
 
-      &:hover,
-      &:active {
+      &:is(:hover, :active) {
         border-color: $magenta;
       }
     }
@@ -24,8 +22,7 @@ html.darkmode-active {
         .theme-toggle {
           background-color: $black-transparent;
 
-          &:hover,
-          &:active {
+          &:is(:hover, :active) {
             background-color: $black;
           }
 
@@ -50,8 +47,7 @@ html.darkmode-active {
           color: $gray-100;
           border-color: $black-transparent;
 
-          &:hover,
-          &:active {
+          &:is(:hover, :active) {
             background-color: $black;
           }
         }
@@ -106,8 +102,7 @@ html.darkmode-active {
             background-color: $black;
           }
 
-          &:not(.is-active):hover,
-          &:not(.is-active):active {
+          &:not(.is-active):is(:hover, :active) {
             background-color: $black;
           }
         }
@@ -116,8 +111,7 @@ html.darkmode-active {
           background-color: $black-transparent;
           color: $gray-100;
 
-          &:hover,
-          &:active {
+          &:is(:hover, :active) {
             background-color: $black;
           }
 

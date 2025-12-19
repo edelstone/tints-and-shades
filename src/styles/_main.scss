@@ -15,6 +15,12 @@ html {
 	}
 }
 
+html,
+body {
+	background-color: $white;
+	transition: background-color 220ms ease;
+}
+
 body {
 	font-size: 1.8rem;
 	line-height: 1.618;
@@ -22,7 +28,6 @@ body {
 	font-weight: normal;
 	text-align: center;
 	color: $black;
-	transition: background-color 220ms ease, color 220ms ease, border-color 220ms ease;
 
 	&.modal-open {
 		overflow: hidden;
@@ -36,8 +41,7 @@ a {
 	text-decoration: none;
 	border-bottom: 3px solid $black;
 
-	&:hover,
-	&:active {
+	&:is(:hover, :active) {
 		border-color: $magenta;
 	}
 }
@@ -88,8 +92,7 @@ a {
 				padding: 0;
 				border-radius: 50%;
 
-				&:hover,
-				&:active {
+				&:is(:hover, :active) {
 					background-color: $gray-100;
 				}
 
@@ -136,8 +139,7 @@ a {
 				top: 3rem;
 			}
 
-			&:hover,
-			&:active {
+			&:is(:hover, :active) {
 				background-color: $gray-100;
 			}
 
@@ -309,8 +311,7 @@ a {
 		font-weight: 400;
 		transition: background 150ms ease-in-out;
 
-		&:hover,
-		&:active {
+		&:is(:hover, :active) {
 			background-color: $magenta;
 		}
 	}
@@ -549,8 +550,7 @@ a {
 					height: 2rem;
 				}
 
-				&:hover,
-				&:active {
+				&:is(:hover, :active) {
 					background-color: $gray-100;
 				}
 
@@ -743,8 +743,7 @@ a {
 							}
 						}
 
-						&:hover .copy-indicator-copy,
-						&:focus-visible .copy-indicator-copy {
+						&:is(:hover, :focus-visible) .copy-indicator-copy {
 							opacity: 1;
 							transform: translate(-50%, -50%);
 						}
