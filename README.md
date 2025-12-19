@@ -28,7 +28,9 @@ Testing shows that the output matches Chrome DevTools’ calculation method as w
 
 ## When would I use this?
 
-It’s perfect if you’ll be:
+Originally created for designer and developer teams, it’s also useful for teachers, data pros, brand strategists, presentation makers, and anyone who works with colors.
+
+It’s perfect for:
 
 - exploring and refining colors visually
 - moving from a single color to a complete system
@@ -37,8 +39,6 @@ It’s perfect if you’ll be:
 - sharing palettes via link or image
 - exporting colors for design tokens, CSS, or JSON
 
-Originally created for designer and developer teams, it’s also useful for teachers, data professionals, brand strategists, and people who make presentations.
-
 ## Calculation method
 
 The given hex color is first converted to RGB. Each RGB component is then calculated independently as follows:
@@ -46,7 +46,7 @@ The given hex color is first converted to RGB. Each RGB component is then calcul
 - **Tints:** `New value = current value + ((255 - current value) x tint factor)`
 - **Shades:** `New value = current value x shade factor`
 
-The new value is rounded if necessary, and then converted back to hex for display.
+The new value is rounded to the nearest whole number (values ending in .5 round up), then converted back to hex for display.
 
 ## Example calculation
 
@@ -102,9 +102,7 @@ If you’re a developer and want to help with the project, please comment on [op
 
 ## Local development
 
-This project is built with the [Eleventy static site generator](https://www.11ty.dev) and is deployed to GitHub Pages using GitHub&rsquo;s native Pages deployment via GitHub Actions.
-
-*Prerequisites: Node.js 18+*
+_Prerequisites: Node.js 18+_
 
 1. Clone this project.
 2. Navigate to the project in your terminal.

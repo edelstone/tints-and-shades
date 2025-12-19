@@ -11,10 +11,6 @@ html.darkmode-active {
     a {
       color: $gray-100;
       border-color: $gray-100;
-
-      &:is(:hover, :active) {
-        border-color: $magenta;
-      }
     }
 
     .header {
@@ -22,8 +18,12 @@ html.darkmode-active {
         .theme-toggle {
           background-color: $black-transparent;
 
-          &:is(:hover, :active) {
+          &:hover {
             background-color: $black;
+          }
+
+          &:active {
+            background-color: color-mix(in srgb, $black 85%, $white);
           }
 
           &-icon {
@@ -47,8 +47,12 @@ html.darkmode-active {
           color: $gray-100;
           border-color: $black-transparent;
 
-          &:is(:hover, :active) {
+          &:hover {
             background-color: $black;
+          }
+
+          &:active {
+            background-color: color-mix(in srgb, $black 85%, $white);
           }
         }
 
@@ -102,8 +106,12 @@ html.darkmode-active {
             background-color: $black;
           }
 
-          &:not(.is-active):is(:hover, :active) {
+          &:hover {
             background-color: $black;
+          }
+
+          &:active {
+            background-color: color-mix(in srgb, $black 85%, $white);
           }
         }
 
@@ -111,14 +119,22 @@ html.darkmode-active {
           background-color: $black-transparent;
           color: $gray-100;
 
-          &:is(:hover, :active) {
+          &:hover {
             background-color: $black;
+          }
+
+          &:active {
+            background-color: color-mix(in srgb, $black 85%, $white);
           }
 
           &.is-active {
             border-color: $gray-400;
             box-shadow: inset 0 0 0 1px $gray-400;
             background-color: $black;
+
+            &:active {
+              background-color: color-mix(in srgb, $black 85%, $white);
+            }
           }
         }
       }
@@ -126,9 +142,20 @@ html.darkmode-active {
       #tints-and-shades {
         .palette-titlebar {
 
-          &-name,
+          &-name {
+            color: $gray-100;
+          }
+
           &-action {
             color: $gray-100;
+
+            &:hover {
+              color: $gray-200;
+            }
+
+            &:active {
+              color: $gray-300;
+            }
           }
         }
 
@@ -141,8 +168,12 @@ html.darkmode-active {
             color: $gray-100;
 
             &:is(:hover, :focus-visible) {
-              background-color: $gray-500;
+              background-color: $gray-600;
               color: $white;
+            }
+
+            &:active {
+              background-color: color-mix(in srgb, $gray-600 92%, $white);
             }
           }
         }

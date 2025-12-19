@@ -41,7 +41,7 @@ a {
 	text-decoration: none;
 	border-bottom: 3px solid $black;
 
-	&:is(:hover, :active) {
+	&:hover {
 		border-color: $magenta;
 	}
 }
@@ -92,8 +92,12 @@ a {
 				padding: 0;
 				border-radius: 50%;
 
-				&:is(:hover, :active) {
+				&:hover {
 					background-color: $gray-100;
+				}
+
+				&:active {
+					background-color: color-mix(in srgb, $gray-100 92%, $black);
 				}
 
 				&-icon {
@@ -139,8 +143,12 @@ a {
 				top: 3rem;
 			}
 
-			&:is(:hover, :active) {
+			&:hover {
 				background-color: $gray-100;
+			}
+
+			&:active {
+				background-color: color-mix(in srgb, $gray-100 92%, $black);
 			}
 
 			&-header {
@@ -309,10 +317,14 @@ a {
 		cursor: pointer;
 		font-size: 2rem;
 		font-weight: 400;
-		transition: background 150ms ease-in-out;
+		transition: background-color 150ms ease-in-out;
 
-		&:is(:hover, :active) {
+		&:hover {
 			background-color: $magenta;
+		}
+
+		&:active {
+			background-color: color-mix(in srgb, $magenta 92%, $white);
 		}
 	}
 
@@ -496,12 +508,20 @@ a {
 						width: 4rem;
 					}
 
-					&.is-active {
-						background-color: $gray-200;
+					&:hover {
+						background-color: $gray-100;
 					}
 
-					&:not(.is-active):is(:hover, :active) {
-						background-color: $gray-100;
+					&:active {
+						background-color: color-mix(in srgb, $gray-100 92%, $black);
+					}
+
+					&.is-active {
+						background-color: $gray-200;
+
+						&:active {
+							background-color: color-mix(in srgb, $gray-200 92%, $black);
+						}
 					}
 
 					&:first-child {
@@ -550,12 +570,20 @@ a {
 					height: 2rem;
 				}
 
-				&:is(:hover, :active) {
+				&:hover {
 					background-color: $gray-100;
+				}
+
+				&:active {
+					background-color: color-mix(in srgb, $gray-100 92%, $black);
 				}
 
 				&.is-active {
 					background-color: $gray-200;
+
+					&:active {
+						background-color: color-mix(in srgb, $gray-200 92%, $black);
+					}
 				}
 			}
 		}
@@ -623,6 +651,14 @@ a {
 						width: 2rem;
 						height: 2rem;
 					}
+
+					&:hover {
+						color: $gray-500;
+					}
+
+					&:active {
+						color: $gray-400;
+					}
 				}
 			}
 
@@ -666,13 +702,12 @@ a {
 					cursor: pointer;
 					overflow: hidden;
 
-					&:hover {
-						transition: background 150ms ease;
+					&:is(:hover, :focus-visible) {
 						background-color: $gray-100;
 					}
 
-					&:focus-visible {
-						background-color: $gray-100;
+					&:active {
+						background-color: color-mix(in srgb, $gray-100 92%, $black);
 					}
 
 					&:first-child {

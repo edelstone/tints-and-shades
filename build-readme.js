@@ -14,7 +14,30 @@ if (!match) {
   throw new Error('README markers not found or misordered in src/about.njk');
 }
 
-const sanitizedContent = match[1]
+const rawReadmeContent = match[1];
+if (!rawReadmeContent.trim()) {
+  throw new Error('README content block is empty in src/about.njk');
+}
+
+const localDevHtml = `<h2>Local development</h2>
+<p><em>Prerequisites: Node.js 18+</em></p>
+<ol>
+  <li>Clone this project.</li>
+  <li>Navigate to the project in your terminal.</li>
+  <li>Install dependencies: <code>npm install</code>.</li>
+  <li>Start the server: <code>npm run start</code>.</li>
+  <li>Navigate to <code>localhost:8080</code> in your browser.</li>
+</ol>`;
+
+const insertLocalDevSection = (content) => {
+  const marker = '<!-- README-INSERT-LOCAL-DEV -->';
+  if (!content.includes(marker)) {
+    throw new Error('README insert marker not found in src/about.njk');
+  }
+  return content.replace(marker, localDevHtml);
+};
+
+const sanitizedContent = insertLocalDevSection(rawReadmeContent)
   .replace(/<!-- README-EXCLUDE-START -->[\s\S]*?<!-- README-EXCLUDE-END -->/g, '')
   .trim();
 
@@ -27,35 +50,11 @@ const normalizeListSpacing = (content) =>
 
 const normalizedMarkdown = normalizeListSpacing(markdownContent);
 
-const localDevSection = `## Local development
+if (!/^## Calculation method\b/m.test(normalizedMarkdown)) {
+  throw new Error('Expected heading missing after README conversion.');
+}
 
-This project is built with the [Eleventy static site generator](https://www.11ty.dev) and is deployed to GitHub Pages using GitHub&rsquo;s native Pages deployment via GitHub Actions.
-
-*Prerequisites: Node.js 18+*
-
-1. Clone this project.
-2. Navigate to the project in your terminal.
-3. Install dependencies: \`npm install\`.
-4. Start the server: \`npm run start\`.
-5. Navigate to \`localhost:8080\` in your browser.`;
-
-const insertLocalDevSection = (content) => {
-  // Guard: don’t insert if it already exists
-  if (/^## Local development\b/m.test(content)) {
-    return content;
-  }
-
-  const marker = '## Support this project';
-  const markerIndex = content.indexOf(marker);
-  if (markerIndex === -1) {
-    return `${content.trimEnd()}\n\n${localDevSection}`;
-  }
-  const before = content.slice(0, markerIndex).trimEnd();
-  const after = content.slice(markerIndex);
-  return `${before}\n\n${localDevSection}\n\n${after}`;
-};
-
-const normalizedMarkdownWithLocalDev = insertLocalDevSection(normalizedMarkdown);
+const normalizedMarkdownWithLocalDev = normalizedMarkdown;
 
 const readmeTemplate = `# [<img src="src/icon.svg" width="28px" alt="" />](https://maketintsandshades.com) &nbsp;[Tint & Shade Generator](https://maketintsandshades.com)
 
