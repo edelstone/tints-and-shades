@@ -762,7 +762,7 @@
         skipFocus: true,
         enteringPaletteIndex: insertionIndex,
         enteringPaletteIndexes: normalizedHexes.map((_, idx) => insertionIndex + idx),
-        enteringFocusContext: { colorIndex: insertionIndex, rowType: "shades" }
+        enteringFocusContext: { colorIndex: insertionIndex, rowType: "base" }
       };
 
       if (ensureRangeVisible && normalizedHexes.length) {
@@ -1029,7 +1029,7 @@
           skipFocus: true,
           enteringPaletteIndex: paletteIndex + 1,
           enteringPaletteIndexes: [paletteIndex + 1],
-          enteringFocusContext: { colorIndex: paletteIndex + 1, rowType: "shades" }
+          enteringFocusContext: { colorIndex: paletteIndex + 1, rowType: "base" }
         });
       }
     };
