@@ -31,12 +31,13 @@ Testing shows that the output matches Chrome DevTools’ calculation method as w
 It’s perfect if you’ll be:
 
 - exploring and refining colors visually
+- moving from a single color to a complete system
 - generating consistent tints and shades for UI states
 - building complementary palettes for accents or secondary UI
-- sharing palettes via URL or image
+- sharing palettes via link or image
 - exporting colors for design tokens, CSS, or JSON
 
-Originally created for designer and developer teams, it’s also useful for teachers, data professionals, and people who make presentations.
+Originally created for designer and developer teams, it’s also useful for teachers, data professionals, brand strategists, and people who make presentations.
 
 ## Calculation method
 
@@ -69,19 +70,19 @@ Let’s say we want tints and shades of [Rebecca Purple](https://meyerweb.com/er
 
 ## Related colors
 
-In addition to generating tints and shades from a single base color, you can also add related palettes based on common color-wheel relationships. These palettes shift the hue while preserving the original saturation and lightness, which is well suited for most color systems.
+In addition to generating tints and shades, you can also add related palettes based on common color-wheel relationships. These palettes shift the hue while preserving the original saturation and lightness, which is well suited for most color systems.
 
 ### Complementary
 
-Adds one new palette using the hue directly opposite the base color (180° away). This produces the strongest contrast and is best when clear visual separation is needed.
+Adds one new palette using the hue directly opposite the base color (180°). This produces the strongest contrast and is best when clear visual separation is needed.
 
 ### Split complementary
 
-Adds two palettes using hues 30° on either side of the complementary color. This keeps contrast high while feeling more flexible and less extreme than a direct complementary pairing.
+Adds two palettes using hues 30° on either side of the complementary color. This keeps contrast high but less extreme than a direct complementary pairing.
 
 ### Analogous
 
-Adds two palettes using hues 30° on either side of the base color. These combinations are low-contrast and cohesive, making them well suited for subtle variation.
+Adds two palettes using hues 30° on either side of the base color. These combinations are low-contrast and cohesive, making them appropriate for subtle variation.
 
 ### Triadic
 
