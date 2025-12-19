@@ -29,7 +29,7 @@ const normalizedMarkdown = normalizeListSpacing(markdownContent);
 
 const localDevSection = `## Local development
 
-This project uses the [Eleventy static site generator](https://www.11ty.dev) and deploys to GitHub Pages using a [GitHub Action from Shohei Ueda](https://github.com/marketplace/actions/github-pages-action).
+This project is built with the [Eleventy static site generator](https://www.11ty.dev) and is deployed to GitHub Pages using GitHub&rsquo;s native Pages deployment via GitHub Actions.
 
 *Prerequisites: Node.js 18+*
 
