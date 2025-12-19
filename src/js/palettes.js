@@ -1,8 +1,5 @@
 (() => {
   let warningTimeout = null;
-  let hexCellKeyHandlerAdded = false;
-  let paletteCloseHandlerAdded = false;
-  let complementDropdownEventsAdded = false;
   const closingPaletteStates = new WeakMap();
   const EMPTY_STATE_SCROLL_DURATION = 500;
 
@@ -27,6 +24,18 @@
       isActivationKey(value.keyCode) ||
       isActivationKey(value.which)
     );
+  };
+  const getEventTargetElement = (event) => {
+    let node = event && event.target;
+    while (node) {
+      if (node instanceof Element) return node;
+      node = node.parentNode;
+    }
+    return null;
+  };
+  const closestFromEvent = (event, selector) => {
+    const target = getEventTargetElement(event);
+    return target ? target.closest(selector) : null;
   };
   const HASH_PARAM_KEYS = {
     colors: "colors",
@@ -184,6 +193,7 @@
   };
 
   const handleDropdownMenuKeydown = (event) => {
+    if (event.defaultPrevented) return;
     const menu = event.currentTarget;
     if (!menu) return;
     const dropdown = menu.closest && menu.closest(".palette-complement-dropdown");
@@ -237,11 +247,9 @@
   };
 
   const handleDropdownToggleKeydown = (event) => {
-    if (!event || !event.target) return;
-    const toggleButton =
-      typeof event.target.closest === "function"
-        ? event.target.closest(".palette-complement-dropdown-toggle")
-        : null;
+    if (event.defaultPrevented) return;
+    if (!event) return;
+    const toggleButton = closestFromEvent(event, ".palette-complement-dropdown-toggle");
     if (!toggleButton) return;
     const dropdown = toggleButton.closest && toggleButton.closest(".palette-complement-dropdown");
     if (!dropdown || !dropdown.classList.contains("is-open")) return;
@@ -297,13 +305,15 @@
   };
 
   const handleDocumentClickForComplementDropdowns = (event) => {
-    if (!event || !event.target) return;
-    if (event.target.closest && event.target.closest(".palette-complement-dropdown")) return;
+    if (!event) return;
+    const target = getEventTargetElement(event);
+    if (!target) return;
+    if (target.closest(".palette-complement-dropdown")) return;
     closeComplementDropdowns();
   };
 
   const handleDocumentKeydownForComplementDropdowns = (event) => {
-    if (!event) return;
+    if (!event || event.defaultPrevented) return;
     if (event.key === "Escape" || event.key === "Esc") {
       closeComplementDropdowns();
     }
@@ -318,11 +328,80 @@
   };
 
   const ensureComplementDropdownListeners = () => {
-    if (complementDropdownEventsAdded) return;
-    document.addEventListener("click", handleDocumentClickForComplementDropdowns);
-    document.addEventListener("keydown", handleDocumentKeydownForComplementDropdowns);
-    document.addEventListener("focusin", handleDocumentFocusInForComplementDropdowns);
-    complementDropdownEventsAdded = true;
+    const handlerStore = window.__tsPalettesHandlers || (window.__tsPalettesHandlers = {});
+    if (handlerStore.bound === true) {
+      document.removeEventListener("click", handlerStore.complementClick);
+      document.removeEventListener("keydown", handlerStore.complementKeydown);
+      document.removeEventListener("focusin", handlerStore.complementFocusIn);
+    }
+    const next = {
+      complementClick: handleDocumentClickForComplementDropdowns,
+      complementKeydown: handleDocumentKeydownForComplementDropdowns,
+      complementFocusIn: handleDocumentFocusInForComplementDropdowns
+    };
+    document.addEventListener("click", next.complementClick);
+    document.addEventListener("keydown", next.complementKeydown);
+    document.addEventListener("focusin", next.complementFocusIn);
+    Object.assign(handlerStore, next, { bound: true });
+  };
+
+  const handleHexCellKeydown = (event) => {
+    if (event.defaultPrevented) return;
+    const target = getEventTargetElement(event);
+    if (!target || !target.classList || !target.classList.contains("hex-color")) return;
+    if (!isActivationKey(event)) return;
+    event.preventDefault();
+    target.click();
+  };
+
+  const handlePaletteTableClick = (event) => {
+    const target = getEventTargetElement(event);
+    if (!target) return;
+    const container = event.currentTarget;
+    if (!container || !container.__tsPaletteHandlers) return;
+    const handlerStore = container.__tsPaletteHandlers;
+    const dropdownToggle = target.closest && target.closest(".palette-complement-dropdown-toggle");
+    if (dropdownToggle) {
+      toggleComplementDropdownMenu(dropdownToggle);
+      return;
+    }
+
+    const dropdownItem = target.closest && target.closest(".palette-complement-dropdown-item");
+    if (dropdownItem) {
+      const paletteIndex = parseInt(dropdownItem.getAttribute("data-palette-index"), 10);
+      if (!Number.isNaN(paletteIndex)) {
+        const action = dropdownItem.getAttribute("data-dropdown-action");
+        if (action === "split-complementary") {
+          handlerStore.toggleSplitComplementaryPalette(paletteIndex);
+        } else if (action === "analogous") {
+          handlerStore.toggleAnalogousPalette(paletteIndex);
+        } else if (action === "triadic") {
+          handlerStore.toggleTriadicPalette(paletteIndex);
+        } else {
+          handlerStore.toggleComplementPalette(paletteIndex);
+        }
+      }
+      closeComplementDropdowns();
+      return;
+    }
+
+    const duplicateTrigger = target.closest && target.closest(".palette-duplicate-button");
+    if (duplicateTrigger) {
+      const paletteIndex = parseInt(duplicateTrigger.getAttribute("data-palette-index"), 10);
+      if (!Number.isNaN(paletteIndex)) {
+        handlerStore.duplicatePaletteAtIndex(paletteIndex);
+      }
+      return;
+    }
+
+    const button = target.closest && target.closest(".palette-close-button");
+    if (!button) return;
+
+    const paletteIndex = parseInt(button.getAttribute("data-palette-index"), 10);
+    if (Number.isNaN(paletteIndex)) return;
+
+    const paletteWrapper = button.closest(".palette-wrapper");
+    handlerStore.requestPaletteRemoval(paletteIndex, paletteWrapper);
   };
 
   const formatPercentLabel = (value) => {
@@ -925,7 +1004,7 @@
       if (window.palettes && typeof window.palettes.createTintsAndShades === "function") {
         window.palettes.createTintsAndShades(settings, false, {
           skipScroll: true,
-          focusPickerContext: { colorIndex: nextFocusIndex, rowType: "shades" },
+          focusPickerContext: { colorIndex: nextFocusIndex, rowType: "base" },
           ensurePaletteInView: nextFocusIndex,
           ensurePaletteSkipDownwardScroll: hasLowerPalette
         });
@@ -1026,6 +1105,15 @@
       });
     };
 
+    tableContainer.__tsPaletteHandlers = {
+      toggleComplementPalette,
+      toggleSplitComplementaryPalette,
+      toggleAnalogousPalette,
+      toggleTriadicPalette,
+      duplicatePaletteAtIndex,
+      requestPaletteRemoval
+    };
+
     const parsedColorsArray = parseColorValues(colorInput.value);
 
     if (parsedColorsArray && parsedColorsArray.length) {
@@ -1094,67 +1182,19 @@
         ensurePaletteVisible(ensurePaletteInView, ensurePaletteSkipDownwardScroll);
       }
 
-      if (!hexCellKeyHandlerAdded) {
-        tableContainer.addEventListener("keydown", (event) => {
-          const target = event.target;
-          if (!target || !target.classList || !target.classList.contains("hex-color")) return;
-          if (target.closest && target.closest(".palette-color-picker-button")) return;
-          if (!isActivationKey(event)) return;
-          event.preventDefault();
-          target.click();
-        });
-        hexCellKeyHandlerAdded = true;
+      if (!tableContainer.dataset.tsHexKeydownBound) {
+        tableContainer.dataset.tsHexKeydownBound = "true";
+        tableContainer.addEventListener("keydown", handleHexCellKeydown);
       }
 
-      if (!paletteCloseHandlerAdded) {
-        tableContainer.addEventListener("click", (event) => {
-          const target = event.target;
-          if (!target) return;
-          const dropdownToggle = target.closest && target.closest(".palette-complement-dropdown-toggle");
-          if (dropdownToggle) {
-            toggleComplementDropdownMenu(dropdownToggle);
-            return;
-          }
+      if (!tableContainer.dataset.tsPaletteClickBound) {
+        tableContainer.dataset.tsPaletteClickBound = "true";
+        tableContainer.addEventListener("click", handlePaletteTableClick);
+      }
 
-          const dropdownItem = target.closest && target.closest(".palette-complement-dropdown-item");
-          if (dropdownItem) {
-            const paletteIndex = parseInt(dropdownItem.getAttribute("data-palette-index"), 10);
-            if (!Number.isNaN(paletteIndex)) {
-              const action = dropdownItem.getAttribute("data-dropdown-action");
-              if (action === "split-complementary") {
-                toggleSplitComplementaryPalette(paletteIndex);
-              } else if (action === "analogous") {
-                toggleAnalogousPalette(paletteIndex);
-              } else if (action === "triadic") {
-                toggleTriadicPalette(paletteIndex);
-              } else {
-                toggleComplementPalette(paletteIndex);
-              }
-            }
-            closeComplementDropdowns();
-            return;
-          }
-
-          const duplicateTrigger = target.closest && target.closest(".palette-duplicate-button");
-          if (duplicateTrigger) {
-            const paletteIndex = parseInt(duplicateTrigger.getAttribute("data-palette-index"), 10);
-            if (!Number.isNaN(paletteIndex)) {
-              duplicatePaletteAtIndex(paletteIndex);
-            }
-            return;
-          }
-
-          const button = event.target && event.target.closest && event.target.closest(".palette-close-button");
-          if (!button) return;
-
-          const paletteIndex = parseInt(button.getAttribute("data-palette-index"), 10);
-          if (Number.isNaN(paletteIndex)) return;
-
-          const paletteWrapper = button.closest(".palette-wrapper");
-          requestPaletteRemoval(paletteIndex, paletteWrapper);
-        });
+      if (!tableContainer.dataset.tsDropdownToggleKeydownBound) {
+        tableContainer.dataset.tsDropdownToggleKeydownBound = "true";
         tableContainer.addEventListener("keydown", handleDropdownToggleKeydown);
-        paletteCloseHandlerAdded = true;
       }
 
       state.palettes = paletteMetadata;

@@ -447,7 +447,7 @@ a {
 }
 
 @include breakpoint('large') {
-[data-tooltip]::after {
+	[data-tooltip]::after {
 		display: none;
 	}
 }
@@ -459,27 +459,14 @@ a {
 #clr-picker {
 	box-shadow: $shadow-main;
 
+	&:before {
+		color: transparent;
+	}
+
 	input.clr-color {
 		border-color: $gray-200;
 		background-color: $gray-50;
 		font-family: $monospace;
-		border-radius: $radius-main;
-		margin-bottom: 10px;
-	}
-
-	.clr-preview {
-		margin-bottom: 10px;
-	}
-
-	.clr-close {
-		width: 100%;
-		margin: 0 10px 10px;
-		font-size: 14px;
-		border-radius: 999px;
-		background-color: $black;
-		color: $white;
-		border-radius: $radius-main;
-		height: 32px;
 	}
 }
 
@@ -686,10 +673,14 @@ a {
 					width: 100%;
 					padding: .8rem 1.2rem;
 					cursor: pointer;
-					transition: background 150ms ease;
 					overflow: hidden;
 
-					&:is(:hover, :focus-visible) {
+					&:hover {
+						transition: background 150ms ease;
+						background: $gray-100;
+					}
+
+					&:focus-visible {
 						background: $gray-100;
 					}
 
