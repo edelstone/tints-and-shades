@@ -38,26 +38,6 @@ It’s perfect if you’ll be:
 
 Originally created for designer and developer teams, it’s also useful for teachers, data professionals, and people who make presentations.
 
-## Related colors
-
-In addition to generating tints and shades from a single base color, you can also add related palettes based on common color-wheel relationships. These palettes shift the hue while preserving the original saturation and lightness, which is well suited for most color systems.
-
-### Complementary
-
-Adds one new palette using the hue directly opposite the base color (180° away). This produces the strongest contrast and is best when clear visual separation is needed.
-
-### Split complementary
-
-Adds two palettes using hues 30° on either side of the complementary color. This keeps contrast high while feeling more flexible and less extreme than a direct complementary pairing.
-
-### Analogous
-
-Adds two palettes using hues 30° on either side of the base color. These combinations are low-contrast and cohesive, making them well suited for subtle variation.
-
-### Triadic
-
-Adds two palettes evenly spaced at 120° intervals around the color wheel. This produces clearly distinct and energetic color relationships.
-
 ## Calculation method
 
 The given hex color is first converted to RGB. Each RGB component is then calculated independently as follows:
@@ -86,6 +66,26 @@ Let’s say we want tints and shades of [Rebecca Purple](https://meyerweb.com/er
 3. **G:** `51 x .9 = 45.9`, rounded to 46
 4. **B:** `153 x .9 = 137.7`, rounded to 138
 5. RGB 92, 46, 138 is converted to the hex equivalent of #5c2e8a
+
+## Related colors
+
+In addition to generating tints and shades from a single base color, you can also add related palettes based on common color-wheel relationships. These palettes shift the hue while preserving the original saturation and lightness, which is well suited for most color systems.
+
+### Complementary
+
+Adds one new palette using the hue directly opposite the base color (180° away). This produces the strongest contrast and is best when clear visual separation is needed.
+
+### Split complementary
+
+Adds two palettes using hues 30° on either side of the complementary color. This keeps contrast high while feeling more flexible and less extreme than a direct complementary pairing.
+
+### Analogous
+
+Adds two palettes using hues 30° on either side of the base color. These combinations are low-contrast and cohesive, making them well suited for subtle variation.
+
+### Triadic
+
+Adds two palettes evenly spaced at 120° intervals around the color wheel. This produces clearly distinct and energetic color relationships.
 
 ## Figma plugin
 
