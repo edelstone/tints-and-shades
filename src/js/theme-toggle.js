@@ -50,6 +50,24 @@
   const initialTheme = preferred || (systemPrefersDark ? "dark" : "light");
   applyTheme(initialTheme);
 
+  const ensureThemeApplied = () => {
+    const storedTheme = getStoredTheme();
+    const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const nextTheme = storedTheme || (prefersDark ? "dark" : "light");
+    if (nextTheme === "dark" && !root.classList.contains("darkmode-active")) {
+      applyTheme("dark");
+      return;
+    }
+    if (nextTheme === "light" && root.classList.contains("darkmode-active")) {
+      applyTheme("light");
+    }
+  };
+
+  const observer = new MutationObserver(() => {
+    ensureThemeApplied();
+  });
+  observer.observe(root, { attributes: true, attributeFilter: ["class"] });
+
   if (toggle) {
     toggle.addEventListener("click", () => {
       const nextTheme = root.classList.contains("darkmode-active") ? "light" : "dark";

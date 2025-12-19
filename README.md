@@ -18,27 +18,25 @@
 
 ## What is the Tint & Shade Generator?
 
-The Tint & Shade Generator is a precision color tool for producing accurate tints (pure white added) and shades (pure black added) from a given hex color in 5%, 10%, or 20% increments. Palette editing, related color generation, and export/share workflows are built in.
+The Tint & Shade Generator is a precision color tool for producing accurate tints (pure white added) and shades (pure black added) from a given hex color in 5%, 10%, or 20% increments.
 
 ## Why is this tool unique?
 
-It takes the math seriously. In my experience similar tools get calculations incorrect due to rounding errors, creator preferences, or other inconsistencies.
+It takes the math seriously. In my experience similar tools get the calculations incorrect due to rounding errors, creator preferences, or other inconsistencies.
 
 Testing shows that the output matches Chrome DevTools’ calculation method as well as some [established](https://css-tricks.com/snippets/sass/tint-shade-functions), [popular](https://sindresorhus.com/sass-extras/#color-function-tint) methods to derive tints and shades via Sass.
 
 ## When would I use this?
 
-When you want to move from a single color to a usable, communicable system.
+It’s perfect if you’ll be:
 
-Typical use cases:
+- exploring and refining colors visually
+- generating consistent tints and shades for UI states
+- building complementary palettes for accents or secondary UI
+- sharing palettes via URL or image
+- exporting colors for design tokens, CSS, or JSON
 
-- Exploring and refining base colors visually
-- Generating consistent tints and shades for UI states
-- Building complementary palettes for accents or secondary UI
-- Sharing palettes via link or image
-- Exporting colors for design tokens, CSS, or JSON
-
-Originally created for designers and developers, I’ve heard it’s equally useful for teachers, data pros, and people who make presentations.
+Originally created for designer and developer teams, it’s also useful for teachers, data professionals, and people who make presentations.
 
 ## Related colors
 
