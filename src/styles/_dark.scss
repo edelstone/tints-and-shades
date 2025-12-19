@@ -22,7 +22,7 @@ html.darkmode-active {
     .header {
       .preface {
         .theme-toggle {
-          background: $black-transparent;
+          background-color: $black-transparent;
 
           &:hover,
           &:active {
@@ -46,7 +46,7 @@ html.darkmode-active {
         }
 
         .announcement {
-          background: $black-transparent;
+          background-color: $black-transparent;
           color: $gray-100;
           border-color: $black-transparent;
 
@@ -68,19 +68,19 @@ html.darkmode-active {
 
     .form {
       textarea {
-        background: $gray-500;
+        background-color: $gray-500;
         border-color: $gray-500;
         color: $gray-100;
       }
 
       .color-picker-button {
-        background: $black-transparent;
+        background-color: $black-transparent;
         color: $gray-100;
       }
     }
 
     [data-tooltip]::after {
-      background: $gray-500;
+      background-color: $gray-500;
       color: $white;
     }
 
@@ -96,35 +96,35 @@ html.darkmode-active {
     .palettes {
       .palette-controls {
         .step-selector-option {
-          background: $black-transparent;
+          background-color: $black-transparent;
           color: $gray-100;
           border: none;
 
           &.is-active {
             box-shadow: inset 0 0 0 1px $gray-400;
             opacity: 1;
-            background: $black;
+            background-color: $black;
           }
 
           &:not(.is-active):hover,
           &:not(.is-active):active {
-            background: $black;
+            background-color: $black;
           }
         }
 
         .action-button {
-          background: $black-transparent;
+          background-color: $black-transparent;
           color: $gray-100;
 
           &:hover,
           &:active {
-            background: $black;
+            background-color: $black;
           }
 
           &.is-active {
             border-color: $gray-400;
             box-shadow: inset 0 0 0 1px $gray-400;
-            background: $black;
+            background-color: $black;
           }
         }
       }
@@ -140,14 +140,14 @@ html.darkmode-active {
 
         .palette-complement-dropdown {
           &-menu {
-            background: $black;
+            background-color: $black;
           }
 
           &-item {
             color: $gray-100;
 
             &:is(:hover, :focus-visible) {
-              background: $gray-500;
+              background-color: $gray-500;
               color: $white;
             }
           }
@@ -156,7 +156,7 @@ html.darkmode-active {
     }
 
     .utility-dialog {
-      background: $gray-600;
+      background-color: $gray-600;
       color: $gray-100;
       border-color: $gray-600;
 
@@ -178,7 +178,7 @@ html.darkmode-active {
         .export-body {
           .export-output {
             border-color: transparent;
-            background: $black-transparent;
+            background-color: $black-transparent;
 
             &-code {
               color: $gray-100;
@@ -189,7 +189,7 @@ html.darkmode-active {
 
       &.share-dialog {
         .share-input {
-          background: $black-transparent;
+          background-color: $black-transparent;
           color: $gray-100;
         }
       }
@@ -197,12 +197,12 @@ html.darkmode-active {
 
     .docs {
       code {
-        background: $gray-500;
+        background-color: $gray-500;
       }
     }
 
     .not-found {
-      background: $black-transparent;
+      background-color: $black-transparent;
       color: $gray-100;
     }
   }
