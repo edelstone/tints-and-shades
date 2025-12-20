@@ -183,6 +183,44 @@ const initializeSettings = (initialUrlState = {}) => {
   }
 };
 
+const applyUrlState = (urlState = {}) => {
+  const colorValuesElement = document.getElementById("color-values");
+  const hashtagToggle = document.getElementById("show-hide-hashtags");
+  const stepSelector = document.querySelector(".inline-actions .step-selector");
+  const tintShadeButtons = stepSelector ? Array.from(stepSelector.querySelectorAll(".step-selector-option")) : [];
+
+  if (typeof urlState.copyWithHashtag === "boolean" && settings.copyWithHashtag !== urlState.copyWithHashtag) {
+    settings.copyWithHashtag = urlState.copyWithHashtag;
+    if (hashtagToggle) {
+      updateHashtagToggle(hashtagToggle, settings.copyWithHashtag);
+    }
+    saveSettings();
+    exportUI.updateClipboardData(settings.copyWithHashtag);
+  }
+
+  if (typeof urlState.tintShadeCount === "number") {
+    const normalizedCount = palettes.normalizeTintShadeCount(urlState.tintShadeCount);
+    if (settings.tintShadeCount !== normalizedCount) {
+      settings.tintShadeCount = normalizedCount;
+      if (tintShadeButtons.length) {
+        setActiveCountButtons(tintShadeButtons, settings.tintShadeCount);
+      }
+      saveSettings();
+    }
+  }
+
+  if (colorValuesElement) {
+    const rawHash = window.location.hash.slice(1);
+    if (!rawHash) {
+      colorValuesElement.value = "";
+    } else if (typeof urlState.colors === "string") {
+      colorValuesElement.value = urlState.colors;
+    }
+  }
+
+  palettes.createTintsAndShades(settings, false, { skipFocus: true });
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   wireTooltipHandlers();
   const urlState = palettes.readHashState ? palettes.readHashState() : {};
@@ -217,6 +255,11 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!copyWithHashtagToggle) {
     console.error("Element with id 'show-hide-hashtags' not found.");
   }
+
+  window.addEventListener("hashchange", () => {
+    const nextState = palettes.readHashState ? palettes.readHashState() : {};
+    applyUrlState(nextState);
+  });
 });
 
 document.addEventListener("click", (event) => {
