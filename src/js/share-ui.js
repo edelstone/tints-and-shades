@@ -109,14 +109,13 @@
     }
   };
 
-  const focusInput = () => {
-    if (!shareElements.input) return;
+  const focusCopyButton = () => {
+    if (!shareElements.copyButton) return;
     try {
-      shareElements.input.focus({ preventScroll: true });
+      shareElements.copyButton.focus({ preventScroll: true });
     } catch (error) {
-      shareElements.input.focus();
+      shareElements.copyButton.focus();
     }
-    shareElements.input.select();
   };
 
   const openShareModal = () => {
@@ -156,7 +155,7 @@
     }
     requestAnimationFrame(() => {
       resizeShareInputHeight();
-      focusInput();
+      focusCopyButton();
     });
   };
 
@@ -255,6 +254,13 @@
 
     if (shareElements.copyButton) {
       shareElements.copyButton.addEventListener("click", () => copyShareLink());
+    }
+
+    if (shareElements.input) {
+      shareElements.input.setAttribute("tabindex", "-1");
+      shareElements.input.addEventListener("click", () => {
+        shareElements.input.select();
+      });
     }
   };
 
