@@ -101,9 +101,13 @@ html.darkmode-active {
           border: none;
 
           &.is-active {
-            box-shadow: inset 0 0 0 1px $gray-400;
+            box-shadow: inset 0 0 0 2px $gray-500;
             opacity: 1;
             background-color: $black;
+
+            &:active {
+              background-color: color-mix(in srgb, $black 85%, $white);
+            }
           }
 
           &:hover {
@@ -129,7 +133,7 @@ html.darkmode-active {
 
           &.is-active {
             border-color: $gray-400;
-            box-shadow: inset 0 0 0 1px $gray-400;
+            box-shadow: inset 0 0 0 2px $gray-500;
             background-color: $black;
 
             &:active {
