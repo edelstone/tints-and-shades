@@ -12,13 +12,32 @@ const setActiveCountButtons = (buttons, count) => {
   });
 };
 const TOOLTIP_IMMEDIATE_ATTR = "data-tooltip-immediate";
+let lastInteractionWasKeyboard = false;
 
 const wireTooltipHandlers = () => {
+  document.addEventListener(
+    "pointerdown",
+    () => {
+      lastInteractionWasKeyboard = false;
+    },
+    true
+  );
+
+  document.addEventListener(
+    "keydown",
+    (event) => {
+      if (event.key === "Tab") {
+        lastInteractionWasKeyboard = true;
+      }
+    },
+    true
+  );
+
   document.addEventListener(
     "focusout",
     (event) => {
       const target = event.target?.closest?.("[data-tooltip]");
-      if (target) {
+      if (target && lastInteractionWasKeyboard) {
         target.setAttribute(TOOLTIP_IMMEDIATE_ATTR, "true");
       }
     },
