@@ -58,6 +58,16 @@ const saveSettings = () => {
   }
 };
 
+const suppressTooltipUntilMouseOut = (target) => {
+  if (!target || !target.setAttribute) return;
+  target.setAttribute("data-tooltip-suppressed", "true");
+  const clear = () => {
+    target.removeAttribute("data-tooltip-suppressed");
+  };
+  target.addEventListener("mouseleave", clear, { once: true });
+  target.addEventListener("pointerleave", clear, { once: true });
+};
+
 const updateHashtagToggle = (button, isOn) => {
   if (!button) return;
   button.setAttribute("aria-pressed", isOn ? "true" : "false");
@@ -83,6 +93,9 @@ const initializeSettings = (initialUrlState = {}) => {
 
   if (hashtagToggle) {
     updateHashtagToggle(hashtagToggle, settings.copyWithHashtag);
+    hashtagToggle.addEventListener("pointerdown", () => {
+      suppressTooltipUntilMouseOut(hashtagToggle);
+    });
     hashtagToggle.addEventListener("click", () => {
       settings.copyWithHashtag = !settings.copyWithHashtag;
       updateHashtagToggle(hashtagToggle, settings.copyWithHashtag);
