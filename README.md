@@ -18,7 +18,7 @@
 
 ## What is the Tint & Shade Generator?
 
-The Tint & Shade Generator is a precision color tool for producing accurate tints (pure white added) and shades (pure black added) from a given hex color in 5%, 10%, or 20% increments.
+The Tint & Shade Generator is a precision color tool for producing accurate tints (lighter variants) and shades (darker variants) from a given hex color in 5%, 10%, or 20% increments.
 
 ## Why is this tool unique?
 
@@ -46,6 +46,8 @@ The given hex color is first converted to RGB. Each RGB component is then calcul
 - **Tints:** `New value = current value + ((255 - current value) x tint factor)`
 - **Shades:** `New value = current value x shade factor`
 
+The “tint factor” represents the percentage of the remaining distance each RGB channel moves toward white (255), while the “shade factor” represents the percentage of the original color retained as each channel is scaled toward black (0).
+
 The new value is rounded to the nearest whole number (values ending in .5 round up), then converted back to hex for display.
 
 ## Example calculation
@@ -70,23 +72,23 @@ Let’s say we want tints and shades of [Rebecca Purple](https://meyerweb.com/er
 
 ## Related colors
 
-In addition to generating tints and shades, you can also add related palettes based on common color-wheel relationships. These palettes shift the hue while preserving the original saturation and lightness, which is well suited for most color systems.
+In addition to generating tints and shades, you can also add related palettes based on common color-wheel relationships. These palettes shift the hue while preserving the original saturation and lightness, which is well suited to most color systems.
 
 ### Complementary
 
-Adds one new palette using the hue directly opposite the base color (180°). This produces the strongest contrast and is best when clear visual separation is needed.
+Adds one new palette using the hue directly opposite the base color (180°), producing the strongest contrast and clear visual separation.
 
 ### Split complementary
 
-Adds two palettes using hues 30° on either side of the complementary color. This keeps contrast high but less extreme than a direct complementary pairing.
+Adds two palettes using hues 30° on either side of the complementary color, keeping contrast high but less extreme than a direct complementary pairing.
 
 ### Analogous
 
-Adds two palettes using hues 30° on either side of the base color. These combinations are low-contrast and cohesive, making them appropriate for subtle variation.
+Adds two palettes using hues 30° on either side of the base color, resulting in low contrast, cohesive combinations suited for subtle variation.
 
 ### Triadic
 
-Adds two palettes evenly spaced at 120° intervals around the color wheel. This produces clearly distinct and energetic color relationships.
+Adds two palettes evenly spaced at 120° intervals around the color wheel, creating medium-high contrast with energetic, distinct relationships.
 
 ## Figma plugin
 

@@ -8,7 +8,7 @@ docs: true
 <!-- START README CONTENT -->
 <h2>What is the Tint &amp; Shade Generator?</h2>
 
-<p>The Tint &amp; Shade Generator is a precision color tool for producing accurate tints (pure white added) and shades (pure black added) from a given hex color in 5%, 10%, or 20% increments.</p>
+<p>The Tint &amp; Shade Generator is a precision color tool for producing accurate tints (lighter variants) and shades (darker variants) from a given hex color in 5%, 10%, or 20% increments.</p>
 
 <h2>Why is this tool unique?</h2>
 
@@ -40,6 +40,8 @@ docs: true
   <li><b>Shades:</b> <code>New value = current value x shade factor</code></li>
 </ul>
 
+<p>The &ldquo;tint factor&rdquo; represents the percentage of the remaining distance each RGB channel moves toward white (255), while the &ldquo;shade factor&rdquo; represents the percentage of the original color retained as each channel is scaled toward black (0).</p>
+
 <p>The new value is rounded to the nearest whole number (values ending in .5 round up), then converted back to hex for display.</p>
 
 <h2>Example calculation</h2>
@@ -68,23 +70,23 @@ docs: true
 
 <h2>Related colors</h2>
 
-<p>In addition to generating tints and shades, you can also add related palettes based on common color-wheel relationships. These palettes shift the hue while preserving the original saturation and lightness, which is well suited for most color systems.</p>
+<p>In addition to generating tints and shades, you can also add related palettes based on common color-wheel relationships. These palettes shift the hue while preserving the original saturation and lightness, which is well suited to most color systems.</p>
 
 <h3>Complementary</h3>
 
-<p>Adds one new palette using the hue directly opposite the base color (180&deg;). This produces the strongest contrast and is best when clear visual separation is needed.</p>
+<p>Adds one new palette using the hue directly opposite the base color (180&deg;), producing the strongest contrast and clear visual separation.</p>
 
 <h3>Split complementary</h3>
 
-<p>Adds two palettes using hues 30&deg; on either side of the complementary color. This keeps contrast high but less extreme than a direct complementary pairing.</p>
+<p>Adds two palettes using hues 30&deg; on either side of the complementary color, keeping contrast high but less extreme than a direct complementary pairing.</p>
 
 <h3>Analogous</h3>
 
-<p>Adds two palettes using hues 30&deg; on either side of the base color. These combinations are low-contrast and cohesive, making them appropriate for subtle variation.</p>
+<p>Adds two palettes using hues 30&deg; on either side of the base color, resulting in low contrast, cohesive combinations suited for subtle variation.</p>
 
 <h3>Triadic</h3>
 
-<p>Adds two palettes evenly spaced at 120&deg; intervals around the color wheel. This produces clearly distinct and energetic color relationships.</p>
+<p>Adds two palettes evenly spaced at 120&deg; intervals around the color wheel, creating medium-high contrast with energetic, distinct relationships.</p>
 
 <h2><!-- README-EXCLUDE-START --><span class="subheader-icon">{% include "partials/icons/figma.njk" %}</span><!-- README-EXCLUDE-END --> Figma plugin</h2>
 
