@@ -84,7 +84,7 @@ Adds two palettes using hues 30° on either side of the complementary color, kee
 
 ### Analogous
 
-Adds two palettes using hues 30° on either side of the base color, resulting in low contrast, cohesive combinations suited for subtle variation.
+Adds two palettes using hues 30° on either side of the base color, resulting in low-contrast, cohesive combinations suited for subtle variation.
 
 ### Triadic
 
