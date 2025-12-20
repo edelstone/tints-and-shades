@@ -16,6 +16,8 @@
   let focusButtonOnEsc = false;
   let pendingFocusTarget = null;
   let focusReturnTarget = null;
+  let suppressNextPalettePickerOpen = null;
+  let suppressNextPickerButtonOpen = false;
   const GLOBAL_GUARD = "__tsColorPickerDocumentHandlersBound";
   const ACTIVATION_KEYS = new Set(["enter", "return", "numpadenter", " ", "space", "spacebar"]);
   const ACTIVATION_KEY_CODES = new Set([13, 32]);
@@ -58,7 +60,7 @@
 
   const activatePickerCell = (target) => {
     clearActivePickerCell();
-    if (target && target.classList && target.classList.contains("palette-color-picker-button")) {
+    if (target && target.classList && target.classList.contains("edit-base-button")) {
       activePickerCell = target;
       activePickerCell.classList.add("is-picker-open");
     }
@@ -70,11 +72,25 @@
     }
   };
 
+  const suppressTooltipUntilMouseOut = (target) => {
+    if (!target || !target.setAttribute) return;
+    target.setAttribute("data-tooltip-suppressed", "true");
+    const clear = () => {
+      target.removeAttribute("data-tooltip-suppressed");
+    };
+    target.addEventListener("mouseleave", clear, { once: true });
+    target.addEventListener("pointerleave", clear, { once: true });
+  };
+
   const handlePickerFocusIn = (event) => {
     if (!isPickerOpen) return;
     const picker = document.getElementById("clr-picker");
     if (focusButtonOnEsc) return;
     if (picker && picker.contains(event.target)) return;
+    const palettePickerButton = closestFromEvent(event, ".edit-base-button");
+    if (palettePickerButton && palettePickerButton === activePickerCell) {
+      suppressNextPalettePickerOpen = palettePickerButton;
+    }
     pendingFocusTarget = event.target;
     Coloris.close();
   };
@@ -186,9 +202,19 @@
   };
 
   const handlePalettePickerClick = (event) => {
-    const palettePickerButton = closestFromEvent(event, ".palette-color-picker-button");
+    const palettePickerButton = closestFromEvent(event, ".edit-base-button");
     if (!palettePickerButton) return;
     event.preventDefault();
+    if (suppressNextPalettePickerOpen === palettePickerButton) {
+      suppressNextPalettePickerOpen = null;
+      return;
+    }
+    if (isPickerOpen && activePickerCell === palettePickerButton) {
+      focusReturnTarget = palettePickerButton;
+      suppressTooltipUntilMouseOut(palettePickerButton);
+      Coloris.close();
+      return;
+    }
     const colorIndex = parseInt(palettePickerButton.getAttribute("data-color-index"), 10);
     const colorHex = normalizeHex(palettePickerButton.getAttribute("data-color-hex"));
     const rowType = palettePickerButton.getAttribute("data-row-type") || null;
@@ -201,11 +227,24 @@
     });
   };
 
+  const handlePalettePickerPointerDown = (event) => {
+    const palettePickerButton = closestFromEvent(event, ".edit-base-button");
+    if (!palettePickerButton) return;
+    if (!isPickerOpen || activePickerCell !== palettePickerButton) return;
+    suppressNextPalettePickerOpen = palettePickerButton;
+    focusReturnTarget = palettePickerButton;
+    suppressTooltipUntilMouseOut(palettePickerButton);
+    Coloris.close();
+    event.preventDefault();
+    event.stopPropagation();
+  };
+
   if (!window[GLOBAL_GUARD]) {
     document.addEventListener("focusin", handlePickerFocusIn);
     document.addEventListener("keydown", handlePickerEscape);
     document.addEventListener("keydown", handlePickerTabNavigation, true);
     document.addEventListener("keydown", handlePickerEnterCommit, true);
+    document.addEventListener("pointerdown", handlePalettePickerPointerDown);
     document.addEventListener("click", handlePalettePickerClick);
     window[GLOBAL_GUARD] = true;
   }
@@ -275,10 +314,17 @@
   const handlePalettePickerKeydown = (event) => {
     if (event.defaultPrevented) return;
     if (!isActivationKey(event)) return;
-    const pickerCell = closestFromEvent(event, ".palette-color-picker-button");
+    const pickerCell = closestFromEvent(event, ".edit-base-button");
     if (!pickerCell) return;
     event.preventDefault();
     event.stopPropagation();
+    suppressNextPalettePickerOpen = null;
+    if (isPickerOpen && activePickerCell === pickerCell) {
+      focusReturnTarget = pickerCell;
+      suppressTooltipUntilMouseOut(pickerCell);
+      Coloris.close();
+      return;
+    }
     const colorIndex = parseInt(pickerCell.getAttribute("data-color-index"), 10);
     const colorHex = normalizeHex(pickerCell.getAttribute("data-color-hex"));
     const rowType = pickerCell.getAttribute("data-row-type") || null;
@@ -470,7 +516,24 @@
 
   if (!pickerButton.dataset.tsBound) {
     pickerButton.dataset.tsBound = "true";
+    pickerButton.addEventListener("pointerdown", (event) => {
+      if (!isPickerOpen || activeContext.mode !== "add") return;
+      suppressNextPickerButtonOpen = true;
+      focusReturnTarget = pickerButton;
+      Coloris.close();
+      event.preventDefault();
+      event.stopPropagation();
+    });
     pickerButton.addEventListener("click", () => {
+      if (suppressNextPickerButtonOpen) {
+        suppressNextPickerButtonOpen = false;
+        return;
+      }
+      if (isPickerOpen && activeContext.mode === "add") {
+        focusReturnTarget = pickerButton;
+        Coloris.close();
+        return;
+      }
       openPicker({ target: pickerButton, baseHex: null, mode: "add", index: null });
     });
 
@@ -478,6 +541,11 @@
       if (event.defaultPrevented) return;
       if (isActivationKey(event)) {
         event.preventDefault();
+        if (isPickerOpen && activeContext.mode === "add") {
+          focusReturnTarget = pickerButton;
+          Coloris.close();
+          return;
+        }
         openPicker({ target: pickerButton, baseHex: null, mode: "add", index: null });
         return;
       }

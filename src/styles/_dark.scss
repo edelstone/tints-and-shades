@@ -197,6 +197,10 @@ html.darkmode-active {
         .export-tab {
           color: $gray-300;
 
+          &:hover {
+            color: $gray-100;
+          }
+
           &.is-active {
             border-color: transparent;
             color: $gray-100;

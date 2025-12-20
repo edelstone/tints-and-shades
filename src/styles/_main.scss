@@ -448,6 +448,10 @@ a {
 		transition: none;
 		transition-delay: 0ms;
 	}
+
+	[data-tooltip][data-tooltip-suppressed]::after {
+		display: none;
+	}
 }
 
 @include breakpoint('large') {
@@ -456,8 +460,10 @@ a {
 	}
 }
 
-.palette-color-picker-button.is-picker-open[data-tooltip]::after {
-	display: none;
+.edit-base-button {
+	&.is-picker-open[data-tooltip]::after {
+		display: none;
+	}
 }
 
 #clr-picker {
@@ -946,6 +952,10 @@ a {
 				border-bottom: none;
 				font-size: 1.6rem;
 				user-select: none;
+
+				&:hover {
+					color: $black;
+				}
 
 				&.is-active {
 					color: $black;
