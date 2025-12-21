@@ -144,8 +144,8 @@
     scrollSingle: 400,
     scrollRange: 520,
     fade: 360,
-    fadeDelayRange: 210,
-    fadeDelaySingle: 180,
+    fadeDelayRange: 280,
+    fadeDelaySingle: 240,
     collapseDelayRatio: 0.8
   };
   const logAnimationEvent = (label, detail = "") => {
