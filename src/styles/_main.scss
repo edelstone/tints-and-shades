@@ -9,6 +9,12 @@
 html {
 	font-size: 62.5%;
 	color-scheme: light;
+	--link-hover-1: #{$magenta};
+	--link-hover-2: #{$orange};
+	--link-hover-3: #{$code-light-accent-1};
+	--link-hover-4: #{$code-light-accent-2};
+	--link-hover-5: #{$code-light-accent-3};
+	--link-hover-6: #{$code-light-accent-4};
 
 	@include breakpoint('large') {
 		font-size: 55%;
@@ -39,7 +45,8 @@ body {
 a {
 	color: $black;
 	text-decoration: none;
-	border-bottom: 3px solid $black;
+	border-bottom: 4px solid $black;
+	transition: border-color 240ms ease-out;
 
 	&:hover {
 		border-color: $magenta;
@@ -1127,6 +1134,10 @@ a {
 	.utility-dialog.is-closing::backdrop {
 		animation: none;
 	}
+
+	a {
+		transition: none;
+	}
 }
 
 .docs {
@@ -1167,10 +1178,6 @@ a {
 
 	.anchorjs-link {
 		border: none;
-
-		&:hover {
-			color: $magenta;
-		}
 	}
 
 	.subheader-icon {

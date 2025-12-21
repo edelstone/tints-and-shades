@@ -74,6 +74,8 @@ Let’s say we want tints and shades of [Rebecca Purple](https://meyerweb.com/er
 
 In addition to generating tints and shades, you can also add related palettes based on common color-wheel relationships. These palettes shift the hue while preserving the original saturation and lightness, which is well suited to most color systems.
 
+Hue-derived palettes require saturation. If the base color is neutral or near-neutral (very low saturation), these palettes will return the original color because neutral colors have no meaningful hue to rotate.
+
 ### Complementary
 
 Adds one new palette using the hue directly opposite the base color (180°), producing the strongest contrast and clear visual separation.
@@ -138,6 +140,6 @@ Many thanks to [Joel Carr](https://github.com/joelcarr), [Sebastian Gutierrez](h
 
 - Typography: [Work Sans](https://weiweihuanghuang.github.io/Work-Sans/) by Wei Huang
 - Iconography: [Tabler Icons](https://tabler.io/icons)
-- Colors: [#000000](/#colors=000000), [#ffffff](/#colors=ffffff), [#e96443](/#colors=e96443), and [#ca228e](/#colors=ca228e)
+- Colors: [#000000](/#colors=000000), [#1a1a1a](/#colors=1a1a1a), [#e6e6e6](/#colors=e6e6e6), [#ffffff](/#colors=ffffff), [#e96443](/#colors=e96443), and [#ca228e](/#colors=ca228e)
 
 Prefer Google’s color logic? Try the [Material Design Palette Generator](https://materialpalettes.com).
