@@ -207,6 +207,35 @@ html.darkmode-active {
 
             &-code {
               color: $gray-100;
+
+              .code-token {
+                &-string,
+                &-value {
+                  color: $code-dark-accent-1;
+                }
+
+                &-key,
+                &-keyword {
+                  color: $code-dark-accent-2;
+                }
+
+                &-number {
+                  color: $code-dark-accent-3;
+                }
+
+                &-function,
+                &-selector {
+                  color: $code-dark-accent-4;
+                }
+
+                &-comment {
+                  color: $code-dark-accent-5;
+                }
+
+                &-punctuation {
+                  color: color-mix(in srgb, $white 65%, $black);
+                }
+              }
             }
           }
         }

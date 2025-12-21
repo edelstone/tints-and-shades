@@ -825,8 +825,7 @@ a {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		margin-bottom: 2rem;
-		padding: .5rem 0;
+		margin: .5rem 0 2rem;
 	}
 
 	&-title {
@@ -852,47 +851,54 @@ a {
 		}
 	}
 
-	.utility-copy-button {
-		width: 4.8rem;
-		height: 4.8rem;
-		padding: 0;
-		border-radius: 50%;
-		border: none;
-		background-color: $white;
-		color: $black;
-		cursor: pointer;
-		box-shadow: $shadow-main;
-		position: relative;
-		transition: background-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+	.utility-copy-wrapper {
+		position: absolute;
+		right: 3rem;
+		bottom: 3rem;
+		display: flex;
 
-		.copy-indicator-copy {
-			opacity: 1;
-			transform: translate(-50%, -50%) scale(1);
-		}
+		.utility-copy-button {
+			width: 4.8rem;
+			height: 4.8rem;
+			padding: 0;
+			border-radius: 50%;
+			border: none;
+			background-color: $white;
+			color: $black;
+			cursor: pointer;
+			box-shadow: $shadow-main;
+			position: relative;
+			transition: background-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
 
-		.copy-indicator-check {
-			opacity: 0;
-			transform: translate(-50%, -50%) scale(1.2);
-		}
-
-		&:active {
-			opacity: .75;
-			transform: scale(.9);
-		}
-
-		&[disabled] {
-			pointer-events: none;
-		}
-
-		&.copied {
 			.copy-indicator-copy {
-				opacity: 0;
-				transform: translate(-50%, -50%) scale(.8);
+				opacity: 1;
+				transform: translate(-50%, -50%) scale(1);
 			}
 
 			.copy-indicator-check {
-				opacity: 1;
-				transform: translate(-50%, -50%) scale(1);
+				opacity: 0;
+				transform: translate(-50%, -50%) scale(1.2);
+			}
+
+			&:active {
+				opacity: .75;
+				transform: scale(.9);
+			}
+
+			&[disabled] {
+				pointer-events: none;
+			}
+
+			&.copied {
+				.copy-indicator-copy {
+					opacity: 0;
+					transform: translate(-50%, -50%) scale(.8);
+				}
+
+				.copy-indicator-check {
+					opacity: 1;
+					transform: translate(-50%, -50%) scale(1);
+				}
 			}
 		}
 	}
@@ -967,6 +973,9 @@ a {
 				flex: 1 1 auto;
 				border-radius: $radius-main;
 				background-color: $gray-50;
+				text-align: left;
+				overflow: auto;
+				overflow-anchor: none;
 
 				&.is-first-tab-active {
 					border-radius: 0 $radius-main $radius-main $radius-main;
@@ -974,37 +983,47 @@ a {
 
 				&-code {
 					display: block;
-					width: 100%;
 					text-shadow: none;
 					font-size: 1.4rem;
+					line-height: 1.5;
 					font-family: $font-monospace;
 					color: $black;
+					margin: 0;
+					white-space: pre;
+					tab-size: 2;
 					margin: -2.7rem 0 -5.4rem;
 
-					html:not(.darkmode-active) & {
+					.code-token {
 
-						.token.selector,
-						.token.string {
-							color: #4f7300;
+						&-string,
+						&-value {
+							color: $code-light-accent-1;
 						}
 
-						.token.comment {
-							color: #5e6f80;
+						&-key,
+						&-keyword {
+							color: $code-light-accent-2;
 						}
 
-						.token.operator {
-							background-color: transparent;
+						&-number {
+							color: $code-light-accent-3;
+						}
+
+						&-function,
+						&-selector {
+							color: $code-light-accent-4;
+						}
+
+						&-comment {
+							color: $code-light-accent-5;
+						}
+
+						&-punctuation {
+							color: color-mix(in srgb, $black 65%, $white);
 						}
 					}
 				}
 			}
-		}
-
-		.export-copy {
-			position: absolute;
-			right: 3rem;
-			bottom: 3rem;
-			display: flex;
 		}
 	}
 
@@ -1014,7 +1033,6 @@ a {
 			flex-direction: column;
 			align-items: flex-end;
 			gap: 1.5rem;
-			margin-bottom: .5rem;
 
 			.share-input {
 				width: 100%;
@@ -1026,7 +1044,7 @@ a {
 				background-color: $gray-50;
 				font-family: $font-monospace;
 				resize: none;
-				min-height: 4.5rem;
+				min-height: 12rem;
 				color: $black;
 			}
 		}

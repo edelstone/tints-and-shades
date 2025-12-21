@@ -81,9 +81,9 @@
 
   const highlightExportCode = (codeElement) => {
     if (!codeElement || typeof window === "undefined") return;
-    const prism = window.Prism;
-    if (!prism || typeof prism.highlightElement !== "function") return;
-    prism.highlightElement(codeElement);
+    const highlighter = window.CodeHighlighter;
+    if (!highlighter || typeof highlighter.highlightElement !== "function") return;
+    highlighter.highlightElement(codeElement);
   };
 
   let pageScrollY = 0;
@@ -635,6 +635,7 @@
     if (elements.code) {
       elements.code.textContent = text;
       highlightExportCode(elements.code);
+      resetExportScroll(elements);
     } else {
       elements.output.textContent = text;
     }
@@ -764,8 +765,7 @@
     }
     const activeTab = elements.tabs.find((tab) => tab.classList.contains("is-active")) || elements.tabs[0];
     if (activeTab) activeTab.focus();
-    // Reset scroll after layout to avoid stale scroll positions on reopen
-    requestAnimationFrame(() => resetExportScroll(elements));
+    resetExportScroll(elements);
   };
 
   const closeExportModal = (elements) => {
