@@ -5,10 +5,10 @@ html.darkmode-active {
   color-scheme: dark;
   --link-hover-1: #{$magenta};
   --link-hover-2: #{$orange};
-  --link-hover-3: #{$code-dark-accent-1};
-  --link-hover-4: #{$code-dark-accent-2};
-  --link-hover-5: #{$code-dark-accent-3};
-  --link-hover-6: #{$code-dark-accent-4};
+  --link-hover-3: #{$accent-dark-1};
+  --link-hover-4: #{$accent-dark-2};
+  --link-hover-5: #{$accent-dark-3};
+  --link-hover-6: #{$accent-dark-4};
 
   body {
     color: $gray-100;
@@ -217,25 +217,25 @@ html.darkmode-active {
               .code-token {
                 &-string,
                 &-value {
-                  color: $code-dark-accent-1;
+                  color: $accent-dark-1;
                 }
 
                 &-key,
                 &-keyword {
-                  color: $code-dark-accent-2;
+                  color: $accent-dark-2;
                 }
 
                 &-number {
-                  color: $code-dark-accent-3;
+                  color: $accent-dark-3;
                 }
 
                 &-function,
                 &-selector {
-                  color: $code-dark-accent-4;
+                  color: $accent-dark-4;
                 }
 
                 &-comment {
-                  color: $code-dark-accent-5;
+                  color: $accent-dark-5;
                 }
 
                 &-punctuation {

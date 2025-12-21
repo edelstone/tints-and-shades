@@ -11,10 +11,10 @@ html {
 	color-scheme: light;
 	--link-hover-1: #{$magenta};
 	--link-hover-2: #{$orange};
-	--link-hover-3: #{$code-light-accent-1};
-	--link-hover-4: #{$code-light-accent-2};
-	--link-hover-5: #{$code-light-accent-3};
-	--link-hover-6: #{$code-light-accent-4};
+	--link-hover-3: #{$accent-light-1};
+	--link-hover-4: #{$accent-light-2};
+	--link-hover-5: #{$accent-light-3};
+	--link-hover-6: #{$accent-light-4};
 
 	@include breakpoint('large') {
 		font-size: 55%;
@@ -1004,25 +1004,25 @@ a {
 
 						&-string,
 						&-value {
-							color: $code-light-accent-1;
+							color: $accent-light-1;
 						}
 
 						&-key,
 						&-keyword {
-							color: $code-light-accent-2;
+							color: $accent-light-2;
 						}
 
 						&-number {
-							color: $code-light-accent-3;
+							color: $accent-light-3;
 						}
 
 						&-function,
 						&-selector {
-							color: $code-light-accent-4;
+							color: $accent-light-4;
 						}
 
 						&-comment {
-							color: $code-light-accent-5;
+							color: $accent-light-5;
 						}
 
 						&-punctuation {
