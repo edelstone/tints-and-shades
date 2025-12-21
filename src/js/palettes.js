@@ -734,8 +734,17 @@
       }
       return true;
     };
+    const focusActiveStepButton = () => {
+      const activeStep = document.querySelector(".step-selector-option.is-active");
+      if (focusElement(activeStep)) return true;
+      const fallbackStep = document.querySelector(".step-selector-option");
+      return focusElement(fallbackStep);
+    };
     const restoreFocus = () => {
       if (!capturedFocus || !tableContainer) return false;
+      if (capturedFocus.id === "make" || capturedFocus.classes.includes("step-selector-option")) {
+        return focusActiveStepButton();
+      }
       if (capturedFocus.id) {
         const byId = document.getElementById(capturedFocus.id);
         if (byId && byId.isConnected) return focusElement(byId);
