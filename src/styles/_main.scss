@@ -201,10 +201,10 @@ a {
 			color: $white;
 			text-decoration: none;
 			border: none;
-			padding: 1rem 3rem;
+			padding: 1rem 2rem;
 			display: flex;
 			justify-content: center;
-			width: 72rem;
+			width: 70rem;
 
 			@include breakpoint('large') {
 				width: 100%;
