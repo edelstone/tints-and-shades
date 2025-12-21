@@ -257,6 +257,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   window.addEventListener("hashchange", () => {
+    if (window.__tsIgnoreHashChange) {
+      window.__tsIgnoreHashChange = false;
+      return;
+    }
     const nextState = palettes.readHashState ? palettes.readHashState() : {};
     applyUrlState(nextState);
   });

@@ -18,7 +18,7 @@
 
 ## What is the Tint & Shade Generator?
 
-The Tint & Shade Generator is a precision color tool for producing accurate tints (lighter variants) and shades (darker variants) from a given hex color in 5%, 10%, or 20% increments.
+The Tint & Shade Generator is a precision color tool for producing tints (lighter variants) and shades (darker variants) from a given hex color in 5%, 10%, or 20% increments.
 
 ## Why is this tool unique?
 

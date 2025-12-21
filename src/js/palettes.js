@@ -125,14 +125,31 @@
         const baseUrl = `${window.location.pathname}${window.location.search}`;
         window.history.replaceState(null, "", baseUrl);
       } else if (window.location.hash) {
+        window.__tsIgnoreHashChange = true;
         window.location.hash = "";
       }
       return;
     }
+    if (window.location.hash.replace(/^#/, "") === hashString) {
+      return;
+    }
+    window.__tsIgnoreHashChange = true;
     window.location.hash = hashString;
   };
 
   const TOOLTIP_CLEARANCE = 40;
+  const ANIMATION_TIMINGS = {
+    bump: 220,
+    scroll: 400,
+    fade: 360,
+    fadeDelayRange: 260,
+    fadeDelaySingle: 200
+  };
+  const logAnimationEvent = (label, detail = "") => {
+    if (!window.__tsDebugAnimations) return;
+    const suffix = detail ? ` ${detail}` : "";
+    console.log(`[tints-and-shades] ${label}${suffix}`);
+  };
 
   const enableComplementTooltip = (toggleButton) => {
     if (!toggleButton) return;
@@ -560,6 +577,8 @@
       enteringPaletteIndex = null,
       enteringPaletteIndexes = [],
       enteringFocusContext = null,
+      insertionIndex = null,
+      insertedCount = 0,
       ensurePaletteInView = null,
       ensurePaletteSkipDownwardScroll = false,
       ensurePaletteRangeStart = null,
@@ -607,33 +626,19 @@
       return false;
     };
 
-    const animatePaletteElement = (target, focusContext = null, { skipScroll = false } = {}) => {
-      if (!target || prefersReducedMotion()) return;
-
-      const computedStyle = window.getComputedStyle(target);
-      const initialRect = target.getBoundingClientRect();
-      const finalHeight = initialRect.height;
-      if (!finalHeight) {
-        target.style.opacity = "1";
-        target.style.height = "";
-        target.style.marginBottom = "";
-        target.style.paddingTop = "";
-        target.style.paddingBottom = "";
-        target.style.overflow = "";
+    const animatePaletteFadeIn = (target, focusContext = null, { skipScroll = false } = {}) => {
+      if (!target) return;
+      if (prefersReducedMotion()) {
+        target.style.visibility = "";
+        target.removeAttribute("data-entering");
         return;
       }
 
-      const finalMarginBottom = computedStyle.marginBottom;
-      const finalPaddingTop = computedStyle.paddingTop;
-      const finalPaddingBottom = computedStyle.paddingBottom;
-
-      target.style.height = "0px";
-      target.style.marginBottom = "0px";
-      target.style.paddingTop = "0px";
-      target.style.paddingBottom = "0px";
-      target.style.opacity = "0";
-      target.style.visibility = "hidden";
-      target.style.overflow = "hidden";
+      const fadeDuration = ANIMATION_TIMINGS.fade;
+      logAnimationEvent("fade:start", `duration=${fadeDuration}ms`);
+      const initialRect = target.getBoundingClientRect();
+      const finalHeight = initialRect.height;
+      if (!finalHeight) return;
 
       const viewportHeight = window.innerHeight;
       const viewportBottom = window.scrollY + viewportHeight;
@@ -642,77 +647,91 @@
         const scrollMargin = 16;
         const desiredScrollTop = Math.max(0, finalBottomAbsolute - viewportHeight + scrollMargin);
         if (desiredScrollTop > window.scrollY) {
-          smoothScrollToPosition(desiredScrollTop, 500);
+          smoothScrollToPosition(desiredScrollTop, ANIMATION_TIMINGS.scroll);
         }
       }
 
-      target.getBoundingClientRect(); // flush layout before expanding
+      target.style.opacity = "0";
+      target.style.visibility = "visible";
+      target.style.transition = "none";
 
-      requestAnimationFrame(() => {
-        target.style.height = `${finalHeight}px`;
-        target.style.marginBottom = finalMarginBottom;
-        target.style.paddingTop = finalPaddingTop;
-        target.style.paddingBottom = finalPaddingBottom;
-      });
-
-      let layoutTransitionDone = false;
-      let handleTransitionEnd;
-      let fallbackTimeout;
+      let cleaned = false;
       const cleanup = () => {
-        target.style.height = "";
-        target.style.marginBottom = "";
-        target.style.paddingTop = "";
-        target.style.paddingBottom = "";
-        target.style.overflow = "";
+        if (cleaned) return;
+        cleaned = true;
         target.style.opacity = "";
+        target.style.transition = "";
         target.style.visibility = "";
         target.removeAttribute("data-entering");
         target.removeEventListener("transitionend", handleTransitionEnd);
-        clearTimeout(fallbackTimeout);
+        if (focusContext) {
+          focusPickerCell(focusContext);
+        }
       };
 
-      handleTransitionEnd = (event) => {
+      const handleTransitionEnd = (event) => {
         if (event.target !== target) return;
-
-        if (!layoutTransitionDone && event.propertyName === "height") {
-          layoutTransitionDone = true;
-          requestAnimationFrame(() => {
-            target.style.visibility = "visible";
-            target.style.opacity = "1";
-            if (focusContext) {
-              focusPickerCell(focusContext);
-            }
-          });
-          return;
-        }
-
-        if (layoutTransitionDone && event.propertyName === "opacity") {
-          cleanup();
-        }
-      };
-
-      fallbackTimeout = setTimeout(() => {
-        if (!layoutTransitionDone) {
-          layoutTransitionDone = true;
-          target.style.visibility = "visible";
-          target.style.opacity = "1";
-          if (focusContext) {
-            focusPickerCell(focusContext);
-          }
-          return;
-        }
+        if (event.propertyName !== "opacity") return;
         cleanup();
-      }, 480);
+      };
 
       target.addEventListener("transitionend", handleTransitionEnd);
+      requestAnimationFrame(() => {
+        target.style.transition = `opacity ${fadeDuration}ms ease`;
+        target.style.opacity = "1";
+      });
+
+      setTimeout(cleanup, fadeDuration + 80);
     };
 
-    const animatePaletteEntry = (paletteIndex, focusContext = null, { skipScroll = false } = {}) => {
-      if (!tableContainer || !Number.isInteger(paletteIndex)) return;
+    const capturePaletteRects = () => {
+      if (!tableContainer) return null;
       const wrappers = Array.from(tableContainer.querySelectorAll(".palette-wrapper"));
-      const target = wrappers[paletteIndex];
-      if (!target) return;
-      animatePaletteElement(target, focusContext, { skipScroll });
+      if (!wrappers.length) return null;
+      return wrappers.map((wrapper) => wrapper.getBoundingClientRect());
+    };
+
+    const animatePaletteReorder = (beforeRects, insertionIndex, insertedCount) => {
+      if (prefersReducedMotion()) return;
+      if (!tableContainer) return;
+      if (!Array.isArray(beforeRects) || !beforeRects.length) return;
+      if (!Number.isInteger(insertionIndex) || insertedCount <= 0) return;
+      const wrappers = Array.from(tableContainer.querySelectorAll(".palette-wrapper"));
+      if (!wrappers.length) return;
+
+      logAnimationEvent("bump:start", `count=${insertedCount}`);
+      const animations = [];
+      const beforeCount = beforeRects.length;
+      for (let i = 0; i < beforeCount; i++) {
+        const targetIndex = i < insertionIndex ? i : i + insertedCount;
+        const target = wrappers[targetIndex];
+        if (!target) continue;
+        const afterRect = target.getBoundingClientRect();
+        const deltaY = beforeRects[i].top - afterRect.top;
+        if (!deltaY || Math.abs(deltaY) < 1) continue;
+        animations.push({ target, deltaY });
+      }
+
+      if (!animations.length) return;
+
+      animations.forEach(({ target, deltaY }) => {
+        target.style.transition = "none";
+        target.style.transform = `translateY(${deltaY}px)`;
+      });
+
+      requestAnimationFrame(() => {
+        animations.forEach(({ target }) => {
+          target.style.transition = `transform ${ANIMATION_TIMINGS.bump}ms ease`;
+          target.style.transform = "";
+        });
+      });
+
+      setTimeout(() => {
+        animations.forEach(({ target }) => {
+          target.style.transition = "";
+          target.style.transform = "";
+        });
+      }, ANIMATION_TIMINGS.bump + 40);
     };
 
     const waitForPaletteEntryAnimations = (callback) => {
@@ -762,13 +781,17 @@
         skipFocus: true,
         enteringPaletteIndex: insertionIndex,
         enteringPaletteIndexes: normalizedHexes.map((_, idx) => insertionIndex + idx),
-        enteringFocusContext: { colorIndex: insertionIndex, rowType: "base" }
+        enteringFocusContext: { colorIndex: insertionIndex, rowType: "base" },
+        insertionIndex,
+        insertedCount: normalizedHexes.length
       };
 
       if (ensureRangeVisible && normalizedHexes.length) {
         const lastInsertionIndex = insertionIndex + normalizedHexes.length - 1;
         options.ensurePaletteRangeStart = insertionIndex;
         options.ensurePaletteRangeEnd = lastInsertionIndex;
+      } else if (normalizedHexes.length) {
+        options.ensurePaletteInView = insertionIndex;
       }
 
       createTintsAndShades(settings, false, options);
@@ -884,6 +907,8 @@
       const wrappers = Array.from(tableContainer.querySelectorAll(".palette-wrapper"));
       const target = wrappers[paletteIndex];
       if (!target) return;
+      const doc = document.documentElement;
+      const atBottom = window.scrollY + window.innerHeight >= doc.scrollHeight - 2;
       const rect = target.getBoundingClientRect();
       const absoluteTop = rect.top + window.scrollY;
       const absoluteBottom = absoluteTop + rect.height;
@@ -900,14 +925,15 @@
       }
 
       if (targetScroll !== null) {
-        if (skipDownwardScroll && targetScroll > window.scrollY) {
+        if (skipDownwardScroll && !atBottom && targetScroll > window.scrollY) {
           return;
         }
-        smoothScrollToPosition(targetScroll, 400);
+        logAnimationEvent("scroll:ensure", `target=${Math.round(targetScroll)}`);
+        smoothScrollToPosition(targetScroll, ANIMATION_TIMINGS.scroll);
       }
     };
 
-    const ensurePaletteRangeVisible = (startIndex, endIndex) => {
+    const getPaletteRangeScrollTarget = (startIndex, endIndex) => {
       if (!tableContainer || !Number.isInteger(startIndex) || !Number.isInteger(endIndex)) return;
       const wrappers = Array.from(tableContainer.querySelectorAll(".palette-wrapper"));
       if (!wrappers.length) return;
@@ -925,17 +951,25 @@
       const availableHeight = window.innerHeight - scrollMargin * 2;
       let targetScroll = null;
 
-      if (rangeBottom - rangeTop <= availableHeight) {
-        targetScroll = rangeTop - safeScrollMargin;
-      } else if (rangeBottom > viewportBottom) {
+      if (rangeBottom > viewportBottom) {
         targetScroll = rangeBottom - window.innerHeight + scrollMargin;
-      } else if (rangeTop < viewportTop) {
+      } else if (rangeBottom - rangeTop > availableHeight && rangeTop < viewportTop) {
         targetScroll = rangeTop - safeScrollMargin;
       }
 
       if (targetScroll !== null && targetScroll !== window.scrollY) {
-        smoothScrollToPosition(targetScroll, 400);
+        return targetScroll;
       }
+      return null;
+    };
+
+    const ensurePaletteRangeVisible = (startIndex, endIndex) => {
+      const targetScroll = getPaletteRangeScrollTarget(startIndex, endIndex);
+      if (Number.isFinite(targetScroll)) {
+        logAnimationEvent("scroll:range", `target=${Math.round(targetScroll)}`);
+        smoothScrollToPosition(targetScroll, ANIMATION_TIMINGS.scroll);
+      }
+      return targetScroll;
     };
 
     const applyNoPalettesState = () => {
@@ -1002,12 +1036,15 @@
       const hasLowerPalette = paletteIndex < currentColors.length;
 
       if (window.palettes && typeof window.palettes.createTintsAndShades === "function") {
-        window.palettes.createTintsAndShades(settings, false, {
+        const options = {
           skipScroll: true,
           focusPickerContext: { colorIndex: nextFocusIndex, rowType: "base" },
-          ensurePaletteInView: nextFocusIndex,
           ensurePaletteSkipDownwardScroll: hasLowerPalette
-        });
+        };
+        if (hasLowerPalette) {
+          options.ensurePaletteInView = nextFocusIndex;
+        }
+        window.palettes.createTintsAndShades(settings, false, options);
       }
     };
 
@@ -1029,7 +1066,10 @@
           skipFocus: true,
           enteringPaletteIndex: paletteIndex + 1,
           enteringPaletteIndexes: [paletteIndex + 1],
-          enteringFocusContext: { colorIndex: paletteIndex + 1, rowType: "base" }
+          enteringFocusContext: { colorIndex: paletteIndex + 1, rowType: "base" },
+          ensurePaletteInView: paletteIndex + 1,
+          insertionIndex: paletteIndex + 1,
+          insertedCount: 1
         });
       }
     };
@@ -1051,9 +1091,6 @@
 
       const hasLowerPalette = paletteIndex + 1 < currentColors.length;
       const adjacentPaletteIndex = hasLowerPalette ? paletteIndex + 1 : paletteIndex - 1;
-      if (!hasLowerPalette && Number.isInteger(adjacentPaletteIndex) && adjacentPaletteIndex >= 0) {
-        ensurePaletteVisible(adjacentPaletteIndex);
-      }
 
       if (closingPaletteStates.has(paletteWrapper)) return;
 
@@ -1123,6 +1160,15 @@
       const paletteTables = [];
       const colorPrefix = settings.copyWithHashtag ? "#" : "";
 
+      const shouldAnimateInsertion = Number.isInteger(insertionIndex) && insertedCount > 0;
+      const beforeRects = shouldAnimateInsertion ? capturePaletteRects() : null;
+      const canAnimateInsertion =
+        shouldAnimateInsertion &&
+        Array.isArray(beforeRects) &&
+        beforeRects.length + insertedCount === parsedColorsArray.length;
+
+      const motionAllowed = !prefersReducedMotion();
+
       parsedColorsArray.forEach((color, colorIndex) => {
         const paletteData = paletteMetadata[colorIndex] || {};
         const rawLabel = paletteData.label || paletteData.id || "Base";
@@ -1157,7 +1203,7 @@
         const removeButton = `<button type="button" class="palette-close-button palette-titlebar-action" data-tooltip="Remove" data-palette-index="${colorIndex}" aria-label="Remove ${paletteLabel} palette">${closeIcon}</button>`;
         const paletteNameMarkup = `<div class="palette-titlebar" role="heading" aria-level="2"><span class="palette-titlebar-name">${paletteLabel}</span><div class="palette-titlebar-controls">${paletteColorPickerButton}${complementDropdownMarkup}${duplicateButton}${removeButton}</div></div>`;
         const isEntering = enteringIndexesSet.has(colorIndex);
-        const enteringAttr = isEntering ? ' data-entering="true"' : "";
+        const enteringAttr = isEntering && motionAllowed ? ' data-entering="true"' : "";
         const tableMarkup = `<div class="palette-wrapper" role="region" aria-label="${paletteLabel}" data-palette-index="${colorIndex}"${enteringAttr}>${paletteNameMarkup}<div class="palette-table"><table><thead>${headerRow}</thead><tbody>${paletteRows.join("")}</tbody></table></div></div>`;
         paletteTables.push(tableMarkup);
       });
@@ -1167,15 +1213,36 @@
 
       const hasRangeTarget = Number.isInteger(ensurePaletteRangeStart) && Number.isInteger(ensurePaletteRangeEnd);
       const shouldSkipEntryScrolls = hasRangeTarget;
-      if (hasRangeTarget) {
-        ensurePaletteRangeVisible(ensurePaletteRangeStart, ensurePaletteRangeEnd);
-      }
+      const rangeScrollTarget = hasRangeTarget
+        ? getPaletteRangeScrollTarget(ensurePaletteRangeStart, ensurePaletteRangeEnd)
+        : null;
+      const shouldScrollToRange = Number.isFinite(rangeScrollTarget);
 
-      if (enteringIndexes.length) {
+      const runEntryAnimations = () => {
         enteringIndexes.forEach((entryIndex, index) => {
           const focusContext = index === 0 ? enteringFocusContext : null;
-          animatePaletteEntry(entryIndex, focusContext, { skipScroll: shouldSkipEntryScrolls });
+          const wrappers = Array.from(tableContainer.querySelectorAll(".palette-wrapper"));
+          const target = wrappers[entryIndex];
+          if (target) {
+            const skipScroll = canAnimateInsertion ? true : shouldSkipEntryScrolls;
+            animatePaletteFadeIn(target, focusContext, { skipScroll });
+          }
         });
+      };
+
+      if (canAnimateInsertion && enteringIndexes.length) {
+        animatePaletteReorder(beforeRects, insertionIndex, insertedCount);
+        const bumpDuration = ANIMATION_TIMINGS.bump;
+        const fadeDelay = shouldScrollToRange ? ANIMATION_TIMINGS.fadeDelayRange : ANIMATION_TIMINGS.fadeDelaySingle;
+        if (shouldScrollToRange) {
+          logAnimationEvent("scroll:range", `target=${Math.round(rangeScrollTarget)}`);
+          smoothScrollToPosition(rangeScrollTarget, ANIMATION_TIMINGS.scroll);
+          setTimeout(runEntryAnimations, fadeDelay);
+        } else {
+          setTimeout(runEntryAnimations, fadeDelay);
+        }
+      } else if (enteringIndexes.length) {
+        runEntryAnimations();
       }
 
       if (!hasRangeTarget && Number.isInteger(ensurePaletteInView)) {
@@ -1227,7 +1294,7 @@
           }
         }
 
-        if (hasRangeTarget) {
+        if (shouldScrollToRange && !canAnimateInsertion) {
           waitForPaletteEntryAnimations(() => ensurePaletteRangeVisible(ensurePaletteRangeStart, ensurePaletteRangeEnd));
         }
       });
