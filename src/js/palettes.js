@@ -139,11 +139,14 @@
 
   const TOOLTIP_CLEARANCE = 40;
   const ANIMATION_TIMINGS = {
-    bump: 220,
-    scroll: 400,
+    bumpSingle: 220,
+    bumpRange: 260,
+    scrollSingle: 400,
+    scrollRange: 520,
     fade: 360,
-    fadeDelayRange: 260,
-    fadeDelaySingle: 200
+    fadeDelayRange: 210,
+    fadeDelaySingle: 180,
+    collapseDelayRatio: 0.8
   };
   const logAnimationEvent = (label, detail = "") => {
     if (!window.__tsDebugAnimations) return;
@@ -647,7 +650,7 @@
         const scrollMargin = 16;
         const desiredScrollTop = Math.max(0, finalBottomAbsolute - viewportHeight + scrollMargin);
         if (desiredScrollTop > window.scrollY) {
-          smoothScrollToPosition(desiredScrollTop, ANIMATION_TIMINGS.scroll);
+          smoothScrollToPosition(desiredScrollTop, ANIMATION_TIMINGS.scrollSingle);
         }
       }
 
@@ -691,7 +694,7 @@
       return wrappers.map((wrapper) => wrapper.getBoundingClientRect());
     };
 
-    const animatePaletteReorder = (beforeRects, insertionIndex, insertedCount) => {
+    const animatePaletteReorder = (beforeRects, insertionIndex, insertedCount, duration) => {
       if (prefersReducedMotion()) return;
       if (!tableContainer) return;
       if (!Array.isArray(beforeRects) || !beforeRects.length) return;
@@ -721,7 +724,7 @@
 
       requestAnimationFrame(() => {
         animations.forEach(({ target }) => {
-          target.style.transition = `transform ${ANIMATION_TIMINGS.bump}ms ease`;
+          target.style.transition = `transform ${duration}ms ease`;
           target.style.transform = "";
         });
       });
@@ -731,7 +734,7 @@
           target.style.transition = "";
           target.style.transform = "";
         });
-      }, ANIMATION_TIMINGS.bump + 40);
+      }, duration + 40);
     };
 
     const waitForPaletteEntryAnimations = (callback) => {
@@ -902,7 +905,7 @@
       insertRelatedPalettes(paletteIndex, triadicHexes, { ensureRangeVisible: true });
     };
 
-    const ensurePaletteVisible = (paletteIndex, skipDownwardScroll = false) => {
+    const ensurePaletteVisible = (paletteIndex, skipDownwardScroll = false, duration = ANIMATION_TIMINGS.scrollSingle) => {
       if (!tableContainer || !Number.isInteger(paletteIndex)) return;
       const wrappers = Array.from(tableContainer.querySelectorAll(".palette-wrapper"));
       const target = wrappers[paletteIndex];
@@ -929,7 +932,7 @@
           return;
         }
         logAnimationEvent("scroll:ensure", `target=${Math.round(targetScroll)}`);
-        smoothScrollToPosition(targetScroll, ANIMATION_TIMINGS.scroll);
+        smoothScrollToPosition(targetScroll, duration);
       }
     };
 
@@ -967,7 +970,7 @@
       const targetScroll = getPaletteRangeScrollTarget(startIndex, endIndex);
       if (Number.isFinite(targetScroll)) {
         logAnimationEvent("scroll:range", `target=${Math.round(targetScroll)}`);
-        smoothScrollToPosition(targetScroll, ANIMATION_TIMINGS.scroll);
+        smoothScrollToPosition(targetScroll, ANIMATION_TIMINGS.scrollRange);
       }
       return targetScroll;
     };
@@ -1110,15 +1113,6 @@
         if (event.target !== paletteWrapper) return;
 
         if (wrapperState.stage === "fading" && event.propertyName === "opacity") {
-          wrapperState.stage = "collapsing";
-          paletteWrapper.classList.add("palette-wrapper-collapsing");
-          paletteWrapper.getBoundingClientRect(); // ensure styles apply before collapsing
-          requestAnimationFrame(() => {
-            paletteWrapper.style.height = "0px";
-            paletteWrapper.style.marginBottom = "0px";
-            paletteWrapper.style.paddingTop = "0px";
-            paletteWrapper.style.paddingBottom = "0px";
-          });
           return;
         }
 
@@ -1128,6 +1122,19 @@
           cleanupStyles();
           removePaletteAtIndex(paletteIndex);
         }
+      };
+
+      const startCollapse = () => {
+        if (wrapperState.stage !== "fading") return;
+        wrapperState.stage = "collapsing";
+        paletteWrapper.classList.add("palette-wrapper-collapsing");
+        paletteWrapper.getBoundingClientRect(); // ensure styles apply before collapsing
+        requestAnimationFrame(() => {
+          paletteWrapper.style.height = "0px";
+          paletteWrapper.style.marginBottom = "0px";
+          paletteWrapper.style.paddingTop = "0px";
+          paletteWrapper.style.paddingBottom = "0px";
+        });
       };
 
       paletteWrapper.addEventListener("transitionend", handleTransitionEnd);
@@ -1140,6 +1147,8 @@
       requestAnimationFrame(() => {
         paletteWrapper.classList.add("palette-wrapper-fading");
       });
+
+      setTimeout(startCollapse, Math.floor(ANIMATION_TIMINGS.bumpSingle * ANIMATION_TIMINGS.collapseDelayRatio));
     };
 
     tableContainer.__tsPaletteHandlers = {
@@ -1231,12 +1240,13 @@
       };
 
       if (canAnimateInsertion && enteringIndexes.length) {
-        animatePaletteReorder(beforeRects, insertionIndex, insertedCount);
-        const bumpDuration = ANIMATION_TIMINGS.bump;
+        const isRangeInsert = insertedCount > 1;
+        const bumpDuration = isRangeInsert ? ANIMATION_TIMINGS.bumpRange : ANIMATION_TIMINGS.bumpSingle;
+        animatePaletteReorder(beforeRects, insertionIndex, insertedCount, bumpDuration);
         const fadeDelay = shouldScrollToRange ? ANIMATION_TIMINGS.fadeDelayRange : ANIMATION_TIMINGS.fadeDelaySingle;
         if (shouldScrollToRange) {
           logAnimationEvent("scroll:range", `target=${Math.round(rangeScrollTarget)}`);
-          smoothScrollToPosition(rangeScrollTarget, ANIMATION_TIMINGS.scroll);
+          smoothScrollToPosition(rangeScrollTarget, ANIMATION_TIMINGS.scrollRange);
           setTimeout(runEntryAnimations, fadeDelay);
         } else {
           setTimeout(runEntryAnimations, fadeDelay);
@@ -1246,7 +1256,8 @@
       }
 
       if (!hasRangeTarget && Number.isInteger(ensurePaletteInView)) {
-        ensurePaletteVisible(ensurePaletteInView, ensurePaletteSkipDownwardScroll);
+        const ensureDuration = insertedCount > 1 ? ANIMATION_TIMINGS.scrollRange : ANIMATION_TIMINGS.scrollSingle;
+        ensurePaletteVisible(ensurePaletteInView, ensurePaletteSkipDownwardScroll, ensureDuration);
       }
 
       if (!tableContainer.dataset.tsHexKeydownBound) {
