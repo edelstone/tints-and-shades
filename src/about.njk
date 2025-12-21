@@ -36,8 +36,8 @@ docs: true
 <p>The given hex color is first converted to RGB. Each RGB component is then calculated independently as follows:</p>
 
 <ul>
-  <li><b>Tints:</b> <code>New value = current value + ((255 - current value) x tint factor)</code></li>
-  <li><b>Shades:</b> <code>New value = current value x shade factor</code></li>
+  <li><strong>Tints:</strong> <code>New value = current value + ((255 &minus; current value) &times; tint factor)</code></li>
+  <li><strong>Shades:</strong> <code>New value = current value &times; shade factor</code></li>
 </ul>
 
 <p>The &ldquo;tint factor&rdquo; represents the percentage of the remaining distance each RGB channel moves toward white (255), while the &ldquo;shade factor&rdquo; represents the percentage of the original color retained as each channel is scaled toward black (0).</p>
@@ -46,26 +46,26 @@ docs: true
 
 <h2>Example calculation</h2>
 
-<p>Let&rsquo;s say we want tints and shades of <a href="https://meyerweb.com/eric/thoughts/2014/06/19/rebeccapurple/">Rebecca Purple</a>, #663399.</p>
+<p>Let&rsquo;s say we want tints and shades of <a href="https://meyerweb.com/eric/thoughts/2014/06/19/rebeccapurple/">Rebecca Purple</a>, <code>#663399</code>.</p>
 
 <h3>10% tint</h3>
 
 <ol>
-  <li>#663399 is converted to the RGB equivalent of 102, 51, 153</li>
-  <li><b>R:</b> <code>102 + ((255 - 102) x .1) = 117.3</code>, rounded to 117</li>
-  <li><b>G:</b> <code>51 + ((255 - 51) x .1) = 71.4</code>, rounded to 71</li>
-  <li><b>B:</b> <code>153 + ((255 - 153) x .1) = 163.2</code>, rounded to 163</li>
-  <li>RGB 117, 71, 163 is converted to the hex equivalent of #7547a3</li>
+  <li><code>#663399</code> is converted to the RGB equivalent of <code>(102, 51, 153)</code></li>
+  <li><strong>R:</strong> <code>102 + ((255 &minus; 102) &times; 0.1) = 117.3</code>, rounded to 117</li>
+  <li><strong>G:</strong> <code>51 + ((255 &minus; 51) &times; 0.1) = 71.4</code>, rounded to 71</li>
+  <li><strong>B:</strong> <code>153 + ((255 &minus; 153) &times; 0.1) = 163.2</code>, rounded to 163</li>
+  <li>RGB <code>(117, 71, 163)</code> is converted to the hex equivalent of <code>#7547a3</code> </li>
 </ol>
 
 <h3>10% shade</h3>
 
 <ol>
-  <li>#663399 is converted to the RGB equivalent of 102, 51, 153</li>
-  <li><b>R:</b> <code>102 x .9 = 91.8</code>, rounded to 92</li>
-  <li><b>G:</b> <code>51 x .9 = 45.9</code>, rounded to 46</li>
-  <li><b>B:</b> <code>153 x .9 = 137.7</code>, rounded to 138</li>
-  <li>RGB 92, 46, 138 is converted to the hex equivalent of #5c2e8a</li>
+  <li><code>#663399</code> is converted to the RGB equivalent of <code>(102, 51, 153)</code> </li>
+  <li><strong>R:</strong> <code>102 &times; 0.9 = 91.8</code>, rounded to 92</li>
+  <li><strong>G:</strong> <code>51 &times; 0.9 = 45.9</code>, rounded to 46</li>
+  <li><strong>B:</strong> <code>153 &times; 0.9 = 137.7</code>, rounded to 138</li>
+  <li>RGB <code>(92, 46, 138)</code> is converted to the hex equivalent of <code>#5c2e8a</code> </li>
 </ol>
 
 <h2>Related colors</h2>
