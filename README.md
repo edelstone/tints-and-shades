@@ -48,7 +48,7 @@ The given hex color is first converted to RGB. Each RGB component is then calcul
 
 The “tint factor” represents the percentage of the remaining distance each RGB channel moves toward white (255), while the “shade factor” represents the percentage of the original color retained as each channel is scaled toward black (0).
 
-The new value is rounded to the nearest whole number (values ending in .5 round up), then converted back to hex for display.
+The new value is rounded to the nearest whole number (values ending in .5 round up), and then converted back to hex for display.
 
 ## Example calculation
 

@@ -153,6 +153,39 @@
     const suffix = detail ? ` ${detail}` : "";
     console.log(`[tints-and-shades] ${label}${suffix}`);
   };
+  const escapeHtml = (value) =>
+    String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  const normalizeHex = (value) => String(value || "").trim().replace(/^#/, "");
+  const isValidHex = (value) => {
+    const hex = normalizeHex(value);
+    return /^[0-9a-fA-F]{3}$/.test(hex) || /^[0-9a-fA-F]{6}$/.test(hex) || /^[0-9a-fA-F]{8}$/.test(hex);
+  };
+  const captureFocusContext = () => {
+    const active = document.activeElement;
+    if (!active || !(active instanceof HTMLElement)) return null;
+    const paletteWrapper = active.closest(".palette-wrapper");
+    return {
+      id: active.id || null,
+      paletteIndex: paletteWrapper ? paletteWrapper.getAttribute("data-palette-index") : null,
+      paletteId: paletteWrapper ? paletteWrapper.getAttribute("data-palette-id") : null,
+      dataColorIndex: active.getAttribute("data-color-index"),
+      dataPaletteIndex: active.getAttribute("data-palette-index"),
+      dataRowType: active.getAttribute("data-row-type"),
+      classes: Array.from(active.classList || [])
+    };
+  };
+  const escapeSelector = (value) => {
+    if (!value) return "";
+    if (window.CSS && typeof window.CSS.escape === "function") {
+      return window.CSS.escape(value);
+    }
+    return value.replace(/"/g, "\\\"");
+  };
   const fadeElement = (target, { duration, from = "0", to = "1", onComplete = null, preserveOpacity = false } = {}) => {
     if (!target) return null;
     const fadeDuration = Number.isFinite(duration) ? duration : ANIMATION_TIMINGS.fade;
@@ -472,9 +505,9 @@
   const buildTableHeader = (steps) => {
     const safeSteps = Math.max(1, steps);
     const headers = Array.from({ length: safeSteps }, (_, index) => {
-      if (index === 0) return "<td><span>Base</span></td>";
+      if (index === 0) return "<th scope=\"col\"><span>Base</span></th>";
       const percent = (index / safeSteps) * 100;
-      return `<td><span>${formatPercentLabel(percent)}</span></td>`;
+      return `<th scope=\"col\"><span>${formatPercentLabel(percent)}</span></th>`;
     });
     return `<tr class="table-header">${headers.join("")}</tr>`;
   };
@@ -497,8 +530,10 @@
   const getColorCellMarkup = (hexValue, prefix, baseClassName, rowTypeAttribute) => {
     const copyIcon = getIconMarkup("icon-copy-template");
     const checkIcon = getIconMarkup("icon-check-template");
-    const ariaLabel = `Copy ${prefix}${hexValue.toUpperCase()}`;
-    return `<td tabindex="0" role="button" aria-label="${ariaLabel}" class="hex-color${baseClassName}" style="background-color:#${hexValue}" data-clipboard-text="${prefix}${hexValue}"${rowTypeAttribute}>
+    const safeHex = normalizeHex(hexValue);
+    const ariaLabel = `Copy ${prefix}${safeHex.toUpperCase()}`;
+    const styleAttr = isValidHex(safeHex) ? ` style="background-color:#${safeHex}"` : "";
+    return `<td tabindex="0" role="button" aria-label="${ariaLabel}" class="hex-color${baseClassName}"${styleAttr} data-clipboard-text="${prefix}${hexValue}"${rowTypeAttribute}>
       <span class="copy-indicator copy-indicator-copy" aria-hidden="true">${copyIcon}</span>
       <span class="copy-indicator copy-indicator-check" aria-hidden="true">${checkIcon}</span>
     </td>`;
@@ -617,6 +652,7 @@
       skipScroll = false,
       skipFocus = false,
       focusPickerContext = null,
+      focusRestoreContext = null,
       enteringPaletteIndex = null,
       enteringPaletteIndexes = [],
       enteringFocusContext = null,
@@ -647,12 +683,33 @@
     const tableContainer = document.getElementById("tints-and-shades");
     const warning = document.getElementById("warning");
     ensureComplementDropdownListeners();
+    const capturedFocus = focusRestoreContext || captureFocusContext();
 
     const focusPickerCell = (context) => {
       if (!tableContainer || !context) return false;
-      const { colorIndex, rowType } = context;
-      if (!Number.isInteger(colorIndex)) return false;
+      const { colorIndex, rowType, paletteId } = context;
       const rowAttribute = rowType ? `[data-row-type="${rowType}"]` : "";
+      if (paletteId) {
+        const wrapper = tableContainer.querySelector(
+          `.palette-wrapper[data-palette-id="${escapeSelector(paletteId)}"]`
+        );
+        if (wrapper) {
+          const selectors = [
+            `.edit-base-button${rowAttribute}`,
+            `.hex-color-picker${rowAttribute}`
+          ];
+          const focusTarget = wrapper.querySelector(selectors.join(","));
+          if (focusTarget && typeof focusTarget.focus === "function") {
+            try {
+              focusTarget.focus({ preventScroll: true });
+            } catch (error) {
+              focusTarget.focus();
+            }
+            return true;
+          }
+        }
+      }
+      if (!Number.isInteger(colorIndex)) return false;
       const selectors = [
         `.edit-base-button[data-color-index="${colorIndex}"]${rowAttribute}`,
         `.hex-color-picker[data-color-index="${colorIndex}"]${rowAttribute}`
@@ -667,6 +724,90 @@
         return true;
       }
       return false;
+    };
+    const focusElement = (target) => {
+      if (!target || typeof target.focus !== "function") return false;
+      try {
+        target.focus({ preventScroll: true });
+      } catch (error) {
+        target.focus();
+      }
+      return true;
+    };
+    const restoreFocus = () => {
+      if (!capturedFocus || !tableContainer) return false;
+      if (capturedFocus.id) {
+        const byId = document.getElementById(capturedFocus.id);
+        if (byId && byId.isConnected) return focusElement(byId);
+      }
+
+      if (capturedFocus.paletteId) {
+        const wrapper = tableContainer.querySelector(
+          `.palette-wrapper[data-palette-id="${escapeSelector(capturedFocus.paletteId)}"]`
+        );
+        if (wrapper) {
+          const rowAttribute = capturedFocus.dataRowType ? `[data-row-type="${capturedFocus.dataRowType}"]` : "";
+          const scopedSelectors = [];
+          if (capturedFocus.classes.includes("edit-base-button")) {
+            scopedSelectors.push(`.edit-base-button${rowAttribute}`);
+          }
+          if (capturedFocus.classes.includes("hex-color-picker")) {
+            scopedSelectors.push(`.hex-color-picker${rowAttribute}`);
+          }
+          if (capturedFocus.classes.includes("palette-duplicate-button")) {
+            scopedSelectors.push(".palette-duplicate-button");
+          }
+          if (capturedFocus.classes.includes("palette-close-button")) {
+            scopedSelectors.push(".palette-close-button");
+          }
+          if (capturedFocus.classes.includes("palette-complement-dropdown-toggle")) {
+            scopedSelectors.push(".palette-complement-dropdown-toggle");
+          }
+          for (const selector of scopedSelectors) {
+            const target = wrapper.querySelector(selector);
+            if (target && focusElement(target)) return true;
+          }
+
+          const fallback = wrapper.querySelector("button, [href], input, select, textarea, [tabindex]:not([tabindex=\"-1\"])");
+          if (focusElement(fallback)) return true;
+        }
+      }
+
+      const selectors = [];
+      const rowAttribute = capturedFocus.dataRowType ? `[data-row-type="${capturedFocus.dataRowType}"]` : "";
+      if (capturedFocus.classes.includes("edit-base-button") && capturedFocus.dataColorIndex) {
+        selectors.push(`.edit-base-button[data-color-index="${capturedFocus.dataColorIndex}"]${rowAttribute}`);
+      }
+      if (capturedFocus.classes.includes("hex-color-picker") && capturedFocus.dataColorIndex) {
+        selectors.push(`.hex-color-picker[data-color-index="${capturedFocus.dataColorIndex}"]${rowAttribute}`);
+      }
+      if (capturedFocus.classes.includes("palette-duplicate-button") && capturedFocus.dataPaletteIndex) {
+        selectors.push(`.palette-duplicate-button[data-palette-index="${capturedFocus.dataPaletteIndex}"]`);
+      }
+      if (capturedFocus.classes.includes("palette-close-button") && capturedFocus.dataPaletteIndex) {
+        selectors.push(`.palette-close-button[data-palette-index="${capturedFocus.dataPaletteIndex}"]`);
+      }
+      if (capturedFocus.classes.includes("palette-complement-dropdown-toggle") && capturedFocus.dataPaletteIndex) {
+        selectors.push(`.palette-complement-dropdown-toggle[data-palette-index="${capturedFocus.dataPaletteIndex}"]`);
+      }
+
+      for (const selector of selectors) {
+        const target = tableContainer.querySelector(selector);
+        if (target && focusElement(target)) return true;
+      }
+
+      if (capturedFocus.paletteIndex !== null) {
+        const wrapper = tableContainer.querySelector(`.palette-wrapper[data-palette-index="${capturedFocus.paletteIndex}"]`);
+        if (wrapper) {
+          const focusable = wrapper.querySelector("button, [href], input, select, textarea, [tabindex]:not([tabindex=\"-1\"])");
+          if (focusElement(focusable)) return true;
+        }
+      }
+
+      const makeButton = document.getElementById("make");
+      if (focusElement(makeButton)) return true;
+      const colorValuesInput = document.getElementById("color-values");
+      return focusElement(colorValuesInput);
     };
 
     const animatePaletteFadeIn = (target, focusContext = null, { skipScroll = false } = {}) => {
@@ -1227,6 +1368,16 @@
       const { state, elements, toggleExportWrapperVisibility, setExportFormat, updateExportOutput } = exportUI;
       const tintShadeCount = normalizeTintShadeCount(settings.tintShadeCount);
       const paletteMetadata = buildPaletteData(parsedColorsArray, tintShadeCount);
+      const derivedEnteringFocusContext = (() => {
+        if (!enteringFocusContext || enteringFocusContext.paletteId) return enteringFocusContext;
+        const focusIndex = Number.isInteger(enteringFocusContext.colorIndex)
+          ? enteringFocusContext.colorIndex
+          : (enteringIndexes.length ? enteringIndexes[0] : null);
+        if (Number.isInteger(focusIndex) && paletteMetadata[focusIndex] && paletteMetadata[focusIndex].id) {
+          return { ...enteringFocusContext, paletteId: paletteMetadata[focusIndex].id };
+        }
+        return enteringFocusContext;
+      })();
       const paletteTables = [];
       const colorPrefix = settings.copyWithHashtag ? "#" : "";
       if (tableContainer) {
@@ -1253,6 +1404,9 @@
         const paletteData = paletteMetadata[colorIndex] || {};
         const rawLabel = paletteData.label || paletteData.id || "Base";
         const paletteLabel = exportNaming.formatLabelForDisplay(rawLabel) || rawLabel;
+        const paletteLabelEsc = escapeHtml(paletteLabel);
+        const paletteId = paletteData.id || "";
+        const paletteIdEsc = escapeHtml(paletteId);
         const paletteRows = [];
 
         const calculatedShades = colorUtils.calculateShades(color, tintShadeCount);
@@ -1269,22 +1423,22 @@
         const plusIcon = getIconMarkup("icon-plus-template");
         const closeIcon = getIconMarkup("icon-x-template");
         const complementDropdownMarkup = `<div class="palette-complement-dropdown">
-          <button type="button" class="palette-complement-dropdown-toggle palette-titlebar-action" data-tooltip="Add related colors" aria-haspopup="menu" aria-expanded="false" aria-label="Add related colors for ${paletteLabel}">${filterIcon}</button>
-          <div class="palette-complement-dropdown-menu" role="menu" aria-hidden="true">
-            <button type="button" class="palette-complement-dropdown-item" role="menuitem" tabindex="-1" data-palette-index="${colorIndex}" data-dropdown-action="complementary">Complementary</button>
-            <button type="button" class="palette-complement-dropdown-item" role="menuitem" tabindex="-1" data-palette-index="${colorIndex}" data-dropdown-action="split-complementary">Split complementary</button>
-            <button type="button" class="palette-complement-dropdown-item" role="menuitem" tabindex="-1" data-palette-index="${colorIndex}" data-dropdown-action="analogous">Analogous</button>
-            <button type="button" class="palette-complement-dropdown-item" role="menuitem" tabindex="-1" data-palette-index="${colorIndex}" data-dropdown-action="triadic">Triadic</button>
+          <button type="button" class="palette-complement-dropdown-toggle palette-titlebar-action" data-tooltip="Add related colors" aria-haspopup="menu" aria-expanded="false" aria-label="Add related colors for ${paletteLabelEsc}">${filterIcon}</button>
+          <div class="palette-complement-dropdown-menu" aria-hidden="true">
+            <button type="button" class="palette-complement-dropdown-item" tabindex="-1" data-palette-index="${colorIndex}" data-dropdown-action="complementary">Complementary</button>
+            <button type="button" class="palette-complement-dropdown-item" tabindex="-1" data-palette-index="${colorIndex}" data-dropdown-action="split-complementary">Split complementary</button>
+            <button type="button" class="palette-complement-dropdown-item" tabindex="-1" data-palette-index="${colorIndex}" data-dropdown-action="analogous">Analogous</button>
+            <button type="button" class="palette-complement-dropdown-item" tabindex="-1" data-palette-index="${colorIndex}" data-dropdown-action="triadic">Triadic</button>
           </div>
         </div>`;
         const normalizedBaseHex = color ? color.replace(/^#/, "") : "";
-        const paletteColorPickerButton = `<button type="button" class="edit-base-button palette-titlebar-action" data-tooltip="Edit base color" data-color-index="${colorIndex}" data-color-hex="${normalizedBaseHex}" data-row-type="base" aria-label="Adjust ${paletteLabel} base color">${pencilIcon}</button>`;
-        const duplicateButton = `<button type="button" class="palette-duplicate-button palette-titlebar-action" data-tooltip="Duplicate" data-palette-index="${colorIndex}" aria-label="Duplicate ${paletteLabel} palette">${plusIcon}</button>`;
-        const removeButton = `<button type="button" class="palette-close-button palette-titlebar-action" data-tooltip="Remove" data-palette-index="${colorIndex}" aria-label="Remove ${paletteLabel} palette">${closeIcon}</button>`;
-        const paletteNameMarkup = `<div class="palette-titlebar" role="heading" aria-level="2"><span class="palette-titlebar-name">${paletteLabel}</span><div class="palette-titlebar-controls">${paletteColorPickerButton}${complementDropdownMarkup}${duplicateButton}${removeButton}</div></div>`;
+        const paletteColorPickerButton = `<button type="button" class="edit-base-button palette-titlebar-action" data-tooltip="Edit base color" data-color-index="${colorIndex}" data-color-hex="${normalizedBaseHex}" data-row-type="base" aria-label="Adjust ${paletteLabelEsc} base color">${pencilIcon}</button>`;
+        const duplicateButton = `<button type="button" class="palette-duplicate-button palette-titlebar-action" data-tooltip="Duplicate" data-palette-index="${colorIndex}" aria-label="Duplicate ${paletteLabelEsc} palette">${plusIcon}</button>`;
+        const removeButton = `<button type="button" class="palette-close-button palette-titlebar-action" data-tooltip="Remove" data-palette-index="${colorIndex}" aria-label="Remove ${paletteLabelEsc} palette">${closeIcon}</button>`;
+        const paletteNameMarkup = `<div class="palette-titlebar"><span class="palette-titlebar-name">${paletteLabelEsc}</span><div class="palette-titlebar-controls">${paletteColorPickerButton}${complementDropdownMarkup}${duplicateButton}${removeButton}</div></div>`;
         const isEntering = enteringIndexesSet.has(colorIndex);
         const enteringAttr = isEntering && motionAllowed ? ' data-entering="true"' : "";
-        const tableMarkup = `<div class="palette-wrapper" role="region" aria-label="${paletteLabel}" data-palette-index="${colorIndex}"${enteringAttr}>${paletteNameMarkup}<div class="palette-table"><table><thead>${headerRow}</thead><tbody>${paletteRows.join("")}</tbody></table></div></div>`;
+        const tableMarkup = `<div class="palette-wrapper" data-palette-index="${colorIndex}" data-palette-id="${paletteIdEsc}"${enteringAttr}>${paletteNameMarkup}<div class="palette-table"><table><thead>${headerRow}</thead><tbody>${paletteRows.join("")}</tbody></table></div></div>`;
         paletteTables.push(tableMarkup);
       });
 
@@ -1300,7 +1454,7 @@
 
       const runEntryAnimations = () => {
         enteringIndexes.forEach((entryIndex, index) => {
-          const focusContext = index === 0 ? enteringFocusContext : null;
+          const focusContext = index === 0 ? derivedEnteringFocusContext : null;
           const wrappers = Array.from(tableContainer.querySelectorAll(".palette-wrapper"));
           const target = wrappers[entryIndex];
           if (target) {
@@ -1377,15 +1531,17 @@
       setTimeout(() => {
         tableContainer.removeAttribute("tabindex");
         const pickerFocused = focusPickerContext && focusPickerCell(focusPickerContext);
+        const shouldRestoreFocus = !enteringFocusContext;
+        const restoredFocus = !pickerFocused && shouldRestoreFocus && restoreFocus();
 
         // if we have a target close button index, focus it after rebuild
-        if (!pickerFocused && !skipFocus) {
+        if (!pickerFocused && !restoredFocus && !skipFocus) {
           const activeStepButton = document.querySelector(".step-selector-option.is-active");
           if (activeStepButton) {
-            activeStepButton.focus();
+            focusElement(activeStepButton);
           } else {
             const makeButton = document.getElementById("make");
-            if (makeButton) makeButton.focus();
+            if (makeButton) focusElement(makeButton);
           }
         }
 
