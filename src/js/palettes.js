@@ -1178,6 +1178,8 @@
 
       const motionAllowed = !prefersReducedMotion();
 
+      const hadPalettes = tableContainer && tableContainer.querySelector(".palette-wrapper");
+
       parsedColorsArray.forEach((color, colorIndex) => {
         const paletteData = paletteMetadata[colorIndex] || {};
         const rawLabel = paletteData.label || paletteData.id || "Base";
@@ -1253,6 +1255,15 @@
         }
       } else if (enteringIndexes.length) {
         runEntryAnimations();
+      }
+      const shouldFadeInitial = !enteringIndexes.length && !hadPalettes;
+      if (shouldFadeInitial) {
+        const wrappers = Array.from(tableContainer.querySelectorAll(".palette-wrapper"));
+        const target = wrappers[0];
+        if (target) {
+          target.setAttribute("data-entering", "true");
+          animatePaletteFadeIn(target, null, { skipScroll: false });
+        }
       }
 
       if (!hasRangeTarget && Number.isInteger(ensurePaletteInView)) {
