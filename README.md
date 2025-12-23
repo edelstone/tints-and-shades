@@ -98,11 +98,9 @@ Now you can generate the same meticulously-crafted tints and shades without leav
 
 ## Feedback and contributing
 
-This project is open source and I’d love your help!
+If you notice a bug or want a feature added please [file an issue on GitHub](https://github.com/edelstone/tints-and-shades/issues/new) or just [email me](mailto:contact@maketintsandshades.com) the details.
 
-If you notice a bug or want a feature added please [file an issue on GitHub](https://github.com/edelstone/tints-and-shades/issues/new). If you don’t have an account there, just [email me](mailto:contact@maketintsandshades.com) the details.
-
-If you’re a developer and want to help with the project, please comment on [open issues](https://github.com/edelstone/tints-and-shades/issues) or create a new one and communicate your intentions. Once we agree on a path forward you can just make a pull request and take it to the finish line.
+If you’d like to contribute, comment on an [open issue](https://github.com/edelstone/tints-and-shades/issues) or open a new one describing your approach. Once aligned, submit a PR.
 
 ## Local development
 
@@ -115,8 +113,6 @@ _Prerequisites: Node.js 18+_
 5. Navigate to `localhost:8080` in your browser.
 
 ## Support this project
-
-The Tint & Shade Generator will always be free but your support is greatly appreciated.
 
 - [Buy Me a Coffee](https://www.buymeacoffee.com/edelstone)
 - [Cash App](https://cash.app/$edelstone)
