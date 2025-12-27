@@ -22,8 +22,9 @@ jobs:
 
       - name: Run Lighthouse CI
         run: |
-          npx @lhci/cli collect --config=./.lighthouserc.json --output-path=./lhci-results
-          npx @lhci/cli upload --config=./.lighthouserc.json --target=filesystem --outputDir=./lhci-results
+          npx @lhci/cli collect --config=./.lighthouserc.json --outputDir=./lhci-results
+      - name: Debug Lighthouse output
+        run: ls -la lhci-results || true
 
       - name: Generate Lighthouse badge
         run: node scripts/generate-lighthouse-badge.js
