@@ -56,8 +56,8 @@ if (!/^## Calculation method\b/m.test(normalizedMarkdown)) {
 
 const normalizedMarkdownWithLocalDev = normalizedMarkdown;
 
-const badgeRow = `[![Uptime](https://img.shields.io/uptimerobot/ratio/m802057964-ccc7bb7005a502e6c6fb8eb4?style=for-the-badge)](https://stats.uptimerobot.com/QYdgLvy4p7)
-[![License](https://img.shields.io/github/license/edelstone/tints-and-shades?style=for-the-badge)](LICENSE)`;
+const badgeRow = `[![Uptime](https://img.shields.io/uptimerobot/ratio/m802057964-ccc7bb7005a502e6c6fb8eb4)](https://stats.uptimerobot.com/QYdgLvy4p7)&nbsp;&nbsp;
+[![License](https://img.shields.io/github/license/edelstone/tints-and-shades)](LICENSE)`;
 
 const readmeTemplate = `# [<img src="src/icon.svg" width="28px" alt="" />](https://maketintsandshades.com) &nbsp;[Tint & Shade Generator](https://maketintsandshades.com)
 
