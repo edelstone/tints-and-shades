@@ -56,7 +56,7 @@ if (!/^## Calculation method\b/m.test(normalizedMarkdown)) {
 
 const normalizedMarkdownWithLocalDev = normalizedMarkdown;
 
-const badgeRow = `[![Lighthouse](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fedelstone%2Ftints-and-shades%2Fmain%2Fassets%2Fbadges%2Flighthouse.json&style=for-the-badge)](https://github.com/edelstone/tints-and-shades/actions/workflows/lighthouse.yml)
+const badgeRow = `[![Lighthouse](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fedelstone%2Ftints-and-shades%2Fmain%2Fassets%2Fbadges%2Flighthouse.json&style=for-the-badge&cacheSeconds=60)](https://github.com/edelstone/tints-and-shades/actions/workflows/lighthouse.yml)
 [![Uptime](https://img.shields.io/uptimerobot/ratio/m802057964-ccc7bb7005a502e6c6fb8eb4?style=for-the-badge)](https://stats.uptimerobot.com/QYdgLvy4p7)
 [![License](https://img.shields.io/github/license/edelstone/tints-and-shades?style=for-the-badge)](LICENSE)`;
 
