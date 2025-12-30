@@ -1,8 +1,5 @@
 # [<img src="src/icon.svg" width="28px" alt="" />](https://maketintsandshades.com) &nbsp;[Tint & Shade Generator](https://maketintsandshades.com)
 
-[![Uptime](https://img.shields.io/uptimerobot/ratio/m802057964-ccc7bb7005a502e6c6fb8eb4)](https://stats.uptimerobot.com/QYdgLvy4p7)&nbsp;&nbsp;
-[![License](https://img.shields.io/github/license/edelstone/tints-and-shades)](LICENSE)
-
 <a href="https://maketintsandshades.com">
  <picture>
    <source media="(prefers-color-scheme: dark)" srcset="assets/home-dark.png" />
