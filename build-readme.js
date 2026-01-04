@@ -56,7 +56,7 @@ if (!/^## Calculation method\b/m.test(normalizedMarkdown)) {
 
 const normalizedMarkdownWithLocalDev = normalizedMarkdown;
 
-const readmeTemplate = `# [<img src="src/icon.svg" width="28px" alt="" style="margin-right: .5em;">](https://maketintsandshades.com)[Tint & Shade Generator](https://maketintsandshades.com)
+const readmeTemplate = `# [Tint & Shade Generator](https://maketintsandshades.com)
 
 <a href="https://maketintsandshades.com">
  <picture>

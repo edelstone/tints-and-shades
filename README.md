@@ -1,4 +1,4 @@
-# [<img src="src/icon.svg" width="28px" alt="" style="margin-right: .5em;">](https://maketintsandshades.com)[Tint & Shade Generator](https://maketintsandshades.com)
+# [Tint & Shade Generator](https://maketintsandshades.com)
 
 <a href="https://maketintsandshades.com">
  <picture>
