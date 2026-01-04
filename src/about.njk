@@ -14,13 +14,13 @@ docs: true
 
 <p>It takes the math seriously. In my experience similar tools get the calculations incorrect due to rounding errors, creator preferences, or other inconsistencies.</p>
 
-<p>Testing shows that the output matches Chrome DevTools&rsquo; calculation method as well as some <a href="https://css-tricks.com/snippets/sass/tint-shade-functions">established</a>, <a href="https://sindresorhus.com/sass-extras/#color-function-tint">popular</a> methods to derive tints and shades via Sass.</p>
+<p>Testing shows that the output matches Chrome DevTools’ calculation method as well as some <a href="https://css-tricks.com/snippets/sass/tint-shade-functions">established</a>, <a href="https://sindresorhus.com/sass-extras/#color-function-tint">popular</a> methods to derive tints and shades via Sass.</p>
 
 <h2>When would I use this?</h2>
 
-<p>Originally created for designer and developer teams, it&rsquo;s also useful for teachers, data pros, brand strategists, presentation makers, and anyone who works with colors.</p>
+<p>Originally created for designer and developer teams, it’s also useful for teachers, data pros, brand strategists, presentation makers, and anyone who works with colors.</p>
 
-<p>It&rsquo;s perfect for:</p>
+<p>It’s perfect for:</p>
 
 <ul>
   <li>exploring and refining colors visually</li>
@@ -36,25 +36,25 @@ docs: true
 <p>The given hex color is first converted to RGB. Each RGB component is then calculated independently as follows:</p>
 
 <ul>
-  <li><strong>Tints:</strong> <code>New value = current value + ((255 &minus; current value) &times; tint factor)</code></li>
-  <li><strong>Shades:</strong> <code>New value = current value &times; shade factor</code></li>
+  <li><strong>Tints:</strong> <code>New value = current value + ((255 − current value) × tint factor)</code></li>
+  <li><strong>Shades:</strong> <code>New value = current value × shade factor</code></li>
 </ul>
 
-<p>The &ldquo;tint factor&rdquo; represents the percentage of the remaining distance each RGB channel moves toward white (255), while the &ldquo;shade factor&rdquo; represents the percentage of the original color retained as each channel is scaled toward black (0).</p>
+<p>The “tint factor” represents the percentage of the remaining distance each RGB channel moves toward white (255), while the “shade factor” represents the percentage of the original color retained as each channel is scaled toward black (0).</p>
 
 <p>The new value is rounded to the nearest whole number (values ending in .5 round up), and then converted back to hex for display.</p>
 
 <h2>Example calculation</h2>
 
-<p>Let&rsquo;s say we want tints and shades of <a href="https://meyerweb.com/eric/thoughts/2014/06/19/rebeccapurple/">Rebecca Purple</a>, <code>#663399</code>.</p>
+<p>Let’s say we want tints and shades of <a href="https://meyerweb.com/eric/thoughts/2014/06/19/rebeccapurple/">Rebecca Purple</a>, <code>#663399</code>.</p>
 
 <h3>10% tint</h3>
 
 <ol>
   <li><code>#663399</code> is converted to the RGB equivalent of <code>(102, 51, 153)</code></li>
-  <li><strong>R:</strong> <code>102 + ((255 &minus; 102) &times; 0.1) = 117.3</code>, rounded to 117</li>
-  <li><strong>G:</strong> <code>51 + ((255 &minus; 51) &times; 0.1) = 71.4</code>, rounded to 71</li>
-  <li><strong>B:</strong> <code>153 + ((255 &minus; 153) &times; 0.1) = 163.2</code>, rounded to 163</li>
+  <li><strong>R:</strong> <code>102 + ((255 − 102) × 0.1) = 117.3</code>, rounded to 117</li>
+  <li><strong>G:</strong> <code>51 + ((255 − 51) × 0.1) = 71.4</code>, rounded to 71</li>
+  <li><strong>B:</strong> <code>153 + ((255 − 153) × 0.1) = 163.2</code>, rounded to 163</li>
   <li>RGB <code>(117, 71, 163)</code> is converted to the hex equivalent of <code>#7547a3</code> </li>
 </ol>
 
@@ -62,9 +62,9 @@ docs: true
 
 <ol>
   <li><code>#663399</code> is converted to the RGB equivalent of <code>(102, 51, 153)</code> </li>
-  <li><strong>R:</strong> <code>102 &times; 0.9 = 91.8</code>, rounded to 92</li>
-  <li><strong>G:</strong> <code>51 &times; 0.9 = 45.9</code>, rounded to 46</li>
-  <li><strong>B:</strong> <code>153 &times; 0.9 = 137.7</code>, rounded to 138</li>
+  <li><strong>R:</strong> <code>102 × 0.9 = 91.8</code>, rounded to 92</li>
+  <li><strong>G:</strong> <code>51 × 0.9 = 45.9</code>, rounded to 46</li>
+  <li><strong>B:</strong> <code>153 × 0.9 = 137.7</code>, rounded to 138</li>
   <li>RGB <code>(92, 46, 138)</code> is converted to the hex equivalent of <code>#5c2e8a</code> </li>
 </ol>
 
@@ -76,19 +76,19 @@ docs: true
 
 <h3>Complementary</h3>
 
-<p>Adds one new palette using the hue directly opposite the base color (180&deg;), producing the strongest contrast and clear visual separation.</p>
+<p>Adds one new palette using the hue directly opposite the base color (180°), producing the strongest contrast and clear visual separation.</p>
 
 <h3>Split complementary</h3>
 
-<p>Adds two palettes using hues 30&deg; on either side of the complementary color, keeping contrast high but less extreme than a direct complementary pairing.</p>
+<p>Adds two palettes using hues 30° on either side of the complementary color, keeping contrast high but less extreme than a direct complementary pairing.</p>
 
 <h3>Analogous</h3>
 
-<p>Adds two palettes using hues 30&deg; on either side of the base color, resulting in low-contrast, cohesive combinations suited for subtle variation.</p>
+<p>Adds two palettes using hues 30° on either side of the base color, resulting in low-contrast, cohesive combinations suited for subtle variation.</p>
 
 <h3>Triadic</h3>
 
-<p>Adds two palettes evenly spaced at 120&deg; intervals around the color wheel, creating medium-high contrast with energetic, distinct relationships.</p>
+<p>Adds two palettes evenly spaced at 120° intervals around the color wheel, creating medium-high contrast with energetic, distinct relationships.</p>
 
 <h2><!-- README-EXCLUDE-START --><span class="subheader-icon">{% include "partials/icons/figma.njk" %}</span><!-- README-EXCLUDE-END --> Figma plugin</h2>
 
@@ -98,7 +98,7 @@ docs: true
 
 <p>If you notice a bug or want a feature added please <a href="https://github.com/edelstone/tints-and-shades/issues/new">file an issue on GitHub</a> or just <a href="mailto:contact@maketintsandshades.com">email me</a> the details.</p>
 
-<p>If you&rsquo;d like to contribute, comment on an <a href="https://github.com/edelstone/tints-and-shades/issues">open issue</a> or open a new one describing your approach. Once aligned, submit a PR.</p>
+<p>If you’d like to contribute, comment on an <a href="https://github.com/edelstone/tints-and-shades/issues">open issue</a> or open a new one describing your approach. Once aligned, submit a PR.</p>
 
 <!-- README-INSERT-LOCAL-DEV -->
 
@@ -134,5 +134,5 @@ docs: true
   <li>Colors: <a href="/#colors=000000">#000000</a>, <a href="/#colors=1a1a1a">#1a1a1a</a>, <a href="/#colors=e6e6e6">#e6e6e6</a>, <a href="/#colors=ffffff">#ffffff</a>, <a href="/#colors=e96443">#e96443</a>, and <a href="/#colors=ca228e">#ca228e</a></li>
 </ul>
 
-<p>Prefer Google&rsquo;s color logic? Try the <a href="https://materialpalettes.com">Material Design Palette Generator</a>.</p>
+<p>Prefer Google’s color logic? Try the <a href="https://materialpalettes.com">Material Design Palette Generator</a>.</p>
 <!-- END README CONTENT -->
