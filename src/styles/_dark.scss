@@ -3,12 +3,6 @@
 html.darkmode-active {
   background-color: $gray-600;
   color-scheme: dark;
-  --link-hover-1: #{$magenta};
-  --link-hover-2: #{$orange};
-  --link-hover-3: #{$accent-dark-1};
-  --link-hover-4: #{$accent-dark-2};
-  --link-hover-5: #{$accent-dark-3};
-  --link-hover-6: #{$accent-dark-4};
 
   body {
     color: $gray-100;
@@ -17,6 +11,10 @@ html.darkmode-active {
     a {
       color: $gray-100;
       border-color: $gray-100;
+
+      &:hover {
+        border-color: $magenta;
+      }
     }
 
     .header {
