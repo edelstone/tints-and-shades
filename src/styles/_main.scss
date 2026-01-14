@@ -443,6 +443,12 @@ a {
 						width: 4rem;
 					}
 
+					&[data-skip-focus-ring],
+					&[data-skip-focus-ring]:focus-visible {
+						outline: none;
+						box-shadow: none;
+					}
+
 					&:hover {
 						background-color: $gray-100;
 					}

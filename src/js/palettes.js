@@ -171,6 +171,7 @@
     const paletteWrapper = active.closest(".palette-wrapper");
     return {
       id: active.id || null,
+      tagName: active.tagName || null,
       paletteIndex: paletteWrapper ? paletteWrapper.getAttribute("data-palette-index") : null,
       paletteId: paletteWrapper ? paletteWrapper.getAttribute("data-palette-id") : null,
       dataColorIndex: active.getAttribute("data-color-index"),
@@ -734,14 +735,34 @@
       }
       return true;
     };
-    const focusActiveStepButton = () => {
+    const suppressInitialFocusRing = (target) => {
+      if (!target) return;
+      if (target.hasAttribute("data-skip-focus-ring")) return;
+      target.setAttribute("data-skip-focus-ring", "true");
+      const clear = () => {
+        target.removeAttribute("data-skip-focus-ring");
+      };
+      document.addEventListener("keydown", clear, { capture: true, once: true });
+      document.addEventListener("pointerdown", clear, { capture: true, once: true });
+      target.addEventListener("blur", clear, { once: true });
+    };
+    const focusActiveStepButton = (suppressRing = false) => {
       const activeStep = document.querySelector(".step-selector-option.is-active");
+      if (activeStep && suppressRing) {
+        suppressInitialFocusRing(activeStep);
+      }
       if (focusElement(activeStep)) return true;
       const fallbackStep = document.querySelector(".step-selector-option");
+      if (fallbackStep && suppressRing) {
+        suppressInitialFocusRing(fallbackStep);
+      }
       return focusElement(fallbackStep);
     };
     const restoreFocus = () => {
       if (!capturedFocus || !tableContainer) return false;
+      if (capturedFocus.tagName === "BODY") {
+        if (focusActiveStepButton(true)) return true;
+      }
       if (capturedFocus.id === "make" || capturedFocus.classes.includes("step-selector-option")) {
         return focusActiveStepButton();
       }
