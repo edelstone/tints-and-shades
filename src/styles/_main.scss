@@ -141,10 +141,6 @@ a {
 				font-size: 4.8rem;
 				padding: 1rem 1.5rem;
 			}
-
-			@include breakpoint('small') {
-				font-size: 3.6rem;
-			}
 		}
 	}
 }
