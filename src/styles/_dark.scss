@@ -19,37 +19,9 @@ html.darkmode-active {
 
     .header {
       .preface {
-        .theme-toggle {
-          background-color: $black-transparent;
-
-          &:hover {
-            background-color: $black;
-          }
-
-          &:active {
-            background-color: color-mix(in srgb, $black 85%, $white);
-          }
-
-          &-icon {
-
-            svg {
-              color: $white;
-            }
-
-            .icon-tabler-sun-high {
-              display: inline-block;
-            }
-
-            .icon-tabler-moon {
-              display: none;
-            }
-          }
-        }
-
-        .announcement {
+        .icon-button {
           background-color: $black-transparent;
           color: $gray-100;
-          border-color: $black-transparent;
 
           &:hover {
             background-color: $black;
@@ -60,9 +32,17 @@ html.darkmode-active {
           }
         }
 
-        a.github-corner {
-          fill: $black-transparent;
+        .theme-toggle-icon {
+
+          .icon-tabler-sun-high {
+            display: inline-block;
+          }
+
+          .icon-tabler-moon {
+            display: none;
+          }
         }
+
       }
 
       .title a {
@@ -213,6 +193,7 @@ html.darkmode-active {
               color: $gray-100;
 
               .code-token {
+
                 &-string,
                 &-value {
                   color: $accent-dark-1;

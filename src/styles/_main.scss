@@ -39,7 +39,7 @@ body {
 a {
 	color: $black;
 	text-decoration: none;
-	border-bottom: .4rem solid $black;
+	border-bottom: .3rem solid $black;
 
 	&:hover {
 		border-color: $magenta;
@@ -48,16 +48,17 @@ a {
 
 .header {
 	display: flex;
-	justify-content: center;
-	padding: 7.5rem 2rem 8rem;
-	margin: auto;
+	flex-direction: column;
+	align-items: center;
+	padding: 1.5rem 2rem 8rem;
+	gap: 1.5rem;
 
 	@at-root body:has(.docs) & {
 		padding-bottom: 6rem;
 	}
 
 	@include breakpoint('large') {
-		padding: 9rem 2rem 6rem;
+		padding-bottom: 6rem;
 	}
 
 	@include breakpoint('small') {
@@ -65,83 +66,23 @@ a {
 	}
 
 	.preface {
-		position: absolute;
-		top: 0;
 		display: flex;
 		justify-content: space-between;
+		align-items: center;
 		width: 100%;
-		left: 0;
 
-		.dark-mode-selector {
-			position: relative;
-			top: 1.5rem;
-			left: 2rem;
+		.icon-button {
+			background-color: $gray-50;
+			border: none;
+			color: $black;
+			cursor: pointer;
 			display: grid;
+			padding: 0;
+			border-radius: 50%;
 			height: 4.8rem;
 			width: 4.8rem;
-
-			@include breakpoint('large') {
-				top: 2rem;
-			}
-
-			.theme-toggle {
-				background-color: $gray-50;
-				border: none;
-				cursor: pointer;
-				display: grid;
-				padding: 0;
-				border-radius: 50%;
-
-				&:hover {
-					background-color: $gray-100;
-				}
-
-				&:active {
-					background-color: color-mix(in srgb, $gray-100 92%, $black);
-				}
-
-				&-icon {
-					display: inline-flex;
-					align-items: center;
-					justify-content: center;
-
-					svg {
-						width: 2.2rem;
-						height: 2.2rem;
-						color: $black;
-					}
-
-					.icon-tabler-sun-high {
-						display: none;
-					}
-
-					.icon-tabler-moon {
-						display: inline-block;
-					}
-				}
-			}
-		}
-
-		.announcement {
-			position: absolute;
-			left: 50%;
-			top: 2.2rem;
-			transform: translateX(-50%);
-			padding: .5rem 2rem;
-			border-radius: 999px;
-			background-color: $gray-50;
-			color: $black;
-			font-size: 1.3rem;
-			display: inline-flex;
-			align-items: center;
-			border: none;
-			font-weight: 500;
-			gap: .3rem;
-			transition: none;
-
-			@include breakpoint('large') {
-				top: 3rem;
-			}
+			text-decoration: none;
+			place-items: center;
 
 			&:hover {
 				background-color: $gray-100;
@@ -151,31 +92,24 @@ a {
 				background-color: color-mix(in srgb, $gray-100 92%, $black);
 			}
 
-			&-header {
-				text-transform: uppercase;
-			}
-
-			&-icon {
+			svg {
 				display: flex;
-
-				svg {
-					width: 2rem;
-					height: 2rem;
-				}
+				width: 2.4rem;
+				height: 2.4rem;
 			}
 		}
 
-		a.github-corner {
-			border: none;
+		.theme-toggle-icon {
 			display: flex;
-			fill: $black;
-			color: $white;
-			clip-path: polygon(0 0, 100% 0, 100% 100%);
-			outline-offset: -1px;
 
-			&:focus-visible {
-				clip-path: none;
+			.icon-tabler-sun-high {
+				display: none;
 			}
+		}
+
+		.header-actions {
+			display: flex;
+			gap: 1rem;
 		}
 	}
 
@@ -352,8 +286,8 @@ a {
 			transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
 
 			svg {
-				width: 2.2rem;
-				height: 2.2rem;
+				width: 2.4rem;
+				height: 2.4rem;
 				display: flex;
 			}
 
