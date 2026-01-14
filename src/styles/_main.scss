@@ -38,11 +38,10 @@ body {
 
 a {
 	color: $black;
-	text-decoration: none;
-	border-bottom: .3rem solid $black;
+	text-decoration-thickness: 2px;
 
 	&:hover {
-		border-color: $magenta;
+		text-decoration-color: $magenta;
 	}
 }
 
@@ -50,19 +49,20 @@ a {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	padding: 1.5rem 2rem 8rem;
+	padding: 1.5rem 2rem;
 	gap: 1.5rem;
+	margin-bottom: 6.5rem;
 
 	@at-root body:has(.docs) & {
-		padding-bottom: 6rem;
+		margin-bottom: 4.5rem;
 	}
 
 	@include breakpoint('large') {
-		padding-bottom: 6rem;
+		margin-bottom: 4.5rem;
 	}
 
 	@include breakpoint('small') {
-		padding-bottom: 4rem;
+		margin-bottom: 1.5rem;
 	}
 
 	.preface {
@@ -115,23 +115,18 @@ a {
 
 	h1 {
 		margin: 0;
-		position: relative;
-		z-index: 1;
 
 		a {
 			background-image: linear-gradient(to right, $orange, $magenta);
 			border-radius: $radius-main;
-			margin-bottom: 0;
 			font-size: 5.6rem;
 			font-weight: 900;
 			line-height: 1.1;
 			color: $white;
-			text-decoration: none;
-			border: none;
 			padding: 1rem 2rem;
-			display: flex;
-			justify-content: center;
+			display: block;
 			width: 70rem;
+			text-decoration: none;
 
 			@include breakpoint('large') {
 				width: 100%;
@@ -140,6 +135,10 @@ a {
 			@include breakpoint('medium') {
 				font-size: 4.8rem;
 				padding: 1rem 1.5rem;
+			}
+
+			@include breakpoint('small') {
+				font-size: 4.2rem;
 			}
 		}
 	}
@@ -990,8 +989,9 @@ a {
 	display: flex;
 	gap: 4rem;
 	justify-content: center;
-	padding: 0;
+	padding: 0 2rem;
 	margin: 0 0 8rem;
+	flex-wrap: wrap;
 }
 
 .sr-only,
@@ -1090,7 +1090,7 @@ a {
 	code {
 		background-color: $gray-100;
 		font-size: 90%;
-		padding: .2rem .4rem;
+		padding: .2rem .6rem;
 		border-radius: $radius-main;
 		font-family: $font-monospace;
 	}
