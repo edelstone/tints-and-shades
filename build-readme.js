@@ -8,6 +8,7 @@ const aboutPath = join(__dirname, 'src', 'about.njk');
 const readmePath = join(__dirname, 'README.md');
 
 const aboutContent = readFileSync(aboutPath, 'utf8');
+const siteUrl = 'https://maketintsandshades.com';
 
 const match = aboutContent.match(/<!-- START README CONTENT -->([\s\S]*?)<!-- END README CONTENT -->/);
 if (!match) {
@@ -41,7 +42,10 @@ const sanitizedContent = insertLocalDevSection(rawReadmeContent)
   .replace(/<!-- README-EXCLUDE-START -->[\s\S]*?<!-- README-EXCLUDE-END -->/g, '')
   .trim();
 
-const markdownContent = turndownService.turndown(sanitizedContent);
+const rewriteReadmeLinks = (content) =>
+  content.replace(/href="\/#colors=([0-9a-fA-F]+)"/g, `href="${siteUrl}/#colors=$1"`);
+
+const markdownContent = turndownService.turndown(rewriteReadmeLinks(sanitizedContent));
 
 const normalizeListSpacing = (content) =>
   content
@@ -54,7 +58,10 @@ if (!/^## Calculation method\b/m.test(normalizedMarkdown)) {
   throw new Error('Expected heading missing after README conversion.');
 }
 
-const normalizedMarkdownWithLocalDev = normalizedMarkdown;
+const normalizedMarkdownWithLocalDev = normalizedMarkdown.replace(
+  /\(\/#colors=([0-9a-fA-F]+)\)/g,
+  `(${siteUrl}/#colors=$1)`
+);
 
 const readmeTemplate = `# [Tint & Shade Generator](https://maketintsandshades.com)
 

@@ -136,6 +136,6 @@ Many thanks to [Joel Carr](https://github.com/joelcarr), [Sebastian Gutierrez](h
 
 - Typography: [Work Sans](https://weiweihuanghuang.github.io/Work-Sans/) by Wei Huang
 - Iconography: [Tabler Icons](https://tabler.io/icons)
-- Colors: [#000000](/#colors=000000), [#1a1a1a](/#colors=1a1a1a), [#e6e6e6](/#colors=e6e6e6), [#ffffff](/#colors=ffffff), [#e96443](/#colors=e96443), and [#ca228e](/#colors=ca228e)
+- Colors: [#000000](https://maketintsandshades.com/#colors=000000), [#1a1a1a](https://maketintsandshades.com/#colors=1a1a1a), [#e6e6e6](https://maketintsandshades.com/#colors=e6e6e6), [#ffffff](https://maketintsandshades.com/#colors=ffffff), [#e96443](https://maketintsandshades.com/#colors=e96443), and [#ca228e](https://maketintsandshades.com/#colors=ca228e)
 
 Prefer Google’s color logic? Try the [Material Design Palette Generator](https://materialpalettes.com).
