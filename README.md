@@ -22,7 +22,7 @@ The Tint & Shade Generator is a precision color tool for producing tints (lighte
 
 ## Why is this tool unique?
 
-It takes the math seriously. Similar tools get the calculations incorrect due to rounding errors, creator preferences, or other inconsistencies.
+It takes the math seriously. In my experience similar tools get the calculations incorrect due to rounding errors, creator preferences, or other inconsistencies.
 
 Testing shows that the output matches Chrome DevTools’ calculation method as well as some [established](https://css-tricks.com/snippets/sass/tint-shade-functions), [popular](https://sindresorhus.com/sass-extras/#color-function-tint) methods to derive tints and shades via Sass.
 
