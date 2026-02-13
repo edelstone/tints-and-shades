@@ -9,22 +9,28 @@
     git commit -m "describe change"
     ```
 
-2. Bump npm version
+2. Verify working tree is clean
 
-    **Working tree must be clean before versioning.** Run `git status` first if uncertain.
+    **Working tree must be clean before versioning.**
+
+    ```bash
+    git status
+    ```
+
+3. Bump npm version
 
     ```bash
     cd packages/tints-and-shades
     npm version patch   # or minor / major
     ```
 
-3. Publish to npm
+4. Publish to npm
 
     ```bash
     npm publish
     ```
 
-4. Commit version bump to GitHub
+5. Commit version bump to GitHub
 
     **Commit message should match npm version number.**
 
@@ -34,7 +40,7 @@
     git commit -m "vX.Y.Z"
     ```
 
-5. Create annotated tag
+6. Create annotated tag
 
     **Tag should match npm version number.**
 
@@ -42,7 +48,7 @@
     git tag -a vX.Y.Z -m "version summary"
     ```
 
-6. Push everything
+7. Push everything
 
     ```bash
     git push
