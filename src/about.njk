@@ -44,11 +44,11 @@ docs: true
 
 <p>The new value is rounded to the nearest whole number (values ending in .5 round up), and then converted back to hex for display.</p>
 
-<h2 id="example-calculation">Example calculation</h2>
+<h3 id="example-calculation">Example calculation</h2>
 
 <p>Let’s say we want tints and shades of <a href="https://meyerweb.com/eric/thoughts/2014/06/19/rebeccapurple/">Rebecca Purple</a>, <code>#663399</code>.</p>
 
-<h3>10% tint</h3>
+<h4 id="example-calculation-tint">10% tint</h3>
 
 <ol>
   <li><code>#663399</code> is converted to the RGB equivalent of <code>(102, 51, 153)</code></li>
@@ -58,7 +58,7 @@ docs: true
   <li>RGB <code>(117, 71, 163)</code> is converted to the hex equivalent of <code>#7547a3</code> </li>
 </ol>
 
-<h3>10% shade</h3>
+<h4 id="example-calculation-shade">10% shade</h3>
 
 <ol>
   <li><code>#663399</code> is converted to the RGB equivalent of <code>(102, 51, 153)</code> </li>
@@ -71,8 +71,6 @@ docs: true
 <h2 id="related-colors">Related colors</h2>
 
 <p>In addition to generating tints and shades, you can also add related palettes based on common color-wheel relationships. These palettes shift the hue while preserving the original saturation and lightness, which is well suited to most color systems.</p>
-
-<p>Hue-derived palettes require saturation. If the base color is neutral or near-neutral (very low saturation), these palettes will return the original color because neutral colors have no meaningful hue to rotate.</p>
 
 <h3>Complementary</h3>
 

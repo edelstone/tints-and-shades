@@ -50,11 +50,11 @@ The “tint factor” represents the percentage of the remaining distance each R
 
 The new value is rounded to the nearest whole number (values ending in .5 round up), and then converted back to hex for display.
 
-## Example calculation
+### Example calculation
 
 Let’s say we want tints and shades of [Rebecca Purple](https://meyerweb.com/eric/thoughts/2014/06/19/rebeccapurple/), `#663399`.
 
-### 10% tint
+#### 10% tint
 
 1. `#663399` is converted to the RGB equivalent of `(102, 51, 153)`
 2. **R:** `102 + ((255 − 102) × 0.1) = 117.3`, rounded to 117
@@ -62,7 +62,7 @@ Let’s say we want tints and shades of [Rebecca Purple](https://meyerweb.com/er
 4. **B:** `153 + ((255 − 153) × 0.1) = 163.2`, rounded to 163
 5. RGB `(117, 71, 163)` is converted to the hex equivalent of `#7547a3`
 
-### 10% shade
+#### 10% shade
 
 1. `#663399` is converted to the RGB equivalent of `(102, 51, 153)`
 2. **R:** `102 × 0.9 = 91.8`, rounded to 92
@@ -73,8 +73,6 @@ Let’s say we want tints and shades of [Rebecca Purple](https://meyerweb.com/er
 ## Related colors
 
 In addition to generating tints and shades, you can also add related palettes based on common color-wheel relationships. These palettes shift the hue while preserving the original saturation and lightness, which is well suited to most color systems.
-
-Hue-derived palettes require saturation. If the base color is neutral or near-neutral (very low saturation), these palettes will return the original color because neutral colors have no meaningful hue to rotate.
 
 ### Complementary
 
