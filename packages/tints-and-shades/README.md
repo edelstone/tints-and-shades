@@ -85,9 +85,9 @@ Shades output:
 - `steps` must be an array of finite numbers.
 - Invalid `steps` input throws a `TypeError`.
 
-## Learn More
+## Learn more
 
-- Calculation method and rationale: [Tint & Shade Generator docs](https://maketintsandshades.com/about/#calculation-method)
+- Calculation method and rationale available on the [Tint & Shade Generator docs](https://maketintsandshades.com/about/#calculation-method).
 
 ## Development
 
