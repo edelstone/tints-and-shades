@@ -114,7 +114,7 @@ _Prerequisites: Node.js 18+_
 
 ## Core API Package
 
-- Published package: [`@edelstone/tints-and-shades`](https://www.npmjs.com/package/@edelstone/tints-and-shades)
+- Published on npm: [`@edelstone/tints-and-shades`](https://www.npmjs.com/package/@edelstone/tints-and-shades)
 - Source location: [`packages/tints-and-shades`](packages/tints-and-shades)
 - Build locally: `npm run build:api`
 - Run package tests: `npm run test:api`
