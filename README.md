@@ -135,9 +135,9 @@ Many thanks to [Joel Carr](https://github.com/joelcarr), [Sebastian Gutierrez](h
 
 We also utilize these amazing open-source projects:
 
-- [Eleventy](https://github.com/11ty/eleventy)
 - [Color Names](https://github.com/meodai/color-names)
-- [@melloware/coloris](https://github.com/melloware/coloris-npm)
+- [Coloris NPM](https://github.com/melloware/coloris-npm)
+- [Eleventy](https://github.com/11ty/eleventy)
 
 ## Design specs
 
