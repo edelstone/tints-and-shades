@@ -1,4 +1,4 @@
-(() => {
+const initShareUI = () => {
   const shareElements = {
     openButton: document.getElementById("share-open"),
     modal: document.getElementById("share-dialog"),
@@ -266,9 +266,12 @@
 
   wireShareControls();
 
-  window.shareUI = {
+  return {
     openShareModal,
     closeShareModal,
     elements: shareElements
   };
-})();
+};
+
+export { initShareUI };
+export default initShareUI;

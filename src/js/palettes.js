@@ -1,3 +1,9 @@
+import colorUtils from "./color-utils.js";
+import exportNaming from "./export-naming.js";
+import exportUI from "./export-ui.js";
+
+let palettes = null;
+
 (() => {
   let warningTimeout = null;
   const closingPaletteStates = new WeakMap();
@@ -1238,17 +1244,15 @@
       const nextFocusIndex = Math.min(paletteIndex, currentColors.length - 1);
       const hasLowerPalette = paletteIndex < currentColors.length;
 
-      if (window.palettes && typeof window.palettes.createTintsAndShades === "function") {
-        const options = {
-          skipScroll: true,
-          focusPickerContext: { colorIndex: nextFocusIndex, rowType: "base" },
-          ensurePaletteSkipDownwardScroll: hasLowerPalette
-        };
-        if (hasLowerPalette) {
-          options.ensurePaletteInView = nextFocusIndex;
-        }
-        window.palettes.createTintsAndShades(settings, false, options);
+      const options = {
+        skipScroll: true,
+        focusPickerContext: { colorIndex: nextFocusIndex, rowType: "base" },
+        ensurePaletteSkipDownwardScroll: hasLowerPalette
+      };
+      if (hasLowerPalette) {
+        options.ensurePaletteInView = nextFocusIndex;
       }
+      createTintsAndShades(settings, false, options);
     };
 
     const duplicatePaletteAtIndex = (paletteIndex) => {
@@ -1263,18 +1267,16 @@
       updatedColors.splice(paletteIndex + 1, 0, currentColors[paletteIndex]);
       colorInputElement.value = updatedColors.join(" ");
 
-      if (window.palettes && typeof window.palettes.createTintsAndShades === "function") {
-        window.palettes.createTintsAndShades(settings, false, {
-          skipScroll: true,
-          skipFocus: true,
-          enteringPaletteIndex: paletteIndex + 1,
-          enteringPaletteIndexes: [paletteIndex + 1],
-          enteringFocusContext: { colorIndex: paletteIndex + 1, rowType: "base" },
-          ensurePaletteInView: paletteIndex + 1,
-          insertionIndex: paletteIndex + 1,
-          insertedCount: 1
-        });
-      }
+      createTintsAndShades(settings, false, {
+        skipScroll: true,
+        skipFocus: true,
+        enteringPaletteIndex: paletteIndex + 1,
+        enteringPaletteIndexes: [paletteIndex + 1],
+        enteringFocusContext: { colorIndex: paletteIndex + 1, rowType: "base" },
+        ensurePaletteInView: paletteIndex + 1,
+        insertionIndex: paletteIndex + 1,
+        insertedCount: 1
+      });
     };
 
     const requestPaletteRemoval = (paletteIndex, paletteWrapper) => {
@@ -1541,12 +1543,17 @@
 
       state.palettes = paletteMetadata;
       state.tintShadeCount = tintShadeCount;
-      toggleExportWrapperVisibility(true, elements);
-      setExportFormat(state.format, state, elements);
-      updateExportOutput(state, elements);
 
-      if (shouldFadeInitial && elements.wrapper && !prefersReducedMotion()) {
-        fadeElement(elements.wrapper, { duration: ANIMATION_TIMINGS.fade, from: "0", to: "1" });
+      try {
+        toggleExportWrapperVisibility(true, elements);
+        setExportFormat(state.format, state, elements);
+        updateExportOutput(state, elements);
+
+        if (shouldFadeInitial && elements.wrapper && !prefersReducedMotion()) {
+          fadeElement(elements.wrapper, { duration: ANIMATION_TIMINGS.fade, from: "0", to: "1" });
+        }
+      } catch (error) {
+        console.error("Export UI update failed", error);
       }
 
       updateHashState(parsedColorsArray, settings);
@@ -1601,7 +1608,7 @@
     return false;
   };
 
-  window.palettes = {
+  palettes = {
     parseColorValues,
     buildPaletteData,
     createTintsAndShades,
@@ -1613,3 +1620,5 @@
     updateHashState
   };
 })();
+
+export default palettes;

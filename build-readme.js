@@ -30,15 +30,15 @@ const localDevHtml = `<h2>Local development</h2>
   <li>Navigate to <code>localhost:8080</code> in your browser.</li>
 </ol>`;
 
-const insertLocalDevSection = (content) => {
+const removeLocalDevMarker = (content) => {
   const marker = '<!-- README-INSERT-LOCAL-DEV -->';
   if (!content.includes(marker)) {
     throw new Error('README insert marker not found in src/about.njk');
   }
-  return content.replace(marker, localDevHtml);
+  return content.replace(marker, '');
 };
 
-const sanitizedContent = insertLocalDevSection(rawReadmeContent)
+const sanitizedContent = removeLocalDevMarker(rawReadmeContent)
   .replace(/<!-- README-EXCLUDE-START -->[\s\S]*?<!-- README-EXCLUDE-END -->/g, '')
   .trim();
 
@@ -63,6 +63,26 @@ const normalizedMarkdownWithLocalDev = normalizedMarkdown.replace(
   `(${siteUrl}/#colors=$1)`
 );
 
+const localDevMarkdown = normalizeListSpacing(turndownService.turndown(localDevHtml)).trim();
+
+const coreApiSection = `
+## Core API Package
+
+- Published package: [\`@edelstone/tints-and-shades\`](https://www.npmjs.com/package/@edelstone/tints-and-shades)
+- Source location: [\`packages/tints-and-shades\`](packages/tints-and-shades)
+- Build locally: \`npm run build:api\`
+- Run package tests: \`npm run test:api\`
+- App integration note: during development, the web app consumes the local workspace build at \`packages/tints-and-shades/dist/index.js\`.`;
+
+const injectContributorSections = (content) => {
+  const supportHeading = '## Support this project';
+  if (!content.includes(supportHeading)) {
+    throw new Error('Support section heading not found in generated README content.');
+  }
+  const sections = `${localDevMarkdown}\n\n${coreApiSection.trim()}\n`;
+  return content.replace(supportHeading, `${sections}\n${supportHeading}`);
+};
+
 const readmeTemplate = `# [Tint & Shade Generator](https://maketintsandshades.com)
 
 <a href="https://maketintsandshades.com">
@@ -81,7 +101,7 @@ const readmeTemplate = `# [Tint & Shade Generator](https://maketintsandshades.co
  </picture>
 </a>
 
-${normalizedMarkdownWithLocalDev}`;
+${injectContributorSections(normalizedMarkdownWithLocalDev)}`;
 
 const readmeOutput = `${readmeTemplate}\n`;
 writeFileSync(readmePath, readmeOutput, 'utf8');

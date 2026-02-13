@@ -1,8 +1,12 @@
 {
   "name": "tints-and-shades",
-  "version": "6.0.0",
+  "version": "7.0.0",
+  "private": true,
   "description": "Easily make tints and shades that match the output of Chrome DevTools, Sass, Less, and PostCSS.",
   "main": "index.js",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "watch:readme": "nodemon --watch src/about.njk --watch build-readme.js --exec \"npm run build:readme\"",
     "build:readme": "node build-readme.js",
@@ -12,7 +16,9 @@
     "build:11ty": "eleventy",
     "build": "npm run build:css && npm run build:11ty",
     "start": "concurrently \"npm run watch:css\" \"npm run watch:readme\" \"npm run watch:11ty\"",
-    "deploy": "npm run build && gh-pages -d _site"
+    "deploy": "npm run build && gh-pages -d _site",
+    "build:api": "npm --workspace @edelstone/tints-and-shades run build",
+    "test:api": "npm --workspace @edelstone/tints-and-shades run test"
   },
   "keywords": [
     "colors",
@@ -24,6 +30,10 @@
   ],
   "author": "Michael Edelstone <michael.edelstone@gmail.com> (https://michaeledelstone.com)",
   "license": "MIT",
+  "dependencies": {
+    "@melloware/coloris": "^0.25.0",
+    "color-name-list": "^14.29.0"
+  },
   "devDependencies": {
     "@11ty/eleventy": "^3.1.2",
     "@11ty/eleventy-dev-server": "^2.0.4",

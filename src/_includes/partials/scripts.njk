@@ -1,21 +1,9 @@
 {% if main %}
-<script src="/vendor/js/color-name-list.js"></script>
-<script src="/js/export-naming.js"></script>
-<script src="/js/color-utils.js"></script>
-<script src="/js/code-highlighter.js"></script>
-<script src="/js/export-ui.js"></script>
-<script src="/js/share-ui.js"></script>
-<script src="/js/palettes.js"></script>
-<script src="/vendor/js/coloris.min.js"></script>
-<script src="/js/color-picker.js"></script>
-<script src="/js/app.js"></script>
-<script src="/vendor/js/clipboard.js"></script>
-<script src="/js/clipboard-init.js"></script>
+<script type="module" src="/js/app.js"></script>
 {% endif %}
 
 {% if docs %}
-<script src="/vendor/js/anchor.js"></script>
-<script>anchors.add('h2');</script>
+<script type="module" src="/js/docs.js"></script>
 {% endif %}
 
-<script src="/js/theme-toggle.js"></script>
+<script type="module" src="/js/theme-toggle.js"></script>

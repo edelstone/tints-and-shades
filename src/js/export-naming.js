@@ -1,3 +1,6 @@
+import colorUtils from "./color-utils.js";
+import { colornames } from "/vendor/color-name-list/colornames.esm.js";
+
 const slugify = (value) => value
   .toLowerCase()
   .normalize("NFKD")
@@ -72,11 +75,7 @@ let cachedColorNames = null;
 
 const prepareColorNames = () => {
   if (cachedColorNames) return cachedColorNames;
-
-  if (!Array.isArray(window.colorNameList)) {
-    cachedColorNames = [];
-    return cachedColorNames;
-  }
+  if (!Array.isArray(colornames)) return [];
 
   const normalizeDisplayName = (value) => {
     const trimmed = (value || "").trim();
@@ -84,7 +83,7 @@ const prepareColorNames = () => {
     return trimmed;
   };
 
-  cachedColorNames = window.colorNameList
+  cachedColorNames = colornames
     .map((item) => {
       const name = normalizeDisplayName(item.name);
       const slug = slugify(name);
@@ -154,9 +153,12 @@ const makeUniqueName = (name, usedNames) => {
   return finalName;
 };
 
-window.exportNaming = {
+const exportNaming = {
   slugify,
   getFriendlyName,
   makeUniqueName,
   formatLabelForDisplay
 };
+
+export { slugify, getFriendlyName, makeUniqueName, formatLabelForDisplay };
+export default exportNaming;

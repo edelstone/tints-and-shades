@@ -1,0 +1,52 @@
+{
+  "name": "@edelstone/tints-and-shades",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/edelstone/tints-and-shades.git",
+    "directory": "packages/tints-and-shades"
+  },
+  "homepage": "https://maketintsandshades.com",
+  "bugs": {
+    "url": "https://github.com/edelstone/tints-and-shades/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "version": "0.1.4",
+  "description": "Deterministic tint and shade generator for 6-character hex colors.",
+  "license": "MIT",
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf dist",
+    "test": "npm run build && node --test test/*.test.mjs",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0"
+  },
+  "keywords": [
+    "color",
+    "tint",
+    "shade",
+    "hex",
+    "design",
+    "typescript"
+  ],
+  "author": "Michael Edelstone"
+}

@@ -1,3 +1,8 @@
+import CodeHighlighter from "./code-highlighter.js";
+import exportNaming from "./export-naming.js";
+
+let exportUI = null;
+
 (() => {
   const VALID_EXPORT_FORMATS = ["hex", "hex-hash", "rgb", "css", "json"];
   const EXPORT_FORMAT_STORAGE_KEY = "export-preferred-format";
@@ -81,7 +86,7 @@
 
   const highlightExportCode = (codeElement) => {
     if (!codeElement || typeof window === "undefined") return;
-    const highlighter = window.CodeHighlighter;
+    const highlighter = CodeHighlighter;
     if (!highlighter || typeof highlighter.highlightElement !== "function") return;
     highlighter.highlightElement(codeElement);
   };
@@ -729,7 +734,6 @@
 
   const openExportModal = (state, elements) => {
     if (!elements.modal) return;
-    if (!state.palettes.length) return;
     setExportFormat(state.format, state, elements);
     lockBodyScroll();
     if (typeof elements.modal.showModal === "function") {
@@ -955,7 +959,7 @@
     });
   };
 
-  window.exportUI = {
+  exportUI = {
     state: exportState,
     elements: exportElements,
     formatListOutput: formatHexOutput,
@@ -971,4 +975,7 @@
     wireExportControls,
     updateClipboardData
   };
+
 })();
+
+export default exportUI;

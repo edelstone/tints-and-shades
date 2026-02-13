@@ -1,3 +1,5 @@
+import { calculateTints as apiCalculateTints, calculateShades as apiCalculateShades } from "/packages/tints-and-shades/dist/index.js";
+
 const pad = (number, length) => {
   let str = number.toString();
   while (str.length < length) {
@@ -17,46 +19,20 @@ const intToHex = (rgbint) => pad(Math.min(Math.max(Math.round(rgbint), 0), 255).
 const rgbToHex = (rgb) => intToHex(rgb.red) + intToHex(rgb.green) + intToHex(rgb.blue);
 
 const DEFAULT_STEPS = 10;
-const clampSteps = (steps = DEFAULT_STEPS) => {
-  const parsed = parseInt(steps, 10);
-  if (Number.isNaN(parsed)) return DEFAULT_STEPS;
-  return Math.min(Math.max(parsed, 1), 20);
-};
-
-const mixChannel = (from, to, ratio) => from + (to - from) * ratio;
-
-const calculateScale = (colorValue, steps, mixFn) => {
-  const totalSteps = clampSteps(steps);
-  const color = hexToRGB(colorValue);
-  const values = [];
-
-  for (let i = 0; i < totalSteps; i++) {
-    const ratio = i / totalSteps;
-    const rgb = mixFn(color, ratio);
-    values.push({
-      hex: rgbToHex(rgb),
-      ratio,
-      percent: Number((ratio * 100).toFixed(1))
-    });
+const buildStepRatios = (steps = DEFAULT_STEPS) => {
+  if (!Number.isInteger(steps) || steps < 1) {
+    throw new TypeError("steps must be a positive integer.");
   }
-
-  return values;
+  return Array.from({ length: steps }, (_, index) => index / steps);
 };
 
-const rgbShade = (rgb, ratio) => ({
-  red: mixChannel(rgb.red, 0, ratio),
-  green: mixChannel(rgb.green, 0, ratio),
-  blue: mixChannel(rgb.blue, 0, ratio)
-});
+const calculateShades = (colorValue, steps = DEFAULT_STEPS) => {
+  return apiCalculateShades(colorValue, buildStepRatios(steps));
+};
 
-const rgbTint = (rgb, ratio) => ({
-  red: mixChannel(rgb.red, 255, ratio),
-  green: mixChannel(rgb.green, 255, ratio),
-  blue: mixChannel(rgb.blue, 255, ratio)
-});
-
-const calculateShades = (colorValue, steps = DEFAULT_STEPS) => calculateScale(colorValue, steps, rgbShade);
-const calculateTints = (colorValue, steps = DEFAULT_STEPS) => calculateScale(colorValue, steps, rgbTint);
+const calculateTints = (colorValue, steps = DEFAULT_STEPS) => {
+  return apiCalculateTints(colorValue, buildStepRatios(steps));
+};
 
 const rgbToHsl = (rgb) => {
   const r = rgb.red / 255;
@@ -131,18 +107,28 @@ const calculateComplementaryHex = (colorValue) => {
   return rgbToHex(complementaryRgb);
 };
 
-// Expose for reuse
-window.colorUtils = {
+const colorUtils = {
   pad,
   hexToRGB,
   intToHex,
   rgbToHex,
   rgbToHsl,
   hslToRgb,
-  rgbShade,
-  rgbTint,
-  calculateScale,
   calculateShades,
   calculateTints,
   calculateComplementaryHex
 };
+
+export {
+  pad,
+  hexToRGB,
+  intToHex,
+  rgbToHex,
+  rgbToHsl,
+  hslToRgb,
+  calculateShades,
+  calculateTints,
+  calculateComplementaryHex
+};
+
+export default colorUtils;

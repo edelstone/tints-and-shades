@@ -112,6 +112,14 @@ _Prerequisites: Node.js 18+_
 4. Start the server: `npm run start`.
 5. Navigate to `localhost:8080` in your browser.
 
+## Core API Package
+
+- Published package: [`@edelstone/tints-and-shades`](https://www.npmjs.com/package/@edelstone/tints-and-shades)
+- Source location: [`packages/tints-and-shades`](packages/tints-and-shades)
+- Build locally: `npm run build:api`
+- Run package tests: `npm run test:api`
+- App integration note: during development, the web app consumes the local workspace build at `packages/tints-and-shades/dist/index.js`.
+
 ## Support this project
 
 - [Buy Me a Coffee](https://www.buymeacoffee.com/edelstone)
@@ -123,14 +131,13 @@ _Prerequisites: Node.js 18+_
 
 [Michael Edelstone](https://michaeledelstone.com) designed and organized the project with major assistance from [Nick Wing](https://github.com/wickning1) on the color calculations.
 
-We use these amazing open-source libraries across the project:
-
-- [AnchorJS](https://github.com/bryanbraun/anchorjs)
-- [clipboard.js](https://github.com/zenorocha/clipboard.js)
-- [Color Names](https://github.com/meodai/color-names)
-- [Eleventy](https://github.com/11ty/eleventy)
-
 Many thanks to [Joel Carr](https://github.com/joelcarr), [Sebastian Gutierrez](https://github.com/pepas24), [Tim Scalzo](https://github.com/TJScalzo), [Aman Agarwal](https://github.com/AmanAgarwal041), [Aleksandr Hovhannisyan](https://github.com/AleksandrHovhannisyan), [Shubhendu Sen](https://github.com/Sen-442b), and [Luis Escarrilla](https://github.com/latesc) for their valuable contributions.
+
+We also utilize these amazing open-source projects:
+
+- [Eleventy](https://github.com/11ty/eleventy)
+- [Color Names](https://github.com/meodai/color-names)
+- [@melloware/coloris](https://github.com/melloware/coloris-npm)
 
 ## Design specs
 

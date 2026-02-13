@@ -6,17 +6,17 @@ docs: true
 ---
 
 <!-- START README CONTENT -->
-<h2>What is the Tint &amp; Shade Generator?</h2>
+<h2 id="what-is-the-tint-shade-generator">What is the Tint &amp; Shade Generator?</h2>
 
 <p>The Tint &amp; Shade Generator is a precision color tool for producing tints (lighter variants) and shades (darker variants) from a given hex color in 5%, 10%, or 20% increments.</p>
 
-<h2>Why is this tool unique?</h2>
+<h2 id="why-is-this-tool-unique">Why is this tool unique?</h2>
 
 <p>It takes the math seriously. In my experience similar tools get the calculations incorrect due to rounding errors, creator preferences, or other inconsistencies.</p>
 
 <p>Testing shows that the output matches Chrome DevTools’ calculation method as well as some <a href="https://css-tricks.com/snippets/sass/tint-shade-functions">established</a>, <a href="https://sindresorhus.com/sass-extras/#color-function-tint">popular</a> methods to derive tints and shades via Sass.</p>
 
-<h2>When would I use this?</h2>
+<h2 id="when-would-i-use-this">When would I use this?</h2>
 
 <p>Originally created for designer and developer teams, it’s also useful for teachers, data pros, brand strategists, presentation makers, and anyone who works with colors.</p>
 
@@ -31,7 +31,7 @@ docs: true
   <li>exporting colors for design tokens, CSS, or JSON</li>
 </ul>
 
-<h2>Calculation method</h2>
+<h2 id="calculation-method">Calculation method</h2>
 
 <p>The given hex color is first converted to RGB. Each RGB component is then calculated independently as follows:</p>
 
@@ -44,7 +44,7 @@ docs: true
 
 <p>The new value is rounded to the nearest whole number (values ending in .5 round up), and then converted back to hex for display.</p>
 
-<h2>Example calculation</h2>
+<h2 id="example-calculation">Example calculation</h2>
 
 <p>Let’s say we want tints and shades of <a href="https://meyerweb.com/eric/thoughts/2014/06/19/rebeccapurple/">Rebecca Purple</a>, <code>#663399</code>.</p>
 
@@ -68,7 +68,7 @@ docs: true
   <li>RGB <code>(92, 46, 138)</code> is converted to the hex equivalent of <code>#5c2e8a</code> </li>
 </ol>
 
-<h2>Related colors</h2>
+<h2 id="related-colors">Related colors</h2>
 
 <p>In addition to generating tints and shades, you can also add related palettes based on common color-wheel relationships. These palettes shift the hue while preserving the original saturation and lightness, which is well suited to most color systems.</p>
 
@@ -90,11 +90,11 @@ docs: true
 
 <p>Adds two palettes evenly spaced at 120° intervals around the color wheel, creating medium-high contrast with energetic, distinct relationships.</p>
 
-<h2><!-- README-EXCLUDE-START --><span class="subheader-icon">{% include "partials/icons/figma.njk" %}</span><!-- README-EXCLUDE-END --> Figma plugin</h2>
+<h2 id="figma-plugin"><!-- README-EXCLUDE-START --><span class="subheader-icon">{% include "partials/icons/figma.njk" %}</span><!-- README-EXCLUDE-END --> Figma plugin</h2>
 
 <p>Now you can generate the same meticulously-crafted tints and shades without leaving your canvas (and automatically create local color styles, too). Grab the plugin <a href="https://www.figma.com/community/plugin/1580658889126377365/tint-shade-generator">from the Figma Community</a>.</p>
 
-<h2>Feedback and contributing</h2>
+<h2 id="feedback-and-contributing">Feedback and contributing</h2>
 
 <p>If you notice a bug or want a feature added please <a href="https://github.com/edelstone/tints-and-shades/issues/new">file an issue on GitHub</a> or just <a href="mailto:contact@maketintsandshades.com">email me</a> the details.</p>
 
@@ -102,7 +102,7 @@ docs: true
 
 <!-- README-INSERT-LOCAL-DEV -->
 
-<h2>Support this project</h2>
+<h2 id="support-this-project">Support this project</h2>
 
 <ul>
   <li><a href="https://www.buymeacoffee.com/edelstone">Buy Me a Coffee</a></li>
@@ -111,22 +111,21 @@ docs: true
   <li><a href="https://venmo.com/michaeledelstone">Venmo</a></li>
 </ul>
 
-<h2>Credits</h2>
+<h2 id="credits">Credits</h2>
 
 <p><a href="https://michaeledelstone.com">Michael Edelstone</a> designed and organized the project with major assistance from <a href="https://github.com/wickning1">Nick Wing</a> on the color calculations.</p>
 
-<p>We use these amazing open-source libraries across the project:</p>
-
-<ul>
-  <li><a href="https://github.com/bryanbraun/anchorjs">AnchorJS</a></li>
-  <li><a href="https://github.com/zenorocha/clipboard.js">clipboard.js</a></li>
-  <li><a href="https://github.com/meodai/color-names">Color Names</a></li>
-  <li><a href="https://github.com/11ty/eleventy">Eleventy</a></li>
-</ul>
-
 <p>Many thanks to <a href="https://github.com/joelcarr">Joel Carr</a>, <a href="https://github.com/pepas24">Sebastian Gutierrez</a>, <a href="https://github.com/TJScalzo">Tim Scalzo</a>, <a href="https://github.com/AmanAgarwal041">Aman Agarwal</a>, <a href="https://github.com/AleksandrHovhannisyan">Aleksandr Hovhannisyan</a>, <a href="https://github.com/Sen-442b">Shubhendu Sen</a>, and <a href="https://github.com/latesc">Luis Escarrilla</a> for their valuable contributions.</p>
 
-<h2>Design specs</h2>
+<p>We also utilize these amazing open-source projects:</p>
+
+<ul>
+  <li><a href="https://github.com/11ty/eleventy">Eleventy</a></li>
+  <li><a href="https://github.com/meodai/color-names">Color Names</a></li>
+  <li><a href="https://github.com/melloware/coloris-npm">@melloware/coloris</a></li>
+</ul>
+
+<h2 id="design-specs">Design specs</h2>
 
 <ul>
   <li>Typography: <a href="https://weiweihuanghuang.github.io/Work-Sans/">Work Sans</a> by Wei Huang</li>

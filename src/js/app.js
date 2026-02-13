@@ -1,3 +1,9 @@
+import palettes from "./palettes.js";
+import exportUI from "./export-ui.js";
+import initShareUI from "./share-ui.js";
+import initColorPicker from "./color-picker.js";
+import initClipboard from "./clipboard.js";
+
 const SETTINGS_STORAGE_KEY = "settings";
 const settings = { copyWithHashtag: false, tintShadeCount: 10 };
 const tintShadeOptions = [5, 10, 20];
@@ -119,8 +125,12 @@ const initializeSettings = (initialUrlState = {}) => {
       settings.copyWithHashtag = !settings.copyWithHashtag;
       updateHashtagToggle(hashtagToggle, settings.copyWithHashtag);
       saveSettings();
-      exportUI.updateClipboardData(settings.copyWithHashtag);
-      exportUI.updateExportOutput(exportUI.state, exportUI.elements);
+      try {
+        exportUI.updateClipboardData(settings.copyWithHashtag);
+        exportUI.updateExportOutput(exportUI.state, exportUI.elements);
+      } catch (error) {
+        console.error("Export UI update failed during hashtag toggle", error);
+      }
       if (palettes.updateHexValueDisplay) {
         palettes.updateHexValueDisplay(settings.copyWithHashtag);
       }
@@ -223,6 +233,7 @@ const applyUrlState = (urlState = {}) => {
 
 document.addEventListener("DOMContentLoaded", () => {
   wireTooltipHandlers();
+
   const urlState = palettes.readHashState ? palettes.readHashState() : {};
   initializeSettings(urlState);
   exportUI.wireExportControls();
@@ -264,6 +275,24 @@ document.addEventListener("DOMContentLoaded", () => {
     const nextState = palettes.readHashState ? palettes.readHashState() : {};
     applyUrlState(nextState);
   });
+
+  try {
+    initShareUI();
+  } catch (error) {
+    console.error("Share UI init failed", error);
+  }
+
+  try {
+    initColorPicker();
+  } catch (error) {
+    console.error("Color picker init failed", error);
+  }
+
+  try {
+    initClipboard();
+  } catch (error) {
+    console.error("Clipboard init failed", error);
+  }
 });
 
 document.addEventListener("click", (event) => {

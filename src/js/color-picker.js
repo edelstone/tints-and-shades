@@ -1,10 +1,16 @@
-(() => {
+import palettes from "./palettes.js";
+import Coloris from "/vendor/coloris/esm/coloris.min.js";
+
+const initColorPicker = () => {
   const colorInput = document.getElementById("color-values");
   const pickerInput = document.getElementById("color-picker-input");
   const pickerButton = document.getElementById("color-picker-button");
   const submitButton = document.getElementById("make");
 
-  if (!colorInput || !pickerInput || !pickerButton || typeof Coloris === "undefined" || !window.palettes) return;
+  if (!colorInput || !pickerInput || !pickerButton || !palettes) return false;
+  if (typeof Coloris.init === "function") {
+    Coloris.init();
+  }
 
   const defaultColor = "#3b82f6";
   let pendingHex = "";
@@ -302,8 +308,8 @@
   pickerInput.inert = true;
 
   const setPickerBaseColor = (overrideHex) => {
-    const parsedValues = window.palettes && window.palettes.parseColorValues
-      ? window.palettes.parseColorValues(colorInput.value)
+    const parsedValues = palettes && palettes.parseColorValues
+      ? palettes.parseColorValues(colorInput.value)
       : [];
     const lastHex = parsedValues && parsedValues.length ? parsedValues[parsedValues.length - 1] : null;
     const hexToUse = normalizeHex(overrideHex || (lastHex ? `#${lastHex}` : defaultColor));
@@ -366,8 +372,8 @@
 
   const applyCommittedHex = (hexValue) => {
     if (!hexValue || hasCommittedThisSession) return;
-    const parsed = window.palettes && window.palettes.parseColorValues
-      ? window.palettes.parseColorValues(colorInput.value) || []
+    const parsed = palettes && palettes.parseColorValues
+      ? palettes.parseColorValues(colorInput.value) || []
       : [];
 
     if (activeContext.mode === "edit" && Number.isInteger(activeContext.index)) {
@@ -575,4 +581,8 @@
       }
     });
   }
-})();
+  return true;
+};
+
+export { initColorPicker };
+export default initColorPicker;

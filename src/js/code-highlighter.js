@@ -1,5 +1,4 @@
-(() => {
-  const TOKEN_PREFIX = "code-token";
+const TOKEN_PREFIX = "code-token";
 
   const escapeHtml = (value) => value
     .replace(/&/g, "&amp;")
@@ -118,8 +117,10 @@
     element.innerHTML = highlight(code, language);
   };
 
-  window.CodeHighlighter = {
-    highlight,
-    highlightElement,
-  };
-})();
+const CodeHighlighter = {
+  highlight,
+  highlightElement,
+};
+
+export { highlight, highlightElement };
+export default CodeHighlighter;
