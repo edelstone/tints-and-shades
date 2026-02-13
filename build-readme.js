@@ -68,8 +68,8 @@ const localDevMarkdown = normalizeListSpacing(turndownService.turndown(localDevH
 const coreApiSection = `
 ## Core API Package
 
-- Published on npm: [\`@edelstone/tints-and-shades\`](https://www.npmjs.com/package/@edelstone/tints-and-shades)
-- Source location: [\`packages/tints-and-shades\`](packages/tints-and-shades)
+- Published on npm: [@edelstone/tints-and-shades](https://www.npmjs.com/package/@edelstone/tints-and-shades)
+- Source location: [packages/tints-and-shades](packages/tints-and-shades)
 - Build locally: \`npm run build:api\`
 - Run package tests: \`npm run test:api\`
 - App integration note: during development, the web app consumes the local workspace build at \`packages/tints-and-shades/dist/index.js\`.`;
