@@ -11,11 +11,11 @@
 
 2. Verify working tree is clean
 
-    **Working tree must be clean before versioning.**
-
     ```bash
     git status
     ```
+
+    If not clean, return to step 1 and commit your changes before continuing.
 
 3. Bump npm version
 
@@ -32,7 +32,7 @@
 
 5. Commit version bump to GitHub
 
-    **Commit message should match npm version number.**
+    _Commit message should match npm version number._
 
     ```bash
     cd ../../
@@ -42,7 +42,7 @@
 
 6. Create annotated tag
 
-    **Tag should match npm version number.**
+    _Tag should match npm version number._
 
     ```bash
     git tag -a vX.Y.Z -m "version summary"
