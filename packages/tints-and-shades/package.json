@@ -12,7 +12,7 @@
   "engines": {
     "node": ">=18"
   },
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Deterministic tint and shade generator for 6-character hex colors.",
   "license": "MIT",
   "type": "module",
