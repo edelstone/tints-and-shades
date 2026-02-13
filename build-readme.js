@@ -66,7 +66,7 @@ const normalizedMarkdownWithLocalDev = normalizedMarkdown.replace(
 const localDevMarkdown = normalizeListSpacing(turndownService.turndown(localDevHtml)).trim();
 
 const coreApiSection = `
-## Core API Package
+## Core API package
 
 - Published on npm: [@edelstone/tints-and-shades](https://www.npmjs.com/package/@edelstone/tints-and-shades)
 - Source location: [packages/tints-and-shades](packages/tints-and-shades)

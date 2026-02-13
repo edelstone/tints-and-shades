@@ -110,7 +110,7 @@ _Prerequisites: Node.js 18+_
 4. Start the server: `npm run start`.
 5. Navigate to `localhost:8080` in your browser.
 
-## Core API Package
+## Core API package
 
 - Published on npm: [@edelstone/tints-and-shades](https://www.npmjs.com/package/@edelstone/tints-and-shades)
 - Source location: [packages/tints-and-shades](packages/tints-and-shades)
