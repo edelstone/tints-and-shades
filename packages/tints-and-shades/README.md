@@ -1,7 +1,7 @@
 # @edelstone/tints-and-shades
 
 Deterministic tint and shade generator for 6-character hex colors.  
-Used internally by the [Tint & Shade Generator](https://maketintsandshades.com) and published as a standalone API.
+Used internally by the [Tint & Shade Generator](https://maketintsandshades.com) and published here as a standalone API.
 
 ## Install
 
