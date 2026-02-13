@@ -11,7 +11,7 @@
 
 2. Bump npm version
 
-    **Working tree must be clean before versioning. Run `git status` first if uncertain.**
+    **Working tree must be clean before versioning.** Run `git status` first if uncertain.
 
     ```bash
     cd packages/tints-and-shades
