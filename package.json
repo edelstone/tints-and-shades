@@ -1,6 +1,6 @@
 {
   "name": "tints-and-shades",
-  "version": "7.0.0",
+  "version": "0.0.0",
   "private": true,
   "description": "Easily make tints and shades that match the output of Chrome DevTools, Sass, Less, and PostCSS.",
   "main": "index.js",

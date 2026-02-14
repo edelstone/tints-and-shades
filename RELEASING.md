@@ -2,14 +2,14 @@
 
 **Applies only when releasing the npm package.** If `packages/tints-and-shades` isn’t modified, just commit and push to `main`.
 
-1. Commit code changes
+1. Commit code changes.
 
     ```bash
     git add .
     git commit -m "describe change"
     ```
 
-2. Verify working tree is clean
+2. Verify working tree is clean.
 
     ```bash
     git status
@@ -17,20 +17,20 @@
 
     If not clean, return to step 1 and commit your changes before continuing.
 
-3. Bump npm version
+3. Bump npm version.
 
     ```bash
     cd packages/tints-and-shades
     npm version patch   # or minor / major
     ```
 
-4. Publish to npm
+4. Publish to npm.
 
     ```bash
     npm publish
     ```
 
-5. Commit version bump to GitHub
+5. Commit version bump to GitHub.
 
     _Commit message should match npm version number._
 
@@ -40,7 +40,7 @@
     git commit -m "vX.Y.Z"
     ```
 
-6. Create annotated tag
+6. Create annotated tag.
 
     _Tag should match npm version number._
 
@@ -48,7 +48,7 @@
     git tag -a vX.Y.Z -m "version summary"
     ```
 
-7. Push everything
+7. Push everything.
 
     ```bash
     git push
