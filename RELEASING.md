@@ -1,4 +1,4 @@
-# Release flow for `(packages/tints-and-shades)`
+# API release flow
 
 **Applies only when releasing the npm package.** If `packages/tints-and-shades` isn’t modified, just commit and push to `main`.
 
