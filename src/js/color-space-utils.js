@@ -1,38 +1,12 @@
-import { calculateTints as apiCalculateTints, calculateShades as apiCalculateShades } from "/packages/tints-and-shades/dist/index.js";
-
-const pad = (number, length) => {
-  let str = number.toString();
-  while (str.length < length) {
-    str = '0' + str;
-  }
-  return str;
-};
-
 const hexToRGB = (colorValue) => ({
-  red: parseInt(colorValue.substr(0, 2), 16),
-  green: parseInt(colorValue.substr(2, 2), 16),
-  blue: parseInt(colorValue.substr(4, 2), 16)
+  red: parseInt(colorValue.slice(0, 2), 16),
+  green: parseInt(colorValue.slice(2, 4), 16),
+  blue: parseInt(colorValue.slice(4, 6), 16)
 });
 
-const intToHex = (rgbint) => pad(Math.min(Math.max(Math.round(rgbint), 0), 255).toString(16), 2);
+const intToHex = (rgbint) => Math.min(Math.max(Math.round(rgbint), 0), 255).toString(16).padStart(2, "0");
 
 const rgbToHex = (rgb) => intToHex(rgb.red) + intToHex(rgb.green) + intToHex(rgb.blue);
-
-const DEFAULT_STEPS = 10;
-const buildStepRatios = (steps = DEFAULT_STEPS) => {
-  if (!Number.isInteger(steps) || steps < 1) {
-    throw new TypeError("steps must be a positive integer.");
-  }
-  return Array.from({ length: steps }, (_, index) => index / steps);
-};
-
-const calculateShades = (colorValue, steps = DEFAULT_STEPS) => {
-  return apiCalculateShades(colorValue, buildStepRatios(steps));
-};
-
-const calculateTints = (colorValue, steps = DEFAULT_STEPS) => {
-  return apiCalculateTints(colorValue, buildStepRatios(steps));
-};
 
 const rgbToHsl = (rgb) => {
   const r = rgb.red / 255;
@@ -107,28 +81,22 @@ const calculateComplementaryHex = (colorValue) => {
   return rgbToHex(complementaryRgb);
 };
 
-const colorUtils = {
-  pad,
+const colorSpaceUtils = {
   hexToRGB,
   intToHex,
   rgbToHex,
   rgbToHsl,
   hslToRgb,
-  calculateShades,
-  calculateTints,
   calculateComplementaryHex
 };
 
 export {
-  pad,
   hexToRGB,
   intToHex,
   rgbToHex,
   rgbToHsl,
   hslToRgb,
-  calculateShades,
-  calculateTints,
   calculateComplementaryHex
 };
 
-export default colorUtils;
+export default colorSpaceUtils;

@@ -18,7 +18,8 @@
     "start": "concurrently \"npm run watch:css\" \"npm run watch:readme\" \"npm run watch:11ty\"",
     "deploy": "npm run build && gh-pages -d _site",
     "build:api": "npm --workspace @edelstone/tints-and-shades run build",
-    "test:api": "npm --workspace @edelstone/tints-and-shades run test"
+    "test:api": "npm --workspace @edelstone/tints-and-shades run test",
+    "test:app": "node --experimental-default-type=module --test test/*.test.mjs"
   },
   "keywords": [
     "colors",

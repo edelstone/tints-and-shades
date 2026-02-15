@@ -1,5 +1,6 @@
 import CodeHighlighter from "./code-highlighter.js";
 import exportNaming from "./export-naming.js";
+import { normalizeHexForExport } from "./input-utils.js";
 
 let exportUI = null;
 
@@ -580,10 +581,7 @@ let exportUI = null;
     return JSON.stringify(payload, null, 2);
   };
 
-  const normalizeHex = (hex) => {
-    if (typeof hex !== "string") return "";
-    return hex.replace(/^#/, "").trim().slice(0, 6);
-  };
+  const normalizeHex = normalizeHexForExport;
 
   const formatRgbValue = (hex) => {
     const normalized = normalizeHex(hex);

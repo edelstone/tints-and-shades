@@ -1,5 +1,6 @@
 import palettes from "./palettes.js";
 import Coloris from "/vendor/coloris/esm/coloris.min.js";
+import { isActivationKey, normalizeHexForPicker } from "./input-utils.js";
 
 const initColorPicker = () => {
   const colorInput = document.getElementById("color-values");
@@ -25,25 +26,6 @@ const initColorPicker = () => {
   let suppressNextPalettePickerOpen = null;
   let suppressNextPickerButtonOpen = false;
   const GLOBAL_GUARD = "__tsColorPickerDocumentHandlersBound";
-  const ACTIVATION_KEYS = new Set(["enter", "return", "numpadenter", " ", "space", "spacebar"]);
-  const ACTIVATION_KEY_CODES = new Set([13, 32]);
-  const isActivationKey = (value) => {
-    if (typeof value === "string") {
-      return ACTIVATION_KEYS.has(value.toLowerCase());
-    }
-    if (typeof value === "number") {
-      return ACTIVATION_KEY_CODES.has(value);
-    }
-    if (value && typeof value === "object") {
-      if (isActivationKey(value.key)) return true;
-      if (isActivationKey(value.code)) return true;
-      const keyCode = typeof value.keyCode === "number" ? value.keyCode : value.which;
-      if (typeof keyCode === "number") {
-        return isActivationKey(keyCode);
-      }
-    }
-    return false;
-  };
   const getEventTargetElement = (event) => {
     let node = event && event.target;
     while (node) {
@@ -255,17 +237,7 @@ const initColorPicker = () => {
     window[GLOBAL_GUARD] = true;
   }
 
-  const normalizeHex = (value) => {
-    if (!value) return "";
-    const raw = value.toString().trim();
-    const withoutHash = raw.startsWith("#") ? raw.slice(1) : raw;
-    const clean = withoutHash.replace(/[^0-9a-f]/gi, "").slice(0, 6).toLowerCase();
-    if (clean.length === 3) {
-      return clean.split("").map((char) => char + char).join("");
-    }
-    if (clean.length !== 6) return "";
-    return clean;
-  };
+  const normalizeHex = normalizeHexForPicker;
 
   const getThemeMode = () => (document.documentElement.classList.contains("darkmode-active") ? "dark" : "light");
   const WINDOW_REFRESH_HANDLER = "__tsColorPickerWindowRefreshHandler";

@@ -1,6 +1,14 @@
-import colorUtils from "./color-utils.js";
+import tintShadeUtils from "./tint-shade-utils.js";
+import colorSpaceUtils from "./color-space-utils.js";
 import exportNaming from "./export-naming.js";
 import exportUI from "./export-ui.js";
+import {
+  isAcceptedUserHex,
+  isActivationKey,
+  normalizeHexStrictSix,
+  normalizeHexForPaletteCell,
+  parseUserHexValues
+} from "./input-utils.js";
 
 let palettes = null;
 
@@ -11,26 +19,6 @@ let palettes = null;
 
   const VALID_TINT_SHADE_COUNTS = [5, 10, 20];
   const DEFAULT_TINT_SHADE_COUNT = 10;
-  const ACTIVATION_KEYS = new Set(["enter", "return", "numpadenter", " ", "space", "spacebar"]);
-  const ACTIVATION_KEY_CODES = new Set([13, 32]);
-  const isActivationKey = (value) => {
-    if (typeof value === "string") {
-      return ACTIVATION_KEYS.has(value.toLowerCase());
-    }
-
-    if (typeof value === "number") {
-      return ACTIVATION_KEY_CODES.has(value);
-    }
-
-    if (!value || typeof value !== "object") return false;
-
-    return (
-      isActivationKey(value.key) ||
-      isActivationKey(value.code) ||
-      isActivationKey(value.keyCode) ||
-      isActivationKey(value.which)
-    );
-  };
   const getEventTargetElement = (event) => {
     let node = event && event.target;
     while (node) {
@@ -49,10 +37,15 @@ let palettes = null;
     steps: "steps"
   };
 
+  const iconMarkupCache = new Map();
   const getIconMarkup = (templateId) => {
+    if (iconMarkupCache.has(templateId)) {
+      return iconMarkupCache.get(templateId);
+    }
     const template = document.getElementById(templateId);
-    if (!template) return "";
-    return (template.innerHTML || "").trim();
+    const markup = template ? (template.innerHTML || "").trim() : "";
+    iconMarkupCache.set(templateId, markup);
+    return markup;
   };
 
   const normalizeTintShadeCount = (value) => {
@@ -166,10 +159,10 @@ let palettes = null;
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;")
       .replace(/'/g, "&#39;");
-  const normalizeHex = (value) => String(value || "").trim().replace(/^#/, "");
+  const normalizeHex = normalizeHexForPaletteCell;
   const isValidHex = (value) => {
     const hex = normalizeHex(value);
-    return /^[0-9a-fA-F]{3}$/.test(hex) || /^[0-9a-fA-F]{6}$/.test(hex) || /^[0-9a-fA-F]{8}$/.test(hex);
+    return isAcceptedUserHex(hex);
   };
   const captureFocusContext = () => {
     const active = document.activeElement;
@@ -620,28 +613,17 @@ let palettes = null;
     requestAnimationFrame(animation);
   };
 
-  const HEX_RE = /\b(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})\b/g;
-
-  const parseColorValues = (colorValues) => {
-    const matches = colorValues.match(HEX_RE);
-    if (!matches) return null;
-
-    return matches.map((item) =>
-      item.length === 3
-        ? item.split("").map(ch => ch + ch).join("")
-        : item
-    );
-  };
+  const parseColorValues = (colorValues) => parseUserHexValues(colorValues);
 
   const buildPaletteData = (colors, tintShadeCount) => {
     const stepsPerSide = normalizeTintShadeCount(tintShadeCount);
     const usedNames = new Set();
     return colors.map((color, index) => {
       const baseHex = color.toLowerCase();
-      const shades = colorUtils.calculateShades(color, stepsPerSide)
+      const shades = tintShadeUtils.calculateShades(color, stepsPerSide)
         .map((entry) => ({ hex: entry.hex.toLowerCase(), percent: entry.percent }))
         .filter(item => item.hex !== baseHex && item.hex !== "000000");
-      const tints = colorUtils.calculateTints(color, stepsPerSide)
+      const tints = tintShadeUtils.calculateTints(color, stepsPerSide)
         .map((entry) => ({ hex: entry.hex.toLowerCase(), percent: entry.percent }))
         .filter(item => item.hex !== baseHex && item.hex !== "ffffff");
 
@@ -956,13 +938,6 @@ let palettes = null;
       requestAnimationFrame(checkAnimation);
     };
 
-    const normalizeHexValue = (colorValue) => {
-      if (typeof colorValue !== "string") return null;
-      const normalized = colorValue.replace(/^#/, "").trim().toLowerCase();
-      if (/^[0-9a-f]{6}$/.test(normalized)) return normalized;
-      return null;
-    };
-
     const moduloHue = (value) => ((value % 360) + 360) % 360;
 
     const insertRelatedPalettes = (paletteIndex, paletteHexes = [], { ensureRangeVisible = false } = {}) => {
@@ -971,7 +946,7 @@ let palettes = null;
       if (!Number.isInteger(paletteIndex) || paletteIndex < 0 || paletteIndex >= currentColors.length) return false;
 
       const normalizedHexes = paletteHexes
-        .map((value) => normalizeHexValue(value))
+        .map((value) => normalizeHexStrictSix(value))
         .filter(Boolean);
 
       if (!normalizedHexes.length) return false;
@@ -1004,53 +979,53 @@ let palettes = null;
     };
 
     const calculateSplitComplementaryHexes = (colorValue) => {
-      const normalized = normalizeHexValue(colorValue);
+      const normalized = normalizeHexStrictSix(colorValue);
       if (!normalized) return [];
-      const rgb = colorUtils.hexToRGB(normalized);
-      const hsl = colorUtils.rgbToHsl(rgb);
+      const rgb = colorSpaceUtils.hexToRGB(normalized);
+      const hsl = colorSpaceUtils.rgbToHsl(rgb);
       const offsets = [180 - 30, 180 + 30];
       return offsets.map((offset) => {
         const hue = moduloHue(hsl.hue + offset);
-        const complementaryRgb = colorUtils.hslToRgb({
+        const complementaryRgb = colorSpaceUtils.hslToRgb({
           hue,
           saturation: hsl.saturation,
           lightness: hsl.lightness
         });
-        return colorUtils.rgbToHex(complementaryRgb);
+        return colorSpaceUtils.rgbToHex(complementaryRgb);
       });
     };
 
     const calculateAnalogousHexes = (colorValue) => {
-      const normalized = normalizeHexValue(colorValue);
+      const normalized = normalizeHexStrictSix(colorValue);
       if (!normalized) return [];
-      const rgb = colorUtils.hexToRGB(normalized);
-      const hsl = colorUtils.rgbToHsl(rgb);
+      const rgb = colorSpaceUtils.hexToRGB(normalized);
+      const hsl = colorSpaceUtils.rgbToHsl(rgb);
       const offsets = [-30, 30];
       return offsets.map((offset) => {
         const hue = moduloHue(hsl.hue + offset);
-        const analogousRgb = colorUtils.hslToRgb({
+        const analogousRgb = colorSpaceUtils.hslToRgb({
           hue,
           saturation: hsl.saturation,
           lightness: hsl.lightness
         });
-        return colorUtils.rgbToHex(analogousRgb);
+        return colorSpaceUtils.rgbToHex(analogousRgb);
       });
     };
 
     const calculateTriadicHexes = (colorValue) => {
-      const normalized = normalizeHexValue(colorValue);
+      const normalized = normalizeHexStrictSix(colorValue);
       if (!normalized) return [];
-      const rgb = colorUtils.hexToRGB(normalized);
-      const hsl = colorUtils.rgbToHsl(rgb);
+      const rgb = colorSpaceUtils.hexToRGB(normalized);
+      const hsl = colorSpaceUtils.rgbToHsl(rgb);
       const offsets = [120, 240];
       return offsets.map((offset) => {
         const hue = moduloHue(hsl.hue + offset);
-        const triadicRgb = colorUtils.hslToRgb({
+        const triadicRgb = colorSpaceUtils.hslToRgb({
           hue,
           saturation: hsl.saturation,
           lightness: hsl.lightness
         });
-        return colorUtils.rgbToHex(triadicRgb);
+        return colorSpaceUtils.rgbToHex(triadicRgb);
       });
     };
 
@@ -1060,7 +1035,7 @@ let palettes = null;
       if (!Number.isInteger(paletteIndex) || paletteIndex < 0 || paletteIndex >= currentColors.length) return;
       const baseColor = currentColors[paletteIndex];
       if (!baseColor) return;
-      const complementHex = colorUtils.calculateComplementaryHex(baseColor);
+      const complementHex = colorSpaceUtils.calculateComplementaryHex(baseColor);
       if (!complementHex) return;
       insertRelatedPalettes(paletteIndex, [complementHex]);
     };
@@ -1441,11 +1416,11 @@ let palettes = null;
         const paletteIdEsc = escapeHtml(paletteId);
         const paletteRows = [];
 
-        const calculatedShades = colorUtils.calculateShades(color, tintShadeCount);
+        const calculatedShades = tintShadeUtils.calculateShades(color, tintShadeCount);
         paletteRows.push(`<tr>${makeTableRowColors(calculatedShades, "colors", colorPrefix, { enableBasePicker: true, colorIndex, rowType: "shades" })}</tr>`);
         paletteRows.push(`<tr>${makeTableRowColors(calculatedShades, "RGBValues", colorPrefix)}</tr>`);
 
-        const calculatedTints = colorUtils.calculateTints(color, tintShadeCount);
+        const calculatedTints = tintShadeUtils.calculateTints(color, tintShadeCount);
         paletteRows.push(`<tr>${makeTableRowColors(calculatedTints, "colors", colorPrefix, { enableBasePicker: true, colorIndex, rowType: "tints" })}</tr>`);
         paletteRows.push(`<tr>${makeTableRowColors(calculatedTints, "RGBValues", colorPrefix)}</tr>`);
 
