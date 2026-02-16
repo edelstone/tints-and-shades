@@ -12,7 +12,7 @@
   "engines": {
     "node": ">=18"
   },
-  "version": "0.1.6",
+  "version": "0.2.0",
   "description": "Deterministic color toolkit for tints, shades, color-wheel relationships, hex normalization, and hex/RGB/HSL conversion.",
   "license": "MIT",
   "type": "module",
