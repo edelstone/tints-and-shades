@@ -1,17 +1,4 @@
-const pad = (number, length) => {
-    let str = number.toString();
-    while (str.length < length) {
-        str = "0" + str;
-    }
-    return str;
-};
-const hexToRGB = (colorValue) => ({
-    red: parseInt(colorValue.slice(0, 2), 16),
-    green: parseInt(colorValue.slice(2, 4), 16),
-    blue: parseInt(colorValue.slice(4, 6), 16)
-});
-const intToHex = (rgbint) => pad(Math.min(Math.max(Math.round(rgbint), 0), 255).toString(16), 2);
-const rgbToHex = (rgb) => intToHex(rgb.red) + intToHex(rgb.green) + intToHex(rgb.blue);
+import { hexToRgb, rgbToHex } from "./color.js";
 const DEFAULT_STEPS = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9];
 const validateColorValue = (colorValue) => {
     if (typeof colorValue !== "string" || colorValue.length !== 6 || !/^[0-9a-fA-F]{6}$/.test(colorValue)) {
@@ -33,7 +20,7 @@ const mixChannel = (from, to, ratio) => from + (to - from) * ratio;
 const calculateScale = (colorValue, steps, mixFn) => {
     validateColorValue(colorValue);
     const stepRatios = resolveSteps(steps);
-    const color = hexToRGB(colorValue);
+    const color = hexToRgb(colorValue);
     const values = [];
     for (const ratio of stepRatios) {
         const rgb = mixFn(color, ratio);

@@ -1,6 +1,7 @@
 import CodeHighlighter from "./code-highlighter.js";
 import exportNaming from "./export-naming.js";
 import { normalizeHexForExport } from "./input-utils.js";
+import { hexToRgb } from "/packages/tints-and-shades/dist/index.js";
 
 let exportUI = null;
 
@@ -586,11 +587,12 @@ let exportUI = null;
   const formatRgbValue = (hex) => {
     const normalized = normalizeHex(hex);
     if (normalized.length !== 6) return "";
-    const r = parseInt(normalized.slice(0, 2), 16);
-    const g = parseInt(normalized.slice(2, 4), 16);
-    const b = parseInt(normalized.slice(4, 6), 16);
-    if ([r, g, b].some((value) => Number.isNaN(value))) return "";
-    return `rgb(${r}, ${g}, ${b})`;
+    try {
+      const { red, green, blue } = hexToRgb(normalized);
+      return `rgb(${red}, ${green}, ${blue})`;
+    } catch (error) {
+      return "";
+    }
   };
 
   const formatRgbOutput = (palettes, stepLabel) => {

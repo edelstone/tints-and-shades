@@ -1,6 +1,6 @@
 # @edelstone/tints-and-shades
 
-Deterministic tint and shade generator for 6-character hex colors.  
+Deterministic color toolkit for tints, shades, color-wheel relationships, hex normalization, and hex/RGB/HSL conversion.  
 Used internally by the [Tint & Shade Generator](https://maketintsandshades.com) and published here as a standalone API.
 
 ## Install
@@ -9,14 +9,48 @@ Used internally by the [Tint & Shade Generator](https://maketintsandshades.com) 
 npm install @edelstone/tints-and-shades
 ```
 
+## Quick example
+
+```js
+import {
+  normalizeHex,
+  calculateTints,
+  calculateShades,
+  getComplementaryHex
+} from "@edelstone/tints-and-shades";
+
+const baseHex = normalizeHex("#3bf"); // "33bbff"
+if (!baseHex) throw new Error("Invalid color");
+
+const tints = calculateTints(baseHex, [0, 0.5, 1]);
+const shades = calculateShades(baseHex, [0, 0.5, 1]);
+const complementary = getComplementaryHex(baseHex);
+```
+
+```json
+{
+  "complementary": "ff7733",
+  "tints": [
+    { "hex": "33bbff", "ratio": 0, "percent": 0 },
+    { "hex": "99ddff", "ratio": 0.5, "percent": 50 },
+    { "hex": "ffffff", "ratio": 1, "percent": 100 }
+  ],
+  "shades": [
+    { "hex": "33bbff", "ratio": 0, "percent": 0 },
+    { "hex": "1a5e80", "ratio": 0.5, "percent": 50 },
+    { "hex": "000000", "ratio": 1, "percent": 100 }
+  ]
+}
+```
+
 ## API
+
+### Generation
 
 ```ts
 calculateTints(colorValue: string, steps?: number[]): ScaleColor[]
 calculateShades(colorValue: string, steps?: number[]): ScaleColor[]
-```
 
-```ts
 type ScaleColor = {
   hex: string;
   ratio: number;
@@ -24,83 +58,53 @@ type ScaleColor = {
 };
 ```
 
-### Parameters
+Default steps: `[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]`
 
-- **colorValue**  
-  6-character hex string without `#`, e.g. `3b82f6`  
-  Must be a valid 6-character hex value.
+### Normalization
 
-- **steps** (optional)  
-  Array of finite numeric mix ratios.  
-  Example: `[0, 0.1, 0.2, 0.3]`
-
-If omitted, the default steps are:
-
-```js
-[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
+```ts
+normalizeHex(value: string): string | null
 ```
 
-## Returns
+Returns canonical 6-character lowercase hex without `#` (3-character hex is expanded), or `null` if invalid.
 
-An array of `ScaleColor` objects:
+### Relationships
 
-- `hex`: 6-character hex string (without `#`)
-- `ratio`: numeric step ratio used for the mix
-- `percent`: `ratio` expressed as a percentage (rounded to 1 decimal)
-
-## Example
-
-```js
-import { calculateTints, calculateShades } 
-  from "@edelstone/tints-and-shades";
-
-const tints = calculateTints("000000", [0, 0.5, 1]);
-const shades = calculateShades("ffffff", [0, 0.5, 1]);
+```ts
+getComplementaryHex(colorValue: string): string
+getSplitComplementaryHexes(colorValue: string): [string, string]
+getAnalogousHexes(colorValue: string): [string, string]
+getTriadicHexes(colorValue: string): [string, string]
 ```
 
-Tints output:
+Hue is rotated by standard offsets while preserving saturation and lightness.
 
-```json
-[
-  { "hex": "000000", "ratio": 0, "percent": 0 },
-  { "hex": "808080", "ratio": 0.5, "percent": 50 },
-  { "hex": "ffffff", "ratio": 1, "percent": 100 }
-]
+### Conversions
+
+```ts
+hexToRgb(colorValue: string): RGB
+rgbToHex(rgb: RGB): string
+rgbToHsl(rgb: RGB): HSL
+hslToRgb(hsl: HSL): RGB
+
+type RGB = {
+  red: number;
+  green: number;
+  blue: number;
+};
+
+type HSL = {
+  hue: number;
+  saturation: number;
+  lightness: number;
+};
 ```
 
-Shades output:
+Converts between hex, RGB, and HSL using deterministic channel clamping and standard HSL conversion math.
 
-```json
-[
-  { "hex": "ffffff", "ratio": 0, "percent": 0 },
-  { "hex": "808080", "ratio": 0.5, "percent": 50 },
-  { "hex": "000000", "ratio": 1, "percent": 100 }
-]
-```
+## Validation rules
 
-## Validation
-
-- `colorValue` must be a 6-character hex string (no `#`).
-- Invalid values throw a `TypeError`.
-- `steps` must be an array of finite numbers.
-- Invalid `steps` input throws a `TypeError`.
-
-## Learn more
-
-- Calculation method and rationale available on the [Tint & Shade Generator docs](https://maketintsandshades.com/about/#calculation-method).
-
-## Development
-
-From repo root:
-
-```bash
-npm run build:api
-npm run test:api
-```
-
-From package directory:
-
-```bash
-npm run build
-npm run test
-```
+- Generation requires a 6-character hex string (no `#`) and finite numeric steps.
+- Relationship and conversion helpers accept valid 3- or 6-character hex (optional `#`).
+- `normalizeHex` returns `null` for invalid input.
+- Other helpers throw `TypeError` for invalid input.

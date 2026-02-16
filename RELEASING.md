@@ -5,7 +5,7 @@
 1. Commit code changes.
 
     ```bash
-    git add .
+    git add -A
     git commit -m "describe change"
     ```
 
@@ -17,30 +17,38 @@
 
     If not clean, return to step 1 and commit your changes before continuing.
 
-3. Bump npm version.
+3. Verify API package tests pass.
+
+    ```bash
+    npm run test:api
+    ```
+
+4. Bump npm version.
 
     ```bash
     cd packages/tints-and-shades
     npm version patch   # or minor / major
     ```
 
-4. Publish to npm.
+    _The only files changed should be `package-lock.json` and `packages/tints-and-shades/package.json`._
+
+5. Publish to npm.
 
     ```bash
     npm publish
     ```
 
-5. Commit version bump to GitHub.
+6. Commit version bump to GitHub.
 
     _Commit message should match npm version number._
 
     ```bash
     cd ../../
-    git add package-lock.json packages/tints-and-shades/package.json
+    git add -A
     git commit -m "vX.Y.Z"
     ```
 
-6. Create annotated tag.
+7. Create annotated tag.
 
     _Tag should match npm version number._
 
@@ -48,7 +56,7 @@
     git tag -a vX.Y.Z -m "version summary"
     ```
 
-7. Push everything.
+8. Push everything.
 
     ```bash
     git push

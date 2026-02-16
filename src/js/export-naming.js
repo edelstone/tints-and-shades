@@ -1,4 +1,4 @@
-import colorSpaceUtils from "./color-space-utils.js";
+import { hexToRgb } from "/packages/tints-and-shades/dist/index.js";
 import { colornames } from "/vendor/color-name-list/colornames.esm.js";
 
 const slugify = (value) => value
@@ -67,7 +67,7 @@ const hexToLab = (hex) => {
   if (!hex) return null;
   const normalized = hex.replace("#", "").toLowerCase();
   if (normalized.length !== 6) return null;
-  const rgb = colorSpaceUtils.hexToRGB(normalized);
+  const rgb = hexToRgb(normalized);
   return xyzToLab(rgbToXyz(rgb));
 };
 

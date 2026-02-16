@@ -1,5 +1,4 @@
 import tintShadeUtils from "./tint-shade-utils.js";
-import colorSpaceUtils from "./color-space-utils.js";
 import exportNaming from "./export-naming.js";
 import exportUI from "./export-ui.js";
 import {
@@ -9,6 +8,12 @@ import {
   normalizeHexForPaletteCell,
   parseUserHexValues
 } from "./input-utils.js";
+import {
+  getComplementaryHex,
+  getSplitComplementaryHexes,
+  getAnalogousHexes,
+  getTriadicHexes
+} from "/packages/tints-and-shades/dist/index.js";
 
 let palettes = null;
 
@@ -938,8 +943,6 @@ let palettes = null;
       requestAnimationFrame(checkAnimation);
     };
 
-    const moduloHue = (value) => ((value % 360) + 360) % 360;
-
     const insertRelatedPalettes = (paletteIndex, paletteHexes = [], { ensureRangeVisible = false } = {}) => {
       if (!colorInput) return false;
       const currentColors = parseColorValues(colorInput.value) || [];
@@ -981,52 +984,19 @@ let palettes = null;
     const calculateSplitComplementaryHexes = (colorValue) => {
       const normalized = normalizeHexStrictSix(colorValue);
       if (!normalized) return [];
-      const rgb = colorSpaceUtils.hexToRGB(normalized);
-      const hsl = colorSpaceUtils.rgbToHsl(rgb);
-      const offsets = [180 - 30, 180 + 30];
-      return offsets.map((offset) => {
-        const hue = moduloHue(hsl.hue + offset);
-        const complementaryRgb = colorSpaceUtils.hslToRgb({
-          hue,
-          saturation: hsl.saturation,
-          lightness: hsl.lightness
-        });
-        return colorSpaceUtils.rgbToHex(complementaryRgb);
-      });
+      return getSplitComplementaryHexes(normalized);
     };
 
     const calculateAnalogousHexes = (colorValue) => {
       const normalized = normalizeHexStrictSix(colorValue);
       if (!normalized) return [];
-      const rgb = colorSpaceUtils.hexToRGB(normalized);
-      const hsl = colorSpaceUtils.rgbToHsl(rgb);
-      const offsets = [-30, 30];
-      return offsets.map((offset) => {
-        const hue = moduloHue(hsl.hue + offset);
-        const analogousRgb = colorSpaceUtils.hslToRgb({
-          hue,
-          saturation: hsl.saturation,
-          lightness: hsl.lightness
-        });
-        return colorSpaceUtils.rgbToHex(analogousRgb);
-      });
+      return getAnalogousHexes(normalized);
     };
 
     const calculateTriadicHexes = (colorValue) => {
       const normalized = normalizeHexStrictSix(colorValue);
       if (!normalized) return [];
-      const rgb = colorSpaceUtils.hexToRGB(normalized);
-      const hsl = colorSpaceUtils.rgbToHsl(rgb);
-      const offsets = [120, 240];
-      return offsets.map((offset) => {
-        const hue = moduloHue(hsl.hue + offset);
-        const triadicRgb = colorSpaceUtils.hslToRgb({
-          hue,
-          saturation: hsl.saturation,
-          lightness: hsl.lightness
-        });
-        return colorSpaceUtils.rgbToHex(triadicRgb);
-      });
+      return getTriadicHexes(normalized);
     };
 
     const toggleComplementPalette = (paletteIndex) => {
@@ -1035,7 +1005,7 @@ let palettes = null;
       if (!Number.isInteger(paletteIndex) || paletteIndex < 0 || paletteIndex >= currentColors.length) return;
       const baseColor = currentColors[paletteIndex];
       if (!baseColor) return;
-      const complementHex = colorSpaceUtils.calculateComplementaryHex(baseColor);
+      const complementHex = getComplementaryHex(baseColor);
       if (!complementHex) return;
       insertRelatedPalettes(paletteIndex, [complementHex]);
     };

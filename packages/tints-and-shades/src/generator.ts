@@ -1,32 +1,10 @@
-type RGB = {
-  red: number;
-  green: number;
-  blue: number;
-};
+import { hexToRgb, rgbToHex, type RGB } from "./color.js";
 
 export type ScaleColor = {
   hex: string;
   ratio: number;
   percent: number;
 };
-
-const pad = (number: number | string, length: number): string => {
-  let str = number.toString();
-  while (str.length < length) {
-    str = "0" + str;
-  }
-  return str;
-};
-
-const hexToRGB = (colorValue: string): RGB => ({
-  red: parseInt(colorValue.slice(0, 2), 16),
-  green: parseInt(colorValue.slice(2, 4), 16),
-  blue: parseInt(colorValue.slice(4, 6), 16)
-});
-
-const intToHex = (rgbint: number): string => pad(Math.min(Math.max(Math.round(rgbint), 0), 255).toString(16), 2);
-
-const rgbToHex = (rgb: RGB): string => intToHex(rgb.red) + intToHex(rgb.green) + intToHex(rgb.blue);
 
 const DEFAULT_STEPS: number[] = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9];
 const validateColorValue = (colorValue: string): void => {
@@ -51,7 +29,7 @@ const mixChannel = (from: number, to: number, ratio: number): number => from + (
 const calculateScale = (colorValue: string, steps: number[] | undefined, mixFn: (rgb: RGB, ratio: number) => RGB): ScaleColor[] => {
   validateColorValue(colorValue);
   const stepRatios = resolveSteps(steps);
-  const color = hexToRGB(colorValue);
+  const color = hexToRgb(colorValue);
   const values: ScaleColor[] = [];
 
   for (const ratio of stepRatios) {

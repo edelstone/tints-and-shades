@@ -13,7 +13,7 @@
     "node": ">=18"
   },
   "version": "0.1.6",
-  "description": "Deterministic tint and shade generator for 6-character hex colors.",
+  "description": "Deterministic color toolkit for tints, shades, color-wheel relationships, hex normalization, and hex/RGB/HSL conversion.",
   "license": "MIT",
   "type": "module",
   "publishConfig": {
