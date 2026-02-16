@@ -17,10 +17,11 @@
 
     If not clean, return to step 1 and commit your changes before continuing.
 
-3. Verify API package tests pass.
+3. Verify release tests pass.
 
     ```bash
     npm run test:api
+    npm run test:app
     ```
 
 4. Bump npm version.
