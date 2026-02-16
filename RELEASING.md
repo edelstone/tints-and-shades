@@ -54,7 +54,7 @@
     _Tag should match npm version number._
 
     ```bash
-    git tag -a vX.Y.Z -m "60-80 character version summary"
+    git tag -a vX.Y.Z -m "~60-character version summary"
     ```
 
 8. Push everything.
