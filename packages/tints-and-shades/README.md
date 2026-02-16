@@ -5,11 +5,15 @@ Used internally by the [Tint & Shade Generator](https://maketintsandshades.com) 
 
 ## Install
 
+_Prerequisites: Node.js 18+_
+
 ```bash
 npm install @edelstone/tints-and-shades
 ```
 
 ## Quick example
+
+### Input
 
 ```js
 import {
@@ -26,6 +30,8 @@ const tints = calculateTints(baseHex, [0, 0.5, 1]);
 const shades = calculateShades(baseHex, [0, 0.5, 1]);
 const complementary = getComplementaryHex(baseHex);
 ```
+
+### Output
 
 ```json
 {
@@ -108,3 +114,4 @@ Converts between hex, RGB, and HSL using deterministic channel clamping and stan
 - Relationship and conversion helpers accept valid 3- or 6-character hex (optional `#`).
 - `normalizeHex` returns `null` for invalid input.
 - Other helpers throw `TypeError` for invalid input.
+- All returned hex strings are lowercase 6-character values without `#`.
