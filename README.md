@@ -76,7 +76,7 @@ In addition to generating tints and shades, you can also add related palettes ba
 
 ### Complementary
 
-Adds one new palette using the hue directly opposite the base color (180°), producing the strongest contrast and clear visual separation.
+Adds one palette using the hue directly opposite the base color (180°), producing the strongest contrast and clear visual separation.
 
 ### Split complementary
 
@@ -114,7 +114,6 @@ _Prerequisites: Node.js 18+_
 
 - Published on npm: [@edelstone/tints-and-shades](https://www.npmjs.com/package/@edelstone/tints-and-shades)
 - Source location: [packages/tints-and-shades](packages/tints-and-shades)
-- Includes generation (`calculateTints`, `calculateShades`), normalization (`normalizeHex`), relationships (complementary/split-complementary/analogous/triadic), and conversions (hex↔rgb, rgb↔hsl).
 - Build locally: `npm run build:api`
 - Run package tests: `npm run test:api`
 - App integration note: during development, the web app consumes the local workspace build at `packages/tints-and-shades/dist/index.js`.
