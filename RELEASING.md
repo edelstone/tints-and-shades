@@ -31,7 +31,8 @@
     npm version patch   # or minor / major
     ```
 
-    _The only files changed should be `package-lock.json` and `packages/tints-and-shades/package.json`._
+    > [!IMPORTANT]
+    > The only files changed should be `package-lock.json` and `packages/tints-and-shades/package.json`.
 
 5. Publish to npm.
 
