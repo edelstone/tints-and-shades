@@ -2,6 +2,9 @@
   "name": "tints-and-shades",
   "version": "0.0.0",
   "private": true,
+  "engines": {
+    "node": ">=18"
+  },
   "description": "Easily make tints and shades that match the output of Chrome DevTools, Sass, Less, and PostCSS.",
   "main": "index.js",
   "workspaces": [
@@ -37,11 +40,10 @@
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.1.2",
-    "@11ty/eleventy-dev-server": "^2.0.4",
-    "concurrently": "^9.0.1",
-    "gh-pages": "^6.1.1",
-    "nodemon": "^3.1.4",
-    "sass": "^1.78.0",
-    "turndown": "^7.2.0"
+    "concurrently": "^9.2.1",
+    "gh-pages": "^6.3.0",
+    "nodemon": "^3.1.11",
+    "sass": "^1.96.0",
+    "turndown": "^7.2.2"
   }
 }
