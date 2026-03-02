@@ -13,7 +13,7 @@
   "scripts": {
     "watch:readme": "nodemon --watch src/about.njk --watch build-readme.js --exec \"npm run build:readme\"",
     "build:readme": "node build-readme.js",
-    "watch:css": "sass --watch src/styles:_site/css --style=expanded",
+    "watch:css": "sass --watch --poll src/styles:_site/css --style=expanded",
     "build:css": "sass src/styles:_site/css --style=compressed",
     "watch:11ty": "eleventy --serve",
     "build:11ty": "eleventy",
