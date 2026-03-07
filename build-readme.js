@@ -22,9 +22,20 @@ const picturesSection = `<a href="https://maketintsandshades.com">
  <picture>
    <source media="(prefers-color-scheme: dark)" srcset="assets/palettes-dark.png" />
    <source media="(prefers-color-scheme: light)" srcset="assets/palettes-light.png" />
-   <img alt="Screenshot of app home page" src="assets/palettes-light.png" />
+   <img alt="Screenshot of palettes" src="assets/palettes-light.png" />
  </picture>
 </a>`;
+
+const coreApiSection = `## API
+
+The Tint & Shade Generator exposes its color engine as a standalone API. It generates tints and shades, derives related color palettes, and performs common color conversions.
+
+It can also be used independently in your projects.
+
+### Usage and examples
+
+- npm: [@edelstone/tints-and-shades](https://www.npmjs.com/package/@edelstone/tints-and-shades)
+- Source: [packages/tints-and-shades](packages/tints-and-shades)`;
 
 const localDevSection = `## Local development
 
@@ -36,18 +47,10 @@ _Prerequisites: Node.js 18+_
 4. Start the server: \`npm run start\`.
 5. Navigate to \`localhost:8080\` in your browser.`;
 
-const coreApiSection = `## Core API package
-
-- Published on npm: [@edelstone/tints-and-shades](https://www.npmjs.com/package/@edelstone/tints-and-shades)
-- Source location: [packages/tints-and-shades](packages/tints-and-shades)
-- Build locally: \`npm run build:api\`
-- Run package tests: \`npm run test:api\`
-- App integration note: during development, the web app consumes the local workspace build at \`packages/tints-and-shades/dist/index.js\`.`;
-
 const insertMarkers = {
   pictures: '<!-- README-INSERT-PICTURES -->',
-  localDev: '<!-- README-INSERT-LOCAL-DEV -->',
   coreApi: '<!-- README-INSERT-CORE-API -->',
+  localDev: '<!-- README-INSERT-LOCAL-DEV -->',
 };
 
 const aboutContent = readFileSync(aboutPath, 'utf8');
@@ -64,8 +67,8 @@ Object.values(insertMarkers).forEach((marker) => {
 
 const tokenizedContent = rawReadmeContent
   .replace(insertMarkers.pictures, 'READMETOKENPICTURES')
-  .replace(insertMarkers.localDev, 'READMETOKENLOCALDEV')
   .replace(insertMarkers.coreApi, 'READMETOKENCOREAPI')
+  .replace(insertMarkers.localDev, 'READMETOKENLOCALDEV')
   .replace(/<!-- README-EXCLUDE-START -->[\s\S]*?<!-- README-EXCLUDE-END -->/g, '')
   .replace(/href="\/#colors=([0-9a-fA-F]+)"/g, `href="${siteUrl}/#colors=$1"`)
   .trim();
@@ -78,8 +81,8 @@ const normalizeListSpacing = (content) =>
 const readmeBody = normalizeListSpacing(turndownService.turndown(tokenizedContent))
   .replace(/\(\/#colors=([0-9a-fA-F]+)\)/g, `(${siteUrl}/#colors=$1)`)
   .replace('READMETOKENPICTURES', `\n\n${picturesSection}\n\n`)
-  .replace('READMETOKENLOCALDEV', `\n\n${localDevSection}\n\n`)
   .replace('READMETOKENCOREAPI', `\n\n${coreApiSection}\n\n`)
+  .replace('READMETOKENLOCALDEV', `\n\n${localDevSection}\n\n`)
   .replace(/\n[ \t]+\n/g, '\n\n')
   .replace(/\n{3,}/g, '\n\n')
   .trim();

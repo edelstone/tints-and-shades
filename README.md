@@ -12,7 +12,7 @@
  <picture>
    <source media="(prefers-color-scheme: dark)" srcset="assets/palettes-dark.png" />
    <source media="(prefers-color-scheme: light)" srcset="assets/palettes-light.png" />
-   <img alt="Screenshot of app home page" src="assets/palettes-light.png" />
+   <img alt="Screenshot of palettes" src="assets/palettes-light.png" />
  </picture>
 </a>
 
@@ -72,7 +72,7 @@ Let’s say we want tints and shades of [Rebecca Purple](https://meyerweb.com/er
 
 ## Related colors
 
-In addition to generating tints and shades, you can also add related palettes based on common color-wheel relationships. These palettes shift the hue while preserving the original saturation and lightness, which is well suited to most color systems.
+In addition to generating tints and shades, you can also add related palettes based on common color-wheel relationships. These palettes shift the hue while preserving the original saturation and lightness, which works well for most color systems.
 
 ### Complementary
 
@@ -94,9 +94,20 @@ Adds two palettes evenly spaced at 120° intervals around the color wheel, creat
 
 Now you can generate the same meticulously-crafted tints and shades without leaving your canvas (and automatically create local color styles, too). Grab the plugin [from the Figma Community](https://www.figma.com/community/plugin/1580658889126377365/tint-shade-generator).
 
+## API
+
+The Tint & Shade Generator exposes its color engine as a standalone API. It generates tints and shades, derives related color palettes, and performs common color conversions.
+
+It can also be used independently in your projects.
+
+### Usage and examples
+
+- npm: [@edelstone/tints-and-shades](https://www.npmjs.com/package/@edelstone/tints-and-shades)
+- Source: [packages/tints-and-shades](packages/tints-and-shades)
+
 ## Feedback and contributing
 
-If you notice a bug or want a feature added please [file an issue on GitHub](https://github.com/edelstone/tints-and-shades/issues/new) or just [email me](mailto:contact@maketintsandshades.com) the details.
+If you notice a bug or want a feature added, please [file an issue on GitHub](https://github.com/edelstone/tints-and-shades/issues/new) or just [email me](mailto:contact@maketintsandshades.com) the details.
 
 If you’d like to contribute, comment on an [open issue](https://github.com/edelstone/tints-and-shades/issues) or open a new one describing your approach. Once aligned, submit a PR.
 
@@ -109,14 +120,6 @@ _Prerequisites: Node.js 18+_
 3. Install dependencies: `npm install`.
 4. Start the server: `npm run start`.
 5. Navigate to `localhost:8080` in your browser.
-
-## Core API package
-
-- Published on npm: [@edelstone/tints-and-shades](https://www.npmjs.com/package/@edelstone/tints-and-shades)
-- Source location: [packages/tints-and-shades](packages/tints-and-shades)
-- Build locally: `npm run build:api`
-- Run package tests: `npm run test:api`
-- App integration note: during development, the web app consumes the local workspace build at `packages/tints-and-shades/dist/index.js`.
 
 ## Support this project
 
