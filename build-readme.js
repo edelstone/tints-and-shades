@@ -28,7 +28,7 @@ const picturesSection = `<a href="https://maketintsandshades.com">
 
 const coreApiSection = `## API
 
-The Tint & Shade Generator exposes its color engine as a standalone API. It generates tints and shades, derives related color palettes, and performs common color conversions.
+The Tint & Shade Generator exposes its color engine as a standalone API. It generates tints and shades, derives related palettes, and performs common color normalization and conversion.
 
 It can also be used independently in your projects.
 

@@ -94,9 +94,15 @@ Adds two palettes evenly spaced at 120° intervals around the color wheel, creat
 
 Now you can generate the same meticulously-crafted tints and shades without leaving your canvas (and automatically create local color styles, too). Grab the plugin [from the Figma Community](https://www.figma.com/community/plugin/1580658889126377365/tint-shade-generator).
 
+## Feedback and contributing
+
+If you notice a bug or want a feature added, please [file an issue on GitHub](https://github.com/edelstone/tints-and-shades/issues/new) or just [email me](mailto:contact@maketintsandshades.com) the details.
+
+If you’d like to contribute, comment on an [open issue](https://github.com/edelstone/tints-and-shades/issues) or open a new one describing your approach. Once aligned, submit a PR.
+
 ## API
 
-The Tint & Shade Generator exposes its color engine as a standalone API. It generates tints and shades, derives related color palettes, and performs common color conversions.
+The Tint & Shade Generator exposes its color engine as a standalone API. It generates tints and shades, derives related palettes, and performs common color normalization and conversion.
 
 It can also be used independently in your projects.
 
@@ -104,12 +110,6 @@ It can also be used independently in your projects.
 
 - npm: [@edelstone/tints-and-shades](https://www.npmjs.com/package/@edelstone/tints-and-shades)
 - Source: [packages/tints-and-shades](packages/tints-and-shades)
-
-## Feedback and contributing
-
-If you notice a bug or want a feature added, please [file an issue on GitHub](https://github.com/edelstone/tints-and-shades/issues/new) or just [email me](mailto:contact@maketintsandshades.com) the details.
-
-If you’d like to contribute, comment on an [open issue](https://github.com/edelstone/tints-and-shades/issues) or open a new one describing your approach. Once aligned, submit a PR.
 
 ## Local development
 
