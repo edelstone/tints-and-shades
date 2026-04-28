@@ -3,18 +3,23 @@
   "version": "0.0.0",
   "private": true,
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=18"
   },
   "description": "Easily make tints and shades that match the output of Chrome DevTools, Sass, Less, and PostCSS.",
+  "main": "index.js",
   "workspaces": [
     "packages/*"
   ],
   "scripts": {
-    "watch:readme": "nodemon --watch src/shared/about.html --watch build-readme.js --exec \"npm run build:readme\"",
+    "watch:readme": "nodemon --watch src/about.njk --watch build-readme.js --exec \"npm run build:readme\"",
     "build:readme": "node build-readme.js",
-    "dev": "npm run build:readme && astro dev",
-    "build": "npm run build:api && npm run build:readme && astro build",
-    "start": "concurrently \"npm run watch:readme\" \"npm run dev\"",
+    "watch:css": "sass --watch --poll src/styles:_site/css --style=expanded",
+    "build:css": "sass src/styles:_site/css --style=compressed",
+    "watch:11ty": "eleventy --serve",
+    "build:11ty": "eleventy",
+    "build": "npm run build:css && npm run build:11ty",
+    "start": "concurrently \"npm run watch:css\" \"npm run watch:readme\" \"npm run watch:11ty\"",
+    "deploy": "npm run build && gh-pages -d _site",
     "build:api": "npm --workspace @edelstone/tints-and-shades run build",
     "test:api": "npm --workspace @edelstone/tints-and-shades run test",
     "test:app": "node --experimental-default-type=module --test test/*.test.mjs"
@@ -30,14 +35,13 @@
   "author": "Michael Edelstone <michael.edelstone@gmail.com> (https://michaeledelstone.com)",
   "license": "MIT",
   "dependencies": {
-    "@edelstone/tints-and-shades": "file:packages/tints-and-shades",
     "@melloware/coloris": "^0.25.0",
     "color-name-list": "^14.29.0"
   },
   "devDependencies": {
-    "@types/node": "^25.6.0",
-    "astro": "^6.1.9",
+    "@11ty/eleventy": "^3.1.2",
     "concurrently": "^9.2.1",
+    "gh-pages": "^6.3.0",
     "nodemon": "^3.1.14",
     "sass": "^1.97.3",
     "turndown": "^7.2.2"

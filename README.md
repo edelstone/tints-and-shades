@@ -113,13 +113,13 @@ It can also be used independently in your projects.
 
 ## Local development
 
-_Prerequisites: Node.js 22.12+_
+_Prerequisites: Node.js 18+_
 
 1. Clone this project.
 2. Navigate to the project in your terminal.
 3. Install dependencies: `npm install`.
 4. Start the server: `npm run start`.
-5. Navigate to `localhost:4321` in your browser.
+5. Navigate to `localhost:8080` in your browser.
 
 ## Support this project
 
@@ -136,9 +136,9 @@ Many thanks to [Joel Carr](https://github.com/joelcarr), [Sebastian Gutierrez](h
 
 We also utilize these amazing open-source projects:
 
-- [Astro](https://github.com/withastro/astro)
 - [Color Names](https://github.com/meodai/color-names)
 - [Coloris NPM](https://github.com/melloware/coloris-npm)
+- [Eleventy](https://github.com/11ty/eleventy)
 
 ## Design specs
 

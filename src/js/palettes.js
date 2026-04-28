@@ -13,7 +13,7 @@ import {
   getSplitComplementaryHexes,
   getAnalogousHexes,
   getTriadicHexes
-} from "@edelstone/tints-and-shades";
+} from "/packages/tints-and-shades/dist/index.js";
 
 let palettes = null;
 

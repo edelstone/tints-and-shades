@@ -8,7 +8,7 @@ import {
   getSplitComplementaryHexes,
   getAnalogousHexes,
   getTriadicHexes
-} from "@edelstone/tints-and-shades";
+} from "../packages/tints-and-shades/dist/index.js";
 
 test("hexToRgb and rgbToHex round-trip known values", () => {
   assert.deepEqual(hexToRgb("3b82f6"), { red: 59, green: 130, blue: 246 });
