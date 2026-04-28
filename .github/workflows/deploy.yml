@@ -1,4 +1,4 @@
-name: Deploy Eleventy site to GitHub Pages
+name: Deploy Astro site to GitHub Pages
 
 on:
   push:
@@ -22,7 +22,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
           cache: "npm"
 
       - run: npm ci
@@ -30,7 +30,7 @@ jobs:
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: ./_site
+          path: ./dist
 
   deploy:
     runs-on: ubuntu-latest

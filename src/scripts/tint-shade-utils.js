@@ -1,4 +1,4 @@
-import { calculateTints as apiCalculateTints, calculateShades as apiCalculateShades } from "/packages/tints-and-shades/dist/index.js";
+import { calculateTints as apiCalculateTints, calculateShades as apiCalculateShades } from "@edelstone/tints-and-shades";
 
 const DEFAULT_STEPS = 10;
 const buildStepRatios = (steps = DEFAULT_STEPS) => {

@@ -1,0 +1,55 @@
+---
+import { site } from "../data/site";
+
+interface Props {
+  pageTitle: string;
+  canonicalUrl: string;
+  is404Page?: boolean;
+}
+
+const { pageTitle, canonicalUrl, is404Page = false } = Astro.props;
+---
+
+<meta charset="utf-8" />
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GNR8WM6SC0"></script>
+<script is:inline>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    window.dataLayer.push(arguments);
+  }
+  gtag("js", new Date());
+  gtag("config", "G-GNR8WM6SC0");
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content={site.description} />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={site.name} />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={site.description} />
+<meta property="og:image" content={site.shareImage} />
+{
+  !is404Page && (
+    <>
+      <meta property="og:url" content={canonicalUrl} />
+      <link rel="canonical" href={canonicalUrl} />
+    </>
+  )
+}
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<script is:inline>
+  (function () {
+    try {
+      const stored = localStorage.getItem("theme");
+      const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+      const useDark = stored ? stored === "dark" : prefersDark;
+      if (useDark) {
+        document.documentElement.classList.add("darkmode-active");
+      }
+    } catch (e) {}
+  })();
+</script>
+<title>{pageTitle}</title>
