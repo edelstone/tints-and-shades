@@ -1,6 +1,24 @@
-# API release flow
+# npm package release flow
 
-**Applies only when releasing the npm package.** If `packages/tints-and-shades` isn’t modified, just commit and push to `main`.
+This document applies only when releasing the npm package at `packages/tints-and-shades`.
+
+## When a release is required
+
+Publish a new npm version when the changes should ship to npm consumers. This usually means changes to:
+
+- `packages/tints-and-shades/src/*`
+- `packages/tints-and-shades/package.json`
+- anything else that changes the built output in `packages/tints-and-shades/dist`
+
+You usually do not need a release for package-internal changes that do not affect what npm consumers receive, such as:
+
+- `packages/tints-and-shades/test/*`
+- tooling or config changes
+- README changes, unless you want the npm package documentation updated
+
+If no npm release is needed, just commit and push to `main`.
+
+## Release steps
 
 1. Commit code changes.
 
@@ -31,7 +49,7 @@
     npm version patch   # or minor / major
     ```
 
-    _The only files changed should be `package-lock.json` and `packages/tints-and-shades/package.json`._
+    _At this step, the only files changed should be `package-lock.json` and `packages/tints-and-shades/package.json`._
 
 5. Publish to npm.
 

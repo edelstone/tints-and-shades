@@ -1,9 +1,6 @@
 ---
 import "../styles/styles.scss";
 import "@melloware/coloris/dist/coloris.css";
-import appScriptUrl from "../scripts/app.js?url";
-import docsScriptUrl from "../scripts/heading-anchors.js?url";
-import themeScriptUrl from "../scripts/theme-toggle.js?url";
 import Footer from "./Footer.astro";
 import Head from "./Head.astro";
 import Header from "./Header.astro";
@@ -35,8 +32,10 @@ const is404Page = pathname === "/404.html";
     </main>
     <Footer main={main} />
     <IconTemplates />
-    {main && <script is:inline type="module" src={appScriptUrl} />}
-    {docs && <script is:inline type="module" src={docsScriptUrl} />}
-    <script is:inline type="module" src={themeScriptUrl}></script>
+    {main && <script>import "../scripts/app.js";</script>}
+    {docs && <script>import "../scripts/heading-anchors.js";</script>}
+    <script>
+      import "../scripts/theme-toggle.js";
+    </script>
   </body>
 </html>
