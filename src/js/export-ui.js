@@ -1,7 +1,7 @@
 import CodeHighlighter from "./code-highlighter.js";
 import exportNaming from "./export-naming.js";
 import { normalizeHexForExport } from "./input-utils.js";
-import { hexToRgb } from "@edelstone/tints-and-shades";
+import { hexToRgb } from "/packages/tints-and-shades/dist/index.js";
 
 let exportUI = null;
 

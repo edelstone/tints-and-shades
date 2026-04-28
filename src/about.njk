@@ -1,3 +1,10 @@
+---
+layout: layouts/base
+title: About
+permalink: /about/
+docs: true
+---
+
 <!-- README-INSERT-PICTURES -->
 <h2 id="what-is-the-tint-shade-generator">What is the Tint &amp; Shade Generator?</h2>
 
@@ -37,28 +44,28 @@
 
 <p>The new value is rounded to the nearest whole number (values ending in .5 round up), and then converted back to hex for display.</p>
 
-<h3 id="example-calculation">Example calculation</h3>
+<h3 id="example-calculation">Example calculation</h2>
 
 <p>Let’s say we want tints and shades of <a href="https://meyerweb.com/eric/thoughts/2014/06/19/rebeccapurple/">Rebecca Purple</a>, <code>#663399</code>.</p>
 
-<h4 id="example-calculation-tint">10% tint</h4>
+<h4 id="example-calculation-tint">10% tint</h3>
 
 <ol>
   <li><code>#663399</code> is converted to the RGB equivalent of <code>(102, 51, 153)</code></li>
   <li><strong>R:</strong> <code>102 + ((255 − 102) × 0.1) = 117.3</code>, rounded to 117</li>
   <li><strong>G:</strong> <code>51 + ((255 − 51) × 0.1) = 71.4</code>, rounded to 71</li>
   <li><strong>B:</strong> <code>153 + ((255 − 153) × 0.1) = 163.2</code>, rounded to 163</li>
-  <li>RGB <code>(117, 71, 163)</code> is converted to the hex equivalent of <code>#7547a3</code></li>
+  <li>RGB <code>(117, 71, 163)</code> is converted to the hex equivalent of <code>#7547a3</code> </li>
 </ol>
 
-<h4 id="example-calculation-shade">10% shade</h4>
+<h4 id="example-calculation-shade">10% shade</h3>
 
 <ol>
-  <li><code>#663399</code> is converted to the RGB equivalent of <code>(102, 51, 153)</code></li>
+  <li><code>#663399</code> is converted to the RGB equivalent of <code>(102, 51, 153)</code> </li>
   <li><strong>R:</strong> <code>102 × 0.9 = 91.8</code>, rounded to 92</li>
   <li><strong>G:</strong> <code>51 × 0.9 = 45.9</code>, rounded to 46</li>
   <li><strong>B:</strong> <code>153 × 0.9 = 137.7</code>, rounded to 138</li>
-  <li>RGB <code>(92, 46, 138)</code> is converted to the hex equivalent of <code>#5c2e8a</code></li>
+  <li>RGB <code>(92, 46, 138)</code> is converted to the hex equivalent of <code>#5c2e8a</code> </li>
 </ol>
 
 <h2 id="related-colors">Related colors</h2>
@@ -81,7 +88,7 @@
 
 <p>Adds two palettes evenly spaced at 120° intervals around the color wheel, creating medium-high contrast with energetic, distinct relationships.</p>
 
-<h2 id="figma-plugin"><!-- README-EXCLUDE-START --><span class="subheader-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300"><path d="M50 300c27.6 0 50-22.4 50-50v-50H50c-27.6 0-50 22.4-50 50s22.4 50 50 50" style="fill:#0acf83" /><path d="M0 150c0-27.6 22.4-50 50-50h50v100H50c-27.6 0-50-22.4-50-50" style="fill:#a259ff" /><path d="M0 50C0 22.4 22.4 0 50 0h50v100H50C22.4 100 0 77.6 0 50" style="fill:#f24e1e" /><path d="M100 0h50c27.6 0 50 22.4 50 50s-22.4 50-50 50h-50z" style="fill:#ff7262" /><path d="M200 150c0 27.6-22.4 50-50 50s-50-22.4-50-50 22.4-50 50-50 50 22.4 50 50" style="fill:#1abcfe" /></svg></span><!-- README-EXCLUDE-END --> Figma plugin</h2>
+<h2 id="figma-plugin"><!-- README-EXCLUDE-START --><span class="subheader-icon">{% include "partials/icons/figma.njk" %}</span><!-- README-EXCLUDE-END --> Figma plugin</h2>
 
 <p>Now you can generate the same meticulously-crafted tints and shades without leaving your canvas (and automatically create local color styles, too). Grab the plugin <a href="https://www.figma.com/community/plugin/1580658889126377365/tint-shade-generator">from the Figma Community</a>.</p>
 
@@ -112,9 +119,9 @@
 <p>We also utilize these amazing open-source projects:</p>
 
 <ul>
-  <li><a href="https://github.com/withastro/astro">Astro</a></li>
   <li><a href="https://github.com/meodai/color-names">Color Names</a></li>
   <li><a href="https://github.com/melloware/coloris-npm">Coloris NPM</a></li>
+  <li><a href="https://github.com/11ty/eleventy">Eleventy</a></li>
 </ul>
 
 <h2 id="design-specs">Design specs</h2>

@@ -9,8 +9,8 @@ import {
   normalizeHexForPicker,
   normalizeHexForExport,
   normalizeHexStrictSix
-} from "../src/scripts/input-utils.js";
-import { normalizeHex } from "@edelstone/tints-and-shades";
+} from "../src/js/input-utils.js";
+import { normalizeHex } from "../packages/tints-and-shades/dist/index.js";
 
 test("isAcceptedUserHex accepts only 3/6-character user hex values", () => {
   assert.equal(isAcceptedUserHex("abc"), true);

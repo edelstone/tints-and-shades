@@ -1,12 +1,12 @@
-// Reads the shared About HTML content, injects additional sections, converts
-// everything to Markdown and builds README. Do not edit README directly.
+// Reads about.njk, injects additional sections, converts everything to Markdown
+// and builds README. Do not edit README directly
 const { readFileSync, writeFileSync } = require('fs');
 const { join } = require('path');
 const TurndownService = require('turndown');
 
 const turndownService = new TurndownService({ headingStyle: 'atx', bulletListMarker: '-' });
 
-const aboutPath = join(__dirname, 'src', 'shared', 'about.html');
+const aboutPath = join(__dirname, 'src', 'about.njk');
 const readmePath = join(__dirname, 'README.md');
 const siteUrl = 'https://maketintsandshades.com';
 
@@ -39,13 +39,13 @@ It can also be used independently in your projects.
 
 const localDevSection = `## Local development
 
-_Prerequisites: Node.js 22.12+_
+_Prerequisites: Node.js 18+_
 
 1. Clone this project.
 2. Navigate to the project in your terminal.
 3. Install dependencies: \`npm install\`.
 4. Start the server: \`npm run start\`.
-5. Navigate to \`localhost:4321\` in your browser.`;
+5. Navigate to \`localhost:8080\` in your browser.`;
 
 const insertMarkers = {
   pictures: '<!-- README-INSERT-PICTURES -->',
@@ -53,12 +53,15 @@ const insertMarkers = {
   localDev: '<!-- README-INSERT-LOCAL-DEV -->',
 };
 
-const rawReadmeContent = readFileSync(aboutPath, 'utf8').trim();
-if (!rawReadmeContent.trim()) throw new Error('README content block is empty in src/shared/about.html');
+const aboutContent = readFileSync(aboutPath, 'utf8');
+const rawReadmeContent = aboutContent
+  .replace(/^---[\s\S]*?---\s*/, '')
+  .trim();
+if (!rawReadmeContent.trim()) throw new Error('README content block is empty in src/about.njk');
 
 Object.values(insertMarkers).forEach((marker) => {
   if (!rawReadmeContent.includes(marker)) {
-    throw new Error(`README insert marker not found in src/shared/about.html: ${marker}`);
+    throw new Error(`README insert marker not found in src/about.njk: ${marker}`);
   }
 });
 

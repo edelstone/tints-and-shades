@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  {% include "partials/head.njk" %}
+</head>
+
+<body>
+  {% include "partials/header.njk" %}
+  <main id="main" class="main {% if docs %}docs{% endif %}">
+    {{ content | safe }}
+  </main>
+  {% include "partials/footer.njk" %}
+  {% include "partials/icon-templates.njk" %}
+  {% include "partials/scripts.njk" %}
+</body>
+
+</html>

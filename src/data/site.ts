@@ -1,6 +1,0 @@
-export const site = {
-  name: "Tint & Shade Generator",
-  url: "https://maketintsandshades.com",
-  description: "Easily make tints and shades that match the output of Chrome DevTools, Sass, Less, and PostCSS.",
-  shareImage: "https://maketintsandshades.com/images/share.jpg"
-};
