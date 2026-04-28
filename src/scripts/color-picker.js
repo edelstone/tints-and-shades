@@ -1,5 +1,5 @@
 import palettes from "./palettes.js";
-import Coloris from "/vendor/coloris/esm/coloris.min.js";
+import Coloris from "@melloware/coloris";
 import { isActivationKey, normalizeHexForPicker } from "./input-utils.js";
 
 const initColorPicker = () => {

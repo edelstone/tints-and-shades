@@ -1,0 +1,61 @@
+---
+import BaseLayout from "../components/BaseLayout.astro";
+import ExportDialog from "../components/ExportDialog.astro";
+import InlineIcon from "../components/InlineIcon.astro";
+import ShareDialog from "../components/ShareDialog.astro";
+---
+
+<BaseLayout title="Home" main={true}>
+  <div class="form">
+    <form class="pure-form" id="color-entry-form" action="#" method="post" name="color-entry-form">
+      <div class="form-labels">
+        <div class="form-warning" id="warning" role="alert">Please enter at least one valid hex color.</div>
+        <label class="textarea-label" for="color-values">Enter hex colors (separated by spaces)</label>
+      </div>
+      <div class="form-input">
+        <textarea id="color-values" name="color-values" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"></textarea>
+        <div class="color-picker-wrapper">
+          <button id="color-picker-button" class="color-picker-button" type="button" aria-label="Pick a color">
+            <span aria-hidden="true"><InlineIcon name="color-picker" /></span>
+            <span class="sr-only">Pick a color</span>
+          </button>
+          <input id="color-picker-input" class="color-picker-input" type="text" data-coloris autocomplete="off" aria-label="Pick a color" tabindex="-1" aria-hidden="true" inert />
+        </div>
+      </div>
+      <input id="make" class="make-button" type="submit" value="Make tints and shades  🎉" />
+    </form>
+  </div>
+  <div class="palettes">
+    <div id="palette-controls-wrapper" class="palette-controls-wrapper" hidden>
+      <div class="palette-controls" id="scroll-top">
+        <div class="inline-actions">
+          <div class="step-selector" role="group" aria-label="Steps per side">
+            <button type="button" class="step-selector-option" data-count="5" aria-pressed="false" tabindex="-1">5</button>
+            <button type="button" class="step-selector-option is-active" data-count="10" aria-pressed="true" tabindex="0">10</button>
+            <button type="button" class="step-selector-option" data-count="20" aria-pressed="false" tabindex="-1">20</button>
+          </div>
+          <button id="show-hide-hashtags" class="action-button" type="button" aria-pressed="false">
+            <InlineIcon name="hash" />
+            <span class="sr-only">Show hashtags</span>
+          </button>
+        </div>
+        <div class="external-actions">
+          <button id="share-open" class="action-button" type="button" aria-expanded="false" aria-controls="share-dialog" aria-label="Share palette link" data-tooltip="Share link">
+            <InlineIcon name="share" />
+          </button>
+          <button id="export-image" class="action-button" type="button" aria-label="Download palette image" data-tooltip="Download image">
+            <InlineIcon name="photo" />
+          </button>
+          <button id="export-open" class="action-button" type="button" aria-expanded="false" aria-controls="export-dialog" aria-label="Export palettes" data-tooltip="Export palettes">
+            <InlineIcon name="download" />
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="tints-and-shades"></div>
+    <div id="copy-status" class="sr-only" aria-live="polite"></div>
+  </div>
+
+  <ExportDialog />
+  <ShareDialog />
+</BaseLayout>

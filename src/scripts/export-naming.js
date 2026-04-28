@@ -1,5 +1,5 @@
-import { hexToRgb } from "/packages/tints-and-shades/dist/index.js";
-import { colornames } from "/vendor/color-name-list/colornames.esm.js";
+import { hexToRgb } from "@edelstone/tints-and-shades";
+import { colornames } from "color-name-list";
 
 const slugify = (value) => value
   .toLowerCase()

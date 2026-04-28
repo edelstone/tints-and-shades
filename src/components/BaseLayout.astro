@@ -1,0 +1,42 @@
+---
+import "../styles/styles.scss";
+import "@melloware/coloris/dist/coloris.css";
+import appScriptUrl from "../scripts/app.js?url";
+import docsScriptUrl from "../scripts/heading-anchors.js?url";
+import themeScriptUrl from "../scripts/theme-toggle.js?url";
+import Footer from "./Footer.astro";
+import Head from "./Head.astro";
+import Header from "./Header.astro";
+import IconTemplates from "./IconTemplates.astro";
+import { site } from "../data/site";
+
+interface Props {
+  title: string;
+  main?: boolean;
+  docs?: boolean;
+}
+
+const { title, main = false, docs = false } = Astro.props;
+const pageTitle = `${main ? "" : `${title} | `}${site.name}`;
+const pathname = Astro.url.pathname;
+const canonicalUrl = new URL(pathname, site.url).toString();
+const is404Page = pathname === "/404.html";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <Head pageTitle={pageTitle} canonicalUrl={canonicalUrl} is404Page={is404Page} />
+  </head>
+  <body>
+    <Header main={main} />
+    <main id="main" class={`main${docs ? " docs" : ""}`}>
+      <slot />
+    </main>
+    <Footer main={main} />
+    <IconTemplates />
+    {main && <script is:inline type="module" src={appScriptUrl} />}
+    {docs && <script is:inline type="module" src={docsScriptUrl} />}
+    <script is:inline type="module" src={themeScriptUrl}></script>
+  </body>
+</html>
