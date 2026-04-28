@@ -1,6 +1,5 @@
 ---
 import "../styles/styles.scss";
-import "@melloware/coloris/dist/coloris.css";
 import appScriptUrl from "../scripts/app.js?url";
 import docsScriptUrl from "../scripts/heading-anchors.js?url";
 import themeScriptUrl from "../scripts/theme-toggle.js?url";
@@ -27,6 +26,7 @@ const is404Page = pathname === "/404.html";
 <html lang="en">
   <head>
     <Head pageTitle={pageTitle} canonicalUrl={canonicalUrl} is404Page={is404Page} />
+    <link rel="stylesheet" href="/vendor/coloris/coloris.min.css" />
   </head>
   <body>
     <Header main={main} />
