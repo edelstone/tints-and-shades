@@ -115,11 +115,10 @@ It can also be used independently in your projects.
 
 _Prerequisites: Node.js 22.12+_
 
-1. Clone this project.
-2. Navigate to the project in your terminal.
-3. Install dependencies: `npm install`.
-4. Start the server: `npm run start`.
-5. Navigate to `localhost:4321` in your browser.
+1. Clone this project
+1. Install dependencies: `npm install`
+1. Start the server: `npm start`
+1. Open `localhost:4321`
 
 ## Support this project
 
