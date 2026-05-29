@@ -620,10 +620,12 @@ let palettes = null;
 
   const parseColorValues = (colorValues) => parseUserHexValues(colorValues);
 
-  const buildPaletteData = (colors, tintShadeCount) => {
+  const buildPaletteData = async (colors, tintShadeCount) => {
     const stepsPerSide = normalizeTintShadeCount(tintShadeCount);
     const usedNames = new Set();
-    return colors.map((color, index) => {
+    const palettes = [];
+
+    for (const [index, color] of colors.entries()) {
       const baseHex = color.toLowerCase();
       const shades = tintShadeUtils.calculateShades(color, stepsPerSide)
         .map((entry) => ({ hex: entry.hex.toLowerCase(), percent: entry.percent }))
@@ -633,15 +635,17 @@ let palettes = null;
         .filter(item => item.hex !== baseHex && item.hex !== "ffffff");
 
       const fallbackName = `color-${index + 1}`;
-      const friendlyName = exportNaming.getFriendlyName(baseHex, fallbackName);
+      const friendlyName = await exportNaming.getFriendlyName(baseHex, fallbackName);
       const uniqueId = exportNaming.makeUniqueName(friendlyName.slug, usedNames);
       const label = friendlyName.label || fallbackName;
 
-      return { id: uniqueId, label, base: baseHex, shades, tints, stepsPerSide };
-    });
+      palettes.push({ id: uniqueId, label, base: baseHex, shades, tints, stepsPerSide });
+    }
+
+    return palettes;
   };
 
-  const createTintsAndShades = (settings, firstTime = false, options = {}) => {
+  const createTintsAndShades = async (settings, firstTime = false, options = {}) => {
     const {
       skipScroll = false,
       skipFocus = false,
@@ -1344,7 +1348,7 @@ let palettes = null;
     if (parsedColorsArray && parsedColorsArray.length) {
       const { state, elements, toggleExportWrapperVisibility, setExportFormat, updateExportOutput } = exportUI;
       const tintShadeCount = normalizeTintShadeCount(settings.tintShadeCount);
-      const paletteMetadata = buildPaletteData(parsedColorsArray, tintShadeCount);
+      const paletteMetadata = await buildPaletteData(parsedColorsArray, tintShadeCount);
       const derivedEnteringFocusContext = (() => {
         if (!enteringFocusContext || enteringFocusContext.paletteId) return enteringFocusContext;
         const focusIndex = Number.isInteger(enteringFocusContext.colorIndex)

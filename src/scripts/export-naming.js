@@ -1,5 +1,4 @@
 import { hexToRgb } from "@edelstone/tints-and-shades";
-import { colornames } from "color-name-list";
 
 const slugify = (value) => value
   .toLowerCase()
@@ -72,9 +71,23 @@ const hexToLab = (hex) => {
 };
 
 let cachedColorNames = null;
+let colorNamesPromise = null;
 
-const prepareColorNames = () => {
+const loadColorNames = async () => {
+  if (!colorNamesPromise) {
+    colorNamesPromise = import("color-name-list")
+      .then((module) => module.colornames)
+      .catch((error) => {
+        console.error("Color name list failed to load", error);
+        return [];
+      });
+  }
+  return colorNamesPromise;
+};
+
+const prepareColorNames = async () => {
   if (cachedColorNames) return cachedColorNames;
+  const colornames = await loadColorNames();
   if (!Array.isArray(colornames)) return [];
 
   const normalizeDisplayName = (value) => {
@@ -118,8 +131,8 @@ const createFallbackName = (fallback) => {
   };
 };
 
-const getFriendlyName = (hex, fallback) => {
-  const names = prepareColorNames();
+const getFriendlyName = async (hex, fallback) => {
+  const names = await prepareColorNames();
   const targetLab = hexToLab(hex);
   if (!names.length || !targetLab) return createFallbackName(fallback);
 
