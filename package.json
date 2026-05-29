@@ -32,14 +32,14 @@
   "dependencies": {
     "@edelstone/tints-and-shades": "file:packages/tints-and-shades",
     "@melloware/coloris": "^0.25.0",
-    "color-name-list": "^14.36.0"
+    "color-name-list": "^14.39.1"
   },
   "devDependencies": {
-    "@types/node": "^25.6.0",
-    "astro": "^6.3.0",
-    "concurrently": "^9.2.1",
+    "@types/node": "^25.9.1",
+    "astro": "^6.4.2",
+    "concurrently": "^10.0.0",
     "nodemon": "^3.1.14",
-    "sass": "^1.99.0",
+    "sass": "^1.100.0",
     "turndown": "^7.2.4"
   }
 }
