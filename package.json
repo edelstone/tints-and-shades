@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@types/node": "^25.9.3",
-    "astro": "^6.4.6",
+    "astro": "^6.4.8",
     "concurrently": "^10.0.3",
     "nodemon": "^3.1.14",
     "sass": "^1.101.0",
