@@ -911,6 +911,7 @@ a {
 				text-align: left;
 				overflow: auto;
 				overflow-anchor: none;
+				overscroll-behavior: none;
 
 				&.is-first-tab-active {
 					border-radius: 0 $radius-main $radius-main $radius-main;
