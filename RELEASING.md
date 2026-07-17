@@ -7,13 +7,13 @@ This document applies only when releasing the npm package at `packages/tints-and
 Publish a new npm version when the changes should ship to npm consumers. This usually means changes to:
 
 - `packages/tints-and-shades/src/*`
-- `packages/tints-and-shades/package.json`
+- fields in `packages/tints-and-shades/package.json` that consumers actually receive or that affect install (e.g. `dependencies`, `exports`, `main`, `types`, `version`)
 - anything else that changes the built output in `packages/tints-and-shades/dist`
 
 You usually do not need a release for package-internal changes that do not affect what npm consumers receive, such as:
 
 - `packages/tints-and-shades/test/*`
-- tooling or config changes
+- tooling or config changes, including `devDependencies` bumps in `packages/tints-and-shades/package.json`
 - README changes, unless you want the npm package documentation updated
 
 If no npm release is needed, just commit and push to `main`.
