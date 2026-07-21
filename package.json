@@ -41,5 +41,8 @@
     "nodemon": "^3.1.14",
     "sass": "^1.101.0",
     "turndown": "^7.2.4"
+  },
+  "overrides": {
+    "shell-quote": "^1.9.0"
   }
 }
