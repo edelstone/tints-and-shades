@@ -43,7 +43,6 @@
     "turndown": "^7.2.4"
   },
   "overrides": {
-    "//": "Remove when concurrently pins shell-quote ^1.9.0+. Check: npm view concurrently dependencies, then npm install && npm audit.",
     "shell-quote": "^1.9.0"
   }
 }
