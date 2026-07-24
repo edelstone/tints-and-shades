@@ -104,7 +104,7 @@ If you’d like to contribute, comment on an [open issue](https://github.com/ede
 
 The Tint & Shade Generator exposes its color engine as a standalone API. It generates tints and shades, derives related palettes, and performs common color normalization and conversion.
 
-It can also be used independently in your projects.
+It can be used independently in your projects.
 
 ### Usage and examples
 
