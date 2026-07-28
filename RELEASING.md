@@ -16,15 +16,25 @@ You usually do not need a release for package-internal changes that do not affec
 - tooling or config changes, including `devDependencies` bumps in `packages/tints-and-shades/package.json`
 - README changes, unless you want the npm package documentation updated
 
-If no npm release is needed, just commit and push to `main`.
+If no npm release is needed, just commit and push to `main`. If a release is needed, do it immediately after the code work using the steps below.
 
 ## Release steps
 
-1. Commit code changes.
+1. Commit and push code changes.
+
+    For local work:
 
     ```bash
     git add -A
     git commit -m "describe change"
+    git push
+    ```
+
+    For Dependabot or other PRs on GitHub, merge, then sync locally:
+
+    ```bash
+    git pull
+    npm install
     ```
 
 2. Verify working tree is clean.
@@ -33,7 +43,7 @@ If no npm release is needed, just commit and push to `main`.
     git status
     ```
 
-    If not clean, return to step 1 and commit your changes before continuing.
+    _If not clean, return to step 1 and commit your changes before continuing._
 
 3. Verify release tests pass.
 
@@ -56,6 +66,8 @@ If no npm release is needed, just commit and push to `main`.
     ```bash
     npm publish
     ```
+
+    _If publish fails, fix the issue and rerun `npm publish`._
 
 6. Commit version bump to GitHub.
 
