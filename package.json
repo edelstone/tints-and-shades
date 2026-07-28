@@ -35,11 +35,11 @@
     "color-name-list": "^14.45.0"
   },
   "devDependencies": {
-    "@types/node": "^26.1.1",
-    "astro": "^7.1.0",
+    "@types/node": "^26.1.2",
+    "astro": "^7.1.4",
     "concurrently": "^10.0.3",
     "nodemon": "^3.1.14",
-    "sass": "^1.101.0",
+    "sass": "^1.102.0",
     "turndown": "^7.2.4"
   }
 }
