@@ -35,8 +35,8 @@
     "color-name-list": "^14.45.0"
   },
   "devDependencies": {
-    "@types/node": "^26.1.2",
-    "astro": "^7.1.6",
+    "@types/node": "^26.2.0",
+    "astro": "^7.2.0",
     "concurrently": "^10.0.3",
     "nodemon": "^3.1.14",
     "sass": "^1.102.0",
